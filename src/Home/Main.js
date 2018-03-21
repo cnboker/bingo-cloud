@@ -2,9 +2,6 @@ import React, { Component } from 'react';
 import About from './About'
 import Features from './Features'
 import AdvancedFeatures from './AdvancedFeatures'
-import Team from './Team'
-import Pricing from './Pricing'
-import Faq from './Faq'
 import Gallery from './Gallery'
 import ContactUs from './ContactUs'
 import CalltoAction from './CalltoAction'
@@ -19,9 +16,7 @@ class Main extends Component{
             <Features />
             <AdvancedFeatures/>
             <CalltoAction/>
-            <MoreFeatures />
-            <Pricing/>
-            <Team />   
+            <MoreFeatures />     
             <Gallery/>
             <ContactUs/>
           </main>

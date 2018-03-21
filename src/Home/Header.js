@@ -15,11 +15,10 @@ class Header extends Component{
               <nav id="nav-menu-container">
                 <ul class="nav-menu">
                   <li class="menu-active"><a href="#intro">首页</a></li>
+                  <li><a href="#about">关于我们</a></li>      
                   <li><a href="#features">服务内容</a></li>
-                  <li><a href="#pricing">Pricing</a></li>
-                  <li><a href="#team">Team</a></li>
-                  <li><a href="#gallery">案例展示</a></li>
-                  <li><a href="#about">关于我们</a></li>          
+                  <li><a href="#more-features">服务流程</a></li>
+                  <li><a href="#gallery">案例展示</a></li>                     
                   <li><a href="#contact">联系我们</a></li>
                 </ul>
               </nav>

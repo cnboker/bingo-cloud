@@ -12,7 +12,7 @@ export default class ContactUs extends Component {
               <div class="contact-about">
                 <h3>IOLIZ</h3>
                 <p>值得信赖的长期合作伙伴.</p>
-                <div class="social-links">
+              {/*   <div class="social-links">
                   <a href="#" class="twitter">
                     <i class="fa fa-twitter"></i>
                   </a>
@@ -28,7 +28,7 @@ export default class ContactUs extends Component {
                   <a href="#" class="linkedin">
                     <i class="fa fa-linkedin"></i>
                   </a>
-                </div>
+                </div> */}
               </div>
             </div>
 

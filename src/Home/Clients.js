@@ -2,10 +2,8 @@ import React, {Component} from 'react'
 
 export default class Clients extends Component {
   render() {
-    return ({/* <!--==========================
-              Clients
-            ============================--> */
-    } < section id = "clients" > <div class="container">
+    return (
+       <section id = "clients" > <div class="container">
 
       <div class="row wow fadeInUp">
 
@@ -34,7 +32,7 @@ export default class Clients extends Component {
         </div>
 
       </div>
-    </div> < /section>
+    </div> </section>
     )
   }
 }

@@ -8,14 +8,12 @@ export default class CalltoAction extends Component {
         <div class="container">
           <div class="row">
             <div class="col-lg-9 text-center text-lg-left">
-              <h3 class="cta-title">Call To Action</h3>
+              <h3 class="cta-title">打个电话问一下</h3>
               <p class="cta-text">
-                Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-                culpa qui officia deserunt mollit anim id est laborum.</p>
+                沟通和互信是合作的基础,我们已经准备好,随时等待您的咨询.</p>
             </div>
             <div class="col-lg-3 cta-btn-container text-center">
-              <a class="cta-btn align-middle" href="#">Call To Action</a>
+              <a class="cta-btn align-middle" href="tel:13410053353">Call me</a>
             </div>
           </div>
 
