@@ -11,7 +11,7 @@ class Intro extends Component{
                     <a href="#about" class="btn-get-started scrollto">开始吧</a>
                 </div>
 
-                <div class="product-screens">
+                {/* <div class="product-screens">
 
                     <div class="product-screen-1 wow fadeInUp" data-wow-delay="0.4s" data-wow-duration="0.6s">
                         <img src="img/product-screen-1.png" alt="" />
@@ -25,7 +25,7 @@ class Intro extends Component{
                         <img src="img/product-screen-3.png" alt="" />
                     </div>
 
-                </div>
+                </div> */}
 
             </section>
         )

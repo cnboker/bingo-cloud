@@ -13,18 +13,18 @@ export default class Features extends Component {
 
           <div class="row">
 
-            <div class="col-lg-8 offset-lg-4">
+            <div class="col-lg-8 offset-lg-2">
               <div class="section-header wow fadeIn" data-wow-duration="1s">
                 <h3 class="section-title">服务内容</h3>
                 <span class="section-divider"></span>
               </div>
             </div>
 
-            <div class="col-lg-4 col-md-5 features-img">
+            {/* <div class="col-lg-4 col-md-5 features-img">
               <img src="img/product-features.png" alt="" class="wow fadeInLeft"/>
-            </div>
+            </div> */}
 
-            <div class="col-lg-8 col-md-7 ">
+            <div >
 
               <div class="row">
 
