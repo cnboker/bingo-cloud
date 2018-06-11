@@ -10,7 +10,7 @@ export default class About extends Component {
             <h3 class="section-title">关于我们</h3>
             <span class="section-divider"></span>
             <p class="section-description">
-              深圳市易晟信息技术有限公司是一家软件定制服务公司，在软件行业我们已经有十多年的设计开发能力的积累,已经设施十多个项目同时帮助客户实现目标赢得高额回报！
+              深圳市易晟信息技术有限公司是一家深圳软件开发公司，在软件行业我们已经有十多年的设计开发能力的积累,已经设施十多个项目同时帮助客户实现目标赢得高额回报！
             </p>
           </div>
 
@@ -20,6 +20,9 @@ export default class About extends Component {
             </div>
 
             <div class="col-lg-6 content wow fadeInRight">
+            <h2>业务范围</h2>
+            <h3><strong>充电桩运营系统定制</strong>、<strong>广告机发布系统(数字标牌发布系统)广告机云租赁服务(数字标牌云租赁服务)</strong>、<strong>智能电源监控系统</strong>、<strong>关键字优化排名软件</strong>等与物联网相关业务平台的应用开发</h3>
+            <hr/>
               <h2>服务理念</h2>
               <h3>“我需要A,请给我A,不要给我B.“</h3>
 
@@ -41,6 +44,7 @@ export default class About extends Component {
                   <i class="ion-android-checkmark-circle"></i>
                   我们的服务帮助客户实现业务增长,让客户觉得我们值得信赖,足够.
                 </li>
+              
               </ul>
 
               {/* <p>

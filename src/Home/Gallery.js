@@ -20,7 +20,7 @@ export default class Gallery extends Component {
             <div class="col-lg-4 col-md-6">
               <div class="gallery-item wow fadeInUp">
                 <a href="img/gallery/a1.png" class="gallery-popup">
-                  <img src="img/gallery/a1.png" alt=""/>
+                  <img src="img/gallery/a1.png" alt="广告机云租赁服务(数字标牌云租赁服务)"/>
                 </a>
               </div>
             </div>
@@ -28,7 +28,7 @@ export default class Gallery extends Component {
             <div class="col-lg-4 col-md-6">
               <div class="gallery-item wow fadeInUp">
                 <a href="img/gallery/a2.png" class="gallery-popup">
-                  <img src="img/gallery/a2.png" alt=""/>
+                  <img src="img/gallery/a2.png" alt="充电桩运营系统定制"/>
                 </a>
               </div>
             </div>
@@ -36,7 +36,7 @@ export default class Gallery extends Component {
             <div class="col-lg-4 col-md-6">
               <div class="gallery-item wow fadeInUp">
                 <a href="img/gallery/a3.png" class="gallery-popup">
-                  <img src="img/gallery/a3.png" alt=""/>
+                  <img src="img/gallery/a3.png" alt="P2P,众筹平台系统"/>
                 </a>
               </div>
             </div>

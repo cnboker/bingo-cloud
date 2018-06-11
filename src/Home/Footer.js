@@ -12,7 +12,7 @@ class Footer extends Component {
                                 </div>
                             <div class="credits">
 
-                                Designed by <a href="https://bootstrapmade.com/">ioliz.com</a>
+                                Designed by <a href="http://www.ioliz.com/">ioliz.com</a>
                             </div>
                         </div>
                         <div class="col-lg-6">

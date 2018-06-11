@@ -46,7 +46,7 @@ export default class ContactUs extends Component {
 
                 <div>
                   <i class="ion-ios-telephone-outline"></i>
-                  <p>+13410053353</p>
+                  <a href="tel:13410053353">+13410053353</a>
                 </div>
 
               </div>
