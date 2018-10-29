@@ -6,8 +6,8 @@ class Intro extends Component{
             <section id="intro">
 
                 <div class="intro-text">
-                    <h2>欢迎了解I/O&middot;粒子</h2>
-                    <p>高端软件定制服务,让技术理顺您的业务,让业务飞起来!</p>
+                    <h2>高端软件定制</h2>
+                    <p>量身定做切合您业务的系统,让技术规范您的业务!</p>
                     <a href="#about" class="btn-get-started scrollto">开始吧</a>
                 </div>
 

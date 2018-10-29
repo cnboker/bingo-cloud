@@ -14,10 +14,10 @@ export default class AdvancedFeatures extends Component {
               <div class="col-12">
                 <img
                   class="advanced-feature-img-right wow fadeInRight"
-                  src="img/advanced-feature-1.jpg"
+                  src="img/advanced-feature-1.png"
                   alt="充电桩运营系统定制"/>
                 <div class="wow fadeInLeft">
-                  <h2>充电桩系统定制</h2>
+                  <h2>充电桩运营系统定制</h2>
                   <h3>新能源电动汽车飞速发展为充电桩行业市场提供广阔空间.</h3>
                   <p>新能源汽车市场繁荣的背后,充电桩等配套设备基础设施建设也显得至关重要.</p>
                   <p>基于这个机遇,我们已经和多家设备供应厂商合作开发出充电桩运营平台并实施顺丰及几家地方公交公司,系统运营2年多客户反馈良好.</p>
@@ -34,7 +34,7 @@ export default class AdvancedFeatures extends Component {
               <div class="col-12">
                 <img class="advanced-feature-img-left" src="img/advanced-feature-2.jpg" alt=""/>
                 <div class="wow fadeInRight">
-                  <h2>数字标牌云租赁平台</h2>
+                  <h2>数字标牌内容发布系统</h2>
                   <i
                     class="ion-ios-paper-outline"
                     class="wow fadeInRight"
@@ -62,8 +62,8 @@ export default class AdvancedFeatures extends Component {
               <div class="col-12">
                 <img
                   class="advanced-feature-img-right wow fadeInRight"
-                  src="img/advanced-feature-3.jpg"
-                  alt="数字标牌(广告机)云租赁系统"/>
+                  src="img/advanced-feature-3.png"
+                  alt="社区金融服务平台"/>
                 <div class="wow fadeInLeft">
                   <h2>社区金融服务平台</h2>
                   <h3>互助互惠的社区金融服务综合平台.</h3>

@@ -16,12 +16,12 @@ export default class About extends Component {
 
           <div class="row">
             <div class="col-lg-6 about-img wow fadeInLeft">
-              <img src="img/about-img.jpg" alt=""/>
+              <img src="img/about-img.png" alt=""/>
             </div>
 
             <div class="col-lg-6 content wow fadeInRight">
             <h2>业务范围</h2>
-            <h3><strong>充电桩运营系统定制</strong>、<strong>广告机发布系统(数字标牌发布系统)广告机云租赁服务(数字标牌云租赁服务)</strong>、<strong>智能电源监控系统</strong>、<strong>关键字优化排名软件</strong>等与物联网相关业务平台的应用开发</h3>
+            <h3><strong>定制充电桩运营系统</strong>、<strong>定制充电桩管理系统</strong><strong>、广告机内容发布系统(数字标牌内容发布系统)</strong>、<strong>广告机云租赁服务(数字标牌云租赁系统)</strong>等与物联网相关业务平台的应用开发</h3>
             <hr/>
               <h2>服务理念</h2>
               <h3>“我需要A,请给我A,不要给我B.“</h3>
