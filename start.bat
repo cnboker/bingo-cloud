@@ -1,0 +1,1 @@
+wt -d . ; new-tab  -d D:\projects\myds\ app.bat; new-tab  -d  D:\projects\myds\ service.bat; new-tab  -d D:\projects\myds\  identity.bat

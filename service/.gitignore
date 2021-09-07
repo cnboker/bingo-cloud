@@ -1,0 +1,9 @@
+
+/obj
+/bin
+appsettings.json
+appsettings.Development.json
+/Logs
+/Migrations
+/wwwroot
+.DS_Store
