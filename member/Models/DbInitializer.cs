@@ -57,8 +57,6 @@ namespace Member.Models
         }
         
         await AddUser(provider, "admin", "111111", "Administrators");
-        await AddUser(provider, "tadmin", "111111", "TenantAdministrators");
-        await AddUser(provider, "topt", "111111", "TenantOperators");
       }
 
       if (!context.Servers.Any())

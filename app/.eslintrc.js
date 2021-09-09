@@ -22,5 +22,19 @@ module.exports = {
     // Place to specify ESLint rules. Can be used to overwrite rules specified from the extended configs
     // e.g. "@typescript-eslint/explicit-function-return-type": "off",
     'react/prop-types': 0,
+    'react/display-name': 'off',
+    'react-hooks/exhaustive-deps': 'off',
+    'import/no-anonymous-default-export': [
+      'error',
+      {
+        allowArray: true,
+        allowArrowFunction: true,
+        allowAnonymousClass: true,
+        allowAnonymousFunction: true,
+        allowCallExpression: true, // The true value here is for backward compatibility
+        allowLiteral: true,
+        allowObject: true,
+      },
+    ],
   },
 }

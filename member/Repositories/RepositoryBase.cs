@@ -1,6 +1,7 @@
 using System;
-using System.Data.SqlClient;
+using MySql.Data;
 using Microsoft.Extensions.Configuration;
+using MySql.Data.MySqlClient;
 
 namespace Member.Repositories
 {
@@ -16,7 +17,7 @@ namespace Member.Repositories
         {
             get
             {
-                return new SqlConnection(connectionString);
+                return new MySqlConnection(connectionString);
             }
         }
 
@@ -24,7 +25,7 @@ namespace Member.Repositories
         {
             get
             {
-                return new SqlConnection(connectionString);
+                return new MySqlConnection(connectionString);
             }
         }
         public RepositoryBase(IConfiguration configuration)
