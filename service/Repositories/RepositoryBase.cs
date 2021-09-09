@@ -1,11 +1,9 @@
-using System;
-using System.Data.SqlClient;
-using Microsoft.Extensions.Configuration;
 using Dapper;
 using System.Data;
 using Ioliz.Service.Models;
 using System.Collections.Generic;
 using System.Linq;
+using MySql.Data.MySqlClient;
 
 namespace Ioliz.Service.Repositories
 {
@@ -16,7 +14,7 @@ namespace Ioliz.Service.Repositories
         {
             get
             {
-                return new SqlConnection(AppInstance.Instance.Config.MemberConnectionString);
+                return new MySqlConnection(AppInstance.Instance.Config.MemberConnectionString);
             }
         }
 
@@ -24,7 +22,7 @@ namespace Ioliz.Service.Repositories
         {
             get
             {
-                return new SqlConnection(AppInstance.Instance.Config.IdentityConnectionString);
+                return new MySqlConnection(AppInstance.Instance.Config.IdentityConnectionString);
             }
         }
 
@@ -32,7 +30,7 @@ namespace Ioliz.Service.Repositories
         {
             get
             {
-                return new SqlConnection(AppInstance.Instance.Config.MQTTConnectionString);
+                return new MySqlConnection(AppInstance.Instance.Config.MQTTConnectionString);
             }
         }
 

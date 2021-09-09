@@ -7,3 +7,4 @@ appsettings.Development.json
 /Migrations
 /wwwroot
 .DS_Store
+global.json
