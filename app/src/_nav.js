@@ -288,6 +288,22 @@ const _nav = [
       },
     ],
   },
+  {
+    component: CNavTitle,
+    name: 'Administrator',
+  },
+  {
+    component: CNavGroup,
+    name: 'Function',
+    icon: <CIcon icon={cilStar} customClassName="nav-icon" />,
+    items: [
+      {
+        component: CNavItem,
+        name: 'Users',
+        to: '/admin/users',
+      },
+    ],
+  },
 ]
 
 export default _nav

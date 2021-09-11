@@ -34,9 +34,12 @@ namespace Member.Controllers
         }
 
         [Authorize()]
-        [HttpGet()]
+        [HttpGet("/api/user/list")]
         public IActionResult GetUsers([FromQuery] BaseQuery query)
         {
+            if(!IsAdmin() && !IsAgent()){
+                return BadRequest("request bad!");
+            }
             var data = userManager.Users.Select(x => new
             {
                 UserName = x.UserName,
@@ -49,7 +52,9 @@ namespace Member.Controllers
             if (!string.IsNullOrEmpty(query.Keyword))
             {
                 data = data.Where(c => c.UserName.Contains(query.Keyword) || c.Email.Contains(query.Keyword));
+               
             }
+             data = data.Where(c => c.UserName != "admin");
             //Is factory?
             if (IsAgent())
             {
@@ -115,7 +120,7 @@ namespace Member.Controllers
             if (user == null) return BadRequest("{0} not found");
             user.IsAgent = !user.IsAgent;
             await userManager.UpdateAsync(user);
-            return Ok();
+            return Ok(user);
         }
 
         //用户的扩展属性都通过该接口来维护
@@ -169,9 +174,9 @@ namespace Member.Controllers
         public async Task<IActionResult> Delete(string userName)
         {
             var user = await userManager.FindByNameAsync(userName);
-            if (user == null) return BadRequest("{0} not found");
+            if (user == null) return BadRequest(string.Format("{0} not found",userName));
             await userManager.DeleteAsync(user);
-            return Ok();
+            return Ok(user);
         }
     }
 }

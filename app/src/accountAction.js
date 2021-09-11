@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { LOGIN_RESPONSE, SIGNUP_RESPONSE, UPDATE_TOKEN, LOGOUT } from './accountConstants'
-import { API_RESPONSE_ERROR } from './constants'
+import { apiResponseError } from './actions'
 
 const loginUrl = `${process.env.REACT_APP_AUTH_URL}/api/token`
 const signupUrl = `${process.env.REACT_APP_AUTH_URL}/api/signup`
@@ -11,10 +11,6 @@ export const loginResponse = (payload) => {
 
 export const signupResponse = (payload) => {
   return { type: SIGNUP_RESPONSE, payload }
-}
-
-export const apiResponseError = (payload) => {
-  return { type: API_RESPONSE_ERROR, payload }
 }
 
 export const updateToken = (payload) => {

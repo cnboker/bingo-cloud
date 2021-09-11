@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux'
 import securityReducer from './accountReducer'
-
-const appReducer = combineReducers({ securityReducer })
+import { userReducer } from './views/pages/admin/users/reducer'
+const appReducer = combineReducers({ securityReducer, userReducer })
 
 const IndexReducer = (state, action) => {
   // if (action.type === 'CLIENT_UNSET') {
