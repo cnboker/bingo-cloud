@@ -53,10 +53,12 @@ const Toasts = React.lazy(() => import('./views/components/notifications/toasts/
 
 const Widgets = React.lazy(() => import('./views/components/widgets/Widgets'))
 const Users = React.lazy(() => import('./views/pages/admin/users/indexContainer'))
+const Orders = React.lazy(() => import('./views/pages/admin/orders/indexContainer'))
 const routes = [
   { path: '/', exact: true, name: 'Home' },
   { path: '/admin', exact: true, name: 'Administrator', component: Users },
   { path: '/admin/users', exact: true, name: 'Users', component: Users },
+  { path: '/admin/orders', exact: true, name: 'Orders', component: Orders },
   { path: '/dashboard', name: 'Dashboard', component: Dashboard },
   { path: '/theme', name: 'Theme', component: Colors, exact: true },
   { path: '/theme/colors', name: 'Colors', component: Colors },

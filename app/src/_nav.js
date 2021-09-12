@@ -302,6 +302,11 @@ const _nav = [
         name: 'Users',
         to: '/admin/users',
       },
+      {
+        component: CNavItem,
+        name: 'Orders',
+        to: '/admin/orders',
+      },
     ],
   },
 ]

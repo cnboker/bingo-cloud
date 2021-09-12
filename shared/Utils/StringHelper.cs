@@ -8,7 +8,7 @@ namespace Ioliz.Shared.Utils
   public static class StringHelper
   {
 
-    public static string GetServiceNo()
+    public static string GetOrdersNo()
     {
       Thread.Sleep(5);
       return DateTime.Now.ToString("yyMMddHHmmss") + (new Random()).Next(100, 10000);

@@ -1,17 +1,14 @@
 using Senparc.Weixin.MP.AdvancedAPIs;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using Senparc.Weixin.MP.AdvancedAPIs.OAuth;
 
 using Senparc.Weixin.MP.TenPayLibV3;
 using Senparc.Weixin.MP;
-using System.Xml.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Ioliz.Service.Models;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Http.Features;
-using Member.Repositories;
+using Ioliz.Service.Repositories;
 
 namespace Ioliz.Service.Controllers
 {
@@ -201,16 +198,16 @@ namespace Ioliz.Service.Controllers
             
             logger.LogInformation(resHandler.GetDebugInfo());
             resHandler.SetKey(appSecret.Key);
-            string ServiceNo = "";
+            string OrderNo = "";
             //验证请求是否从微信发过来（安全）
             if (resHandler.IsTenpaySign() && return_code == "SUCCESS")
             {
                 //正确的订单处理
-                ServiceNo = resHandler.GetParameter("out_trade_no");           
-                ServiceRepository ServiceRepository = new ServiceRepository(this.ctx);
+                OrderNo = resHandler.GetParameter("out_trade_no");           
+                OrderRepository ServiceRepository = new OrderRepository(this.ctx);
                 try
                 {
-                    ServiceRepository.Checkout(ServiceNo, PayMethod.Weixin);
+                    ServiceRepository.Checkout(OrderNo, PayMethod.Weixin);
                 }
                 catch (Exception ex)
                 {
@@ -219,7 +216,7 @@ namespace Ioliz.Service.Controllers
             }
             else
             {
-                ThrowError("付款失败,ServiceNo=" + resHandler.GetParameter("out_trade_no"));
+                ThrowError("付款失败,OrderNo=" + resHandler.GetParameter("out_trade_no"));
             }
             return Content("");
         }

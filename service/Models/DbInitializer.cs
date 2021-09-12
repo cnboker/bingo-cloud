@@ -24,7 +24,7 @@ namespace Ioliz.Service.Models
             Amount = 10,
             OrderNo = Guid.NewGuid().ToString(),
             TransTime = DateTime.Now.AddDays(-i),
-            TransType = TransType.Service
+            TransType = TransType.Order
           };
           context.AccountDetails.Add(accountDetail);
         }

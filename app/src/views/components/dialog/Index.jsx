@@ -44,15 +44,15 @@ const Dialog = ({ title, body, callback }) => {
   )
 }
 
-// ref component
+// 每一次重新构造组件
 const WithDialog = ({ children, ...props }) => {
   const ref = useRef()
   const Component = () => React.createElement(Dialog, { ref, ...props }, children)
   return <Component>{children}</Component>
 }
 
-export const confirm = (message, callback) => {
-  const jsx = <WithDialog title={'Information'} body={message} callback={callback} />
+export const confirm = (body, callback) => {
+  const jsx = <WithDialog title={'Information'} body={body} callback={callback} />
   ReactDOM.render(jsx, createContainer())
 }
 

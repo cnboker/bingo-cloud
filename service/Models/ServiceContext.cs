@@ -342,7 +342,7 @@ namespace Ioliz.Service.Models
 
     public enum TransType
     {
-        Service,
+        Order,
         Commissoion
     }
     public class License

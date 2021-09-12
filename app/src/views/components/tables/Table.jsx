@@ -66,6 +66,7 @@ const HTMLTable = ({ cellStyles, data, ...props }) => {
             })}
           </tr>
         </thead>
+
         <DataTableComponent rows={data} cellStyles={cellStyles} {...props} />
       </table>
     </React.Fragment>

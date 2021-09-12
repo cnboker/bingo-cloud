@@ -2,24 +2,21 @@ using System;
 using System.Linq;
 using Ioliz.Service.Models;
 using Ioliz.Shared.Utils;
-using Ioliz.Service;
 using System.Net.Http;
 using Newtonsoft.Json;
-using Ioliz.Service.Repositories;
 using Microsoft.Extensions.Configuration;
 using System.Data;
 using Dapper;
-using System.Collections.Generic;
 
-namespace Member.Repositories
+namespace Ioliz.Service.Repositories
 {
-    public class ServiceRepository : RepositoryBase
+    public class OrderRepository : RepositoryBase
     {
         ServiceContext ctx;
 
 
         //drapper dependency
-        public ServiceRepository(IConfiguration configuration)
+        public OrderRepository(IConfiguration configuration)
         {
         }
 
@@ -36,7 +33,7 @@ namespace Member.Repositories
                 }).ToArray();
             }
         }
-        public ServiceRepository(ServiceContext ctx)
+        public OrderRepository(ServiceContext ctx)
         {
             this.ctx = ctx;
         }
@@ -100,7 +97,7 @@ namespace Member.Repositories
                 AfterBalance = beforeBlance + myService.Amount,
                 UserName = AppConfig.PlatformId,
                 TransTime = DateTime.Now,
-                TransType = TransType.Service,
+                TransType = TransType.Order,
                 Amount = myService.Amount,
                 OrderNo = myService.OrderNo,
                 Remark = string.Format("用户{0}订单金额:{1}", tenant, myService.Amount)
