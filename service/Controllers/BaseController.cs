@@ -49,25 +49,25 @@ namespace Ioliz.Service.Controllers {
             this.logger = logger;
         }
 
-        public bool IsAdmin () {
+        protected bool IsAdmin () {
             return User.Identity.Name == "admin";
         }
 
         //获取工厂帐号
-        public string GetAgent () {
+        protected string GetAgent () {
             var clam = User.Claims.FirstOrDefault (c => c.Type == "agentUser");
             if (clam == null) return "";
             return clam.Value;
         }
 
         //是否是工厂即二级帐号
-        public bool IsAgent () {
+        protected bool IsAgent () {
             var clam = User.Claims.FirstOrDefault (c => c.Type == "isAgent");
             if (clam == null) return false;
             return clam.Value == "true";
         }
 
-        public UserSetting GetSetting(string userName){
+        protected UserSetting GetSetting(string userName){
             var sqlText = "select setting from AspNetUsers where UserName=@userName" ;
             UserSetting setting = new UserSetting();
              using (IDbConnection db = IdentityConnection)

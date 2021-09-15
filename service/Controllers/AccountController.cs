@@ -16,7 +16,7 @@ namespace Ioliz.Service.Controllers
         {
         }
 
-        [HttpPost]
+        [HttpPost("/api/orderDetail/list")]
         [Authorize(Roles = "Administrators")]
         public IActionResult Detail([FromBody] SimpleQueryModel model)
         {

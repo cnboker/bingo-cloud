@@ -10,7 +10,10 @@ import {
   cilPencil,
   cilPuzzle,
   cilSpeedometer,
+  cilSpreadsheet,
   cilStar,
+  cilUser,
+  cilYen,
 } from '@coreui/icons'
 import { CNavGroup, CNavItem, CNavTitle } from '@coreui/react'
 
@@ -293,21 +296,22 @@ const _nav = [
     name: 'Administrator',
   },
   {
-    component: CNavGroup,
-    name: 'Function',
-    icon: <CIcon icon={cilStar} customClassName="nav-icon" />,
-    items: [
-      {
-        component: CNavItem,
-        name: 'Users',
-        to: '/admin/users',
-      },
-      {
-        component: CNavItem,
-        name: 'Orders',
-        to: '/admin/orders',
-      },
-    ],
+    component: CNavItem,
+    name: 'Users',
+    to: '/admin/users',
+    icon: <CIcon icon={cilUser} customClassName="nav-icon" />,
+  },
+  {
+    component: CNavItem,
+    name: 'Orders',
+    to: '/admin/orders',
+    icon: <CIcon icon={cilSpreadsheet} customClassName="nav-icon" />,
+  },
+  {
+    component: CNavItem,
+    name: 'Balance',
+    to: '/admin/orderDetails',
+    icon: <CIcon icon={cilYen} customClassName="nav-icon" />,
   },
 ]
 

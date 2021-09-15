@@ -1,11 +1,11 @@
-import { ORDER_LIST_RESPONSE, ORDER_DELETE_RESPONSE, ORDER_UPDATE_RESPONSE, user } from './contants'
+import { ORDER_LIST_RESPONSE, ORDER_DELETE_RESPONSE, ORDER_UPDATE_RESPONSE } from './contants'
 const initialState = {
   data: [],
   pageCount: 1,
   rowNums: 30,
 }
 
-export const userReducer = (state = initialState, action) => {
+export const orderReducer = (state = initialState, action) => {
   var newState = { ...state }
   switch (action.type) {
     case ORDER_LIST_RESPONSE:

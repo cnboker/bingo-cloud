@@ -1,5 +1,5 @@
 import { ORDER_LIST_RESPONSE, ORDER_DELETE_RESPONSE, ORDER_UPDATE_RESPONSE } from './contants'
-import { get, deleteObject, post } from 'src/lib/api'
+import { deleteObject, post } from 'src/lib/api'
 
 export const userListResponse = (payload) => {
   return { type: ORDER_LIST_RESPONSE, payload }

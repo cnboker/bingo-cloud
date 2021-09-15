@@ -54,11 +54,18 @@ const Toasts = React.lazy(() => import('./views/components/notifications/toasts/
 const Widgets = React.lazy(() => import('./views/components/widgets/Widgets'))
 const Users = React.lazy(() => import('./views/pages/admin/users/indexContainer'))
 const Orders = React.lazy(() => import('./views/pages/admin/orders/indexContainer'))
+const OrderDetails = React.lazy(() => import('./views/pages/admin/orderDetails/indexContainer'))
+const Wizard = React.lazy(() => import('./views/pages/steps/Index'))
+const Trial = React.lazy(() => import('./views/pages/orders/Trial'))
+const CreateOrder = React.lazy(() => import('./views/pages/orders/Create'))
+const Checkout = React.lazy(() => import('./views/pages/orders/Checkout'))
+
 const routes = [
   { path: '/', exact: true, name: 'Home' },
   { path: '/admin', exact: true, name: 'Administrator', component: Users },
   { path: '/admin/users', exact: true, name: 'Users', component: Users },
   { path: '/admin/orders', exact: true, name: 'Orders', component: Orders },
+  { path: '/admin/orderDetails', exact: true, name: 'OrderDetails', component: OrderDetails },
   { path: '/dashboard', name: 'Dashboard', component: Dashboard },
   { path: '/theme', name: 'Theme', component: Colors, exact: true },
   { path: '/theme/colors', name: 'Colors', component: Colors },
@@ -101,6 +108,11 @@ const routes = [
   { path: '/notifications/modals', name: 'Modals', component: Modals },
   { path: '/notifications/toasts', name: 'Toasts', component: Toasts },
   { path: '/widgets', name: 'Widgets', component: Widgets },
+  { path: '/wizard', name: 'Wizard', component: Wizard },
+  { path: '/trial', name: 'Trial', component: Trial },
+  { path: '/order', exact: true, name: 'Order', component: CreateOrder },
+  { path: '/order/create', exact: true, name: 'CreateOrder', component: CreateOrder },
+  { path: '/order/checkout', exact: true, name: 'Checkout', component: Checkout },
 ]
 
 export default routes

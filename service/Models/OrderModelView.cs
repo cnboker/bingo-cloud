@@ -7,7 +7,7 @@ namespace Ioliz.Service.Models {
     public int Days {get;set;}
     public PayMethod PayMethod {get;set;}
     //优惠码
-    public string Code {get;set;}
+    public string Code {get;set;} 
   }
 
 }

@@ -113,8 +113,8 @@ namespace Ioliz.Service.Controllers
       return Json(data);
     }
 
-    [HttpGet("/api/Orders/checkBenifitCodeAvailiable/{code}")]
-    public bool CheckBenifitCodeAvailiable(string code)
+    [HttpGet("/api/order/codeCheck/{code}")]
+    public bool CodeCheck(string code)
     {
       if (string.IsNullOrEmpty(code)) return false;
       var entity = ctx.BenefitCodes.FirstOrDefault(x => x.Code == code);
@@ -122,6 +122,7 @@ namespace Ioliz.Service.Controllers
       return !entity.IsUsed;
     }
 
+    [HttpPost("/api/order/create")]
     public IActionResult Buy([FromBody] OrdersModelView model)
     {
       logger.LogInformation("code=" + model.Code);
@@ -137,7 +138,7 @@ namespace Ioliz.Service.Controllers
       var config = AppInstance.Instance.Config;
       var myOrders = new MyOrder();
 
-      bool codeAvailiable = CheckBenifitCodeAvailiable(model.Code);
+      bool codeAvailiable = CodeCheck(model.Code);
       var codeEntity = ctx.BenefitCodes.FirstOrDefault(x => x.Code == model.Code);
 
       if (!string.IsNullOrEmpty(model.Code))
@@ -178,7 +179,7 @@ namespace Ioliz.Service.Controllers
 
       this.ctx.Orders.Add(myOrders);
       ctx.SaveChanges();
-      return CreatedAtAction("MyOrders", new { id = myOrders.Id }, myOrders);
+      return Ok(myOrders);
     }
 
     public IActionResult Checkout([FromBody] PayModel model)

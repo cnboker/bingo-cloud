@@ -4,7 +4,7 @@ import Index from './index'
 import { free, orderList } from './actions'
 import * as Dialog from '../../../components/dialog/Index'
 export default () => {
-  const userReducer = useSelector((state) => state.userReducer)
+  const orderReducer = useSelector((state) => state.orderReducer)
   const dispatch = useDispatch()
 
   const onSearch = (q) => {
@@ -20,7 +20,7 @@ export default () => {
 
   return (
     <>
-      <Index onSearch={onSearch} dataset={userReducer} onFreeOrder={onFreeOrder} />
+      <Index onSearch={onSearch} dataset={orderReducer} onFreeOrder={onFreeOrder} />
     </>
   )
 }
