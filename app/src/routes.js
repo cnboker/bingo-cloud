@@ -59,7 +59,11 @@ const Wizard = React.lazy(() => import('./views/pages/steps/Index'))
 const Trial = React.lazy(() => import('./views/pages/orders/Trial'))
 const CreateOrder = React.lazy(() => import('./views/pages/orders/Create'))
 const Checkout = React.lazy(() => import('./views/pages/orders/Checkout'))
-
+const FileManager = React.lazy(() =>
+  import('./views/pages/fileManager/Index').then((module) => ({
+    default: module.ServerVFSBrowser,
+  })),
+)
 const routes = [
   { path: '/', exact: true, name: 'Home' },
   { path: '/admin', exact: true, name: 'Administrator', component: Users },
@@ -113,6 +117,7 @@ const routes = [
   { path: '/order', exact: true, name: 'Order', component: CreateOrder },
   { path: '/order/create', exact: true, name: 'CreateOrder', component: CreateOrder },
   { path: '/order/checkout', exact: true, name: 'Checkout', component: Checkout },
+  { path: '/fileManager', exact: true, name: 'FileManager', component: FileManager },
 ]
 
 export default routes

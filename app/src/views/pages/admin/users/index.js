@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-use-before-define
 import React from 'react'
 import { CButton, CCard, CCardBody, CCardHeader } from '@coreui/react'
 import SimpleSearchbar from 'src/views/components/forms/form-control/SimpleSearchbar'
@@ -14,6 +15,7 @@ export default (props) => {
       <CCardHeader component="h5">Users</CCardHeader>
       <CCardBody>
         <SimpleSearchbar onSearch={onSearch} />
+        {/* eslint-disable-next-line @typescript-eslint/no-use-before-define*/}
         <Table {...props} {...TableProps()} data={dataset.data} />
         <Pager pageCount={dataset.pageCount} onPageChange={pagination} />
       </CCardBody>
@@ -30,6 +32,7 @@ const TableProps = () => {
     {
       title: '用户类型',
       columnName: 'isAgent',
+      // eslint-disable-next-line @typescript-eslint/no-use-before-define
       formatter: IsAgentFormatter, //NameUpdateButton
     },
     {
@@ -49,6 +52,7 @@ const TableProps = () => {
     },
     {
       title: '操作',
+      // eslint-disable-next-line @typescript-eslint/no-use-before-define
       formatter: OperationButtons,
       //width: 200,
     },

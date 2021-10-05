@@ -1,5 +1,7 @@
 using System;
+using System.Linq;
 using System.Net;
+using System.Text;
 using System.Threading;
 
 namespace Ioliz.Shared.Utils
@@ -12,6 +14,21 @@ namespace Ioliz.Shared.Utils
     {
       Thread.Sleep(5);
       return DateTime.Now.ToString("yyMMddHHmmss") + (new Random()).Next(100, 10000);
+    }
+
+    public static string IdGenerate()
+    {
+      StringBuilder builder = new StringBuilder();
+      Enumerable
+         .Range(65, 26)
+          .Select(e => ((char)e).ToString())
+          .Concat(Enumerable.Range(97, 26).Select(e => ((char)e).ToString()))
+          .Concat(Enumerable.Range(0, 10).Select(e => e.ToString()))
+          .OrderBy(e => Guid.NewGuid())
+          .Take(11)
+          .ToList().ForEach(e => builder.Append(e));
+      string id = builder.ToString();
+      return id;
     }
 
     public static string GetRandom(int len)

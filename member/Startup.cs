@@ -125,7 +125,7 @@ namespace Ioliz
                 //dbContext.Database.Migrate(); //this will generate the db if it does not exist
 
             }
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseRouting();
             //app.UseIdentity();

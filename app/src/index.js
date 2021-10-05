@@ -5,7 +5,6 @@ import ReactDOM from 'react-dom'
 import App from './App'
 import * as serviceWorker from './serviceWorker'
 import { Provider } from 'react-redux'
-import { ToastContainer } from 'react-toastify'
 import IndexReducer from './index-reducer'
 import { createStore, compose, applyMiddleware } from 'redux'
 import createSegaMiddleware from 'redux-saga'
@@ -30,7 +29,6 @@ sagaMiddleware.run(IndexSagas)
 ReactDOM.render(
   <Provider store={store}>
     <App />
-    <ToastContainer />
   </Provider>,
   document.getElementById('root'),
 )

@@ -13,6 +13,7 @@ export default () => {
   const securityReducer = useSelector((state) => state.securityReducer)
   const submit = (values) => {
     const { userName, password } = values
+    // eslint-disable-next-line @typescript-eslint/no-use-before-define
     const returnUrl = getReturnUrl()
 
     console.log('data,', values)

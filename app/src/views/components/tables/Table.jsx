@@ -89,6 +89,7 @@ const DataRowComponent = ({ cellStyles, row, ...props }) => {
       {cellStyles.map((cellStyle, index) => {
         return (
           <td key={index} style={{ width: cellStyle.width - 1 + 'px' }}>
+            {/* eslint-disable-next-line @typescript-eslint/no-use-before-define */}
             {CellRender({ cellStyle, row, ...props })}
           </td>
         )

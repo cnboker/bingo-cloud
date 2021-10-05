@@ -18,6 +18,7 @@ export default (props) => {
             onSearch(q)
           }}
         />
+        {/* eslint-disable-next-line @typescript-eslint/no-use-before-define*/}
         <Table {...props} {...TableProps()} data={dataset.data} />
         <Pager
           pageCount={dataset.pageCount}
@@ -66,6 +67,7 @@ const TableProps = () => {
     },
     {
       title: '操作',
+      // eslint-disable-next-line @typescript-eslint/no-use-before-define
       formatter: OperationButtons,
     },
   ]

@@ -15,7 +15,6 @@ import CIcon from '@coreui/icons-react'
 import { cilLockLocked, cilUser } from '@coreui/icons'
 import { useForm } from 'react-hook-form'
 import ValidatorSpan from '~/views/ValidatorSpan'
-import { getFormValues } from 'redux-form'
 
 const Register = ({ onsubmit, error }) => {
   const {

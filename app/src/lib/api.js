@@ -1,7 +1,8 @@
 import axios from 'axios'
 import * as Dialog from 'src/views/components/dialog/Index'
-var auth = require('./check-auth')
+import * as auth from './check-auth'
 
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export const asyncGet = (params) => {
   const { url, data } = params
   var headers = auth.authHeader()
@@ -13,6 +14,29 @@ export const asyncGet = (params) => {
   })
 }
 
+export const asyncDelete = (params) => {
+  const { url, data } = params
+  var headers = auth.authHeader()
+  return axios({
+    method: 'delete',
+    url,
+    data,
+    headers,
+  })
+}
+
+export const asyncPost = (params) => {
+  const { url, data } = params
+  var headers = auth.authHeader()
+  return axios({
+    method: 'post',
+    url,
+    data,
+    headers,
+  })
+}
+
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export const get = (params) => (dispatch) => {
   const { url, data, responseAction } = params
   var headers = auth.authHeader()
@@ -26,7 +50,11 @@ export const get = (params) => (dispatch) => {
       dispatch(responseAction(response.data))
     })
     .catch((e) => {
-      Dialog.toast(e.response.data)
+      if (e.response) {
+        Dialog.toast(e.response.data)
+      } else if (e.message) {
+        Dialog.toast(e.message)
+      }
     })
 }
 export const deleteObject = (params) => (dispatch) => {
@@ -42,7 +70,11 @@ export const deleteObject = (params) => (dispatch) => {
     })
     .catch((e) => {
       //dispatch(apiResponseError(e.response.data))
-      Dialog.toast(e.response.data)
+      if (e.response) {
+        Dialog.toast(e.response.data)
+      } else if (e.message) {
+        Dialog.toast(e.message)
+      }
     })
 }
 
@@ -59,6 +91,10 @@ export const post = (params) => (dispatch) => {
       dispatch(responseAction(response.data))
     })
     .catch((e) => {
-      Dialog.toast(e.response.data)
+      if (e.response) {
+        Dialog.toast(e.response.data)
+      } else if (e.message) {
+        Dialog.toast(e.message)
+      }
     })
 }

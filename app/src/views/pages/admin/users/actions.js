@@ -34,7 +34,6 @@ export const userDelete = (userName) => (dispatch) => {
     }),
   )
 }
-export const userUpdate = (userName) => (dispatch) => {}
 
 export const setAgent = (userName) => (dispatch) => {
   dispatch(

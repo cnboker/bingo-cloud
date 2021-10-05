@@ -18,7 +18,7 @@ const Dialog = ({ title, body, callback }) => {
 
   return (
     <>
-      <CModal visible={visible} alignment="center">
+      <CModal visible={visible} alignment="center" size={'lg'}>
         <CModalHeader onDismiss={() => setVisible(false)}>
           <CModalTitle>{title}</CModalTitle>
         </CModalHeader>
@@ -27,17 +27,19 @@ const Dialog = ({ title, body, callback }) => {
           <CButton color="secondary" onClick={() => setVisible(false)}>
             Close
           </CButton>
-          <CButton
-            color="primary"
-            onClick={() => {
-              if (callback) {
-                callback()
-              }
-              setVisible(false)
-            }}
-          >
-            Ok
-          </CButton>
+          {callback && (
+            <CButton
+              color="primary"
+              onClick={() => {
+                if (callback) {
+                  callback()
+                }
+                setVisible(false)
+              }}
+            >
+              Ok
+            </CButton>
+          )}
         </CModalFooter>
       </CModal>
     </>
@@ -53,6 +55,7 @@ const WithDialog = ({ children, ...props }) => {
 
 export const confirm = (body, callback) => {
   const jsx = <WithDialog title={'Information'} body={body} callback={callback} />
+  // eslint-disable-next-line @typescript-eslint/no-use-before-define
   ReactDOM.render(jsx, createContainer())
 }
 
@@ -68,6 +71,7 @@ export const toast = (message) => {
     )
     return <CToaster push={toastJSX} placement="bottom-end" />
   }
+  // eslint-disable-next-line @typescript-eslint/no-use-before-define
   ReactDOM.render(<Toaster message={message} />, createContainer())
 }
 

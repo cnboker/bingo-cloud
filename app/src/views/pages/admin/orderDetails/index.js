@@ -18,6 +18,7 @@ export default (props) => {
             onSearch(q)
           }}
         />
+        {/*eslint-disable-next-line @typescript-eslint/no-use-before-define*/}
         <Table {...props} {...TableProps()} data={dataset.data} />
         <Pager
           pageCount={dataset.pageCount}
@@ -54,6 +55,7 @@ const TableProps = () => {
     {
       title: '交易类型',
       columnName: 'transType',
+      // eslint-disable-next-line @typescript-eslint/no-use-before-define
       formatter: transTypeFormater,
     },
     {

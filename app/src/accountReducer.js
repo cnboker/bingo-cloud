@@ -18,12 +18,14 @@ const securityReducer = (state = initialState, action) => {
         signupSuccess: true,
       }
     case LOGIN_RESPONSE:
+      // eslint-disable-next-line @typescript-eslint/no-use-before-define
       return tokenParse(action.payload)
     case API_RESPONSE_ERROR:
       return {
         error: action.payload,
       }
     case LOGOUT:
+      // eslint-disable-next-line @typescript-eslint/no-use-before-define
       logout()
       console.log('logout...')
       return initialState

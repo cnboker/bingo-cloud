@@ -4,9 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 using System.Collections.Generic;
-using Ioliz.Shared.Utils;
 using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System;
 
 namespace Ioliz.Service.Controllers
@@ -59,11 +57,10 @@ namespace Ioliz.Service.Controllers
 
         //urlAuthorizeCode=sessionid为Url授权代码，系统找到当前用户的设备信息列表， 同时比较设备信息授权代码和urlAuthorizeCode一样的
         //实体，如果一样则说明是待授权设备，用户可以点击授权按钮做授权或拒绝授权操作
-        [HttpGet("/api/license/mydevices/{authorizeCode}")]
-        public IEnumerable<Device> MyDevices(string authorizeCode)
+        [HttpGet("/api/license/unAuthorizedList")]
+        public IEnumerable<Device> UnAuthorizedList()
         {
-            var devices = ctx.Devices.AsQueryable().Where(x => x.TenantUserName == User.Identity.Name && x.AuthorizeStatus == 0).ToList();
-            //var auDevice = devices.FirstOrDefault(x => x.AuthorizeCode == authorizeCode);     
+            var devices = ctx.Devices.AsQueryable().Where(x => x.TenantUserName == User.Identity.Name && x.AuthorizeStatus == 0).ToList();   
             return devices;
         }
 

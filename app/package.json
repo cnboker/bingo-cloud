@@ -1,29 +1,28 @@
 {
   "name": "@coreui/coreui-free-react-admin-template",
-  "description": "CoreUI Free React Admin Template",
+  "description": "IronCloud",
   "version": "4.0.0-rc.0",
   "config": {
     "coreui_library_short_version": "4.0"
   },
   "author": {
-    "name": "CoreUI",
-    "url": "https://coreui.io",
-    "github": "https://github.com/coreui",
-    "twitter": "https://twitter.com/core_ui"
+    "name": "IronCloud",
+    "url": "https://ioliz.com",
+    "github": "https://github.com/cnboker"
   },
   "contributors": [
     {
-      "name": "CoreUI Team",
+      "name": "IronCloud Team",
       "url": "https://github.com/orgs/coreui/people"
     }
   ],
   "homepage": ".",
-  "copyright": "Copyright 2017-2021 creativeLabs Łukasz Holeczek",
+  "copyright": "Copyright 2017-2021 IronCloud",
   "license": "MIT",
   "private": true,
   "repository": {
     "type": "git",
-    "url": "git@github.com:coreui/coreui-free-react-admin-template.git"
+    "url": "git@github.com:cnboker/ironcloud.git"
   },
   "dependencies": {
     "@coreui/chartjs": "3.0.0",
@@ -33,14 +32,26 @@
     "@coreui/react": "4.0.0-rc.0",
     "@coreui/react-chartjs": "2.0.0-rc.0",
     "@coreui/utils": "^1.3.1",
+    "@types/jest": "^27.0.2",
+    "@types/node": "^16.10.1",
+    "@types/react": "^17.0.24",
+    "@types/react-dom": "^17.0.9",
     "@wojtekmaj/enzyme-adapter-react-17": "^0.6.3",
     "axios": "^0.21.4",
     "bs-stepper": "^1.7.0",
     "chart.js": "^3.5.1",
+    "chonky": "^2.2.0",
+    "chonky-icon-fontawesome": "^2.2.0",
     "classnames": "^2.3.1",
     "core-js": "^3.16.2",
     "cross-env": "^7.0.3",
     "enzyme": "^3.11.0",
+    "eslint-config-react-app": "^6.0.0",
+    "filepond": "^4.30.0",
+    "filepond-plugin-file-rename": "^1.1.8",
+    "filepond-plugin-image-crop": "^2.0.6",
+    "filepond-plugin-image-exif-orientation": "^1.0.11",
+    "filepond-plugin-image-preview": "^4.6.10",
     "js-cookie": "^3.0.1",
     "jwt-decode": "^3.1.2",
     "moment": "^2.29.1",
@@ -51,25 +62,28 @@
     "react-app-polyfill": "^2.0.0",
     "react-datepicker": "^4.2.1",
     "react-dom": "^17.0.2",
+    "react-filepond": "^7.1.1",
     "react-hook-form": "^7.15.1",
     "react-localization": "^1.0.17",
     "react-paginate": "^7.1.3",
     "react-redux": "^7.2.5",
     "react-router-dom": "^5.2.0",
-    "react-toastify": "^8.0.2",
     "redux": "4.1.1",
-    "redux-form": "^8.3.7",
     "redux-reset": "^0.3.0",
     "redux-saga": "^1.1.3",
     "redux-thunk": "^2.3.0",
-    "simplebar-react": "^2.3.5"
+    "simplebar-react": "^2.3.5",
+    "typescript": "^4.4.3"
   },
   "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^4.0.1",
+    "@typescript-eslint/parser": "4.0.1",
     "auto-changelog": "~2.3.0",
     "babel-plugin-root-import": "^6.6.0",
     "customize-cra": "^1.0.0",
     "eslint": "^7.32.0",
     "eslint-config-prettier": "^8.3.0",
+    "eslint-config-react": "^1.1.7",
     "eslint-plugin-prettier": "^3.4.1",
     "prettier": "2.3.2",
     "react-app-rewired": "^2.1.8",

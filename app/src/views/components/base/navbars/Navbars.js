@@ -81,7 +81,7 @@ const CNavbars = () => {
                 className="d-inline-block align-top"
                 alt="CoreuiVue"
               />
-              CoreUI React
+              IronCloud
             </CNavbarBrand>
           </CNavbar>
         </CCardBody>

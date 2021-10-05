@@ -46,17 +46,6 @@ export const uuidv4 = () => {
   })
 }
 
-if (!String.prototype.trim) {
-  ;(function () {
-    // Make sure we trim BOM and NBSP
-    var rtrim = /^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g
-    // eslint-disable-next-line no-extend-native
-    String.prototype.trim = function () {
-      return this.replace(rtrim, '')
-    }
-  })()
-}
-
 // eslint-disable-next-line no-extend-native
 Array.prototype.setAll = function (v) {
   var i,
@@ -82,4 +71,8 @@ export const jsonToUrlQuery = (json) => {
     })
     .join('&')
   return url
+}
+
+export const uniqueID = () => {
+  return Math.random().toString(36).slice(2)
 }
