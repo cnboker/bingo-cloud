@@ -1,0 +1,101 @@
+{
+  "channelId": 6,
+  "server": "http://ds1.ezdsm.com",
+  "name": "lg",
+  "version": "1.637345028228686683",
+  "publishDate": "2020-08-31T20:33:42.8686683+08:00",
+  "downloadDays": 7,
+  "channel": {
+    "name": "lg",
+    "shim": null,
+    "playlist": [
+      {
+        "playlistId": 0,
+        "name": "default",
+        "startTime": "",
+        "programs": [
+          {
+            "location": "广东省/深圳市",
+            "programid": 2013,
+            "name": "节目2",
+            "playTime": "",
+            "endTime": "",
+            "Duration": 138,
+            "PlayCount": 1,
+            "displayTime": false,
+            "backgroundType": 0,
+            "backgroundContent": "",
+            "backgroundAudio": "",
+            "mute": false,
+            "isTile": true,
+            "eventTrigger": false,
+            "regions": [
+              {
+                "position": {
+                  "left": 0,
+                  "top": 0,
+                  "width": 1920,
+                  "height": 1080
+                },
+                "zIndex": 18,
+                "lastUpdateDateTime": "0001-01-01T00:00:00",
+                "content": {
+                  "isTile": true,
+                  "mediaUrls": [
+                    "/UploadFiles/file2/video/122.mp4"
+                  ],
+                  "contentType": 3
+                },
+                "ExclusiveMode": false
+              }
+            ]
+          },
+          {
+            "location": "广东省/深圳市",
+            "programid": 2014,
+            "name": "节目2",
+            "playTime": "",
+            "endTime": "",
+            "Duration": 5,
+            "PlayCount": 1,
+            "displayTime": false,
+            "backgroundType": 0,
+            "backgroundContent": "",
+            "backgroundAudio": "",
+            "mute": false,
+            "isTile": true,
+            "eventTrigger": false,
+            "regions": [
+              {
+                "position": {
+                  "left": 0,
+                  "top": 0,
+                  "width": 1920,
+                  "height": 1080
+                },
+                "zIndex": 21,
+                "lastUpdateDateTime": "0001-01-01T00:00:00",
+                "content": {
+                  "switchEffect": 1,
+                  "duration": 5,
+                  "isTile": false,
+                  "interval": 5,
+                  "images": [
+                    "/UploadFiles/file2/images/timg.jpeg"
+                  ],
+                  "contentType": 2
+                },
+                "ExclusiveMode": false
+              }
+            ]
+          }
+        ],
+        "calender": [
+          "2020-08-31T00:00:00",
+          "2020-09-01T00:00:00",
+          "2020-09-02T00:00:00"
+        ]
+      }
+    ]
+  }
+}

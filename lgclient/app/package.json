@@ -1,0 +1,64 @@
+{
+  "name": "my-app",
+  "version": "0.1.0",
+  "private": true,
+  "homepage": "./",
+  "dependencies": {
+    "animate.css": "^3.7.2",
+    "axios": "^0.19.0",
+    "chinese-lunar": "^0.1.4",
+    "classnames": "^2.2.6",
+    "es6-object-assign": "^1.1.0",
+    "fbemitter": "^2.1.1",
+    "lodash": "^4.17.15",
+    "moment": "^2.24.0",
+    "qrcode.react": "^0.9.3",
+    "querystring": "^0.2.0",
+    "react": "^16.9.0",
+    "react-dom": "^16.9.0",
+    "react-hot-loader": "^4.12.11",
+    "react-iframe": "^1.8.0",
+    "react-redux": "^7.1.1",
+    "react-redux-loading-bar": "^4.4.0",
+    "react-router-dom": "^5.0.1",
+    "react-scripts": "3.1.1",
+    "react-toastify": "^5.3.2",
+    "react-video-js-player": "^1.1.1",
+    "reactstrap": "^8.0.1",
+    "redux": "^4.0.4",
+    "redux-reset": "^0.3.0",
+    "redux-thunk": "^2.3.0",
+    "typescript": "^3.6.2"
+  },
+  "scripts": {
+    "start": "REACT_APP_STAGE=dev react-scripts start",
+    "build": "REACT_APP_STAGE=production react-app-rewired build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "postbuild": "bash ./post_build_osx",
+    "postbuild1": "@powershell -NoProfile -ExecutionPolicy Unrestricted -Command ./post_build.ps1"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "@types/jest": "^24.0.18",
+    "@types/node": "^12.7.4",
+    "@types/react": "^16.9.2",
+    "@types/react-dom": "^16.9.0",
+    "@typescript-eslint/parser": "^2.1.0",
+    "react-app-rewired": "^2.1.5"
+  }
+}

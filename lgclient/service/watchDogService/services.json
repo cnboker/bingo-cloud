@@ -1,0 +1,24 @@
+{
+  "id": "com.lg.app.signage.watchdog",
+  "description": "watchdog Service",
+  "services": [
+    {
+      "name": "com.lg.app.signage.watchdog",
+      "command": [
+       
+        {
+          "name": "start",
+          "public": true
+        },
+        {
+          "name": "stop",
+          "public": true
+        },
+        {
+          "name": "confi",
+          "public": true
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,118 @@
+{
+  "channelId": 6,
+  "server": "http://ds1.ezdsm.com",
+  "name": "lg",
+  "version": "1.637346618745979929",
+  "publishDate": "2020-09-02T16:44:34.5979929+08:00",
+  "downloadDays": 7,
+  "channel": {
+    "name": "lg",
+    "shim": null,
+    "playlist": [
+      {
+        "playlistId": 0,
+        "name": "default",
+        "startTime": "",
+        "programs": [
+          {
+            "location": "",
+            "programid": 2013,
+            "name": "节目2",
+            "playTime": "",
+            "endTime": "",
+            "Duration": 20,
+            "PlayCount": 1,
+            "displayTime": false,
+            "backgroundType": 0,
+            "backgroundContent": "",
+            "backgroundAudio": "",
+            "mute": false,
+            "isTile": true,
+            "eventTrigger": false,
+            "regions": [
+              {
+                "position": {
+                  "left": 0,
+                  "top": 0,
+                  "width": 1920,
+                  "height": 1080
+                },
+                "zIndex": 34,
+                "lastUpdateDateTime": "0001-01-01T00:00:00",
+                "content": {
+                  "switchEffect": 1,
+                  "duration": 20,
+                  "isTile": false,
+                  "interval": 5,
+                  "images": [
+                  
+                    "/UploadFiles/file2/images/1133861393232bc9c3o.jpg",
+                    "/UploadFiles/file2/images/11949779330114a824o.jpg"
+                  ],
+                  "contentType": 2
+                },
+                "ExclusiveMode": false
+              }
+            ]
+          },
+       
+          {
+            "location": "",
+            "programid": 2015,
+            "name": "节目3",
+            "playTime": "",
+            "endTime": "",
+            "Duration": 82,
+            "PlayCount": 1,
+            "displayTime": false,
+            "backgroundType": 0,
+            "backgroundContent": "",
+            "backgroundAudio": "",
+            "mute": false,
+            "isTile": true,
+            "eventTrigger": false,
+            "regions": [
+              {
+                "position": {
+                  "left": 0,
+                  "top": 0,
+                  "width": 1920,
+                  "height": 1080
+                },
+                "zIndex": 33,
+                "lastUpdateDateTime": "0001-01-01T00:00:00",
+                "content": {
+                  "isTile": true,
+                  "mediaUrls": [
+                    "/4k.mp4"
+                   
+                  ],
+                  "contentType": 3
+                },
+                "ExclusiveMode": false
+              }
+            ]
+          }
+        ],
+        "calender": [
+          "2020-09-02T00:00:00",
+          "2020-09-03T00:00:00",
+          "2020-09-04T00:00:00",
+          "2020-09-05T00:00:00",
+          "2020-09-06T00:00:00",
+          "2020-09-07T00:00:00",
+          "2020-09-08T00:00:00",
+          "2020-09-09T00:00:00",
+          "2020-09-10T00:00:00",
+          "2020-09-11T00:00:00",
+          "2020-09-12T00:00:00",
+          "2020-09-13T00:00:00",
+          "2020-09-14T00:00:00",
+          "2020-09-15T00:00:00",
+          "2020-09-16T00:00:00",
+          "2020-09-17T00:00:00"
+        ]
+      }
+    ]
+  }
+}

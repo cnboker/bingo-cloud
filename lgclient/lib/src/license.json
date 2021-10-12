@@ -1,0 +1,30 @@
+{
+  "id": 12479,
+  "generateDate": "2019-06-03T18:45:33.2295044",
+  "licenseType": 1,
+  "certification": "9bn75shxtzt5ld2r5fv20f7buc4qn86wigsnw0t5qrxulo7wtz41sqb4eln2y0gu26xbvp4ewzlirmzgeh7yefe1iyiln0h0id1p05ae4ze2f2m1vgxq3vqx2537gt16",
+  "activationdDate": "2019-08-30T09:16:13.0199339",
+  "validDays": 360,
+  "tenantUserName": "test123",
+  "deviceId": "0800278A2B2B",
+  "token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoidGVzdDEyMyIsImlzQWdlbnQiOiJmYWxzZSIsImVtYWlsIjoiNjM0ODgxMzZAcXEuY29tIiwic3ViIjoidGVzdDEyMyIsImp0aSI6IjNmMWY2MDMxLWJiZGYtNGRlOS1hN2E4LTBmYWI0MmM0YjY1NCIsImlhdCI6MTU2NzQwODg0NSwibmJmIjoxNTY3NDA4ODQ1LCJleHAiOjE4ODI3Njg4NDUsImlzcyI6IkRlbW9fSXNzdWVyIiwiYXVkIjoiRGVtb19BdWRpZW5jZSJ9.oWE5PjxJILGd3SBtF3CdTDlaMBEH7HD9De-cTsoDvO0",
+  "device": {
+    "deviceId": "0800278A2B2B",
+    "name": "LGE",
+    "os": "WEBOS4.0",
+    "resolution": null,
+    "mac": "0800278A2B2B",
+    "ip": "10.0.2.15",
+    "status": 0,
+    "lastUpdateTime": "2019-08-30T09:23:06.1676608",
+    "tenantUserName": "test123",
+    "authorizeStatus": 0,
+    "authorizeCode": "00be9bb149eb4faea2436de5ff771c07",
+    "authorizeDate": "2019-08-30T09:16:13.0199339",
+    "currentLicenseId": 12479,
+    "sensorCode": null
+  },
+  "apiUrl": "http://dsapi1.ezdsm.com",
+  "dsUrl": "http://ds1.ezdsm.com/",
+  "status": 1
+}

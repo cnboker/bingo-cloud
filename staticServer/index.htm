@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+    <!--
+      manifest.json provides metadata used when your web app is installed on a
+      user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
+    -->
+
+    <link href="https://vjs.zencdn.net/7.15.4/video-js.css" rel="stylesheet" />
+    <title>DSPlayer</title>
+  </head>
+  <body>
+    <h1>Player</h1>
+
+    <!-- <video id="demo-video" width="800" height="400"  controls loop src="http://localhost:8000/live/test.flv">
+     
+      Your Smart TV does not support the current video format (MP4)
+  </video> -->
+
+    <video
+      id="my-video"
+      class="video-js"
+      controls
+      preload="auto"
+      width="640"
+      height="264"
+      autoplay="{true}"
+      data-setup="{}"
+    
+    >
+     <source src="http://localhost:8888/videos/pipe.mp4" data-type="video/mp4"/>
+      <p class="vjs-no-js">
+        To view this video please enable JavaScript, and consider upgrading to a
+        web browser that
+        <a href="https://videojs.com/html5-video-support/" target="_blank"
+          >supports HTML5 video</a
+        >
+      </p>
+    </video> 
+    
+
+  <script src="https://vjs.zencdn.net/7.15.4/video.min.js"></script>
+</html>

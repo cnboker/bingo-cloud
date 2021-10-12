@@ -1,0 +1,82 @@
+{
+  "playlistId": 0,
+  "name": "default",
+  "startTime": "",
+  "programs": [
+    {
+      "location": "null",
+      "programid": 1040,
+      "name": "节目1",
+      "playTime": "",
+      "endTime": "",
+      "Duration": 10,
+      "PlayCount": 1,
+      "displayTime": false,
+      "backgroundType": 0,
+      "backgroundContent": "",
+      "backgroundAudio": "",
+      "mute": false,
+      "isTile": true,
+      "eventTrigger": false,
+      "regions": [
+        {
+          "position": {
+            "left": 0,
+            "top": 0,
+            "width": 1920,
+            "height": 1080
+          },
+          "zIndex": 62,
+          "lastUpdateDateTime": "0001-01-01T00:00:00",
+          "content": {
+            "switchEffect": 1,
+            "duration": 10,
+            "isTile": false,
+            "interval": 5,
+            "images": ["/UploadFiles/file1013/images/timg.jpg"],
+            "contentType": 2
+          },
+          "ExclusiveMode": false
+        }
+      ]
+    },
+    {
+      "location": "null",
+      "programid": 2065,
+      "name": "节目2",
+      "playTime": "",
+      "endTime": "",
+      "Duration": 10,
+      "PlayCount": 2,
+      "displayTime": false,
+      "backgroundType": 0,
+      "backgroundContent": "",
+      "backgroundAudio": "",
+      "mute": false,
+      "isTile": true,
+      "eventTrigger": false,
+      "regions": [
+        {
+          "position": {
+            "left": 0,
+            "top": 0,
+            "width": 1920,
+            "height": 1080
+          },
+          "zIndex": 64,
+          "lastUpdateDateTime": "0001-01-01T00:00:00",
+          "content": {
+            "switchEffect": 1,
+            "duration": 5,
+            "isTile": false,
+            "interval": 5,
+            "images": ["/UploadFiles/file1013/images/timg (3).jpg"],
+            "contentType": 2
+          },
+          "ExclusiveMode": false
+        }
+      ]
+    }
+  ],
+  "calender": []
+}

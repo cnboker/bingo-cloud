@@ -1,0 +1,150 @@
+{
+  "channelId": 13,
+  "server": "http://ds1.ezdsm.com",
+  "name": "单视频文件播放",
+  "version": "1.637044258383295441",
+  "publishDate": "2019-09-18T17:50:38.3295441+08:00",
+  "downloadDays": 7,
+  "channel": {
+    "name": "单视频文件播放",
+    "shim": null,
+    "playlist": [
+      {
+        "playlistId": 0,
+        "name": "default",
+        "startTime": "",
+        "programs": [
+          {
+            "location": "null",
+            "programid": 21,
+            "name": "节目1",
+            "playTime": "",
+            "endTime": "",
+            "Duration": 144,
+            "PlayCount": 1,
+            "displayTime": false,
+            "backgroundType": 0,
+            "backgroundContent": "",
+            "backgroundAudio": "",
+            "mute": false,
+            "isTile": true,
+            "eventTrigger": false,
+            "regions": [
+              {
+                "position": {
+                  "left": 992,
+                  "top": 0,
+                  "width": 928,
+                  "height": 1080
+                },
+                "zIndex": 17,
+                "lastUpdateDateTime": "0001-01-01T00:00:00",
+                "content": {
+                  "isTile": false,
+                  "mediaUrls": [
+                    "/UploadFiles/file1013/video/122.mp4",
+                    "/UploadFiles/file1013/video/lego.mp4"
+                  ],
+                  "contentType": 3
+                },
+                "ExclusiveMode": false
+              },
+              {
+                "position": {
+                  "left": 0,
+                  "top": 0,
+                  "width": 992,
+                  "height": 1080
+                },
+                "zIndex": 16,
+                "lastUpdateDateTime": "0001-01-01T00:00:00",
+                "content": {
+                  "switchEffect": 1,
+                  "duration": 15,
+                  "isTile": false,
+                  "interval": 5,
+                  "images": [
+                    "/UploadFiles/file1013/images/timg (1).jpg",
+                    "/UploadFiles/file1013/images/timg (2).jpg",
+                    "/UploadFiles/file1013/images/timg (3).jpg"
+                  ],
+                  "contentType": 2
+                },
+                "ExclusiveMode": false
+              }
+            ]
+          },
+          {
+            "location": "null",
+            "programid": 1033,
+            "name": "节目2",
+            "playTime": "",
+            "endTime": "10:00:15",
+            "Duration": 15,
+            "PlayCount": 1,
+            "displayTime": false,
+            "backgroundType": 0,
+            "backgroundContent": "",
+            "backgroundAudio": "",
+            "mute": false,
+            "isTile": true,
+            "eventTrigger": false,
+            "regions": [
+              {
+                "position": {
+                  "left": 0,
+                  "top": 0,
+                  "width": 1920,
+                  "height": 1080
+                },
+                "zIndex": 15,
+                "lastUpdateDateTime": "0001-01-01T00:00:00",
+                "content": {
+                  "text": ["你好"],
+                  "duration": 15,
+                  "style": {
+                    "fontSize": "48",
+                    "textDecoration": "none",
+                    "color": "#000000",
+                    "fontWeight": "0",
+                    "fontFamily": "宋体",
+                    "x": 0,
+                    "y": 0,
+                    "text_align": "left",
+                    "backgroundColor": "#ffffff",
+                    "backgroundImage": null,
+                    "rollStyle": 4,
+                    "direction": 2,
+                    "fontSpeed": 6,
+                    "switchTime": 0,
+                    "backgroundType": 1
+                  },
+                  "contentType": 1
+                },
+                "ExclusiveMode": false
+              }
+            ]
+          },
+          {
+            "location": "null",
+            "programid": 1034,
+            "name": "节目3",
+            "playTime": "",
+            "endTime": "",
+            "Duration": 0,
+            "PlayCount": 1,
+            "displayTime": false,
+            "backgroundType": 0,
+            "backgroundContent": "",
+            "backgroundAudio": "",
+            "mute": false,
+            "isTile": true,
+            "eventTrigger": false,
+            "regions": []
+          }
+        ],
+        "calender": ["2019-09-18T00:00:00", "2019-09-19T00:00:00"]
+      }
+    ]
+  }
+}

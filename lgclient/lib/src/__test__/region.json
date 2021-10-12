@@ -1,0 +1,21 @@
+{
+  "position": {
+    "left": 0,
+    "top": 0,
+    "width": 718,
+    "height": 1280
+  },
+  "zIndex": 35,
+  "lastUpdateDateTime": "0001-01-01T00:00:00",
+  "content": {
+    "switchEffect": 1,
+    "duration": 10,
+    "isTile": false,
+    "interval": 5,
+    "images": [
+      "/UploadFiles/file1013/images/7.jpg",
+      "/UploadFiles/file1013/images/8.jpg"
+    ],
+    "contentType": 2
+  }
+}
