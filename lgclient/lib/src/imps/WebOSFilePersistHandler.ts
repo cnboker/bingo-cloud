@@ -112,7 +112,7 @@ export default class WebOSFilePersistHandler implements IFilePersistHandler {
       // This callback will be called without any parameter.
       var successCb = function () {
         console.log("Removing File done.");
-        resolve();
+        resolve("success");
       };
       // Callback for a failed execution.
       // Failure callback will be invoked with the error code and the error text.
@@ -222,7 +222,7 @@ export default class WebOSFilePersistHandler implements IFilePersistHandler {
         console.log(
           "Successfully writen " + file + "," + cbObject.written + " bytes"
         );
-        resolve();
+        resolve('success');
       };
       var failureCb = function (cbObject: any) {
         var errorCode = cbObject.errorCode;

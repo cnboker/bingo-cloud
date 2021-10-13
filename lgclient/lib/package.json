@@ -21,10 +21,10 @@
     "dotenv": "^8.1.0",
     "fbemitter": "^2.1.1",
     "mqtt": "^3.0.0",
+    "querystring": "^0.2.1",
     "string-format": "^2.0.0",
-    "strongly-typed-events": "^1.6.2",
-    "unzip": "^0.1.11",
-    "v8": "^0.1.0"
+    "strongly-typed-events": "^1.7.3",
+    "unzip": "^0.1.11"
   },
   "devDependencies": {
     "@types/chai": "^4.2.0",

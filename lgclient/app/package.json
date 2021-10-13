@@ -28,7 +28,9 @@
     "redux": "^4.0.4",
     "redux-reset": "^0.3.0",
     "redux-thunk": "^2.3.0",
-    "typescript": "^3.6.2"
+    "typescript": "^3.6.2",
+    "videojs-playlist": "^4.3.1",
+    "video.js": "^7.15.4"
   },
   "scripts": {
     "start": "REACT_APP_STAGE=dev react-scripts start",

@@ -1,5 +1,4 @@
 require("dotenv").config();
-process.env.ROOT = "d:/ds";
 
 //import NodeFilePersistHandler from "./imps/NodeFilePersistHandler";
 import WebOSFilePersistHandler from "./imps/WebOSFilePersistHandler";
@@ -90,7 +89,7 @@ class Config {
 // export const fileIOInstance: IFilePersistHandler =
 //   Config.instance.fileIOInstance;
 // export const emitter: EventEmitter = Config.instance.emitter;
-export const DS_FILE_ROOT = "file://internal/ds";
-export const USB_ROOT = "file://usb:1";
+export const DS_FILE_ROOT = "/home/root/dclient";
+export const USB_ROOT = "/tmp/usb/sda/sda1";
 export const configInstance: Config = Config.instance;
-export const MQTT_Server = "ws://www.ezdsm.com:8000";
+export const MQTT_Server = "ws://www.ioliz.com:8000";

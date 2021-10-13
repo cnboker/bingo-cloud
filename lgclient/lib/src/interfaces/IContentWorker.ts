@@ -1,5 +1,5 @@
 import { ContentPackage } from '../dataModels/ContentPackage';
-import { ISimpleEvent } from "strongly-typed-events";
+import { ISimpleEvent } from "ste-simple-events";
 import { ContentType } from '../constants/contentType';
 
 /*

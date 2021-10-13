@@ -67,7 +67,7 @@ export default class NodeFilePersistHandler implements IFilePersistHandler {
       })
         .then((res: AxiosResponse) => {
           res.data.pipe(fs.createWriteStream(file));
-          resolve();
+          resolve("success");
         })
         .catch((err: AxiosError) => {
           logger.info(err.message);

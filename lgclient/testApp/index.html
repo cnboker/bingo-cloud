@@ -1,0 +1,23 @@
+<!--
+Copyright (c) 2020 LG Electronics Inc.
+
+SPDX-License-Identifier: Apache-2.0
+-->
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Example Web App</title>
+    
+    <script type="text/javascript">
+      window.onload = function () {
+        if(typeof WebOSServiceBridge === 'function'){
+          window.webosBridge = new WebOSServiceBridge()
+        }
+      };
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+  </body>
+</html>

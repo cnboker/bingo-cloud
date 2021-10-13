@@ -4,8 +4,9 @@ import ContentWorker from "./imps/ContentWorker";
 import * as util from "./imps/util";
 import * as config from "./config";
 import ClientAPI from "./imps/ClientAPI";
+import * as downloadManager from './imps/downlaodManager';
 
-export { ContentWorker, DataModel, util, config, ClientAPI };
+export { ContentWorker, DataModel, util, config, ClientAPI, downloadManager };
 
 
 

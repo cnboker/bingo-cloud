@@ -22,7 +22,7 @@
     <link rel="stylesheet" href="./css/main.css"/>
     
      <script type="text/javascript" src='./main.js'></script>
-     <link href="https://vjs.zencdn.net/7.15.4/video-js.css" rel="stylesheet" />
+
     <title>DSPlayer</title>
   </head>
   <body>
@@ -33,7 +33,10 @@
      
     <script>
       window.addEventListener('load', function() {
-        window.webosBridge = new WebOSServiceBridge()
+        if(typeof WebOSServiceBridge === 'function'){
+          window.webosBridge = new WebOSServiceBridge()
+        }
+        
       })
     </script>
     
@@ -48,7 +51,5 @@
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
   </body>
-
-  <script src="https://vjs.zencdn.net/7.15.4/video.min.js"></script>
 
 </html>
