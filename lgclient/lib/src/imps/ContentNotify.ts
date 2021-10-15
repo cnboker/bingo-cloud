@@ -1,24 +1,20 @@
 import { IContentNotify, IContentEvent } from "../interfaces/IContentWorker";
-import { SimpleEventDispatcher } from "ste-simple-events";
 import { ContentPackage } from "../dataModels/ContentPackage";
 import ClientAPI from "./ClientAPI";
 import { configInstance } from "../config";
-
+import EventDispatcher from "../EventDispatcher";
+import { CONTENT_READY_EVENT,SNAPSHOT_EVENT } from '../constants'
 const timeout: number = 10000;
 
 const clientAPI = new ClientAPI();
 export default class ContentNotify implements IContentNotify {
-  private dispatcher = new SimpleEventDispatcher<ContentPackage>();
-  private snapshotDispatcher = new SimpleEventDispatcher<void>();
-
-  contentReadyEvent(): IContentEvent<ContentPackage> {
-    return this.dispatcher.asEvent();
+  
+  dispatcher:EventDispatcher;
+  
+  constructor(dis:EventDispatcher){
+    this.dispatcher = dis
   }
-
-  snapshotEvent(): IContentEvent<void> {
-    return this.snapshotDispatcher.asEvent();
-  }
-
+  
   watch(): void {
     if(!configInstance.licenseInstance.inValid){
       setInterval(this.notifyProcess.bind(this), timeout);
@@ -63,8 +59,7 @@ export default class ContentNotify implements IContentNotify {
     this.doCapture().then(data => {
       clientAPI.updateSnapshot2(data);
     });
-
-    this.snapshotDispatcher.dispatch();
+    this.dispatcher.dispatch(SNAPSHOT_EVENT)
   }
 
   doCapture(): Promise<string> {
@@ -107,7 +102,7 @@ export default class ContentNotify implements IContentNotify {
     clientAPI.getContent(contentId).then(x => {
       var jsonContentString: string = x.data.content;
       var contentPackage: ContentPackage = JSON.parse(jsonContentString);
-      this.dispatcher.dispatch(contentPackage);
+      this.dispatcher.dispatch(CONTENT_READY_EVENT,contentPackage);
     });
   }
 }

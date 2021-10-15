@@ -6,16 +6,14 @@ referece: https://www.webosose.org/docs/reference/ls2-api/com-webos-service-down
 
 interface downloadResult {
   ticket: string,
-  amountReceived: Number,
-  amountTotal: Number
+  amountReceived: number,
+  amountTotal: number
 }
 
 export const download = (
   sourceUrl: string,
   authToken: string,
-  targetDir: string,
-  targetFileName: string, //File name to use when saving the download file
-  subscribe: boolean
+  subscribe: (result:downloadResult)=>void
 ): Promise<downloadResult> => {
   return new Promise((resolve, reject) => {
     //@ts-ignore
@@ -32,18 +30,22 @@ export const download = (
       } = response
       console.log("download", response);
       if (returnValue) {
-        resolve({ ticket, amountReceived, amountTotal });
-      } else {
+        resolve({ ticket, amountReceived:0, amountTotal:0 });
+      }
+      else if(returnValue === false){
         reject({ errorCode, errorText });
       }
+      //通知推送
+      if (typeof subscribe === 'function') {
+        subscribe({ ticket, amountReceived, amountTotal })
+      }
+     
     };
-    var url = "luna://com.webos.service.downloadmanager/download/";
+    var url = "luna://com.webos.service.downloadmanager/download";
     var params = JSON.stringify({
       target: sourceUrl,
       authToken,
-      targetDir,
-      targetFileName,
-      subscribe
+      subscribe:typeof subscribe === 'function'
     });
     bridge.call(url, params);
   });

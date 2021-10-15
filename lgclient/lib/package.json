@@ -23,7 +23,6 @@
     "mqtt": "^3.0.0",
     "querystring": "^0.2.1",
     "string-format": "^2.0.0",
-    "strongly-typed-events": "^1.7.3",
     "unzip": "^0.1.11"
   },
   "devDependencies": {

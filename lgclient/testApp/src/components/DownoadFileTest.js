@@ -11,18 +11,24 @@ export default() => {
   const {download} = downloadManager
 
   const downloadTest = () => {
-    download(`http://${process.env.serverIP}/download/hike.mp4`, '', '/home/root/dclient/download', 'hike.mp4', true).then(res => {
+    function cb(res) {
       const {ticket, amountReceived, amountTotal} = res
       setAmountReceived(amountReceived)
       setAmountTotal(amountTotal)
       setTicket(ticket)
+    }
+    const token = '';
+    download(`http://42.192.11.12:8080/videos/hike.mp4`, token, (res)=>{
+      cb(res)
+    }).then(res => {
+      cb(res)
     }).catch(e => {
       console.log('error->', e)
     })
   }
-  
+
   return (
-    <React.Fragment>
+    <React.Fragment> 
       <button onClick={() => downloadTest()}>downalodTest</button>
       <div>
         download percent:{amountTotal > 0

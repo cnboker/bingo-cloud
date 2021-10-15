@@ -1,7 +1,8 @@
 import { ContentPackage } from '../dataModels/ContentPackage';
-import { ISimpleEvent } from "ste-simple-events";
+//import { ISimpleEvent } from "ste-simple-events";
 import { ContentType } from '../constants/contentType';
-
+import EventDispatcher from '../EventDispatcher';
+interface ISimpleEvent<Targs>{}
 /*
 1. 定时轮询监视是否有新的通知
 2. 如果有更新通知，并根据通知类型做相应处理
@@ -18,9 +19,10 @@ export interface IContentWorker {
 export interface IContentNotify {
     //通知监控
     watch(): void;
+    dispatcher:EventDispatcher
     //接收通知，根据通知类型做处理
-    contentReadyEvent(): IContentEvent<ContentPackage>;
-    snapshotEvent(): IContentEvent<void>;
+    //contentReadyEvent(): IContentEvent<ContentPackage>;
+    //snapshotEvent(): IContentEvent<void>;
 }
 
 //通知接口实现
@@ -43,13 +45,14 @@ export interface IResourceInfo {
 
 //资源下载器
 export interface IResourceDownloader {
+    dispatcher:EventDispatcher
     //资源列表
     contentPackage: ContentPackage;
     //开始下载
     download(): void;   
     //资源下载完成通知
-    downloadCompleteEvent(): IContentEvent<Array<IResourceInfo>>;
-    singleFileDownloadCompleteEvent(): IContentEvent<IResourceInfo>;
+    //downloadCompleteEvent(): IContentEvent<Array<IResourceInfo>>;
+    //singleFileDownloadCompleteEvent(): IContentEvent<IResourceInfo>;
 }
 
 //

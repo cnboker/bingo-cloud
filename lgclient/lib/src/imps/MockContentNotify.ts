@@ -1,20 +1,11 @@
 import { IContentNotify, IContentEvent } from "../interfaces/IContentWorker";
-import { SimpleEventDispatcher } from "ste-simple-events";
+import { CONTENT_READY_EVENT,DOWNLAOD_COMPLETE_EVENT,SNAPSHOT_EVENT } from '../constants'
 import { ContentPackage } from '../dataModels/ContentPackage';
+import EventDispatcher from "../EventDispatcher";
 
 export default class MockContentNotify implements IContentNotify {
-    private dispatcher = new SimpleEventDispatcher<ContentPackage>();
-    private snapshotDispatcher = new SimpleEventDispatcher<void>();
-
-    contentReadyEvent(): IContentEvent<ContentPackage> {
-        return this.dispatcher.asEvent()
-    }
-
-    snapshotEvent(): IContentEvent<void> {
-        return this.snapshotDispatcher.asEvent()
-    }
-
-
+    dispatcher: EventDispatcher;
+  
     watch(): void {
         var conentJson = require('../__test__/content.json');
         var contentPackage: ContentPackage = conentJson

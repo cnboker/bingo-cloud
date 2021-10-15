@@ -1,16 +1,15 @@
 import {
   IResourceDownloader,
-  IResourceInfo,
-  IContentEvent
+  IResourceInfo
 } from "../interfaces/IContentWorker";
-import { SimpleEventDispatcher } from "ste-simple-events";
 import {
   ContentPackage,
 } from "../dataModels/ContentPackage";
 import { connect } from "mqtt";
 import { MQTT_Server, configInstance } from "../config";
 import { ResrouceParser } from "./ResourceParser";
-
+import {DOWNLAOD_COMPLETE_EVENT, SINGLE_FILE_DOWNLOAD_COMPLETE_EVENT} from '../constants'
+import EventDispatcher from "../EventDispatcher";
 var client: any;
 if (client === undefined || !client.connected) {
   client = connect(MQTT_Server);
@@ -29,26 +28,19 @@ function mqttSend(json: any) {
 
 export class ResourceDownloader implements IResourceDownloader {
   contentPackage: ContentPackage;
-  private dispatcher = new SimpleEventDispatcher<IResourceInfo[]>();
-  private singleDispatcher = new SimpleEventDispatcher<IResourceInfo>();
+  
 
   constructor(contentPackage: ContentPackage) {
     this.contentPackage = contentPackage;
   }
+  dispatcher: EventDispatcher;
 
-  downloadCompleteEvent(): IContentEvent<IResourceInfo[]> {
-    return this.dispatcher.asEvent();
-  }
-
-  singleFileDownloadCompleteEvent(): IContentEvent<IResourceInfo> {
-    return this.singleDispatcher.asEvent();
-  }
-
+  
   download(): void {
     var parser = new ResrouceParser(this.contentPackage);
     var resourceInfo = parser.parseResource();
     var result: IResourceInfo[] = [];
-    this.singleFileDownloadCompleteEvent().subscribe(res => {
+    this.dispatcher.subscribe(SINGLE_FILE_DOWNLOAD_COMPLETE_EVENT, (res: IResourceInfo) => {
       //console.log("file download completed", res);
       result.push(res);
       resourceInfo = resourceInfo.filter(x => {
@@ -117,7 +109,7 @@ export class ResourceDownloader implements IResourceDownloader {
       })
       .then(resource => {
         console.log("singleDispatcher execute");
-        this.singleDispatcher.dispatch(resource);
+        this.dispatcher.dispatch(SINGLE_FILE_DOWNLOAD_COMPLETE_EVENT,resource);
       });
   }
 

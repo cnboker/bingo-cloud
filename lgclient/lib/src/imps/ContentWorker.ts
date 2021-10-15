@@ -8,16 +8,15 @@ import { ResourceDownloader } from "./ResourceDownloader";
 import ContentNotify from "./ContentNotify";
 import { configInstance } from "../config";
 import DiskClear from "./DiskClear";
+import EventDispatcher from "../EventDispatcher";
+import { CONTENT_READY_EVENT,SNAPSHOT_EVENT } from '../constants'
 
-// interface IContentWorkerCallback {
-//   (resource: ContentPackage): void;
-// }
 export default class ContentWorker implements IContentWorker {
   contentPackage: ContentPackage;
   contentNotify: IContentNotify;
 
   constructor(contentNotify?: IContentNotify) {
-    this.contentNotify = contentNotify || new ContentNotify();
+    this.contentNotify = contentNotify || new ContentNotify(new EventDispatcher());
   }
 
   get package() {
@@ -26,13 +25,13 @@ export default class ContentWorker implements IContentWorker {
 
   //callback defined
   execute(cb: { (resource: ContentPackage): void }): void {
-    this.contentNotify.contentReadyEvent().subscribe((data: ContentPackage) => {
+    this.contentNotify.dispatcher.subscribe(CONTENT_READY_EVENT, (data: ContentPackage) => {
       console.log("contentNotify", data.name);
       this.contentPackage = data;
      
       var resourceDownloader = new ResourceDownloader(data);
       resourceDownloader
-        .downloadCompleteEvent()
+        .dispatcher
         .subscribe((res: IResourceInfo[]) => {
            this.diskClean(data);
           cb(data);
@@ -40,7 +39,7 @@ export default class ContentWorker implements IContentWorker {
       resourceDownloader.download();
     });
 
-    this.contentNotify.snapshotEvent().subscribe(() => {
+    this.contentNotify.dispatcher.subscribe(SNAPSHOT_EVENT, () => {
       console.log("snapshot");
     });
 
