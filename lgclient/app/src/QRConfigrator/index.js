@@ -1,6 +1,6 @@
 import React from "react";
 import QRCode from "qrcode.react";
-import { getDeviceInfo } from "../serviceAPI/deviceCaller";
+import { requestDeviceInfo } from "./api";
 import { config } from "lgservice";
 
 const RunStep = Object.freeze({
@@ -21,7 +21,7 @@ export default class QRConfig extends React.Component {
     this.key = "";
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     this.mkdsDir();
     this.props.requestQR();
 

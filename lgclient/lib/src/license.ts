@@ -5,38 +5,25 @@
 //   "Set quicktype target language"
 
 export interface License {
-    id:              number;
-    generateDate:    string;
-    licenseType:     number;
-    certification:   string;
-    activationdDate: string;
-    validDays:       number;
-    tenantUserName:  string;
-    deviceId:        string;
-    device:          Device;
-    apiUrl:          string;
-    dsUrl:           string;
-    status:          number;
-    token:           string;
-    //证数无效
-    inValid:         boolean;
+    userName : string;
+    deviceId : string;
+    resourceServer : string;
+    token : string;
 }
 
 export interface Device {
-    deviceId:         string;
-    name:             string;
-    os:               string;
-    resolution:       null;
-    mac:              string;
-    ip:               string;
-    status:           number;
-    lastUpdateTime:   string;
-    tenantUserName:   string;
-    authorizeStatus:  number;
-    authorizeCode:    string;
-    authorizeDate:    string;
-    currentLicenseId: number;
-    sensorCode:       null;
+    deviceId : string;
+    name : string;
+    os : string;
+    resolution : null;
+    mac : string;
+    ip : string;
+    status : number;
+    lastUpdateTime : string;
+    tenantUserName : string;
+    authorizeStatus : number;
+    authorizeCode : string;
+    authorizeDate : string;
+    currentLicenseId : number;
+    sensorCode : null;
 }
-
-

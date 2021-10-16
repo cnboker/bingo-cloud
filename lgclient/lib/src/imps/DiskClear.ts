@@ -1,9 +1,8 @@
 import { ContentPackage } from "../dataModels/ContentPackage";
 import { ResrouceParser } from "./ResourceParser";
-import { configInstance } from "../config";
 import { safeUrl } from "./util";
 import { IResourceInfo } from "../interfaces/IContentWorker";
-
+import {listAllFile,removeFile} from './WebOSFileService'
 export default class DiskClear {
   //当前播放的资源包
   contentPackage: ContentPackage;
@@ -21,7 +20,7 @@ export default class DiskClear {
     if (result.length === 0) return;
     var outFiles: string[] = [];
     //get all files
-    await configInstance.fileIOInstance.listAllFile("/UploadFiles", outFiles);
+    await listAllFile("/UploadFiles", outFiles);
     console.log("allfiles", JSON.stringify(outFiles));
     //exclude files
     const removeFiles = outFiles.filter(function(x) {
@@ -31,8 +30,7 @@ export default class DiskClear {
     console.log("remove old files",removeFiles);
     for (var file of removeFiles) {
       //console.log("remove", file);
-      await configInstance.fileIOInstance
-        .removeFile(file)
+      await removeFile(file)
         .catch(e => console.log(e));
     }
   }

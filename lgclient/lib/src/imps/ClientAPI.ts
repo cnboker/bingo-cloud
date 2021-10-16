@@ -6,28 +6,27 @@ import GeneralResult from "../dataModels/generalResult";
 import GetContentResult from "../dataModels/getContentResult";
 import WeatherResult from "../dataModels/weatherResult";
 import NetTrafficInfo from "../dataModels/netTrafficInfo";
-import { configInstance } from "../config";
+import { configInstance,HTTP_Server,MQTT_Server } from "../config";
 
 const strFormat = require("string-format");
-//const qs = require("querystring");
 
 export default class ClientAPI implements IClientAPI {
   get token(): string {
-    return configInstance.licenseInstance.token;
+    return configInstance.token;
   }
 
-  get dsServer(): string {
-    return configInstance.licenseInstance.apiUrl;
+  get resourceServer(): string {
+    return configInstance.resourceServer;
   }
 
   get key(): string {
-    return configInstance.licenseInstance.deviceId;
+    return configInstance.deviceId;
   }
 
 
   notify(): Promise<AxiosResponse<NotificationResult>> {
     const qs = require("querystring");
-    var url = this.dsServer + strFormat(APIPath.NotifyPath, this.key);
+    var url = HTTP_Server + strFormat(APIPath.NotifyPath, this.key);
     //console.log("url=", url);
     return axios.request<NotificationResult>({
       url,
@@ -39,7 +38,7 @@ export default class ClientAPI implements IClientAPI {
   }
 
   notifyPost(notificationId: number): Promise<AxiosResponse<GeneralResult>> {
-    var url = this.dsServer + strFormat(APIPath.NotifyPath, notificationId);
+    var url = HTTP_Server + strFormat(APIPath.NotifyPath, notificationId);
     //console.log("url=", url);
     return axios.request<GeneralResult>({
       url,
@@ -52,7 +51,7 @@ export default class ClientAPI implements IClientAPI {
 
   getContent(contentId: number): Promise<AxiosResponse<GetContentResult>> {
     const qs = require("querystring");
-    var url = this.dsServer + strFormat(APIPath.GetContentPath, contentId);
+    var url = HTTP_Server + strFormat(APIPath.GetContentPath, contentId);
     //console.log("url=", url);
     return axios.request<GetContentResult>({
       url,
@@ -68,7 +67,7 @@ export default class ClientAPI implements IClientAPI {
   }
 
   updateSnapshot2(imageBaseData: string): void {
-    var url = this.dsServer + APIPath.SnapshotPath2;
+    var url = HTTP_Server + APIPath.SnapshotPath2;
     //console.log("url=", url);
     axios
       .request<GeneralResult>({
@@ -104,7 +103,7 @@ export default class ClientAPI implements IClientAPI {
     level: number,
     message: string
   ): Promise<AxiosResponse<GeneralResult>> {
-    var url = this.dsServer + APIPath.LogPath;
+    var url = HTTP_Server + APIPath.LogPath;
     //console.log("url=", url);
     return axios.request<GeneralResult>({
       url,
@@ -121,7 +120,7 @@ export default class ClientAPI implements IClientAPI {
   }
 
   heartbeat(key: string): Promise<AxiosResponse<GeneralResult>> {
-    var url = this.dsServer + strFormat(APIPath.HeartbeatPath, key);
+    var url = HTTP_Server + strFormat(APIPath.HeartbeatPath, key);
     //console.log("url=", url);
     return axios.request<GeneralResult>({
       url,
@@ -136,7 +135,7 @@ export default class ClientAPI implements IClientAPI {
     deviceId: string,
     data: NetTrafficInfo
   ): Promise<AxiosResponse<GeneralResult>> {
-    var url = this.dsServer + APIPath.NetTrafficInfoPath;
+    var url = HTTP_Server + APIPath.NetTrafficInfoPath;
     //console.log("url=", url);
     return axios.request<WeatherResult>({
       url,
@@ -149,7 +148,7 @@ export default class ClientAPI implements IClientAPI {
   }
 
   getWeather(city: string): Promise<AxiosResponse<WeatherResult>> {
-    var url = this.dsServer + strFormat(APIPath.WeatherPath, city);
+    var url = HTTP_Server + strFormat(APIPath.WeatherPath, city);
     console.log("getweather url=", url);
     return axios.request<WeatherResult>({
       url,
@@ -164,7 +163,7 @@ export default class ClientAPI implements IClientAPI {
     channelId: number,
     deviceId: number
   ): Promise<AxiosResponse<GeneralResult>> {
-    var url = this.dsServer + APIPath.PlayCountPath;
+    var url = HTTP_Server + APIPath.PlayCountPath;
     //console.log("url=", url);
     return axios.request<WeatherResult>({
       url,

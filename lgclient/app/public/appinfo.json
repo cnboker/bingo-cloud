@@ -1,5 +1,5 @@
 {
-  "id": "com.lg.app.signage",
+  "id": "com.ioliz.lgclient.app",
   "version": "0.0.1",
   "vendor": "ioliz.com",
   "type": "web",
@@ -10,5 +10,11 @@
   "appDescription": "webOS Signage Application",
   "inspectable": true ,
   "trustLevel": "trusted",
-  "requiredPermissions": ["arescli.interface","systemsettings.query","media.operation"]
+  "requiredPermissions": [
+    "time.query",
+    "activity.operation",
+    "download.management",
+    "systemsettings.query",
+    "storageaccess.operation"
+  ]
 }

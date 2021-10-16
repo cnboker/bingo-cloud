@@ -1,39 +1,25 @@
 require("dotenv").config();
-
-//import NodeFilePersistHandler from "./imps/NodeFilePersistHandler";
-import WebOSFilePersistHandler from "./imps/WebOSFilePersistHandler";
+import { readFile, writeFile, removeFile } from "./imps/WebOSFileService";
 import { License } from "./license";
 import { EventEmitter } from "fbemitter";
-import { IFilePersistHandler } from "./interfaces/IFilePersistHandler";
-
-//事件类型
-export enum EventType {
-  FileDownload
-}
 
 class Config {
   private static _instance: Config;
-  _fileIOInstance: IFilePersistHandler;
   _licenseInstance: License;
   _emitter: EventEmitter;
 
   private constructor() {
-    this._fileIOInstance = new WebOSFilePersistHandler();
-    //this._licenseInstance = require('./license.json');
     this._emitter = new EventEmitter();
     this._emitter.addListener("log", (type: EventType, message: string) => {
       console.log(`${type},${message}`);
     });
   }
 
-  licenseRead(): Promise<License> {
+  configRead(): Promise<License> {
     return new Promise((resolve, reject) => {
-      this._fileIOInstance
-        .readFile("/license.bat")
+      readFile("/config.json")
         .then(content => {
           this._licenseInstance = JSON.parse(content);
-         // this.licenseDebug();
-          //hard code mac
           resolve(this._licenseInstance);
         })
         .catch(e => {
@@ -42,24 +28,14 @@ class Config {
     });
   }
 
-  
-
-  licenseDebug() {
-    this._licenseInstance.deviceId = "0800278A2B2B";
-    //this._licenseInstance.apiUrl = "http://dsapi1.ezdsm.com/";
-    this._licenseInstance.dsUrl = "http://ds1.ezdsm.com/";
-    // this._licenseInstance.token =
-    //   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoic2NvdHQiLCJpc0FnZW50IjoiZmFsc2UiLCJ1c2VyU2V0dGluZyI6IntcclxuICBcImRtc0RlZmF1bHRcIjogZmFsc2VcclxufSIsImVtYWlsIjoiNjM0ODgxNkBxcS5jb20iLCJzdWIiOiJzY290dCIsImp0aSI6IjkwMzFmNzVmLTRkZDctNDQ1Yy04NDFiLTczOGQ2NmZhYmNhZSIsImlhdCI6MTU2OTQ4NDYxOSwibmJmIjoxNTY5NDg0NjE5LCJleHAiOjE4ODQ4NDQ2MTksImlzcyI6IkRlbW9fSXNzdWVyIiwiYXVkIjoiRGVtb19BdWRpZW5jZSJ9.eNXvSlolHQahao4qpEFpRnX679L-D2Wsppib_kikNd4";
+  licenseReset() {
+    removeFile('config.json');
   }
 
-  licenseReset(){
-    this._fileIOInstance.removeFile('license.bat');
-  }
-  
-  licenseWrite(license: License): Promise<string> {
+  licenseWrite(license: License): Promise<boolean> {
     this._licenseInstance = license;
-    return this._fileIOInstance.writeFile(
-      "/license.bat",
+    return writeFile(
+      "/config.json",
       JSON.stringify(license)
     );
   }
@@ -68,12 +44,12 @@ class Config {
     return this._licenseInstance.deviceId;
   }
 
-  get licenseInstance() {
-    return this._licenseInstance;
+  get token():string{
+    return this._licenseInstance.token;
   }
 
-  get fileIOInstance() {
-    return this._fileIOInstance;
+  get resourceServer():string{
+    return this._licenseInstance.resourceServer
   }
 
   get emitter() {
@@ -85,11 +61,12 @@ class Config {
   }
 }
 
-// export const licenseInstance: License = Config.instance.licenseInstance;
-// export const fileIOInstance: IFilePersistHandler =
-//   Config.instance.fileIOInstance;
-// export const emitter: EventEmitter = Config.instance.emitter;
-export const DS_FILE_ROOT = "/home/root/dclient";
+export const DS_FILE_ROOT = "/meida/internal/dclient";
 export const USB_ROOT = "/tmp/usb/sda/sda1";
 export const configInstance: Config = Config.instance;
 export const MQTT_Server = "ws://www.ioliz.com:8000";
+export const HTTP_Server = "http://www.ioliz.com";
+//事件类型
+export enum EventType {
+  FileDownload
+}

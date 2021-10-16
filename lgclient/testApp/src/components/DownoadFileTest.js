@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react'
-import {downloadManager} from "lgservice";
+import {webosApis} from "lgservice";
 
 export default() => {
   const [ticket,
@@ -8,7 +8,7 @@ export default() => {
     setAmountReceived] = useState(0)
   const [amountTotal,
     setAmountTotal] = useState(0)
-  const {download} = downloadManager
+  const {download} = webosApis.downloadManager
 
   const downloadTest = () => {
     function cb(res) {

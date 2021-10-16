@@ -1,6 +1,27 @@
 import axios from "axios";
-import { uuidv4 } from "../lib/util";
-const qs = require("querystring");
+import {uuidv4} from "../lib/util";
+import {webosApis} from 'lgservice'
+const qs = require("querystring")
+
+export const requestDeviceInfo = async() => {
+  const {queryDeviceInfo, queryosInfo} = webosApis.systemservice
+  const deviceInfo = await queryDeviceInfo()
+  const osInfo = await queryosInfo()
+  const {wired_addr, bt_addr, wifi_addr, returnValue, device_name} = deviceInfo
+  const {
+    webos_name, //webOS,OSE
+    webos_release
+  } = osInfo
+  return {
+    wired_addr,
+    bt_addr,
+    wifi_addr,
+    returnValue,
+    device_name,
+    webos_name,
+    webos_release
+  }
+}
 
 export const requestQR = () => {
   var url = `${process.env.REACT_APP_AUTH_URL}/api/authSession`;
@@ -11,25 +32,17 @@ export const requestQR = () => {
     headers: {
       "Content-Type": "application/x-www-form-urlencoded"
     },
-    data: qs.stringify({ sessionId })
+    data: qs.stringify({sessionId})
   });
 };
 
 export const requestToken = sessionId => {
   var url = `${process.env.REACT_APP_AUTH_URL}/api/crossToken/${sessionId}`;
 
-  return axios({ url, method: "get" });
+  return axios({url, method: "get"});
 };
 
-export const postDeviceInfo = (
-  token,
-  mac,
-  name,
-  ip,
-  os,
-  resolution,
-  authorizeCode
-) => {
+export const postDeviceInfo = (token, mac, name, ip, os, resolution, authorizeCode) => {
   var url = `${process.env.REACT_APP_MEMBER_URL}/api/License/UploadDeviceInfo`;
 
   return axios({
@@ -51,7 +64,7 @@ export const postDeviceInfo = (
   });
 };
 //设备注册
-export const register = (token,url, mac, name, ip, os, resolution) => {
+export const register = (token, url, mac, name, ip, os, resolution) => {
   //var url = `${process.env.REACT_APP_MEMBER_URL}/api/License/UploadDeviceInfo`;
 
   return axios({
@@ -94,4 +107,3 @@ export const requestInstance = (token) => {
     }
   });
 };
-

@@ -1,4 +1,4 @@
-import { IContentNotify, IContentEvent } from "../interfaces/IContentWorker";
+import { IContentNotify } from "../interfaces/IContentWorker";
 import { ContentPackage } from "../dataModels/ContentPackage";
 import ClientAPI from "./ClientAPI";
 import { configInstance } from "../config";
@@ -16,9 +16,9 @@ export default class ContentNotify implements IContentNotify {
   }
   
   watch(): void {
-    if(!configInstance.licenseInstance.inValid){
-      setInterval(this.notifyProcess.bind(this), timeout);
-    }
+    // if(!configInstance.inValid){
+    //   setInterval(this.notifyProcess.bind(this), timeout);
+    // }
   }
 
   private updateBeatheart() {

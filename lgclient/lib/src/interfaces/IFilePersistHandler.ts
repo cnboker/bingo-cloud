@@ -1,7 +1,4 @@
-import { ProgressResult } from "../imps/downloadProgress";
-
 export interface IFilePersistHandler{
-    copyFile(originalPath:string,copyPath:string,cbProgress?: (result: ProgressResult) => void):Promise<any>;
     exists(path:string): Promise<boolean>;
     listFiles(dir:string):Promise<any>;
     mkdir(path:string):void;
@@ -16,5 +13,5 @@ export interface IFilePersistHandler{
      * @param file 
      * @param data 
      */
-    writeFile(file:string,data:string):Promise<string>;
+    writeFile(file:string,data:string):Promise<boolean>;
 }

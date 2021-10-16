@@ -1,8 +1,12 @@
 import React from 'react'
 import DownoadFileTest from './components/DownoadFileTest'
-
-export default ()=>{
+import QueryDeviceInfoTest from './components/QueryDeviceInfoTest'
+export default() => {
   return (
-    <DownoadFileTest/>
+    <React.Fragment>
+      <DownoadFileTest/>
+      <hr></hr>
+      <QueryDeviceInfoTest/>
+      <hr/></React.Fragment>
   )
 }

@@ -6,10 +6,12 @@ import {
   ContentPackage,
 } from "../dataModels/ContentPackage";
 import { connect } from "mqtt";
-import { MQTT_Server, configInstance } from "../config";
+import { MQTT_Server, HTTP_Server, configInstance } from "../config";
 import { ResrouceParser } from "./ResourceParser";
-import {DOWNLAOD_COMPLETE_EVENT, SINGLE_FILE_DOWNLOAD_COMPLETE_EVENT} from '../constants'
+import { DOWNLAOD_COMPLETE_EVENT, SINGLE_FILE_DOWNLOAD_COMPLETE_EVENT } from '../constants'
 import EventDispatcher from "../EventDispatcher";
+import { writeFile, exists } from './WebOSFileService'
+import { download } from '../webosApis/downloadManager'
 var client: any;
 if (client === undefined || !client.connected) {
   client = connect(MQTT_Server);
@@ -21,21 +23,21 @@ function mqttSend(json: any) {
     ...json
   });
   if (client.connected) {
-    console.log(`LGDownloadProgress/${configInstance.deviceId}`,jsonString)
+    console.log(`LGDownloadProgress/${configInstance.deviceId}`, jsonString)
     client.publish(`LGDownloadProgress/${configInstance.deviceId}`, jsonString);
   }
 }
 
 export class ResourceDownloader implements IResourceDownloader {
   contentPackage: ContentPackage;
-  
+
 
   constructor(contentPackage: ContentPackage) {
     this.contentPackage = contentPackage;
   }
   dispatcher: EventDispatcher;
 
-  
+
   download(): void {
     var parser = new ResrouceParser(this.contentPackage);
     var resourceInfo = parser.parseResource();
@@ -49,12 +51,11 @@ export class ResourceDownloader implements IResourceDownloader {
       if (resourceInfo.length > 0) {
         this.singleFileDownload(resourceInfo[0]);
       } else {
-       
+
         var playlist = this.contentPackage.channel.playlist[0];
         //屏蔽日历
         playlist.calender = [];
-        configInstance.fileIOInstance
-          .writeFile("package.json", JSON.stringify(this.contentPackage))
+        writeFile("package.json", JSON.stringify(this.contentPackage))
           .then(err => {
             if (err) {
               console.log("write package.json error", err);
@@ -78,24 +79,22 @@ export class ResourceDownloader implements IResourceDownloader {
   singleFileDownload(resource: IResourceInfo): void {
     console.log("begin download", resource.resourceUrl);
     resource.status = 3;
-    var apiUrl = `${configInstance.licenseInstance.dsUrl}${resource.resourceUrl}`;
-    //console.log("singleFileDownload", url_parts.pathname, apiUrl);
-    configInstance.fileIOInstance
-      .exists(resource.resourceUrl)
+    var apiUrl = `${configInstance.resourceServer}${resource.resourceUrl}`;
+
+    exists(resource.resourceUrl)
       .then(x => {
-        //console.log('exists', x)
         if (x) {
           console.log(`${resource.resourceUrl} exists return`);
           return resource.resourceUrl;
         } else {
-          return configInstance.fileIOInstance.copyFile(
+         download(
             apiUrl,
             resource.resourceUrl,
             percentResult => {
               console.log("download result:", JSON.stringify(percentResult));
               mqttSend(percentResult);
             }
-          );
+          )
         }
       })
       .then(() => {
@@ -109,9 +108,9 @@ export class ResourceDownloader implements IResourceDownloader {
       })
       .then(resource => {
         console.log("singleDispatcher execute");
-        this.dispatcher.dispatch(SINGLE_FILE_DOWNLOAD_COMPLETE_EVENT,resource);
+        this.dispatcher.dispatch(SINGLE_FILE_DOWNLOAD_COMPLETE_EVENT, resource);
       });
   }
 
-  
+
 }

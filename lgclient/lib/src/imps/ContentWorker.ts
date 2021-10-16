@@ -6,11 +6,10 @@ import {
 } from "../interfaces/IContentWorker";
 import { ResourceDownloader } from "./ResourceDownloader";
 import ContentNotify from "./ContentNotify";
-import { configInstance } from "../config";
 import DiskClear from "./DiskClear";
 import EventDispatcher from "../EventDispatcher";
 import { CONTENT_READY_EVENT,SNAPSHOT_EVENT } from '../constants'
-
+import {readFile} from './WebOSFileService'
 export default class ContentWorker implements IContentWorker {
   contentPackage: ContentPackage;
   contentNotify: IContentNotify;
@@ -46,8 +45,7 @@ export default class ContentWorker implements IContentWorker {
     this.contentNotify.watch();
 
     //检查package.json是否存在
-    configInstance.fileIOInstance
-      .readFile("package.json")
+    readFile("package.json")
       .then(content => {
         var json = JSON.parse(content);
         this.contentPackage = json;
@@ -61,7 +59,7 @@ export default class ContentWorker implements IContentWorker {
   //
 
   diskClean(data: ContentPackage) {
-    const ONE_HOUR = 3600 * 1000;
+    //const ONE_HOUR = 3600 * 1000;
     // var timer = setTimeout(() => {
     //   clearTimeout(timer);
     //   var clear = new DiskClear(data);
