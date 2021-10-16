@@ -1,5 +1,5 @@
 {
-  "id": "com.ioliz.lgclient.testapp",
+  "id": "com.ioliz.lgclient.app",
   "version": "1.0.0",
   "vendor": "My Company",
   "type": "web",
@@ -9,6 +9,8 @@
   "requiredPermissions": [
     "time.query",
     "activity.operation",
-    "download.management"
+    "download.management",
+    "systemsettings.query",
+    "storageaccess.operation"
   ]
 }
