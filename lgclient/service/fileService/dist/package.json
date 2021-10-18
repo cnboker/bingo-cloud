@@ -1,7 +1,8 @@
 {
-  "name": "com.ioliz.lgclient.app.fileservice",
-  "version": "1.0.0",
+  "name": "com.ioliz.dc.app.fileservice",
+  "version": "1.0.1",
   "description": "file service",
+  "main":"index.js",
   "scripts": {
     "build": "webpack"
   },

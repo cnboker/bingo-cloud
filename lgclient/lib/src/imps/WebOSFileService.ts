@@ -4,6 +4,7 @@ export function exists(path: string): Promise<boolean> {
     var bridge = window.webosBridge;
     bridge.onservicecallback = (msg: string) => {
       var response = JSON.parse(msg);
+      console.log('exists response',response)
       const { returnValue, errorText, exists } = response;
       if (returnValue) {
         resolve(exists);
@@ -11,7 +12,7 @@ export function exists(path: string): Promise<boolean> {
         reject(errorText);
       }
     }
-    var url = "luna://com.ioliz.lgclient.app.fileservice/exists";
+    var url = "luna://com.ioliz.dc.app.fileservice/exists";
     var params = JSON.stringify({ path });
     bridge.call(url, params)
   })
@@ -30,7 +31,7 @@ export function listFiles(path: string): Promise<any> {
         reject(errorText);
       }
     }
-    var url = "luna://com.ioliz.lgclient.app.fileservice/listFiles";
+    var url = "luna://com.ioliz.dc.app.fileservice/listFiles";
     var params = JSON.stringify({ path });
     bridge.call(url, params)
   })
@@ -49,7 +50,7 @@ export function mkdir(path: string): Promise<boolean> {
         reject(errorText);
       }
     }
-    var url = "luna://com.ioliz.lgclient.app.fileservice/mkdir";
+    var url = "luna://com.ioliz.dc.app.fileservice/mkdir";
     var params = JSON.stringify({ path });
     bridge.call(url, params)
   })
@@ -68,7 +69,7 @@ export function rmdir(path: string): Promise<boolean> {
         reject(errorText);
       }
     }
-    var url = "luna://com.ioliz.lgclient.app.fileservice/rmdir";
+    var url = "luna://com.ioliz.dc.app.fileservice/rmdir";
     var params = JSON.stringify({ path });
     bridge.call(url, params)
   })
@@ -87,7 +88,7 @@ export function moveFile(originalPath: string, destinationPath: string): Promise
         reject(errorText);
       }
     }
-    var url = "luna://com.ioliz.lgclient.app.fileservice/moveFile";
+    var url = "luna://com.ioliz.dc.app.fileservice/moveFile";
     var params = JSON.stringify({ originalPath, destinationPath });
     bridge.call(url, params)
   })
@@ -106,7 +107,7 @@ export function readFile(path: string): Promise<string> {
         reject(errorText);
       }
     }
-    var url = "luna://com.ioliz.lgclient.app.fileservice/readFile";
+    var url = "luna://com.ioliz.dc.app.fileservice/readFile";
     var params = JSON.stringify({ path, encoding: 'utf-8' });
     bridge.call(url, params)
   })
@@ -125,7 +126,7 @@ export function removeFile(path: string): Promise<void> {
         reject(errorText);
       }
     }
-    var url = "luna://com.ioliz.lgclient.app.fileservice/removeFile";
+    var url = "luna://com.ioliz.dc.app.fileservice/removeFile";
     var params = JSON.stringify({ path });
     bridge.call(url, params)
   })
@@ -144,7 +145,7 @@ export function unzipFile(zipFilePath: string, extractToDirectoryPath: string): 
         reject(errorText);
       }
     }
-    var url = "luna://com.ioliz.lgclient.app.fileservice/unzipFile";
+    var url = "luna://com.ioliz.dc.app.fileservice/unzipFile";
     var params = JSON.stringify({ zipFilePath, extractToDirectoryPath });
     bridge.call(url, params)
   })
@@ -164,7 +165,7 @@ export function writeFile(path: string, data: string): Promise<boolean> {
         reject(errorText);
       }
     }
-    var url = "luna://com.ioliz.lgclient.app.fileservice/writeFile";
+    var url = "luna://com.ioliz.dc.app.fileservice/writeFile";
     var params = JSON.stringify({ path, data, encoding: 'utf-8' });
     bridge.call(url, params)
   })
@@ -207,7 +208,7 @@ export function MD5(path: string, algorithm: string): Promise<string> {
         reject(errorText);
       }
     }
-    var url = "luna://com.ioliz.lgclient.app.fileservice/MD5";
+    var url = "luna://com.ioliz.dc.app.fileservice/MD5";
     var params = JSON.stringify({ path, algorithm });
     bridge.call(url, params)
   })
@@ -226,7 +227,7 @@ export function SHA256(path: string, algorithm: string): Promise<string> {
         reject(errorText);
       }
     }
-    var url = "luna://com.ioliz.lgclient.app.fileservice/SHA256";
+    var url = "luna://com.ioliz.dc.app.fileservice/SHA256";
     var params = JSON.stringify({ path, algorithm });
     bridge.call(url, params)
   })
@@ -245,7 +246,7 @@ export function AES256Encrypt(algorithm: string, password: string, inputPath: st
         reject(errorText);
       }
     }
-    var url = "luna://com.ioliz.lgclient.app.fileservice/AES256Encrypt";
+    var url = "luna://com.ioliz.dc.app.fileservice/AES256Encrypt";
     var params = JSON.stringify({ algorithm, password, inputPath, outputPath });
     bridge.call(url, params)
   })
@@ -264,7 +265,7 @@ export function AES256Decrypt(algorithm: string, password: string, inputPath: st
         reject(errorText);
       }
     }
-    var url = "luna://com.ioliz.lgclient.app.fileservice/AES256Decrypt";
+    var url = "luna://com.ioliz.dc.app.fileservice/AES256Decrypt";
     var params = JSON.stringify({ algorithm, password, inputPath, outputPath });
     bridge.call(url, params)
   })
@@ -292,7 +293,7 @@ export function AES256EncryptCreateCipheriv(
         reject(errorText);
       }
     }
-    var url = "luna://com.ioliz.lgclient.app.fileservice/AES256EncryptCreateCipheriv";
+    var url = "luna://com.ioliz.dc.app.fileservice/AES256EncryptCreateCipheriv";
     var params = JSON.stringify({ password, salt, iterations, keylen, digest, algorithm, inputPath, outputPath });
     bridge.call(url, params)
   })
@@ -320,7 +321,7 @@ export function AES256DecryptCreateDecipheriv(
         reject(errorText);
       }
     }
-    var url = "luna://com.ioliz.lgclient.app.fileservice/AES256DecryptCreateDecipheriv";
+    var url = "luna://com.ioliz.dc.app.fileservice/AES256DecryptCreateDecipheriv";
     var params = JSON.stringify({ password, salt, iterations, keylen, digest, algorithm, inputPath, outputPath });
     bridge.call(url, params)
   })
