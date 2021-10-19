@@ -1,156 +1,110 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import QRCode from "qrcode.react";
 import { requestDeviceInfo } from "./api";
-import { config } from "lgservice";
+import { config, webosApis } from "lgservice";
+import {
+    postDeviceInfo,
+    requestInstance,
+    requestLicense,
+    requestQR,
+    requestToken
+} from "./actions";
+import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router";
 
-const RunStep = Object.freeze({
-  RequestQR: 1,
-  RequestToken: 2,
-  RequestLicense: 3,
-  Finished: 4
-});
+export default() => {
+    const RunStep = Object.freeze({ RequestQR: 1, RequestToken: 2, RequestLicense: 3, Finished: 4 });
+    const { exists,mkdir } = webosApis.webosFileService;
+    const [runStep,
+        setRunStep] = useState(RunStep.RequestQR);
+    const [id,
+        setId] = useState();
+    const delay = 5000;
+    const dispatch = useDispatch();
+    const history = useHistory();
+    const qrState = useSelector(state => state.qrReducer);
+    const { QR, token, license, instance } = qrState;
+    const { APP_ROOT } = config;
 
-export default class QRConfig extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      runStep: RunStep.RequestQR,
-      intervalId: null
+    useEffect(() => {
+        dirReady();
+        dispatch(requestQR());
+    }, []);
+
+    useEffect(() => {
+        let timerId = setInterval(() => {
+            stateLoop();
+        }, delay);
+        return () => clearInterval(timerId);
+    }, []);
+
+    const dirReady = () => {
+        exists(APP_ROOT).then(exist => {
+            if (!exist) {
+                return mkdir(APP_ROOT);
+            }
+            return true;
+        }).then((res) => {
+            console.log(res);
+        }).catch(e => {
+            console.log("mkdsDir", e);
+        });
     };
-    //deviceId
-    this.key = "";
-  }
 
-  async componentDidMount() {
-    this.mkdsDir();
-    this.props.requestQR();
-
-    var intervalId = setInterval(this.timer.bind(this), 5000);
-    this.setState({ intervalId });
-
-    getDeviceInfo().then(obj => {
-      console.log("deviceinfo", obj);
-    });
-  }
-
-  mkdsDir() {
-    //creat ds directory
-    const { fileIOInstance } = config.configInstance;
-
-    fileIOInstance
-      .exists("")
-      .then(exist => {
-        if (!exist) {
-          fileIOInstance.mkdir("");
+    const stateLoop = () => {
+        if (QR.qrUrl && runStep === RunStep.RequestQR) {
+            setRunStep(RunStep.RequestToken);
+            dispatch(requestToken(QR.authorizeCode));
+        } else if (!token.access_token && runStep === RunStep.RequestToken) {
+            dispatch(requestToken(QR.authorizeCode));
+        } else if (token.access_token && runStep === RunStep.RequestToken) {
+            dispatch(requestInstance(token.access_token));
+            setRunStep(RunStep.RequestLicense);
+            requestDeviceInfo().then(deviceInfo => {
+                const { wired_addr } = deviceInfo;
+                setId(wired_addr);
+                dispatch(postDeviceInfo(token.access_token, deviceInfo, QR.authorizeCode));
+            });
+        } else if (!license.resourceServer && runStep === RunStep.RequestLicense) {
+            dispatch(requestLicense(token.access_token, id));
+        } else if (license.resourceServer && runStep === RunStep.RequestLicense) {
+            setRunStep(RunStep.Finished);
+            saveLicense(token);
+            history.push("/play");
         }
-      })
-      .catch(e => {
-        console.log("mkdsDir", e);
-      });
-  }
-
-  async timer() {
-    const { QR, token, license, instance } = this.props.qrState;
-    console.log("instance=", instance);
-    if (QR.qrUrl && this.state.runStep === RunStep.RequestQR) {
-      this.setState({ runStep: RunStep.RequestToken });
-      this.props.requestToken(QR.authorizeCode);
-    } else if (
-      !token.access_token &&
-      this.state.runStep === RunStep.RequestToken
-    ) {
-      this.props.requestToken(QR.authorizeCode);
-    } else if (
-      token.access_token &&
-      this.state.runStep === RunStep.RequestToken
-    ) {
-      this.props.requestInstance(token.access_token);
-      this.setState({ runStep: RunStep.RequestLicense });
-      getDeviceInfo().then(obj => {
-        this.key = obj.macAddress;
-        this.props.postDeviceInfo(
-          token.access_token,
-          obj.macAddress,
-          obj.name,
-          obj.ip,
-          obj.os,
-          obj.resolution,
-          QR.authorizeCode
-        );
-      });
-    } else if (
-      !license.certification &&
-      this.state.runStep === RunStep.RequestLicense
-    ) {
-      this.props.requestLicense(token.access_token, this.key);
-    } else if (
-      license.certification &&
-      this.state.runStep === RunStep.RequestLicense
-    ) {
-      this.setState({ runStep: RunStep.Finished });
-      license.dsUrl = instance.server;
-      this.saveLicense(token);
-      this.activeDevice(license);
-      clearInterval(this.state.intervalId);
-      this.props.history.push("/play");
-    }
-  }
-
-  activeDevice(license) {
-    var url = `${license.apiUrl}api/register`;
-    getDeviceInfo().then(obj => {
-      this.key = obj.macAddress;
-      this.props.register(
-        license.token,
-        url,
-        obj.macAddress,
-        obj.name,
-        obj.ip,
-        obj.os,
-        obj.resolution
-      );
-    });
-  }
-
-  async saveLicense(token) {
-    const { license } = this.props.qrState;
-    license.token = token.access_token;
-    console.log("save license", license);
-    config.configInstance.licenseWrite(license).then(err => {
-      if (err) {
-        console.log("write license file error", err);
-      }
-    });
-  }
-
-  componentWillUnmount() {
-    clearInterval(this.state.intervalId);
-  }
-
-  render() {
-    const { QR } = this.props.qrState;
-    var divStyles = {
-      margin: "0 auto",
-      top: "30%",
-      position: "absolute"
     };
+
+    const saveLicense = (token) => {
+        license.token = token.access_token;
+        console.log("save license", license);
+        config
+            .instance
+            .licenseWrite(license)
+            .then(err => {
+                if (err) {
+                    console.log("write license file error", err);
+                }
+            });
+    };
+
+    const divStyles = {
+        margin: "0 auto",
+        top: "30%",
+        position: "absolute"
+    };
+
     return (
-      <div className="container-fluid" style={divStyles}>
-        <div className="row">
-          <video width="1280" height="640" preload src="http://192.168.50.71:8888/4k.mp4" controls autoplay>
-            
-          </video>
+        <div className="container-fluid" style={ divStyles }>
+            <div className="row">
+                <div className="col">
+                    { QR.qrUrl && <QRCode value={ QR.qrUrl } size={ 256 } className="float-right"/> }
+                </div>
+                <div className="col" style={ {
+                    padding: "5%"
+                } }>
+                    <h1>Scan QR code to activate device,Please.</h1>
+                </div>
+            </div>
         </div>
-        <div className="row">
-          <div className="col">
-            {QR.qrUrl &&
-              <QRCode value={QR.qrUrl} size={256} className="float-right" />}
-          </div>
-          <div className="col" style={{ padding: "5%" }}>
-            <h1>Please scan QR code to activate device.</h1>
-          </div>
-        </div>
-      </div>
     );
-  }
-}
+};

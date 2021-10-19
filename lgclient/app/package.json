@@ -29,19 +29,19 @@
     "redux-reset": "^0.3.0",
     "redux-thunk": "^2.3.0",
     "typescript": "^3.6.2",
-    "videojs-playlist": "^4.3.1",
-    "video.js": "^7.15.4"
+    "video.js": "^7.15.4",
+    "videojs-playlist": "^4.3.1"
   },
   "scripts": {
+    "lint": "eslint -c .eslintrc.js --ext .js,.jsx,.ts,.tsx .",
+    "lint:fix": "npm run lint -- --fix",
     "start": "REACT_APP_STAGE=dev react-scripts start",
-    "build": "REACT_APP_STAGE=production react-app-rewired build",
+    "build": "REACT_APP_STAGE=production ./before_build.sh && react-app-rewired build",
+    "pub": "REACT_APP_STAGE=production react-app-rewired build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "postbuild": "bash ./post_build_osx",
     "postbuild1": "@powershell -NoProfile -ExecutionPolicy Unrestricted -Command ./post_build.ps1"
-  },
-  "eslintConfig": {
-    "extends": "react-app"
   },
   "browserslist": {
     "production": [
@@ -60,7 +60,12 @@
     "@types/node": "^12.7.4",
     "@types/react": "^16.9.2",
     "@types/react-dom": "^16.9.0",
-    "@typescript-eslint/parser": "^2.1.0",
-    "react-app-rewired": "^2.1.5"
+    "react-app-rewired": "^2.1.5",
+    "eslint-config-react-app": "^6.0.0",
+    "eslint-plugin-jest": "^25.2.2",
+    "eslint-plugin-jsx-a11y": "^6.4.1",
+    "eslint-plugin-react": "^7.26.1",
+    "eslint-plugin-react-hooks": "^4.2.0",
+    "eslint-plugin-testing-library": "^4.12.4"
   }
 }

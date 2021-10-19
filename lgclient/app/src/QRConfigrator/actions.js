@@ -7,78 +7,57 @@ export const RECEIVE_LICENSE = "RECEIVE_LICENSE";
 export const RECEIVE_INSTANCE = "RECEIVE_INSTANCE";
 
 export const receiveQR = payload => {
-  return { type: RECEIVE_QR, payload };
+    return { type: RECEIVE_QR, payload };
 };
 
 
 export const receiveToken = payload => {
-  return { type: RECEIVE_TOKEN, payload };
+    return { type: RECEIVE_TOKEN, payload };
 };
 
 export const receiveLicense = payload => {
-  return { type: RECEIVE_LICENSE, payload };
+    return { type: RECEIVE_LICENSE, payload };
 };
 
 export const receiveInstance = payload => {
-  return { type: RECEIVE_INSTANCE, payload };
+    return { type: RECEIVE_INSTANCE, payload };
 };
 
 //-------------------function
 
 export const requestQR = () => dispatch => {
-  api.requestQR().then(response => {
-    dispatch(receiveQR(response.data));
-  });
+    api.requestQR().then(response => {
+        dispatch(receiveQR(response.data));
+    });
 };
 
 export const requestToken = authorizeCode => dispatch => {
-  api.requestToken(authorizeCode).then(response => {
-    dispatch(receiveToken(response.data));
-  });
+    api.requestToken(authorizeCode).then(response => {
+        dispatch(receiveToken(response.data));
+    });
 };
 
 export const postDeviceInfo =  (
-  token,
-  mac,
-  name,
-  ip,
-  os,
-  resolution,
-  authorizeCode
+    token,
+    authorizeCode,
+    deviceInfo
 ) => dispatch =>{
-  api
-    .postDeviceInfo(token,mac, name, ip, os, resolution, authorizeCode)
-    .then(response => {
-      //dispatch(recevie)
-    });
+    api
+        .postDeviceInfo(token,authorizeCode,deviceInfo)
+        .then(response => {
+            //dispatch(recevie)
+        });
 };
-
-export const register = (
-  token,
-  url,
-  mac,
-  name,
-  ip,
-  os,
-  resolution
-) => dispatch => {
-  api
-    .register(token,url,mac, name, ip, os, resolution)
-    .then(response => {
-      //dispatch(recevie)
-    });
-};
-
 
 //key:deviceId
 export const requestLicense = (token,key) => dispatch =>{
-  api.requestLicense(token,key).then(response => {
-    dispatch(receiveLicense(response.data));
-  });
+    api.requestLicense(token,key).then(response => {
+        dispatch(receiveLicense(response.data));
+    });
 };
 
 export const requestInstance = (token) => dispatch =>{
-  api.requestInstance(token).then(response => {
-    dispatch(receiveInstance(response.data));
-  });
+    api.requestInstance(token).then(response => {
+        dispatch(receiveInstance(response.data));
+    });
 };

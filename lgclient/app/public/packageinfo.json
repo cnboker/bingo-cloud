@@ -1,0 +1,9 @@
+{
+  "app": "com.ioliz.dc.app",
+  "id": "com.ioliz.dc.app",
+  "loc_name": "webOS Open Source Edition",
+  "package_format_version": 2,
+  "vendor": "ioliz.com",
+  "version": "1.0.0",
+  "services": ["com.ioliz.dc.app.fileservice"]
+}

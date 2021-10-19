@@ -1,13 +1,13 @@
 {
   "id": "com.ioliz.dc.app",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "vendor": "ioliz.com",
   "type": "web",
   "main": "index.html",
-  "title": "DS Player",
-  "icon": "icon.png",
-  "largeIcon": "icon.png",
-  "appDescription": "webOS Signage Application",
+  "title": "XPlayer",
+  "icon": "256x256.png",
+  "largeIcon": "512x512.png",
+  "appDescription": "ioliz Signage App",
   "inspectable": true ,
   "trustLevel": "trusted",
   "requiredPermissions": [
@@ -15,6 +15,7 @@
     "activity.operation",
     "download.management",
     "systemsettings.query",
-    "storageaccess.operation"
+    "storageaccess.operation",
+    "devices"
   ]
 }

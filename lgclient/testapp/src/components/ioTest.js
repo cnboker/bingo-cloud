@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react'
 import {webosApis} from 'lgservice'
 
 export default()=>{
-  const root = '/media/interal/'
+  const root = '/media/internal/'
   const [existed,setExisted] = useState(false)
   const [existed1,setExisted1] = useState(false)
   const [error,setError] = useState('')

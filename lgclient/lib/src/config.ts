@@ -17,7 +17,7 @@ class Config {
 
   configRead(): Promise<License> {
     return new Promise((resolve, reject) => {
-      readFile("/config.json")
+      readFile(`${APP_ROOT}/config.json`)
         .then(content => {
           this._licenseInstance = JSON.parse(content);
           resolve(this._licenseInstance);
@@ -29,13 +29,13 @@ class Config {
   }
 
   licenseReset() {
-    removeFile('config.json');
+    removeFile(`${APP_ROOT}/config.json`);
   }
 
   licenseWrite(license: License): Promise<boolean> {
     this._licenseInstance = license;
     return writeFile(
-      "/config.json",
+      `${APP_ROOT}/config.json`,
       JSON.stringify(license)
     );
   }
@@ -61,7 +61,8 @@ class Config {
   }
 }
 
-export const DS_FILE_ROOT = "/meida/internal/dclient";
+export const APPID = "com.ioliz.dc.app";
+export const APP_ROOT = "/meida/internal/dclient";
 export const USB_ROOT = "/tmp/usb/sda/sda1";
 export const configInstance: Config = Config.instance;
 export const MQTT_Server = "ws://www.ioliz.com:8000";
