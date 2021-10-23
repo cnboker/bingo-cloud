@@ -13,7 +13,7 @@ export default () => {
   }
 
   const onFreeOrder = (id) => {
-    Dialog.confirm('确定要此操作吗?', () => {
+    Dialog.confirm('确定要此操作吗', () => {
       dispatch(free(id))
     })
   }

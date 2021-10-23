@@ -9,7 +9,8 @@ const prod = {
     defaultApp: require ("./App").default
 };
 
-const config = process.env.REACT_APP_STAGE === "production"
+console.log("process.env.REACT_APP_STAGE",process.env.REACT_APP_STAGE);
+const config = process.env.REACT_APP_STAGE === "prod"
     ? prod
     : dev;
 

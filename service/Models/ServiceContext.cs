@@ -372,10 +372,10 @@ namespace Ioliz.Service.Models
     }
     public class Device
     {
-        //public int Id { get; set; }
         public string DeviceId { get; set; }
         public string Name { get; set; }
         public string OS { get; set; }
+        public string OS_Ver {get;set;}
         public string Resolution { get; set; }
         public string MAC { get; set; }
         public string IP { get; set; }
@@ -390,11 +390,10 @@ namespace Ioliz.Service.Models
         public DateTime? AuthorizeDate { get; set; }
 
         public int? CurrentLicenseId { get; set; }
-        //关联传感器代码
-        public string SensorCode { get; set; }
+       
         //设备分组
         public string GroupName { get; set; }
-        public bool? IsVM { get; set; }
+       
         public DateTime? UpdateDate { get; set; }
         public String LatLng { get; set; }
     }

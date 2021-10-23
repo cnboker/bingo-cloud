@@ -1,71 +1,53 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import resources from '../locale'
-import {tagCatelog} from '../../Tags/contants'
-import DropdownButtonBinder from "../../Components/Dropdownlist";
+import Dropdown from '~/views/components/forms/Dropdown'
+import { useSelector } from 'react-redux'
+import { TagCatelog } from '../../tags/contants'
 
-class GroupLink extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      selectGroup: ''
-    }
+export default ({ name, groupSelect }) => {
+  const tagReducer = useSelector((state) => state.tagReducer)
+  const [data, setData] = useState([])
+  const onTag = (e) => {
+    e.preventDefault()
+    this.props.history.push({
+      pathname: '/tags/create',
+      state: {
+        catelog: TagCatelog.deviceGroup,
+      },
+    })
   }
 
-  onTag(e) {
-    e.preventDefault();
-    this
-      .props
-      .history
-      .push({
-        pathname: '/tags/create',
-        state: {
-          catelog: tagCatelog.deviceGroup
-        }
-      })
-  }
-
-  getData() {
-    var data = this
-      .props
-      .tagReducer[tagCatelog.deviceGroup]
-      .split(',')
-      .map(val => {
-        return {key: val, value: val};
-      });
+  const getData = () => {
+    var data = tagReducer[TagCatelog.deviceGroup].map((val) => {
+      return { key: val, value: val }
+    })
 
     data.splice(0, 0, {
       value: 'notset',
-      key: resources.notset
-    });
+      key: resources.notset,
+    })
     data.splice(0, 0, {
       value: '__all',
-      key: resources.all
-    });
-    return data;
+      key: resources.all,
+    })
+    return data
   }
 
-  render() {
-    return (
-      <React.Fragment>
+  useEffect(() => {
+    setData(getData())
+  }, [tagReducer])
 
-        <DropdownButtonBinder
-          id="groupDropdown"
-          title={resources.groupFilter}
-          bsStyle="success"
-          dataSource={this.getData()}
-          onSelect={(val) => this.props.groupFilter(val)}/>{' '}
-        <button
-          className="btn btn-link btn-sm"
-          onClick={this
-          .onTag
-          .bind(this)}>
-          {this.props.name || resources.group}
-        </button>
-      </React.Fragment>
-
-    )
-
-  }
+  return (
+    <React.Fragment>
+      <Dropdown
+        title={resources.groupFilter}
+        color="primary"
+        data={data}
+        onSelect={(val) => groupSelect(val)}
+      />{' '}
+      <button className="btn btn-link btn-sm" onClick={onTag}>
+        {name || resources.group}
+      </button>
+    </React.Fragment>
+  )
 }
-
-export default GroupLink

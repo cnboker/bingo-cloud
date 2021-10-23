@@ -13,12 +13,12 @@ import {
   CToaster,
 } from '@coreui/react'
 
-const Dialog = ({ title, body, callback }) => {
+const Dialog = ({ title, body, size = 'lg', callback }) => {
   const [visible, setVisible] = useState(true)
 
   return (
     <>
-      <CModal visible={visible} alignment="center" size={'lg'}>
+      <CModal visible={visible} alignment="center" size={size}>
         <CModalHeader onDismiss={() => setVisible(false)}>
           <CModalTitle>{title}</CModalTitle>
         </CModalHeader>
@@ -53,10 +53,14 @@ const WithDialog = ({ children, ...props }) => {
   return <Component>{children}</Component>
 }
 
-export const confirm = (body, callback) => {
-  const jsx = <WithDialog title={'Information'} body={body} callback={callback} />
+export const show = (options, callback) => {
+  const jsx = <WithDialog {...options} callback={callback} />
   // eslint-disable-next-line @typescript-eslint/no-use-before-define
   ReactDOM.render(jsx, createContainer())
+}
+
+export const confirm = (message, cb) => {
+  show({ title: '提示信息', body: message }, cb)
 }
 
 export const toast = (message) => {

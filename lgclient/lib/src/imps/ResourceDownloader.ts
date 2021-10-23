@@ -6,7 +6,7 @@ import {
   ContentPackage,
 } from "../dataModels/ContentPackage";
 import { connect } from "mqtt";
-import { MQTT_Server, HTTP_Server, configInstance } from "../config";
+import { MQTT_Server, HTTP_Server, instance } from "../config";
 import { ResrouceParser } from "./ResourceParser";
 import { DOWNLAOD_COMPLETE_EVENT, SINGLE_FILE_DOWNLOAD_COMPLETE_EVENT } from '../constants'
 import EventDispatcher from "../EventDispatcher";
@@ -19,12 +19,12 @@ if (client === undefined || !client.connected) {
 
 function mqttSend(json: any) {
   var jsonString = JSON.stringify({
-    deviceId: configInstance.deviceId,
+    deviceId: instance.deviceId,
     ...json
   });
   if (client.connected) {
-    console.log(`LGDownloadProgress/${configInstance.deviceId}`, jsonString)
-    client.publish(`LGDownloadProgress/${configInstance.deviceId}`, jsonString);
+    console.log(`LGDownloadProgress/${instance.deviceId}`, jsonString)
+    client.publish(`LGDownloadProgress/${instance.deviceId}`, jsonString);
   }
 }
 
@@ -79,7 +79,7 @@ export class ResourceDownloader implements IResourceDownloader {
   singleFileDownload(resource: IResourceInfo): void {
     console.log("begin download", resource.resourceUrl);
     resource.status = 3;
-    var apiUrl = `${configInstance.resourceServer}${resource.resourceUrl}`;
+    var apiUrl = `${instance.resourceServer}${resource.resourceUrl}`;
 
     exists(resource.resourceUrl)
       .then(x => {

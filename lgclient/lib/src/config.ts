@@ -15,7 +15,7 @@ class Config {
     });
   }
 
-  configRead(): Promise<License> {
+  read(): Promise<License> {
     return new Promise((resolve, reject) => {
       readFile(`${APP_ROOT}/config.json`)
         .then(content => {
@@ -28,11 +28,11 @@ class Config {
     });
   }
 
-  licenseReset() {
+  reset() {
     removeFile(`${APP_ROOT}/config.json`);
   }
 
-  licenseWrite(license: License): Promise<boolean> {
+  write(license: License): Promise<boolean> {
     this._licenseInstance = license;
     return writeFile(
       `${APP_ROOT}/config.json`,
@@ -64,7 +64,7 @@ class Config {
 export const APPID = "com.ioliz.dc.app";
 export const APP_ROOT = "/meida/internal/dclient";
 export const USB_ROOT = "/tmp/usb/sda/sda1";
-export const configInstance: Config = Config.instance;
+export const instance: Config = Config.instance;
 export const MQTT_Server = "ws://www.ioliz.com:8000";
 export const HTTP_Server = "http://www.ioliz.com";
 //事件类型

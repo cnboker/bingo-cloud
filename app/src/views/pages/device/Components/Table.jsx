@@ -1,53 +1,100 @@
-import React, { Component } from "react";
-import TableRow from "./tableRow";
-import resources from "../locale";
+import React from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+import * as Dialog from '~/views/components/dialog/Index'
+import InputDialog from '~/views/components/dialog/InputDialog'
+import { TagCatelog } from '~/views/pages/tags/contants'
+import TableRow from './tableRow'
+import resources from '../locale'
+import { GroupSelector } from './groupSelector'
+import { renewLicense, deviceGroupUpdate, deviceUpdateName } from '../actions'
 
-export default class DeviceMoniter extends Component {
-  render() {
-    return (
-      <table className="table table-bordered table-striped table-sm">
-        <thead>
-          <tr>
-            <th>{resources.tenant}</th>
-            <th>{resources.group}</th>
-            <th>{resources.device_name}</th>
-            <th>MAC</th>
-            <th>IP</th>
-            <th>{resources.device_status}</th>
-            <th>{resources.license_info}</th>
-            <th>{resources.remark}</th>
-            <th>{resources.setSensor}</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>{this.renderList()}</tbody>
-      </table>
-    );
+export default ({ tableData }) => {
+  const tagReducer = useSelector((state) => state.tagReducer)
+  const dispatch = useDispatch()
+  const updateGroup = (deviceId, oldName) => {
+    var selectGroup = ''
+    Dialog.show(
+      {
+        title: resources.groupSetting,
+        body: (
+          <GroupSelector
+            groupName={oldName}
+            groupList={tagReducer[TagCatelog.deviceGroup]}
+            onSelect={(g) => (selectGroup = g.value)}
+          />
+        ),
+      },
+      () => {
+        dispatch(deviceGroupUpdate(deviceId, selectGroup))
+      },
+    )
   }
 
-  renderList() {
-    const { sensorConfig } = this.props;
+  const updateLicense = (id) => {
+    Dialog.show(
+      {
+        title: resources.info,
+        body: resources.confirmInfo,
+      },
+      () => {
+        dispatch(renewLicense(id))
+      },
+    )
+  }
 
-    const fanModelMap = sensorConfig.fanModel.reduce((map, val) => {
-      map[val.name] = val;
-      return map;
-    }, {});
+  //update device name
+  const updateName = (deviceId, oldName) => {
+    var newName = oldName
 
-    return this.props.tableData.map((item, key) => {
+    Dialog.show(
+      {
+        title: resources.info,
+        body: (
+          <InputDialog
+            label={resources.device_name}
+            value={oldName}
+            inputchange={(val) => {
+              newName = val
+            }}
+          />
+        ),
+      },
+      () => {
+        dispatch(deviceUpdateName(deviceId, newName))
+      },
+    )
+  }
+
+  const renderList = () => {
+    return tableData.map((item, key) => {
       return (
         <TableRow
           key={key}
           rowData={item}
-          fanModelMap={fanModelMap}
-          updateLicense={this.props.updateLicense}
-          updateName={this.props.updateName}
-          updateSensor={this.props.updateSensor}
-          detailView={this.props.detailView}
-          deviceSelected={this.props.deviceSelected}
-          updateGroup={this.props.updateGroup}
-          vmDelete ={this.props.vmDelete}
+          updateGroup={updateGroup}
+          updateLicense={updateLicense}
+          updateName={updateName}
         />
-      );
-    });
+      )
+    })
   }
+  return (
+    <table className="table table-bordered table-striped table-sm">
+      <thead>
+        <tr>
+          <th>{resources.tenant}</th>
+          <th>{resources.group}</th>
+          <th>{resources.device_name}</th>
+          <th>MAC</th>
+          <th>IP</th>
+          <th>{resources.device_status}</th>
+          <th>{resources.license_info}</th>
+          <th>{resources.remark}</th>
+          <th>{resources.setSensor}</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>{renderList()}</tbody>
+    </table>
+  )
 }

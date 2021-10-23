@@ -35,6 +35,38 @@
 
 ### webos ose app自启动
 
+webos ose 采用systemd做系统自启动，在/lib/systemd/system/目录下创建dclientStart.service文件，在此文件中添加如下脚本
+
+参考内容 https://www.webosose.org/blog/2020/09/08/run-a-custom-script-at-boot-time/
+
+```bash
+[Unit]
+Description=webos - "%n"
+ 
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/luna-send -n 1 -f luna://com.webos.service.applicationmanager/launch '{ "id" : "com.ioliz.dc.app"}'
+```
+
+创建symbolic link
+
+```bash
+cd lib/systemd/system
+ln -s dclientStart.service ./webos-bd.target.wants/
+```
+
+Reboot
+
+```bash
+reboot -f
+```
+
+Check
+
+```bash
+systemctl status dclientStart
+```
+
 ### webos ose 安装npm
 
 webos ose 默认不支持npm，需要远程安装

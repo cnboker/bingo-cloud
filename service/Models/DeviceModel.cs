@@ -15,9 +15,7 @@ namespace Ioliz.Service.Models{
     public int? ValidDays {get;set;}
     public DateTime ActivationdDate {get;set;}
     public string TenantUserName {get;set;}
-    public string SensorNo {get;set;}
     public string GroupName {get;set;}
-    public bool? IsVM {get;set;}
     public string Resolution {get;set;}
     public string OS {get;set;}
     public string LatLng {get;set;}

@@ -43,3 +43,22 @@ export default class MQTTConnector {
     })
   }
 }
+
+//更新reducer入口 deviceId is array type
+// export const deviceMQTTSubscrible = (deviceIds) => (dispatch) => {
+//   var connector = MQTTConnector.instance()
+
+//   connector.onMessage((topic, message) => {
+//     var jsonObj = JSON.parse(message)
+//     if (topic.indexOf('LGDownloadProgress/') !== -1) {
+//       // console.log("json parse", topic, jsonObj);
+//       dispatch(receiveDownloadProgress(jsonObj))
+//     } else if (topic.indexOf('LGBeatHeart/') !== -1) {
+//       dispatch(receiveStatusUpdate(jsonObj))
+//     }
+//   })
+//   for (var id of deviceIds) {
+//     connector.beatHeartSubscrible(id)
+//     connector.downloadProgressSubscrible(id)
+//   }
+// }

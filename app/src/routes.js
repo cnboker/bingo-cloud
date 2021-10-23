@@ -64,6 +64,8 @@ const FileManager = React.lazy(() =>
     default: module.ServerVFSBrowser,
   })),
 )
+const DeviceManager = React.lazy(() => import('./views/pages/device/components/index'))
+
 const routes = [
   { path: '/', exact: true, name: 'Home' },
   { path: '/admin', exact: true, name: 'Administrator', component: Users },
@@ -118,6 +120,7 @@ const routes = [
   { path: '/order/create', exact: true, name: 'CreateOrder', component: CreateOrder },
   { path: '/order/checkout', exact: true, name: 'Checkout', component: Checkout },
   { path: '/fileManager', exact: true, name: 'FileManager', component: FileManager },
+  { path: '/device', exact: true, name: 'deviceManager', component: DeviceManager },
 ]
 
 export default routes

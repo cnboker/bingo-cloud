@@ -1,5 +1,5 @@
 require("../config");
-import { configInstance } from "../config";
+//import { configInstance } from "../config";
 
 import { expect } from "chai";
 import "mocha";

@@ -8,21 +8,20 @@ import merge from 'lodash/merge'
 const initialState = []
 
 export const unAuthorizeReducer = (state = initialState, action) => {
-  var newSate = merge([], state)
+  var newState = merge([], state)
   switch (action.type) {
     case DEVICE_AUTHORIZE_RESPONSE:
       console.log('DEVICE_AUTHORIZE_SUCCESS success', action.payload)
       const { deviceId } = action.payload
-      var cur = newSate.find((x) => x.deviceId === deviceId)
+      var cur = newState.find((x) => x.deviceId === deviceId)
       if (cur) {
         cur.authorizeStatus = 1
       }
-      return newSate
-
+      return newState
     case AUTHORIZE_LIST_RESPONSE:
       return action.payload
     default:
-      return newSate
+      return newState
   }
 }
 

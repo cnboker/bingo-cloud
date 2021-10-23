@@ -3,15 +3,15 @@ import { config } from "lgservice";
 import { useHistory } from "react-router";
 
 export default() => {
-    const message = "System is intailizing,please wait"
-    const history = useHistory()
+    const message = "System is intailizing,please wait";
+    const history = useHistory();
 
     useEffect(() => {
         config
             .instance
-            .licenseRead()
-            .then(license => {
-                if (license.token) {
+            .read()
+            .then(c => {
+                if (c.token) {
                     history.push("/play");
                 } else {
                     history.push("/qrconfig");
@@ -21,7 +21,7 @@ export default() => {
                 console.log("go to qrconfig", e);
                 history.push("/qrconfig");
             });
-    }, [])
+    }, []);
 
     return (
         <div className="centercontainer">

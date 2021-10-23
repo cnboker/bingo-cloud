@@ -1,9 +1,7 @@
 import { CLIENT_SET, CLIENT_UNSET, RECEIVE_USER_EXTENDER, RECEIVE_CMS_USER } from './constants'
 import axios from 'axios'
-import { toast } from 'react-toastify'
-
-var auth = require('~/lib/check-auth')
-
+import * as auth from '~/lib/check-auth'
+import { toast } from 'src/views/components/dialog/Index'
 export function setClient(token) {
   return { type: CLIENT_SET, token }
 }
@@ -43,12 +41,12 @@ export const updateUserExtender = (data) => (dispatch) => {
   var headers = auth.authHeader()
   axios({ url, method: 'post', data, headers })
     .then((x) => {
-      toast.success('操作成功', { position: toast.POSITION.BOTTOM_CENTER })
+      toast('操作成功')
       dispatch(receiveUserExtender(data))
     })
     .catch((e) => {
       console.log('getUserExtender', e)
-      toast.error(e.response.data, { position: toast.POSITION.BOTTOM_CENTER })
+      toast(e.response.data)
     })
 }
 
@@ -80,10 +78,10 @@ export const resetPassword = (data) => (dispatch) => {
     headers,
   })
     .then((x) => {
-      toast.success('reset password finished!', { position: toast.POSITION.BOTTOM_CENTER })
+      toast('reset password finished!')
     })
     .catch((e) => {
-      toast.error(e.response.data, { position: toast.POSITION.BOTTOM_CENTER })
+      toast(e.response.data)
     })
 }
 
@@ -98,9 +96,9 @@ export const resetPassword1 = (data) => (dispatch) => {
     headers,
   })
     .then((x) => {
-      toast.success('操作成功', { position: toast.POSITION.BOTTOM_CENTER })
+      toast('操作成功')
     })
     .catch((e) => {
-      toast.error(e.response.data, { position: toast.POSITION.BOTTOM_CENTER })
+      toast(e.response.data, { position: toast.POSITION.BOTTOM_CENTER })
     })
 }

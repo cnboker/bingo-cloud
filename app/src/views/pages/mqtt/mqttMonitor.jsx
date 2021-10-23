@@ -1,42 +1,37 @@
-import React from "react";
-import resources from "./locale";
-import { connect } from "react-redux";
+import React from 'react'
+import resources from './locale'
+import { connect } from 'react-redux'
 
 class MqttMonitor extends React.Component {
   constructor() {
-    super();
+    super()
     this.state = {
-      deviceDownloadProgressInfo: {}
-    };
+      deviceDownloadProgressInfo: {},
+    }
   }
 
   componentDidUpdate(nextProps, nextState) {
     if (nextProps.downloadProgress !== this.props.downloadProgress) {
-      const { deviceInfo } = this.props;
-      var deviceDownloadProgressInfo =
-        nextProps.downloadProgress[deviceInfo.deviceId];
+      const { deviceInfo } = this.props
+      var deviceDownloadProgressInfo = nextProps.downloadProgress[deviceInfo.deviceId]
       console.log(
-        "MqttMonitor-componentDidUpdate",
+        'MqttMonitor-componentDidUpdate',
         nextProps.downloadProgress,
-        deviceDownloadProgressInfo
-      );
+        deviceDownloadProgressInfo,
+      )
       if (deviceDownloadProgressInfo) {
-        this.setState({
-          deviceDownloadProgressInfo
-        });
+        this.setState({ deviceDownloadProgressInfo })
       }
     }
   }
 
   downloadProgressDataFormat() {
-    const downloadProgressData = this.state.deviceDownloadProgressInfo;
+    const downloadProgressData = this.state.deviceDownloadProgressInfo
 
     if (!downloadProgressData.fileName) {
       return (
         <div className="row">
-          <label className="col-sm-4 col-form-label">
-            {resources.downloadProgress}
-          </label>
+          <label className="col-sm-4 col-form-label">{resources.downloadProgress}</label>
           <div className="col-sm-8">
             <input
               type="text"
@@ -46,13 +41,11 @@ class MqttMonitor extends React.Component {
             ></input>
           </div>
         </div>
-      );
+      )
     } else {
       return (
         <div className="row">
-          <label className="col-sm-4 col-form-label">
-            {resources.downloadProgress}
-          </label>
+          <label className="col-sm-4 col-form-label">{resources.downloadProgress}</label>
           <div className="col-sm-8">
             <input
               type="text"
@@ -62,25 +55,21 @@ class MqttMonitor extends React.Component {
             ></input>
             <small className="form-text">
               {`${resources.downloaded} : ${downloadProgressData.downloaded}`}
-              <br />
-              {`${resources.downloadSpeed} : ${downloadProgressData.downloadSpeed}`}
-              <br />
-              {`${resources.remainingTime} : ${downloadProgressData.remainingTime}`}
+              <br /> {`${resources.downloadSpeed} : ${downloadProgressData.downloadSpeed}`}
+              <br /> {`${resources.remainingTime} : ${downloadProgressData.remainingTime}`}
             </small>
           </div>
         </div>
-      );
+      )
     }
   }
 
   render() {
-    const { deviceInfo } = this.props;
+    const { deviceInfo } = this.props
     return (
       <form>
         <div className="row">
-          <label className="col-sm-4 col-form-label">
-            {resources.device_name}
-          </label>
+          <label className="col-sm-4 col-form-label">{resources.device_name}</label>
           <div className="col-sm-8">
             <input
               type="text"
@@ -91,7 +80,7 @@ class MqttMonitor extends React.Component {
           </div>
         </div>
         <div className="row">
-          <label className="col-sm-4 col-form-label">{"MAC"}</label>
+          <label className="col-sm-4 col-form-label">{'MAC'}</label>
           <div className="col-sm-8">
             <input
               type="text"
@@ -102,9 +91,7 @@ class MqttMonitor extends React.Component {
           </div>
         </div>
         <div className="row">
-          <label className="col-sm-4 col-form-label">
-            {resources.device_status}
-          </label>
+          <label className="col-sm-4 col-form-label">{resources.device_status}</label>
           <div className="col-sm-8">
             <input
               type="text"
@@ -116,14 +103,12 @@ class MqttMonitor extends React.Component {
         </div>
         {this.downloadProgressDataFormat()}
       </form>
-    );
+    )
   }
 }
 
 const mapStateToProps = (state, ownProps) => {
-  return {
-    downloadProgress: state.downloadProgressReducer
-  };
-};
+  return { downloadProgress: state.downloadProgressReducer }
+}
 
-export default connect(mapStateToProps)(MqttMonitor);
+export default connect(mapStateToProps)(MqttMonitor)

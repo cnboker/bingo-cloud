@@ -10,13 +10,16 @@ import * as storageAccess from './webosApis/systemservice'
 import * as webosFileService from './imps/WebOSFileService'
 import * as usbservice from './webosApis/usbservice'
 import * as applicationmanager from './webosApis/applicationmanager'
+import * as bootservice from './daemon/bootservice'
+
 const webosApis = {
     downloadManager,
     systemservice,
     storageAccess,
     webosFileService,
     usbservice,
-    applicationmanager
+    applicationmanager,
+    bootservice
 }
 
 export {

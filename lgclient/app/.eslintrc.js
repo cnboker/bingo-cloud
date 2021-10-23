@@ -45,11 +45,12 @@ module.exports = {
                 code: 120
             }
         ],
-        'no-console': 'off',
+        "no-console": "off",
         "react/display-name": "off",
         "react/prop-types": "off",
         "no-duplicate-imports": "warn",
         "no-unused-vars": "warn", 
+        "react/react-in-jsx-scope": "off",
         "react-hooks/rules-of-hooks": "error",
         "react-hooks/exhaustive-deps": "off",
         "object-curly-spacing": [
@@ -92,7 +93,7 @@ module.exports = {
                 ignoreDeclarationSort: true,
                 ignoreMemberSort: false
             }
-        ],
+        ]
         // "sort-keys": [     "warn",     "asc",     {         caseSensitive: true,
         //    minKeys: 2,         natural: false     } ]
     },

@@ -6,26 +6,25 @@ import GeneralResult from "../dataModels/generalResult";
 import GetContentResult from "../dataModels/getContentResult";
 import WeatherResult from "../dataModels/weatherResult";
 import NetTrafficInfo from "../dataModels/netTrafficInfo";
-import { configInstance,HTTP_Server,MQTT_Server } from "../config";
+import { instance,HTTP_Server,MQTT_Server } from "../config";
 
 const strFormat = require("string-format");
 
 export default class ClientAPI implements IClientAPI {
   get token(): string {
-    return configInstance.token;
+    return instance.token;
   }
 
   get resourceServer(): string {
-    return configInstance.resourceServer;
+    return instance.resourceServer;
   }
 
   get key(): string {
-    return configInstance.deviceId;
+    return instance.deviceId;
   }
 
 
   notify(): Promise<AxiosResponse<NotificationResult>> {
-    const qs = require("querystring");
     var url = HTTP_Server + strFormat(APIPath.NotifyPath, this.key);
     //console.log("url=", url);
     return axios.request<NotificationResult>({

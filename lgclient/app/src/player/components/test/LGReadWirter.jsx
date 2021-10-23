@@ -21,7 +21,7 @@ export default class LGReadWriter extends React.Component{
         var remoteUrl = "http://ds1.ezdsm.com/UploadFiles/file1013/images/7.jpg";
         var url = require("url");
         var url_parts = url.parse(remoteUrl);        
-        lgs.configInstance.fileIOInstance.copyFile(remoteUrl,url_parts.pathname);
+       // lgs.configInstance.fileIOInstance.copyFile(remoteUrl,url_parts.pathname);
     }
 
     usbunzip(){
@@ -30,7 +30,7 @@ export default class LGReadWriter extends React.Component{
 
     async filelist(){
         var outFiles = [];
-        await lgs.configInstance.fileIOInstance.listAllFile("/", outFiles);
+        //await lgs.configInstance.fileIOInstance.listAllFile("/", outFiles);
         console.log("filelist", outFiles);
     }
 

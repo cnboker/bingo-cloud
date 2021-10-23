@@ -22,7 +22,7 @@ namespace Ioliz.Service.Controllers
 
         //设备获取二维码链接
         [HttpPost]
-        public ApiResult UploadDeviceInfo([FromForm] Device model)
+        public ApiResult PostDeviceInfo([FromForm] Device model)
         {
             // if (ctx.Devices.Any(x => x.MAC == model.MAC)) 
             var device = ctx.Devices.FirstOrDefault(x => x.DeviceId == model.MAC);
@@ -66,7 +66,7 @@ namespace Ioliz.Service.Controllers
 
         [HttpPost]
         //用户为设备授权
-        public IActionResult DeviceAuthorize([FromBody] AuthorizeModel model)
+        public IActionResult Authorize([FromBody] AuthorizeModel model)
         {
             logger.LogInformation("DeviceAuthorize,model,deviceid=" + model.DeviceId);
 

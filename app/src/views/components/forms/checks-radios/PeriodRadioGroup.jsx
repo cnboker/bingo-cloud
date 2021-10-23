@@ -1,6 +1,6 @@
 import React from 'react'
 import LocalizedStrings from 'react-localization'
-import CheckGroup from './CheckGroup'
+import CheckGroup from '../CheckGroup'
 const R = new LocalizedStrings({
   en: {
     week: 'Week',

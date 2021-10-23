@@ -66,7 +66,7 @@ export function UserRoute({
     ...rest
 }) {
     checkAuthorization(dispatch, rest);
-    return <Route { ...rest } render={ props => <Component { ...props }/> }/>;
+    return <Route { ...rest } render={ props => <Component { ...props } /> } />;
 }
 
 export function PrivateRoute({
@@ -79,14 +79,19 @@ export function PrivateRoute({
     return (
         <Route
             { ...rest }
-            render={ props => authed === true
-                ? (<Component { ...props }/>)
-                : (<Redirect
-                        to={ {
-                        pathname: "/login",
-                        state: {
-                            from: props.location
-                        }
-                    } }/>) }/>
+            render={ props => routeRender(authed, Component, props) } />
     );
+}
+
+function routeRender(authed, Component, props) {
+    var state = {
+        pathname: "/login",
+        state: {
+            from: props.location
+        }
+    };
+    authed === true
+        ? (<Component { ...props } />)
+        : (<Redirect to={ state } />);
+            
 }

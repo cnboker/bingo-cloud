@@ -1,7 +1,6 @@
 import { IContentNotify } from "../interfaces/IContentWorker";
 import { ContentPackage } from "../dataModels/ContentPackage";
 import ClientAPI from "./ClientAPI";
-import { configInstance } from "../config";
 import EventDispatcher from "../EventDispatcher";
 import { CONTENT_READY_EVENT,SNAPSHOT_EVENT } from '../constants'
 const timeout: number = 10000;

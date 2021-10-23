@@ -5,5 +5,5 @@
   "package_format_version": 2,
   "vendor": "ioliz.com",
   "version": "1.0.0",
-  "services": ["com.ioliz.dc.app.fileservice"]
+  "services": ["com.ioliz.dc.app.fileservice", "com.ioliz.dc.app.bootservice"]
 }

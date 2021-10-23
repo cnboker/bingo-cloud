@@ -1,8 +1,0 @@
-{
-  "name": "com.lg.app.signage.contentservice",
-  "version": "1.0.0",
-  "description": "contentService",
-  "main": "index.js",
-  "author": "",
-  "license": "BSD"
-}
