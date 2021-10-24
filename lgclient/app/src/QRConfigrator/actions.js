@@ -28,13 +28,13 @@ export const receiveInstance = payload => {
 export const requestQR = () => dispatch => {
     api.requestQR().then(response => {
         dispatch(receiveQR(response.data));
-    });
+    }).catch(e=>console.log(e))
 };
 
 export const requestToken = authorizeCode => dispatch => {
     api.requestToken(authorizeCode).then(response => {
         dispatch(receiveToken(response.data));
-    });
+    }).catch(e=>console.log(e))
 };
 
 export const postDeviceInfo =  (
