@@ -81,6 +81,7 @@ module.exports = function() {
     }
   });
   server.once("error", function(err) {
+    console.log(err)
     if (err.code === "EADDRINUSE") {
       // port is currently in use
       console.log("server is started, start error");
@@ -89,9 +90,9 @@ module.exports = function() {
 
   server.once("listening", function() {
     // close the server if listening doesn't fail
-    //console.log('close the server if listening dont fail')
+    console.log('close the server if listening dont fail')
     //server.close();
   });
 
-  server.listen(port, () => console.log(`Running on ${port} port`));
+  return server.listen(port, () => console.log(`Running on ${port} port`));
 };

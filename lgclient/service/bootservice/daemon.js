@@ -19,6 +19,7 @@ module.exports = function(nodeBin) {
     process.env.__daemon = true
  
     var args = [].concat(process.argv)
+    console.log('args',args)
     var node = args.shift()
     var env = process.env
     child(node, args, env)

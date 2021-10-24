@@ -1,43 +1,16 @@
-var util = require("util");
+require("./fileLogger");
 
-var spawn = require("child_process").spawn;
-var ps = spawn("ps", ["aux"]);
-var grep = spawn("grep", ["node ./stream.js"]);
-ps.stdout.pipe(grep.stdin);
+const message = {};
+message.respond = result => {
+  console.log(result);
+};
 
-grep.stdout.on("data", function(data) {
-  console.log("stdout:" + data);
-  var found = data.indexOf("node ./stream.js");
-  // if (found === -1) {
-  //   var server = spawn("node", ["./stream.js"]);
-  //   server.stdout.on("data", function(data) {
-  //     console.log({ returnValue: true });
-  //   });
-  //   server.stderr.on("data", function(data) {
-  //     console.log({ returnValue: false, errorText: data });
-  //   });
-  //   server.on("exit", function(code) {
-  //     console.log({ returnValue: false, errorText: "server exit" });
-  //   });
-  // } else {
-  //   console.log({ returnValue: false, errorText: "has started" });
-  // }
-});
+const point = `/usr/bin/luna-send -n 1 -f luna://com.webos.service.applicationmanager/launch '{ "id" : "com.ioliz.dc.app"}'`;
+const serviceName = "dclient.service";
+const appservice = require("./bootService");
+appservice(serviceName, point, message);
 
-grep.stderr.on("data", function(data) {
-  console.log("stderr: " + data);
-});
-
-grep.on("exit", function(code) {
-  console.log("child process exited with code " + code);
-  var server = spawn("node", ["./stream.js"]);
-  server.stdout.on("data", function(data) {
-    console.log({ returnValue: true, text:data.toString() });
-  });
-  server.stderr.on("data", function(data) {
-    console.log({ returnValue: false, errorText: data });
-  });
-  server.on("exit", function(code) {
-    console.log({ returnValue: false, errorText: "server exit" });
-  });
-});
+const point1 = `/usr/bin/node /media/developer/apps/usr/palm/services/com.ioliz.dc.app.bootservice/httpserver.js`;
+const serviceName1 = "httpserver.service";
+const httpservice = require("./bootService");
+httpservice(serviceName1, point1, message);
