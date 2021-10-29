@@ -10,7 +10,7 @@ import {
   RECEIVE_DEVICE_SNAPSHOT_IMAGE,
   RECEIVE_DEVICE_LOGS,
 } from './constants'
-
+import * as Dialog from '~/views/components/dialog/Index'
 import { authHeader } from '~/lib/check-auth'
 
 export const receiveDeviceList = (payload) => {
@@ -82,16 +82,18 @@ export const getDeviceSnapshot = (deviceId) => (dispatch) => {
 
 export const renewLicense = (deviceId) => (dispatch) => {
   var headers = authHeader()
-  var url = `${process.env.REACT_APP_SERVICE_URL}/api/device/authorize`
+  var url = `${process.env.REACT_APP_SERVICE_URL}/api/license/authorize`
   //axio push
   axios({ url, method: 'post', headers, data: { deviceId } })
-    .then((response) => {
-      var info = response.data.filter((x) => x.deviceId === deviceId).shift()
-      dispatch(receiveRenewLicense(info))
+    .then((res) => {
+      dispatch(receiveRenewLicense(res.data))
     })
-    .catch((err) => {
-      //toast.error(err, { position: toast.POSITION.BOTTOM_CENTER })
-      console.log(err)
+    .catch((e) => {
+      if (e.response) {
+        Dialog.toast(e.response.data)
+      } else if (e.message) {
+        Dialog.toast(e.message)
+      }
     })
 }
 

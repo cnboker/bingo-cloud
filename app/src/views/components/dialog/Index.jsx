@@ -63,10 +63,10 @@ export const confirm = (message, cb) => {
   show({ title: '提示信息', body: message }, cb)
 }
 
-export const toast = (message) => {
+export const toast = (message, color = 'warning') => {
   const Toaster = () => {
     const toastJSX = (
-      <CToast autohide={true} className="align-items-center">
+      <CToast autohide={true} className="align-items-center" animation={true} color={color}>
         <div className="d-flex">
           <CToastBody>{message}</CToastBody>
           <CToastClose className="me-2 m-auto" />

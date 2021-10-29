@@ -11,7 +11,7 @@ import { renewLicense, deviceGroupUpdate, deviceUpdateName } from '../actions'
 export default ({ tableData }) => {
   const tagReducer = useSelector((state) => state.tagReducer)
   const dispatch = useDispatch()
-  const updateGroup = (deviceId, oldName) => {
+  const updateGroupName = (deviceId, oldName) => {
     var selectGroup = ''
     Dialog.show(
       {
@@ -71,7 +71,7 @@ export default ({ tableData }) => {
         <TableRow
           key={key}
           rowData={item}
-          updateGroup={updateGroup}
+          updateGroup={updateGroupName}
           updateLicense={updateLicense}
           updateName={updateName}
         />
@@ -82,7 +82,6 @@ export default ({ tableData }) => {
     <table className="table table-bordered table-striped table-sm">
       <thead>
         <tr>
-          <th>{resources.tenant}</th>
           <th>{resources.group}</th>
           <th>{resources.device_name}</th>
           <th>MAC</th>
@@ -90,7 +89,6 @@ export default ({ tableData }) => {
           <th>{resources.device_status}</th>
           <th>{resources.license_info}</th>
           <th>{resources.remark}</th>
-          <th>{resources.setSensor}</th>
           <th></th>
         </tr>
       </thead>

@@ -1,8 +1,8 @@
 import React from 'react'
-import { CRow, CFormLabel, CCol, CFormInput, CCard, CCardBody } from '@coreui/react'
+import { CRow, CFormLabel, CCol, CCard, CCardBody } from '@coreui/react'
 import { useSelector } from 'react-redux'
 import QRCode from 'qrcode.react'
-
+import TextRow from 'src/views/components/forms/TextRow'
 export default () => {
   const { order } = useSelector((state) => state.orderContextReducer)
   return (
@@ -28,16 +28,5 @@ export default () => {
         </CRow>
       </CCardBody>
     </CCard>
-  )
-}
-
-const TextRow = ({ label, text }) => {
-  return (
-    <CRow className="mb-3">
-      <CFormLabel className="col-sm-2 col-form-label">{label}</CFormLabel>
-      <CCol sm={10}>
-        <CFormInput type="text" defaultValue={text} readOnly plainText />
-      </CCol>
-    </CRow>
   )
 }

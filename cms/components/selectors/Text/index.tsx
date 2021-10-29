@@ -12,6 +12,7 @@ export type TextProps = {
   shadow: number;
   text: string;
   margin: [string, string, string, string];
+  position:string
 };
 
 export const Text = ({
@@ -22,6 +23,7 @@ export const Text = ({
   shadow,
   text,
   margin,
+  position
 }: Partial<TextProps>) => {
   const {
     connectors: { connect },
@@ -47,6 +49,7 @@ export const Text = ({
         textShadow: `0px 0px 2px rgba(0,0,0,${(shadow || 0) / 100})`,
         fontWeight,
         textAlign,
+        position,
       }}
     />
   );

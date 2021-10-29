@@ -4,3 +4,9 @@
   will-change: auto;
   @include transition(padding .15s);
 }
+
+.page {
+  border-top-left-radius: 0.25rem;
+  border-top-right-radius: 0.25rem;
+  background-color: white;
+}

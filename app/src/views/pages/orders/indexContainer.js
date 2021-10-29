@@ -1,8 +1,8 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import Index from './index'
-import { free, orderList } from './actions'
-import * as Dialog from '../../../components/dialog/Index'
+import { free, orderList, cancel } from './actions'
+import * as Dialog from '../../components/dialog/Index'
 export default () => {
   const orderReducer = useSelector((state) => state.orderReducer)
   const dispatch = useDispatch()
@@ -18,9 +18,20 @@ export default () => {
     })
   }
 
+  const onDelete = (id) => {
+    Dialog.confirm('确定要此操作吗', () => {
+      dispatch(cancel(id))
+    })
+  }
+
   return (
     <>
-      <Index onSearch={onSearch} dataset={orderReducer} onFreeOrder={onFreeOrder} />
+      <Index
+        onSearch={onSearch}
+        dataset={orderReducer}
+        onFreeOrder={onFreeOrder}
+        onDelete={onDelete}
+      />
     </>
   )
 }

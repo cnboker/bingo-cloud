@@ -63,7 +63,7 @@ export default () => {
         {discount > 0 && <CAlert color="success">今天有{discount}%的折扣</CAlert>}
         <CForm onSubmit={handleSubmit(onSubmit)}>
           <div className="mb-3">
-            <CFormLabel>购买周期</CFormLabel>
+            <CFormLabel>购买时长</CFormLabel>
             <br />
             <PeriodRadioGroup
               onChecked={(val) => setPeriod(val)}

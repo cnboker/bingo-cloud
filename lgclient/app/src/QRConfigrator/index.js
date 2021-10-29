@@ -20,26 +20,22 @@ export default () => {
         Finished: 4
     });
     const { exists, mkdir } = webosApis.webosFileService;
-    const { autoboot, startServer } = webosApis.bootservice;
+    const { appbootInstall, httpserverInstall } = webosApis.bootservice;
     const [runStep, setRunStep] = useState(RunStep.RequestQR);
     const [id, setId] = useState();
     const delay = 5000;
     const dispatch = useDispatch();
     const history = useHistory();
     const qrState = useSelector(state => state.qrReducer);
-    const { QR, token, license, instance } = qrState;
+    const { QR, token, license } = qrState;
     const { APP_ROOT } = config;
 
     useEffect(() => {
-        autoboot()
+        httpserverInstall()
             .then(() => {
-                return startServer();
-            })
-            .then(res => {
-                console.log("startserver", res);
-            })
-            .catch(e => {
-                console.log(e);
+                return appbootInstall();
+            }).then(res => {
+                console.log("install->", res);
             });
         dirReady();
         dispatch(requestQR());
@@ -109,17 +105,17 @@ export default () => {
     };
 
     return (
-        <div className="container-fluid" style={ divStyles }>
+        <div className="container-fluid" style={divStyles}>
             <div className="row">
                 <div className="col">
-                    { QR.qrUrl &&
-                        <QRCode value={ QR.qrUrl } size={ 256 } className="float-right" /> }
+                    {QR.qrUrl &&
+                        <QRCode value={QR.qrUrl} size={256} className="float-right" />}
                 </div>
                 <div
                     className="col"
-                    style={ {
+                    style={{
                         padding: "5%"
-                    } }
+                    }}
                 >
                     <h1>Scan QR code to activate device,Please.</h1>
                 </div>

@@ -1,5 +1,16 @@
 import React from 'react'
-
-export default () => {
-  return <div></div>
+import { CForm, CFormInput } from '@coreui/react'
+export default ({ onSearch }) => {
+  return (
+    <CForm>
+      <CFormInput
+        placeholder="keyword"
+        onKeyDown={(e) => {
+          if (e.key === 'Enter') {
+            onSearch(e.target.value)
+          }
+        }}
+      />
+    </CForm>
+  )
 }

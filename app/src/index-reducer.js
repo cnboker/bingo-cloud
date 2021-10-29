@@ -2,10 +2,11 @@ import { combineReducers } from 'redux'
 import securityReducer from './accountReducer'
 import { userReducer } from './views/pages/admin/users/reducer'
 import { orderDetailReducer } from './views/pages/admin/orderDetails/reducer'
-import { orderReducer } from './views/pages/admin/orders/reducer'
-import { orderContextReducer } from './views/pages/orders/reducer'
+import { orderReducer } from './views/pages/orders/reducer'
+import { orderContextReducer } from './views/pages/orderHandlers/reducer'
 import { deviceListReducer } from './views/pages/device/reducer'
 import tagReducer from './views/pages/tags/reducer'
+import siderBarReducer from './store'
 
 const appReducer = combineReducers({
   securityReducer,
@@ -15,6 +16,7 @@ const appReducer = combineReducers({
   orderContextReducer,
   deviceListReducer,
   tagReducer,
+  siderBarReducer,
 })
 
 const IndexReducer = (state, action) => {

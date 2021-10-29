@@ -1,7 +1,6 @@
-import LocalizedStrings from 'react-localization'
-import Cookies from 'js-cookie'
+import { langLoader } from '~/lib/localize'
 
-const GR = new LocalizedStrings({
+const data = {
   en: {
     orderNo: 'Order No',
     tenant: 'Tenant',
@@ -162,9 +161,6 @@ const GR = new LocalizedStrings({
     createDate: '创建时间',
     connection: '连接',
   },
-})
+}
 
-var language = Cookies.get('language') || GR.getLanguage()
-GR.setLanguage(language)
-
-export default GR
+export default langLoader(data)

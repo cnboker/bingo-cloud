@@ -22,6 +22,9 @@ export type ContainerProps = {
   shadow: number;
   children: React.ReactNode;
   radius: number;
+  position:string
+  left:number,
+  top:number,
 };
 
 const defaultProps = {
@@ -56,6 +59,9 @@ export const Container = (props: Partial<ContainerProps>) => {
     shadow,
     radius,
     children,
+    position,
+    left,
+    top,
   } = props;
   return (
     <Resizer
@@ -74,6 +80,9 @@ export const Container = (props: Partial<ContainerProps>) => {
             : `0px 3px 100px ${shadow}px rgba(0, 0, 0, 0.13)`,
         borderRadius: `${radius}px`,
         flex: fillSpace === 'yes' ? 1 : 'unset',
+        position,
+        left,
+        top,
       }}
     >
       {children}

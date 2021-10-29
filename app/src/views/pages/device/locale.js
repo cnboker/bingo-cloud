@@ -1,7 +1,6 @@
-import LocalizedStrings from 'react-localization'
-import Cookies from 'js-cookie'
+import { langLoader } from '~/lib/localize'
 
-const resources = new LocalizedStrings({
+const data = {
   en: {
     device_mgt: 'Device Management',
     device_status: 'Status',
@@ -32,7 +31,7 @@ const resources = new LocalizedStrings({
     all: 'All',
     offline: 'Offline',
     downloadProgress: 'Download Progress',
-    more: 'More',
+    more: 'Detail',
     noData: 'No Data',
     progress: 'Progress',
     downloaded: 'Downloaded',
@@ -61,6 +60,7 @@ const resources = new LocalizedStrings({
     days7WarningStatistics: '7-days warning statistics',
     days7WarningMessage: '7-days warning message',
     recoveryTime: 'Recovery Time',
+    groupEdit: 'Group edit',
   },
   zh: {
     device_mgt: '设备管理',
@@ -91,7 +91,7 @@ const resources = new LocalizedStrings({
     all: '全部',
     offline: '离线',
     downloadProgress: '下载进度',
-    more: '更多',
+    more: '详情',
     noData: '无数据',
     progress: '进度',
     downloaded: '已下载',
@@ -121,9 +121,8 @@ const resources = new LocalizedStrings({
     days7WarningStatistics: '7天警告统计',
     days7WarningMessage: '7天警告消息',
     recoveryTime: '恢复时间',
+    groupEdit: '组编辑',
   },
-})
+}
 
-var language = Cookies.get('language') || resources.getLanguage()
-resources.setLanguage(language)
-export default resources
+export default langLoader(data)

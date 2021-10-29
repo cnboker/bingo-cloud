@@ -1,33 +1,23 @@
-import {
-  ORDER_TRIAL_CREATE_RESPONSE,
-  ORDER_SESSION_LIST_RESPONSE,
-  ORDER_CREATE_RESPONSE,
-  ORDER_CHECKOUT_RESPONSE,
-} from './constants'
-
+import { ORDER_LIST_RESPONSE, ORDER_DELETE_RESPONSE, ORDER_UPDATE_RESPONSE } from './contants'
 const initialState = {
-  //能否允许创建试用
-  isCreateTrial: true,
-  trialCreateSuccess: false,
-  order: {},
-  //单价/天
-  price: 0.5,
-  //试用设备数量
-  trialDeviceCount: 5,
-  discount: 5, //5 point discount
+  data: [],
+  pageCount: 1,
+  rowNums: 30,
 }
 
-export const orderContextReducer = (state = initialState, action) => {
+export const orderReducer = (state = initialState, action) => {
   var newState = { ...state }
   switch (action.type) {
-    case ORDER_SESSION_LIST_RESPONSE:
-      return { ...state, ...action.payload }
-    case ORDER_TRIAL_CREATE_RESPONSE:
-    case ORDER_CREATE_RESPONSE:
-      newState.order = action.payload
-      return newState
-    case ORDER_CHECKOUT_RESPONSE:
+    case ORDER_LIST_RESPONSE:
       return action.payload
+    case ORDER_DELETE_RESPONSE:
+      newState.data = newState.data.filter((x) => x.id !== action.payload.id)
+      return newState
+    case ORDER_UPDATE_RESPONSE:
+      const { data } = newState
+      var index = data.findIndex((x) => x.id === action.payload.id)
+      data[index] = action.payload
+      return newState
     default:
       return state
   }

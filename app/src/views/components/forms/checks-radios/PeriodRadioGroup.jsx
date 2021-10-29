@@ -1,7 +1,8 @@
 import React from 'react'
-import LocalizedStrings from 'react-localization'
 import CheckGroup from '../CheckGroup'
-const R = new LocalizedStrings({
+import { langLoader } from '~/lib/localize'
+
+const R = langLoader({
   en: {
     week: 'Week',
     month: 'Month',
@@ -26,13 +27,13 @@ export const DefaultConfig = [
   { label: `1${R.year}`, value: 720 },
 ]
 
-export const PeriodRadioGroup = ({ onChecked, defaultSelect }) => {
+export const PeriodRadioGroup = ({ onChecked }) => {
   return (
     <CheckGroup
       data={DefaultConfig}
       name="period"
       onChecked={onChecked}
-      defaultSelect={defaultSelect}
+      defaultChecked={DefaultConfig[6]}
     />
   )
 }

@@ -1,11 +1,42 @@
 const { existsSync, writeFileSync } = require("fs");
 const { exec } = require("child_process");
-
-module.exports = function(serviceName, execStart, message) {
+require('./fileLogger')
+function install(serviceName, execStart, message, type='simple') {
   //const serviceName = "dclient.service";
   const servicePath = `/lib/systemd/system/${serviceName}`;
+  //
+  const serviceScript = `
+      [Unit]
+      Description=webos - "%n"
 
-  const serviceRemoveScript = `
+      [Service]
+      Type=${type}
+      ExecStart=${execStart}
+      `;
+  const enableAndStartScript = `
+    ln -s /lib/systemd/system/${serviceName} /lib/systemd/system/webos-bd.target.wants/ &&
+    systemctl enable ${serviceName} && 
+    systemctl start ${serviceName}
+  `;
+
+  const _install = () => {
+    writeFileSync(servicePath, serviceScript);
+    exec(enableAndStartScript, (err, stdout, stderr) => {
+      message.respond({ returnValue: true });
+    });
+  };
+
+  if (existsSync(servicePath)) {
+    uninstall(serviceName,message).finally(() => {
+      _install();
+    });
+  } else {
+    _install();
+  }
+}
+
+function uninstall(serviceName,message) {
+  const script = `
       systemctl stop ${serviceName} && 
       systemctl disable ${serviceName} && 
       rm /lib/systemd/system/webos-bd.target.wants/${serviceName}  && 
@@ -13,45 +44,22 @@ module.exports = function(serviceName, execStart, message) {
       systemctl daemon-reload && 
       systemctl reset-failed
 `;
-  //
-  const serviceScript = `
-      [Unit]
-      Description=webos - "%n"
-
-      [Service]
-      Type=simple
-      ExecStart=${execStart}
-      `;
-  if (existsSync(servicePath)) {
-    exec(serviceRemoveScript, (err, stdout, stderr) => {
-      console.log("serviceRemoveScript", err, stdout);
-      // if (err) {
-      //   message.respond({ returnValue: false, errorText: err });
-      //   return;
-      // }
-      createBootService(serviceName, serviceScript, message);
+  return new Promise((resolve, reject) => {
+    exec(script, (err, stdout, stderr) => {
+      if (err && message) {
+        //message.respond({ returnValue: false, errorText: err });
+        reject(err);
+      } else {
+        resolve(stdout);
+        if(message){
+          //message.respond({ returnValue: true });
+        }
+      }
     });
-  } else {
-    createBootService(serviceName, serviceScript, message);
-  }
-};
+  });
+}
 
-const createBootService = (serviceName, serviceScript, message) => {
-  const servicePath = `/lib/systemd/system/${serviceName}`;
-  writeFileSync(servicePath, serviceScript);
-  exec(
-    `ln -s /lib/systemd/system/${serviceName} /lib/systemd/system/webos-bd.target.wants/`,
-    (err, stdout, stderr) => {
-      // if (err) {
-      //   message.respond({ returnValue: false, errorText: err });
-      //   return;
-      // }
-      console.log(`stdout:${stdout}`);
-      console.log(`stderr:${stderr}`);
-      exec(`systemctl enable ${serviceName} && systemctl start ${serviceName}`,(err,stdout,stderr)=>{
-        console.log(err,stdout)
-      })
-      message.respond({ returnValue: true });
-    }
-  );
+module.exports = {
+  install,
+  uninstall
 };

@@ -14,12 +14,13 @@ const initialState = []
 export const deviceListReducer = (state = initialState, action) => {
   Object.freeze(state)
   let newState = merge([], state)
+  let deviceInfo = null
   switch (action.type) {
     case RECEIVE_DEVICE_LIST:
       console.log('devicelist', action.payload)
       return action.payload
     case RECEIVE_DEVICE_UPDATE_NAME:
-      let deviceInfo = newState.find((x) => x.deviceId === action.payload.deviceId)
+      deviceInfo = newState.find((x) => x.deviceId === action.payload.deviceId)
       if (!deviceInfo) {
         return state
       }

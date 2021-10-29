@@ -10,6 +10,12 @@ using Senparc.Weixin.MP.TenPayLibV3;
 
 namespace Ioliz.Service
 {
+    public class ResourceServerConfig {
+        public string Name {get;set;}
+        public string Description {get;set;}
+        public string Domain {get;set;}
+    }
+
     public class AppConfig
     {
         //代理商许可天数
@@ -57,19 +63,14 @@ namespace Ioliz.Service
 
         //4g網絡配額
         public long Quota4G { get; set; }
-        //風扇閥值
-        public decimal FanAlarmThreshold {get;set;}
-        //温度阀值
-        public decimal TempAlarmThreshold {get;set;}
-        //电压阀值
-        public decimal PowerAlarmThreshold {get;set;}
+        public ResourceServerConfig[] ResourceServers {get;set;}
 
-        public decimal FanMotorAlarmThreshold {get;set;}
         public AppConfig(IServiceProvider provider)
         {
             this.provider = provider;
             IConfigurationRoot configRoot = provider.GetService(typeof(IConfigurationRoot)) as IConfigurationRoot;
             LoadConfig(configRoot);
+            LoadResourceServers(configRoot);
         }
 
         public AppConfig(IConfigurationRoot configRoot){
@@ -96,6 +97,10 @@ namespace Ioliz.Service
             if(this.provider != null){
                 LoadKeyValues();
             }
+        }
+
+        private void LoadResourceServers(IConfigurationRoot root){
+            ResourceServers = root.GetSection("ResourceServerList").Get<ResourceServerConfig[]>();
         }
 
         public void RegisterWeixinPay()
@@ -143,11 +148,6 @@ namespace Ioliz.Service
             MaxBenefitCountByDay = GetValue<int>(keyValues, KeyValueType.MaxBenefitCountByDay.ToString());
             AgentLicenseDays = GetValue<int>(keyValues, KeyValueType.AgentLicenseDays.ToString());
             Quota4G = GetValue<long>(keyValues, KeyValueType.Quota4G.ToString());
-
-            FanAlarmThreshold = GetValue<decimal>(keyValues, KeyValueType.FanAlarmThreshold.ToString());
-            TempAlarmThreshold = GetValue<decimal>(keyValues, KeyValueType.TempAlarmThreshold.ToString());
-            PowerAlarmThreshold = GetValue<decimal>(keyValues, KeyValueType.PowerAlarmThreshold.ToString());
-            FanMotorAlarmThreshold= GetValue<decimal>(keyValues, KeyValueType.FanMotorAlarmThreshold.ToString());
         }
     }
 }

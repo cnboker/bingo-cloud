@@ -21,7 +21,7 @@ namespace Ioliz.Service.Controllers
     public dynamic Get()
     {
       var userName = User.Identity.Name;
-      var instance = ctx.Instances.FirstOrDefault(x => x.TenantUserName == userName);
+      var instance = ctx.Instances.FirstOrDefault(x => x.UserName == userName);
       var isCreateTrial = instance == null;
       return new
       {

@@ -11,17 +11,17 @@ export const RECEIVE_DEVICE_VM_DELETE = 'RECEIVE_DEVICE_VM_DELETE'
 export const RECEIVE_DEVICE_SNAPSHOT_IMAGE = 'RECEIVE_DEVICE_SNAPSHOT_IMAGE'
 export const RECEIVE_DEVICE_LOGS = 'RECEIVE_DEVICE_LOGS'
 //this branch
-export const DeviceStatusList = [
+export const NetworkStatusList = [
   {
     key: R.all,
+    value: -1,
+  },
+  {
+    key: R.offline,
     value: 0,
   },
   {
     key: R.online,
     value: 1,
-  },
-  {
-    key: R.offline,
-    value: 2,
   },
 ]

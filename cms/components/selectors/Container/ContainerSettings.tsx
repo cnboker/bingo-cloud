@@ -8,13 +8,16 @@ export const ContainerSettings = () => {
     <React.Fragment>
       <ToolbarSection
         title="Dimensions"
-        props={['width', 'height']}
+        props={['width', 'height','left', 'top', 'positon']}
         summary={({ width, height }: any) => {
           return `${width || 0} x ${height || 0}`;
         }}
       >
         <ToolbarItem propKey="width" type="text" label="Width" />
         <ToolbarItem propKey="height" type="text" label="Height" />
+        <ToolbarItem propKey="left" type="text" label="Left" />
+        <ToolbarItem propKey="top" type="text" label="Top" />
+        <ToolbarItem propKey="position" type="text" label="Position" />
       </ToolbarSection>
       <ToolbarSection
         title="Colors"

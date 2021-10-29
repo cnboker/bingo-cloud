@@ -1,52 +1,54 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import resources from '../locale'
-import Dropdown from '~/views/components/forms/Dropdown'
 import { useSelector } from 'react-redux'
 import { TagCatelog } from '../../tags/contants'
+import { CButton } from '@coreui/react'
+import CIcon from '@coreui/icons-react'
+import { cilApplications } from '@coreui/icons'
+import Offcanvas from '~/views/components/dialog/Offcanvas'
+import TagCreate from '../../tags/create'
 
-export default ({ name, groupSelect }) => {
+export default ({ groupSelect }) => {
   const tagReducer = useSelector((state) => state.tagReducer)
-  const [data, setData] = useState([])
-  const onTag = (e) => {
-    e.preventDefault()
-    this.props.history.push({
-      pathname: '/tags/create',
-      state: {
-        catelog: TagCatelog.deviceGroup,
-      },
-    })
-  }
+  const [visible, setVisible] = useState(false)
 
   const getData = () => {
+    if (!tagReducer[TagCatelog.deviceGroup]) return []
+    console.log('tagReducer', tagReducer)
     var data = tagReducer[TagCatelog.deviceGroup].map((val) => {
       return { key: val, value: val }
     })
 
     data.splice(0, 0, {
-      value: 'notset',
-      key: resources.notset,
-    })
-    data.splice(0, 0, {
-      value: '__all',
+      value: '',
       key: resources.all,
     })
     return data
   }
 
-  useEffect(() => {
-    setData(getData())
-  }, [tagReducer])
+  let data = getData()
 
   return (
     <React.Fragment>
-      <Dropdown
-        title={resources.groupFilter}
-        color="primary"
-        data={data}
-        onSelect={(val) => groupSelect(val)}
-      />{' '}
-      <button className="btn btn-link btn-sm" onClick={onTag}>
-        {name || resources.group}
+      {visible && (
+        <Offcanvas visible={visible} placement="start" onHide={() => setVisible(false)}>
+          <TagCreate catelog={TagCatelog.deviceGroup} />
+        </Offcanvas>
+      )}
+      {data.map((x) => {
+        return (
+          <CButton
+            color="light"
+            shape="rounded-pill"
+            key={x.key}
+            onClick={() => groupSelect(x.value)}
+          >
+            {x.key}
+          </CButton>
+        )
+      })}
+      <button className="btn btn-link btn-sm" onClick={() => setVisible(true)}>
+        <CIcon icon={cilApplications} size="xl" title="group create" />
       </button>
     </React.Fragment>
   )

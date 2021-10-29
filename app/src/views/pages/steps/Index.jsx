@@ -2,8 +2,11 @@ import React, { useEffect } from 'react'
 import Stepper from 'bs-stepper'
 import { CCard, CCardBody, CCardTitle } from '@coreui/react'
 import 'bs-stepper/dist/css/bs-stepper.min.css'
+import { steps } from './constants'
+
 export default () => {
   var stepper
+
   useEffect(() => {
     stepper = new Stepper(document.querySelector('.bs-stepper'))
 
@@ -11,56 +14,41 @@ export default () => {
     stepper.to(1)
   }, [])
 
+  const titleRender = () => {
+    return steps.map((x, index) => {
+      return (
+        <React.Fragment key={index}>
+          <Step index={index + 1} title={x.title} />
+          <StepLine />
+        </React.Fragment>
+      )
+    })
+  }
+  const contentRender = () => {
+    return steps.map((x, index) => {
+      return (
+        <StepContent index={index + 1} key={index}>
+          <div className="mb-5 mt-3">{x.component}</div>
+          <button className="btn btn-light" onClick={() => stepper.previous()}>
+            Last
+          </button>{' '}
+          <button className="btn btn-light" onClick={() => stepper.next()}>
+            Next
+          </button>
+        </StepContent>
+      )
+    })
+  }
+
   return (
     <CCard>
       <CCardBody>
         <CCardTitle>如何使用</CCardTitle>
         <div className="bs-stepper">
           <div className="bs-stepper-header" role="tablist">
-            <Step index={1} title="创建实例" />
-            <StepLine />
-            <Step index={2} title="试用/下单" />
-            <StepLine />
-            <Step index={3} title="激活设备" />
-            <StepLine />
-            <Step index={4} title="上传素材" />
-            <StepLine />
-            <Step index={5} title="内容设计" />
-            <StepLine />
-            <Step index={6} title="发布内容" />
+            {titleRender()}
           </div>
-          <div className="bs-stepper-content">
-            <StepContent index={1}>
-              <button className="btn btn-primary" onClick={() => stepper.next()}>
-                Next
-              </button>
-            </StepContent>
-            <StepContent index={2}>
-              <button className="btn btn-primary" onClick={() => stepper.next()}>
-                Next
-              </button>
-            </StepContent>
-            <StepContent index={3}>
-              <button className="btn btn-primary" onClick={() => stepper.next()}>
-                Next
-              </button>
-            </StepContent>
-            <StepContent index={4}>
-              <button className="btn btn-primary" onClick={() => stepper.next()}>
-                Next
-              </button>
-            </StepContent>
-            <StepContent index={5}>
-              <button className="btn btn-primary" onClick={() => stepper.next()}>
-                Next
-              </button>
-            </StepContent>
-            <StepContent index={6}>
-              <button className="btn btn-primary" onClick={() => stepper.next()}>
-                Next
-              </button>
-            </StepContent>
-          </div>
+          <div className="bs-stepper-content">{contentRender()}</div>
         </div>
       </CCardBody>
     </CCard>

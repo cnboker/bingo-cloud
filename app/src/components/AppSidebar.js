@@ -17,14 +17,13 @@ import navigation from '../_nav'
 
 const AppSidebar = () => {
   const dispatch = useDispatch()
-  const unfoldable = useSelector((state) => state.sidebarUnfoldable)
-  const sidebarShow = useSelector((state) => state.sidebarShow)
 
+  const { sidebarShow, sidebarUnfoldable } = useSelector((state) => state.siderBarReducer)
+  console.log('sidebar', sidebarShow, sidebarUnfoldable)
   return (
     <CSidebar
       position="fixed"
-      selfHiding="md"
-      unfoldable={unfoldable}
+      unfoldable={sidebarUnfoldable}
       visible={sidebarShow}
       onHide={() => {
         dispatch({ type: 'set', sidebarShow: false })
@@ -41,7 +40,7 @@ const AppSidebar = () => {
       </CSidebarNav>
       <CSidebarToggler
         className="d-none d-lg-flex"
-        onClick={() => dispatch({ type: 'set', sidebarUnfoldable: !unfoldable })}
+        onClick={() => dispatch({ type: 'set', sidebarUnfoldable: !sidebarUnfoldable })}
       />
     </CSidebar>
   )

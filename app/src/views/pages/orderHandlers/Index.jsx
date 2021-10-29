@@ -20,7 +20,7 @@ export default () => {
           试用
         </Link>
       )}
-      <Link color="info" to="/order/create">
+      <Link color="info" to="/orderHandlers/create">
         购买许可
       </Link>
     </>

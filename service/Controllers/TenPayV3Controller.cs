@@ -207,7 +207,7 @@ namespace Ioliz.Service.Controllers
                 OrderRepository ServiceRepository = new OrderRepository(this.ctx);
                 try
                 {
-                    ServiceRepository.Checkout(OrderNo, PayMethod.Weixin);
+                    ServiceRepository.Checkout(User.Identity.Name, OrderNo, PayMethod.Weixin);
                 }
                 catch (Exception ex)
                 {

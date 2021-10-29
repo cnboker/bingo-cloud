@@ -12,7 +12,7 @@ const tagReducer = (
   switch (action.type) {
     case RECEIVE_TAGS:
       var tags = action.payload.tags
-      newState[action.payload.catelog] = tags
+      newState[action.payload.catelog] = tags.split(',')
       return newState
     default:
       return state

@@ -30,7 +30,7 @@ public class NetTrafficController : BaseController
         {
             throw new ApplicationException(string.Format("{0}未找到", model.DeviceId));
         }
-        model.TenantUserName = device.TenantUserName;
+        model.UserName = device.UserName;
         ctx.NetTrafficInfos.Add(model);
         ctx.SaveChanges();
         return new ApiResult() { Message = "ok" };
@@ -42,13 +42,13 @@ public class NetTrafficController : BaseController
         string sqlText = @"
         select *, RowNum = count(*) over() from 
         (select         
-            TenantUserName as tenant,
+            UserName as tenant,
             sum(BytesReceived+BytesSent)/1048576 as payload,
 			sum(BytesReceived)/1048576 as BytesReceived,
 			sum(BytesSent)/1048576 as BytesSent
             from [dbo].[NetTrafficInfos] 
             where  StartDate between @startdate and @enddate
-            group by TenantUserName
+            group by UserName
         ) as T
             Service by tenant
             offset @offset rows

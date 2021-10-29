@@ -1,8 +1,6 @@
 using System;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
-using Newtonsoft.Json;
 
 namespace Ioliz.Service.Models
 {
@@ -30,185 +28,16 @@ namespace Ioliz.Service.Models
         public DbSet<ApplicationUserExtender> ApplicaitonUserExtenders { get; set; }
 
         public DbSet<NetTrafficInfo> NetTrafficInfos { get; set; }
-        public DbSet<SensorConfig> SensorConfigs { get; set; }
 
         public DbSet<Topic> Topics { get; set; }
-        public DbSet<SensorRemoteControl> SensorRemoteControls { get; set; }
-        public DbSet<SensorSpecialConfig> SensorSpecialConfigs { get; set; }
-        public DbSet<SensorScope> SensorScopes { get; set; }
-        public DbSet<SensorScopeDetail> SensorScopeDetails { get; set; }
-        public DbSet<RepairApply> RepairApplies { get; set; }
-        public DbSet<SIMInfo> SIMInfos { get; set; }
-        public DbSet<PreService> PreServices { get; set; }
-        public DbSet<SensorFaultApplyView> SensorFaultApplyViews { get; set; }
-        public DbSet<SensorModel> SensorModels {get;set;}
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<SensorFaultApplyView>(
-              eb =>
-              {
-                  eb.HasNoKey();
-                  eb.ToView("sensorFaultApplyView");
-                  // eb.Property(v => v.SensorId).HasColumnName("DeviceId");
-                  // eb.Property(v => v.Name).HasColumnName("DeviceName");
-              }
-            );
-        }
+       
     }
 
-    public class SensorModel
-    {
-        public int Id { get; set; }
-        public string DeviceId { get; set; }
-        public string SensorId { get; set; }
-        public string Name { get; set; }
-        public string Model { get; set; }
-        public string UserName {get;set;}
-    }
-
-    //设备状态表
-    public class SensorScope
-    {
-        public int Id { get; set; }
-        public string UserName { get; set; }
-        public string Factory { get; set; }
-        //设备Id
-        public string SensorId { get; set; }
-
-        //更新时间
-        public DateTime? UpdateTime { get; set; }
-        //报修时间
-        public DateTime? ApplyTime {get;set;}
-        //网络状态
-        public NetworkStateEnum? NetworkState { get; set; }
-        //设备状态：告警， 维修中，正常
-        public DeviceStateEnum? State { get; set; }
-        //无， 自行处理， 智能处理，
-        public HandleMethodEnum? HandleMethod { get; set; }
-
-        public HandleStepEnum? HandleStep { get; set; }
-
-    }
-
-    public class SensorScopeDetail
-    {
-        public int Id { get; set; }
-        public int ParentId { get; set; }
-        //操作用户
-        public string UserName { get; set; }
-        public HandleStepEnum HandleStep { get; set; }
-        public DateTime CreateDate { get; set; }
-        public string Remark { get; set; }
-    }
-
-    public class SIMInfo
-    {
-        public int Id { get; set; }
-        //客户名称
-        public string CustomerName { get; set; }
-
-        //接入号码
-        public string Number { get; set; }
-        //
-        public string ICCID { get; set; }
-        //套餐名称
-        public string Name { get; set; }
-        //价格
-        public decimal Price { get; set; }
-        //缴费月份
-        public int PayMonth { get; set; }
-        //合计
-        public decimal Total { get; set; }
-        //上传日期
-        public DateTime UploadDate { get; set; }
-        //是否已绑定
-        public bool IsBinding { get; set; }
-    }
-
-    public class SensorFaultApplyView
-    {
-        public int Id { get; set; }
-        //tbl_message
-        public int? Status { get; set; }
-        //tbl_message
-        public DateTime? CreateDate { get; set; }
-        //tbl_message
-        public string Message { get; set; }
-        public string Name { get; set; }
-        public string SensorId { get; set; }
-        //申请人
-        public string Applyer { get; set; }
-        //申请日期
-        public DateTime? ApplyDate { get; set; }
-        //受理人
-        public string Accepter { get; set; }
-        //受理日期
-        public DateTime? AcceptDate { get; set; }
-        //受理人已完成待确认
-        public DateTime? FactoryFinisheddDate { get; set; }
-        //申请人确认完成日期
-        public DateTime? FinishedDate { get; set; }
-        //0:申请未处理， 1.已受理， 2. 处理已完成， 3. 已确认
-        public HandleStepEnum ApplyState { get; set; }
-        //处理方式
-        public HandleMethodEnum HandleMethod { get; set; }
-        //故障传感器,转速，温度， 电压 。。。
-        public string FaultPoint { get; set; }
-        //概述
-        public string Title { get; set; }
-        //详细描述
-        public string DeSc { get; set; }
-        //上传照片
-        public string Images { get; set; }
-
-        //催单次数
-        public int RemenderCount { get; set; }
-        //上次催单时间
-        public DateTime? LastRemenderTime { get; set; }
-    }
-    //报修申请单
-    public class RepairApply
-    {
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public string SensorId { get; set; }
-        //申请人
-        public string Applyer { get; set; }
-        //申请日期
-        public DateTime ApplyDate { get; set; }
-        //受理人
-        public string Accepter { get; set; }
-        //受理日期
-        public DateTime? AcceptDate { get; set; }
-        //工厂完成时间
-        public DateTime? FactoryFinisheddDate { get; set; }
-        //申请人确认完成时间
-        public DateTime? FinishedDate { get; set; }
-        //0:申请未处理， 1.已受理， 2. 处理已完成， 3. 已确认
-        public HandleStepEnum? ApplyState { get; set; }
-        //处理方式
-        public HandleMethodEnum? HandleMethod { get; set; }
-        //故障传感器,转速，温度， 电压 。。。
-        public string FaultPoint { get; set; }
-        //概述
-        public string Title { get; set; }
-        //详细描述
-        public string DeSc { get; set; }
-        //上传照片
-        public string Images { get; set; }
-
-        //催单次数
-        public int RemenderCount { get; set; }
-        //上次催单时间
-        public DateTime? LastRemenderTime { get; set; }
-    }
-
-
-
+   
     public class NetTrafficInfo
     {
         public int Id { get; set; }
-        public string TenantUserName { get; set; }
+        public string UserName { get; set; }
         public string DeviceId { get; set; }
         public string DeviceName { get; set; }
         public DateTime StartDate { get; set; }
@@ -255,35 +84,14 @@ namespace Ioliz.Service.Models
     {
         public int Id { get; set; }
         //实例名称
-        public string InstanceName { get; set; }
-        //domain
-        public string Server { get; set; }
-        //api domain
-        public string ApiServer { get; set; }
-        public string TenantUserName { get; set; }
-        public string DatabaseName { get; set; }
-        public string Resource { get; set; }
+        public string ResourceServer { get; set; }
+        public string UserName { get; set; }
         public DateTime CreateDate { get; set; }
-        //服务是否已经初始化
-        public bool IsInitialize { get; set; }
         //是否是试用会员
         public bool IsTrial { get; set; }
     }
 
-    public class PreService
-    {
-        public int Id { get; set; }
-        public string ServiceNo { get; set; }
-        public string Name { get; set; }
-        public string Mobile { get; set; }
-        public string Address { get; set; }
-        public DateTime CreateDate { get; set; }
-        public DateTime PaidDate { get; set; }
-        public string Remark { get; set; }
-        public bool IsPaid { get; set; }
-        public decimal Amount { get; set; }
-    }
-
+    
     public class MyOrder
     {
         public int Id { get; set; }
@@ -291,7 +99,7 @@ namespace Ioliz.Service.Models
         public string InstanceName { get; set; }
         public decimal Price { get; set; }
         public string OrderNo { get; set; }
-        public string TenantUserName { get; set; }
+        public string UserName { get; set; }
         public decimal Amount { get; set; }
         //订单小记
         public decimal SubTotal { get; set; }
@@ -350,14 +158,11 @@ namespace Ioliz.Service.Models
         public int Id { get; set; }
         public DateTime? GenerateDate { get; set; }
         public LicenseType LicenseType { get; set; }
-        public string Certification { get; set; }
         public DateTime? ActivationdDate { get; set; }
         public int ValidDays { get; set; }
-        public string TenantUserName { get; set; }
+        public string UserName { get; set; }
         public string DeviceId { get; set; }
         public Device Device { get; set; }
-        //远程节目发布系统API接口
-        public string ApiUrl { get; set; }
         public LicenseStatus Status { get; set; }
     }
 
@@ -379,56 +184,21 @@ namespace Ioliz.Service.Models
         public string Resolution { get; set; }
         public string MAC { get; set; }
         public string IP { get; set; }
-        public DeviceStatus Status { get; set; }
+        public NetworkStatus Status { get; set; }
         public DateTime? LastUpdateTime { get; set; }
         // public string ServerName { get; set; }
-        public string TenantUserName { get; set; }
+        public string UserName { get; set; }
         //授权状态
         public AuthorizeStatus? AuthorizeStatus { get; set; }
         //授权代码
         public string AuthorizeCode { get; set; }
         public DateTime? AuthorizeDate { get; set; }
-
-        public int? CurrentLicenseId { get; set; }
        
         //设备分组
         public string GroupName { get; set; }
        
         public DateTime? UpdateDate { get; set; }
         public String LatLng { get; set; }
-    }
-
-    public class SensorRemoteControl
-    {
-        [Key]
-        public string SensorId { get; set; }
-        public string Data { get; set; }
-    }
-
-    public class SensorConfig
-    {
-        public int Id { get; set; }
-        public string TenantUserName { get; set; }
-        //温度预警设置 config->alarm
-        public string Threshold { get; set; }
-        //逗号分隔
-        //public string SensorIds { get; set; }
-        //风机温度默认配置数据--config->temp
-        public string FanConfig { get; set; }
-        //系统设置数据
-        public string SystemConfig { get; set; }
-
-        //监控表格缓存数据
-        public string DeviceCacheData { get; set; }
-
-        //传感器型号和设备关联数据
-        public string FanModel { get; set; }
-        //设备组数据
-        public string MainConfig { get; set; }
-        //恢复上一次配置
-        public string History { get; set; }
-        //用户自定义传感器名称数据[{key,value}]
-        public string SensorPropsLabelData { get; set; }
     }
 
     //用户数据字典
@@ -442,15 +212,7 @@ namespace Ioliz.Service.Models
         public TopicCatelog Catelog { get; set; }
     }
 
-    //环控设备传感器配置表， 可以配置哪些已安装，哪些未安装
-    public class SensorSpecialConfig
-    {
-        public int Id { get; set; }
-        public string UserName { get; set; }
-        //配置内容
-        public string Content { get; set; }
-        public string Group { get; set; }
-    }
+    
 
     //数据字典类别
     public enum TopicCatelog
@@ -483,11 +245,10 @@ namespace Ioliz.Service.Models
         public string Key { get; set; }
         public string Value { get; set; }
     }
-    public enum DeviceStatus
+    public enum NetworkStatus
     {
-        Offline,
-        Failure,
-        Running
+        Offline = 0,
+        Running = 1
     }
     public enum LicenseType
     {

@@ -5,9 +5,6 @@ using Microsoft.Extensions.Logging;
 using System.Linq;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Authorization;
-using System.Net.Http;
-using Newtonsoft.Json;
-using System.Net.Http.Headers;
 using Microsoft.Extensions.Localization;
 
 namespace Ioliz.Service.Controllers
@@ -20,14 +17,13 @@ namespace Ioliz.Service.Controllers
     private ILogger<DeviceController> logger;
     private readonly IStringLocalizer localizer;
 
-
     public DeviceController(ServiceContext context, ILogger<DeviceController> logger, IStringLocalizer<DeviceController> localizer)
     {
       this.ctx = context;
       this.logger = logger;
       this.localizer = localizer;
     }
-    
+
     public IEnumerable<DeviceModel> MyList()
     {
       return List(User.Identity.Name);
@@ -45,12 +41,12 @@ namespace Ioliz.Service.Controllers
       return Ok("");
     }
 
-    [HttpPost("/api/device/nameUpdate")]
-    public IActionResult NameUpdate([FromBody] UpdateDeviceNameModel model)
+    [HttpPost("/api/device/updateName")]
+    public IActionResult UpdateName([FromBody] UpdateDeviceNameModel model)
     {
       var device = ctx.Devices.FirstOrDefault(x => x.DeviceId == model.DeviceId);
       if (device == null) return NotFound("device not found");
-      if (device.TenantUserName != User.Identity.Name) new UnauthorizedAccessException();
+      if (device.UserName != User.Identity.Name) new UnauthorizedAccessException();
       if (!string.IsNullOrEmpty(model.NewName))
       {
         device.Name = model.NewName;
@@ -65,33 +61,8 @@ namespace Ioliz.Service.Controllers
       }
       ctx.SaveChanges();
 
-      var instance = ctx.Instances.FirstOrDefault(x => x.TenantUserName == User.Identity.Name);
-      using (HttpClient client = new HttpClient())
-      {
-        var parameters = new
-        {
-          UserName = User.Identity.Name,
-          DeviceId = model.DeviceId,
-          NewName = model.NewName,
-          Resolution = model.Resolution
-        };
+      return Ok(device);
 
-        var url = instance.ApiServer + string.Format("/api/device");
-        var content = new System.Net.Http.StringContent(JsonConvert.SerializeObject(parameters), System.Text.Encoding.UTF8, "application/json");
-        content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
-        logger.LogInformation("instance remote  url:" + url);
-        var response = client.PostAsync(url, content).Result;
-        if (response.IsSuccessStatusCode)
-        {
-          return Ok(response);
-        }
-        else
-        {
-          var error = response.Content.ReadAsStringAsync().Result;
-          logger.LogInformation("instance error=" + error);
-          return BadRequest(error);
-        }
-      }
     }
 
     //设备分配给会员
@@ -103,8 +74,8 @@ namespace Ioliz.Service.Controllers
       {
         return NotFound(string.Format("deviceid:{0} not found", model.DeviceId));
       }
-      if (device.TenantUserName == model.UserName) return Ok();
-      device.TenantUserName = model.UserName;
+      if (device.UserName == model.UserName) return Ok();
+      device.UserName = model.UserName;
       ctx.SaveChanges();
       return Ok();
     }
@@ -113,65 +84,44 @@ namespace Ioliz.Service.Controllers
     public IEnumerable<DeviceModel> List(string id)
     {
       string userName = id;
-      var instance = ctx.Instances.FirstOrDefault(x => x.TenantUserName == userName);
-      var q = from c in ctx.Devices
-              join b in ctx.Licenses.AsQueryable()
-              on c.CurrentLicenseId equals b.Id into sr
-              from x in sr.DefaultIfEmpty()
-              where c.TenantUserName == userName
-              select new DeviceModel()
-              {
-                DeviceId = c.DeviceId,
-                Name = c.Name,
-                MAC = c.MAC,
-                IP = c.IP,
-                ActivationdDate = x.ActivationdDate != null ? x.ActivationdDate.Value : DateTime.Now,
-                ValidDays = x.ValidDays,
-                TenantUserName = c.TenantUserName,
-
-                GroupName = c.GroupName,
-                Resolution = c.Resolution,
-                OS = c.OS,
-                LatLng = c.LatLng
-              };
-      var model = q.ToList();
-
-      var url = GetDeviceResourceUrl(instance);
-      foreach (var item in model)
-      {
-
-        var days = Convert.ToInt32(item.ActivationdDate.AddDays(item.ValidDays ?? 0).Subtract(DateTime.Now).TotalDays);
-        if (days <= 0)
+      var instance = ctx.Instances.FirstOrDefault(x => x.UserName == userName);
+      var license = ctx.Licenses.FirstOrDefault(x => x.UserName == userName && x.Status == LicenseStatus.Active);
+      var leftDays = GetLeftDays(license);
+      var q = ctx.Devices.AsQueryable().Where(c => c.UserName == userName).Select(c =>
+        new DeviceModel()
         {
-          item.licenseExpired = true;
-          days = 0;
-        }
-        item.LicenseRemark = string.Format(localizer.GetString("有效天数{0}天"), Convert.ToInt32(days));
-        //item.LicenseRemark = string.Format("valid days:{0}", Convert.ToInt32(days));
-        item.StatusResourceUrl = url;
-      }
-
+          DeviceId = c.DeviceId,
+          Name = c.Name,
+          MAC = c.MAC,
+          IP = c.IP,
+          ActivationdDate = license != null ? license.ActivationdDate.Value : DateTime.Now,
+          ValidDays = license != null ? license.ValidDays : 0,
+          UserName = c.UserName,
+          GroupName = c.GroupName,
+          Resolution = c.Resolution,
+          licenseExpired = leftDays <= 0,
+          OS = c.OS,
+          LatLng = c.LatLng,
+          LicenseRemark = string.Format("valid days:{0}", leftDays ?? 0),
+          NetworkStatus = (int)c.Status
+        });
+      var model = q.ToList();
       return model;
     }
 
-
-    private string GetDeviceResourceUrl(Instance instance)
+    int? GetLeftDays(License item)
     {
-      if (instance == null) return "";
-      var url = string.Format("{0}{1}", instance.ApiServer, AppInstance.Instance.Config.DeviceStatusUrl + User.Identity.Name);
-      return url;
+      if (item == null) return 0;
+      return Convert.ToInt32(item.ActivationdDate.Value.AddDays(item.ValidDays).Subtract(DateTime.Now).TotalDays);
     }
-    private string GetDeviceStatus(DeviceStatus status)
+
+    private string GetDeviceStatus(NetworkStatus status)
     {
-      if (status == DeviceStatus.Failure)
-      {
-        return "设备异常";
-      }
-      else if (status == DeviceStatus.Offline)
+      if (status == NetworkStatus.Offline)
       {
         return "设备离线";
       }
-      else if (status == DeviceStatus.Running)
+      else if (status == NetworkStatus.Running)
       {
         return "设备在线";
       }

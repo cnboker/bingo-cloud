@@ -6,5 +6,20 @@
     "MD025": {
       "front_matter_title": ""
     }
-  }
+  },
+  "sqltools.connections": [
+    {
+      "mysqlOptions": {
+        "authProtocol": "default"
+      },
+      "previewLimit": 50,
+      "server": "localhost",
+      "port": 3306,
+      "driver": "MySQL",
+      "name": "mysql",
+      "database": "service",
+      "username": "root",
+      "password": "szsong100"
+    }
+  ]
 }

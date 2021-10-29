@@ -27,7 +27,7 @@ const AppContent = () => {
               )
             )
           })}
-          <Redirect from="/" to="/order/create" />
+          <Redirect from="/" to="dashboard" />
         </Switch>
       </Suspense>
     </CContainer>

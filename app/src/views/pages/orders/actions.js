@@ -1,68 +1,45 @@
-import {
-  ORDER_TRIAL_CREATE_RESPONSE,
-  ORDER_SESSION_LIST_RESPONSE,
-  ORDER_CREATE_RESPONSE,
-  ORDER_CHECKOUT_RESPONSE,
-} from './constants'
-import { get, post, asyncGet } from 'src/lib/api'
+import { ORDER_LIST_RESPONSE, ORDER_DELETE_RESPONSE, ORDER_UPDATE_RESPONSE } from './contants'
+import { deleteObject, post } from 'src/lib/api'
 
-export const trialResponse = (payload) => {
-  return { type: ORDER_TRIAL_CREATE_RESPONSE, payload }
+export const userListResponse = (payload) => {
+  return { type: ORDER_LIST_RESPONSE, payload }
 }
 
-export const orderSessionResponse = (payload) => {
-  return { type: ORDER_SESSION_LIST_RESPONSE, payload }
+export const orderDeleteResponse = (payload) => {
+  return { type: ORDER_DELETE_RESPONSE, payload }
 }
 
-export const orderCreateResponse = (payload) => {
-  return { type: ORDER_CREATE_RESPONSE, payload }
+export const orderUpdateResponse = (payload) => {
+  return { type: ORDER_UPDATE_RESPONSE, payload }
 }
 
-export const orderCheckoutResponse = (payload) => {
-  return { type: ORDER_CHECKOUT_RESPONSE, payload }
-}
+const orderListUrl = `${process.env.REACT_APP_SERVICE_URL}/api/order/list`
 
-export const codeCheck = (code) => {
-  const url = `${process.env.REACT_APP_SERVICE_URL}/api/order/codeCheck/${code}`
-  return asyncGet({ url })
-}
-
-//获取用户订单会话
-export const getOrderSession = () => (dispatch) => {
-  const url = `${process.env.REACT_APP_SERVICE_URL}/api/ordersession`
-  dispatch(
-    get({
-      url,
-      responseAction: orderSessionResponse,
-    }),
-  )
-}
-
-export const createTrial = () => (dispatch) => {
+//startDate, endDate, keyword, page = 0
+export const orderList = (q) => (dispatch) => {
   dispatch(
     post({
-      url: `${process.env.REACT_APP_SERVICE_URL}/api/order/trial`,
-      responseAction: trialResponse,
-    }),
-  )
-}
-
-export const createOrder = (q) => (dispatch) => {
-  dispatch(
-    post({
-      url: `${process.env.REACT_APP_SERVICE_URL}/api/order/create`,
+      url: `${orderListUrl}`,
       data: q,
-      responseAction: orderCreateResponse,
+      responseAction: userListResponse,
     }),
   )
 }
 
-export const checkout = (q) => (dispatch) => {
+export const free = (id) => (dispatch) => {
   dispatch(
     post({
-      url: `${process.env.REACT_APP_SERVICE_URL}/api/order/create`,
-      data: q,
-      responseAction: orderCheckoutResponse,
+      url: `${process.env.REACT_APP_SERVICE_URL}/api/order/free/${id}`,
+      responseAction: orderUpdateResponse,
+    }),
+  )
+}
+
+export const cancel = (id) => (dispatch) => {
+  dispatch(
+    deleteObject({
+      url: `${process.env.REACT_APP_SERVICE_URL}/api/order/cancel/${id}`,
+      responseAction: orderDeleteResponse,
     }),
   )
 }

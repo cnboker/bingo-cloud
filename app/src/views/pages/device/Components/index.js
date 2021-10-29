@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import TableContainer from '~/views/components/tables/TableContainer'
 import Pager from '~/views/components/tables/Pager'
 import Search from '~/views/components/forms/Search'
 import resources from '../locale'
@@ -10,6 +9,7 @@ import DeviceGroup from './groupLink'
 import { requestDeviceList } from '../actions'
 import { TagCatelog } from '../../tags/contants'
 import { fetchTags } from '../../tags/actions'
+import PageContainer from 'src/views/components/pageContainer'
 
 export default () => {
   const dispatch = useDispatch()
@@ -21,10 +21,10 @@ export default () => {
     data: [],
   })
 
-  const interval = 3000 * 10
+  const interval = 30 * 1000
   const [filter, setFilter] = useState({
-    selectGroup: '__all',
-    deviceStatus: 0,
+    selectGroup: '',
+    networkStatus: -1,
     keyword: '',
     page: 0,
   })
@@ -47,7 +47,7 @@ export default () => {
   }, [deviceList, filter])
 
   const statusChange = (status) => {
-    setFilter({ ...filter, deviceStatus: status })
+    setFilter({ ...filter, networkStatus: status.value })
   }
 
   const groupSelect = (selectGroup) => {
@@ -56,21 +56,23 @@ export default () => {
 
   const getTableData = (page = 0) => {
     let data = deviceList
-    if (filter.deviceStatus > 0) {
+    if (filter.networkStatus !== -1) {
       data = data.filter((item) => {
-        return item.value === filter.deviceStatus
+        return item.networkStatus === filter.networkStatus
       })
     }
-    if (filter.selectGroup === 'notset') {
-      data = data.filter((item) => {
-        return !item.group
-      })
-    } else if (filter.selectGroup !== '__all') {
+    if (filter.selectGroup) {
       data = data.filter((item) => {
         return item.groupName === filter.selectGroup
       })
     }
 
+    if (filter.keyword) {
+      data = data.filter((item) => {
+        const { name, deviceId, ip } = item
+        return (name + deviceId + ip).indexOf(filter.keyword) !== -1
+      })
+    }
     var currentIndex = page * PAGE_SIZE
     return {
       pageCount: Math.ceil(deviceList.length / PAGE_SIZE),
@@ -87,16 +89,16 @@ export default () => {
   }
 
   return (
-    <TableContainer title={resources.device_mgt}>
+    <PageContainer>
       <div className="row mb-2">
-        <div className="col-md-3">
-          <DeviceGroup deviceList={deviceList} groupSelect={groupSelect} />
-        </div>
         <div className="col-md-6">
-          <Search onKeywordChange={keywordFilter} />
+          <DeviceGroup groupSelect={groupSelect} />
         </div>
         <div className="col-md-3">
-          <RowFliter statusChange={statusChange} deviceStatus={filter.deviceStatus} />
+          <Search onSearch={keywordFilter} />
+        </div>
+        <div className="col-md-3">
+          <RowFliter statusChange={statusChange} defaultValue={filter.networkStatus} />
         </div>
       </div>
       <div className="table-responsive">
@@ -105,6 +107,6 @@ export default () => {
           <Pager pageCount={tableData.pageCount} onPageChange={pagination} />
         </div>
       </div>
-    </TableContainer>
+    </PageContainer>
   )
 }

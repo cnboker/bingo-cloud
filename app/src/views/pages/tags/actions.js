@@ -30,7 +30,6 @@ export const tagUpdate = (data) => (dispatch) => {
   })
     .then(() => {
       dispatch(receiveTags({ catelog: data.catelog, tags: data.content }))
-      toast('success')
     })
     .catch((e) => {
       toast(e.message)

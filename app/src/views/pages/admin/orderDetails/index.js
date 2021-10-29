@@ -4,28 +4,26 @@ import DateSearchbar from 'src/views/components/forms/form-control/DateSearchbar
 import Table from 'src/views/components/tables/Table'
 import { DateFormater } from 'src/views/components/tables/CellFormatter'
 import Pager from 'src/views/components/tables/Pager'
+import PageContainer from 'src/views/components/pageContainer'
 
 export default (props) => {
   const { dataset, onSearch } = props
   const [query, setQuery] = useState({})
   return (
-    <CCard>
-      <CCardHeader component="h5">Balance</CCardHeader>
-      <CCardBody>
-        <DateSearchbar
-          onSearch={(q) => {
-            setQuery(q)
-            onSearch(q)
-          }}
-        />
-        {/*eslint-disable-next-line @typescript-eslint/no-use-before-define*/}
-        <Table {...props} {...TableProps()} data={dataset.data} />
-        <Pager
-          pageCount={dataset.pageCount}
-          onPageChange={(target) => onSearch({ ...query, page: target.selected })}
-        />
-      </CCardBody>
-    </CCard>
+    <PageContainer>
+      <DateSearchbar
+        onSearch={(q) => {
+          setQuery(q)
+          onSearch(q)
+        }}
+      />
+      {/*eslint-disable-next-line @typescript-eslint/no-use-before-define*/}
+      <Table {...props} {...TableProps()} data={dataset.data} />
+      <Pager
+        pageCount={dataset.pageCount}
+        onPageChange={(target) => onSearch({ ...query, page: target.selected })}
+      />
+    </PageContainer>
   )
 }
 

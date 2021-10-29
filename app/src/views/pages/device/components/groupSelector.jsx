@@ -7,15 +7,13 @@ export const GroupSelector = ({ groupName, groupList, onSelect }) => (
   <React.Fragment>
     <RowContainer label={resources.selectedDevices}>{groupName}</RowContainer>
     <RowContainer label={resources.group}>
-      <div className="ddl">
-        <Select
-          placeholder={resources.group}
-          onChange={onSelect}
-          options={groupList.split(',').map((x) => {
-            return { label: x, value: x }
-          })}
-        />
-      </div>
+      <Select
+        placeholder={resources.group}
+        onChange={onSelect}
+        options={groupList.map((x) => {
+          return { label: x, value: x }
+        })}
+      />
     </RowContainer>
   </React.Fragment>
 )

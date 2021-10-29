@@ -32,6 +32,10 @@ export const TextSettings = () => {
           <ToolbarRadio value="500" label="Medium" />
           <ToolbarRadio value="700" label="Bold" />
         </ToolbarItem>
+        <ToolbarItem propKey="position" type="radio" label="Position">
+          <ToolbarRadio value="relative" label="Relative"/>
+          <ToolbarRadio value="absolute" label="Absolute" />
+        </ToolbarItem>
       </ToolbarSection>
       <ToolbarSection
         title="Margin"
@@ -73,6 +77,7 @@ export const TextSettings = () => {
           type="slider"
           label="Shadow"
         />
+         
       </ToolbarSection>
     </React.Fragment>
   );

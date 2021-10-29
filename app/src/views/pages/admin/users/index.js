@@ -6,20 +6,17 @@ import Table from 'src/views/components/tables/Table'
 import { DateFormater } from 'src/views/components/tables/CellFormatter'
 import { DateTimeFormater } from 'src/views/components/tables/CellFormatter'
 import Pager from 'src/views/components/tables/Pager'
-
+import PageContainer from 'src/views/components/pageContainer'
 export default (props) => {
   const { dataset, onSearch, pagination } = props
 
   return (
-    <CCard>
-      <CCardHeader component="h5">Users</CCardHeader>
-      <CCardBody>
-        <SimpleSearchbar onSearch={onSearch} />
-        {/* eslint-disable-next-line @typescript-eslint/no-use-before-define*/}
-        <Table {...props} {...TableProps()} data={dataset.data} />
-        <Pager pageCount={dataset.pageCount} onPageChange={pagination} />
-      </CCardBody>
-    </CCard>
+    <PageContainer>
+      <SimpleSearchbar onSearch={onSearch} />
+      {/* eslint-disable-next-line @typescript-eslint/no-use-before-define*/}
+      <Table {...props} {...TableProps()} data={dataset.data} />
+      <Pager pageCount={dataset.pageCount} onPageChange={pagination} />
+    </PageContainer>
   )
 }
 

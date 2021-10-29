@@ -15,8 +15,6 @@
     "@material-ui/icons": "^4.5.1",
     "@material-ui/styles": "^4.5.2",
     "autoprefixer": "latest",
-    "chonky": "^2.2.0",
-    "chonky-icon-fontawesome": "^2.2.0",
     "classnames": "^2.2.6",
     "cssnano": "^4.1.10",
     "debounce": "^1.2.0",

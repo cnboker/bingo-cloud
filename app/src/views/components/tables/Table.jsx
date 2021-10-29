@@ -58,6 +58,7 @@ const HTMLTable = ({ cellStyles, data, ...props }) => {
           <tr>
             {cellStyles.map((item, index) => {
               var width = cellStyles[index].width
+              if (item.visiable === false) return null
               return (
                 <th key={index} style={{ width: width + 'px' }}>
                   <span>{item.title}</span>
@@ -87,6 +88,7 @@ const DataRowComponent = ({ cellStyles, row, ...props }) => {
   return (
     <tr>
       {cellStyles.map((cellStyle, index) => {
+        if (cellStyle.visiable === false) return null
         return (
           <td key={index} style={{ width: cellStyle.width - 1 + 'px' }}>
             {/* eslint-disable-next-line @typescript-eslint/no-use-before-define */}
