@@ -1,0 +1,24 @@
+export const MetaMap = {
+  rootId:'a1',
+  map:{
+    'a1':{
+      tag:'View',
+      duration:30,
+      style:{color:'red'},
+      childrenIds:['a2']
+    },
+    'a2':{
+      tag:'Animation',
+      action:'bounch',
+      childrenIds:['a3']
+    },
+    'a3':{
+      tag:'Fragment',
+      childrenIds:['a4']
+    },
+    'a4':{
+      tag:'Image',
+      src:'#'
+    }
+  }
+}
