@@ -1,4 +1,4 @@
-export const MetaMap = {
+exports.MetaMap = {
   rootId:'a1',
   map:{
     'a1':{

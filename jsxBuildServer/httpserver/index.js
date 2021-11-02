@@ -3,7 +3,7 @@ const bodyParser = require('body-parser')
 const cors = require('cors')
 const helmet = require('helmet')
 const morgan = require('morgan')
-
+const postHandler = require('./postHandler')
 const app = express()
 
 // defining an array to work as the database (temporary solution)
@@ -23,7 +23,10 @@ app.get('/',(req,res)=>{
 })
 
 app.post('/', async(req,res)=>{
-
+  const {username,data} = req.body
+  postHandler.make(username,data).then(res=>{
+    res.send(res)
+  })
 })
 
 app.delete('/:id',async(req,res)=>{
