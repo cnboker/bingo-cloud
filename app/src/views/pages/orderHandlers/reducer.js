@@ -10,7 +10,7 @@ const initialState = {
   //能否允许创建试用,通过该属性可以判断用户有无开通试用或下单
   isCreateTrial: false,
   trialCreateSuccess: false,
-  order: {},
+  instance: null,
   //单价/天
   price: 0.5,
   //试用设备数量
@@ -27,7 +27,7 @@ export const orderContextReducer = (state = initialState, action) => {
       return { ...state, ...action.payload, orderSessionRequestSuccess: true }
     case ORDER_TRIAL_CREATE_RESPONSE:
     case ORDER_CREATE_RESPONSE:
-      newState.order = action.payload
+      newState.instance = action.payload
       return newState
     case ORDER_CHECKOUT_RESPONSE:
       return action.payload

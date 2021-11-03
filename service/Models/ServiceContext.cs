@@ -84,7 +84,8 @@ namespace Ioliz.Service.Models
     {
         public int Id { get; set; }
         //实例名称
-        public string ResourceServer { get; set; }
+        public string FileServer { get; set; }
+        public string MQTTServer {get;set;}
         public string UserName { get; set; }
         public DateTime CreateDate { get; set; }
         //是否是试用会员

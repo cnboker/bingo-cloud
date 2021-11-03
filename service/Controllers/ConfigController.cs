@@ -10,7 +10,7 @@ using Microsoft.Extensions.Logging;
 namespace Ioliz.Service.Controllers
 {
   [Route("/api/[controller]/[action]")]
-  [Authorize(Roles="Administrators")]
+  [Authorize(Roles = "Administrators")]
   public class ConfigController : Controller
   {
     private readonly ServiceContext ctx;
@@ -24,25 +24,46 @@ namespace Ioliz.Service.Controllers
     public IEnumerable<KeyValue> GetAll() => ctx.KeyValues.ToList();
 
     [HttpPost]
-    public IActionResult Update([FromBody]IList<KeyValue> list)
+    public IActionResult Update([FromBody] IList<KeyValue> list)
     {
       var original = ctx.KeyValues.ToList();
       foreach (var item in list)
       {
-        logger.LogInformation(string.Format("key:{0},value:{1}",item.Key,item.Value));
+        logger.LogInformation(string.Format("key:{0},value:{1}", item.Key, item.Value));
         var old = original.FirstOrDefault(x => x.Key == item.Key);
-        if(old == null){
+        if (old == null)
+        {
           ctx.KeyValues.Add(item);
-        }else{
-          if(old.Value != item.Value){
+        }
+        else
+        {
+          if (old.Value != item.Value)
+          {
             old.Value = item.Value;
           }
         }
-       
+
       }
       ctx.SaveChanges();
 
       AppInstance.Instance.Config.LoadKeyValues();
+      return Ok();
+    }
+
+    [Authorize]
+    [HttpGet("/api/requestConfig")]
+    public IActionResult RequestConfig(string deviceId)
+    {
+      var instance = ctx.Instances.FirstOrDefault(x => x.UserName == User.Identity.Name);
+      if (instance != null)
+      {
+        return Ok(new
+        {
+          FileServer = instance.FileServer,
+          MQTTServer = instance.MQTTServer,
+          UserName = instance.UserName
+        });
+      }
       return Ok();
     }
 

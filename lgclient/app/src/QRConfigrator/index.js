@@ -1,42 +1,32 @@
 import React, { useEffect, useState } from "react";
 import QRCode from "qrcode.react";
-import { requestDeviceInfo } from "./api";
-import { config, webosApis } from "lgservice";
-import {
-    postDeviceInfo,
-    requestInstance,
-    requestLicense,
-    requestQR,
-    requestToken
-} from "./actions";
+import { getDeviceInfo } from "./api";
+import { configer, webosApis } from "lgservice";
+import { postDeviceInfo, requestConfig, requestQR, requestToken } from "./actions";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router";
 
 export default () => {
-    const RunStep = Object.freeze({
-        RequestQR: 1,
-        RequestToken: 2,
-        RequestLicense: 3,
-        Finished: 4
-    });
+    const RunStep = Object.freeze({ RequestQR: 1, RequestToken: 2, RequestConfig: 3, Finished: 4 });
     const { exists, mkdir } = webosApis.webosFileService;
     const { appbootInstall, httpserverInstall } = webosApis.bootservice;
-    const [runStep, setRunStep] = useState(RunStep.RequestQR);
-    const [id, setId] = useState();
+    const [runStep,
+        setRunStep] = useState(RunStep.RequestQR);
+    const [id,
+        setId] = useState();
     const delay = 5000;
     const dispatch = useDispatch();
     const history = useHistory();
     const qrState = useSelector(state => state.qrReducer);
-    const { QR, token, license } = qrState;
-    const { APP_ROOT } = config;
+    const { QR, token, configInfo } = qrState;
+    const { APP_ROOT } = configInfo;
 
     useEffect(() => {
-        httpserverInstall()
-            .then(() => {
-                return appbootInstall();
-            }).then(res => {
-                console.log("install->", res);
-            });
+        httpserverInstall().then(() => {
+            return appbootInstall();
+        }).then(res => {
+            console.log("install->", res);
+        });
         dirReady();
         dispatch(requestQR());
     }, []);
@@ -49,19 +39,16 @@ export default () => {
     }, []);
 
     const dirReady = () => {
-        exists(APP_ROOT)
-            .then(exist => {
-                if (!exist) {
-                    return mkdir(APP_ROOT);
-                }
-                return true;
-            })
-            .then(res => {
-                console.log(res);
-            })
-            .catch(e => {
-                console.log("mkdsDir", e);
-            });
+        exists(APP_ROOT).then(exist => {
+            if (!exist) {
+                return mkdir(APP_ROOT);
+            }
+            return true;
+        }).then(res => {
+            console.log(res);
+        }).catch(e => {
+            console.log("mkdsDir", e);
+        });
     };
 
     const stateLoop = () => {
@@ -71,31 +58,33 @@ export default () => {
         } else if (!token.access_token && runStep === RunStep.RequestToken) {
             dispatch(requestToken(QR.authorizeCode));
         } else if (token.access_token && runStep === RunStep.RequestToken) {
-            setRunStep(RunStep.RequestLicense);
-            requestDeviceInfo().then(deviceInfo => {
+            setRunStep(RunStep.RequestConfig);
+            getDeviceInfo().then(deviceInfo => {
                 const { wired_addr } = deviceInfo;
                 setId(wired_addr);
-                dispatch(
-                    postDeviceInfo(token.access_token, QR.authorizeCode, deviceInfo)
-                );
+                dispatch(postDeviceInfo(token.access_token, QR.authorizeCode, deviceInfo));
             });
-        } else if (!license.resourceServer && runStep === RunStep.RequestLicense) {
-            dispatch(requestLicense(token.access_token, id));
-        } else if (license.resourceServer && runStep === RunStep.RequestLicense) {
+        } else if (!configInfo.fileServer && runStep === RunStep.RequestConfig) {
+            dispatch(requestConfig(token.access_token));
+        } else if (configInfo.fileServer && runStep === RunStep.RequestConfig) {
             setRunStep(RunStep.Finished);
-            saveLicense(token);
+            saveConfig(token);
             history.push("/play");
         }
     };
 
-    const saveLicense = token => {
-        license.token = token.access_token;
-        console.log("save license", license);
-        config.instance.write(license).then(err => {
-            if (err) {
-                console.log("write license file error", err);
-            }
-        });
+    const saveConfig = () => {
+        configInfo.token = token.access_token;
+        configInfo.deviceId = id;
+        console.log("save configInfo", configInfo);
+        configer
+            .instance
+            .write(configInfo)
+            .then(err => {
+                if (err) {
+                    console.log("write configInfo file error", err);
+                }
+            });
     };
 
     const divStyles = {
@@ -105,19 +94,18 @@ export default () => {
     };
 
     return (
-        <div className="container-fluid" style={divStyles}>
+        <div className="container-fluid" style={ divStyles }>
             <div className="row">
                 <div className="col">
-                    {QR.qrUrl &&
-                        <QRCode value={QR.qrUrl} size={256} className="float-right" />}
+                    { QR.qrUrl && <QRCode value={ QR.qrUrl } size={ 256 } className="float-right" /> }
                 </div>
                 <div
                     className="col"
-                    style={{
+                    style={ {
                         padding: "5%"
-                    }}
-                >
+                    } }>
                     <h1>Scan QR code to activate device,Please.</h1>
+                    <div>* Ensure activate a trial or purchase the license in PC before you scan the QR code</div>
                 </div>
             </div>
         </div>

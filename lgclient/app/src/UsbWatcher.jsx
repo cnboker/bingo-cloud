@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { config, webosApis } from "lgservice";
+import { configer, webosApis } from "lgservice";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -47,8 +47,8 @@ export default () => {
     };
 
     const zipFile = (usbFile) => {
-        rmdir(`${config.ROOT}/downloads`).then(() => {
-            return unzipFile(usbFile, `${config.ROOT}/downloads`);
+        rmdir(`${configer.ROOT}/downloads`).then(() => {
+            return unzipFile(usbFile, `${configer.ROOT}/downloads`);
         }).then(() => {
             toast("Application Update complete. Unplug the U disk and restart the Application....");
             eject(deviceNum);

@@ -6,7 +6,7 @@ import GeneralResult from "../dataModels/generalResult";
 import GetContentResult from "../dataModels/getContentResult";
 import WeatherResult from "../dataModels/weatherResult";
 import NetTrafficInfo from "../dataModels/netTrafficInfo";
-import { instance,HTTP_Server,MQTT_Server } from "../config";
+import { instance,Service_Server } from "../configer";
 
 const strFormat = require("string-format");
 
@@ -15,17 +15,13 @@ export default class ClientAPI implements IClientAPI {
     return instance.token;
   }
 
-  get resourceServer(): string {
-    return instance.resourceServer;
-  }
-
   get key(): string {
     return instance.deviceId;
   }
 
 
   notify(): Promise<AxiosResponse<NotificationResult>> {
-    var url = HTTP_Server + strFormat(APIPath.NotifyPath, this.key);
+    var url = Service_Server + strFormat(APIPath.NotifyPath, this.key);
     //console.log("url=", url);
     return axios.request<NotificationResult>({
       url,
@@ -37,7 +33,7 @@ export default class ClientAPI implements IClientAPI {
   }
 
   notifyPost(notificationId: number): Promise<AxiosResponse<GeneralResult>> {
-    var url = HTTP_Server + strFormat(APIPath.NotifyPath, notificationId);
+    var url = Service_Server + strFormat(APIPath.NotifyPath, notificationId);
     //console.log("url=", url);
     return axios.request<GeneralResult>({
       url,
@@ -50,7 +46,7 @@ export default class ClientAPI implements IClientAPI {
 
   getContent(contentId: number): Promise<AxiosResponse<GetContentResult>> {
     const qs = require("querystring");
-    var url = HTTP_Server + strFormat(APIPath.GetContentPath, contentId);
+    var url = Service_Server + strFormat(APIPath.GetContentPath, contentId);
     //console.log("url=", url);
     return axios.request<GetContentResult>({
       url,
@@ -66,7 +62,7 @@ export default class ClientAPI implements IClientAPI {
   }
 
   updateSnapshot2(imageBaseData: string): void {
-    var url = HTTP_Server + APIPath.SnapshotPath2;
+    var url = Service_Server + APIPath.SnapshotPath2;
     //console.log("url=", url);
     axios
       .request<GeneralResult>({
@@ -102,7 +98,7 @@ export default class ClientAPI implements IClientAPI {
     level: number,
     message: string
   ): Promise<AxiosResponse<GeneralResult>> {
-    var url = HTTP_Server + APIPath.LogPath;
+    var url = Service_Server + APIPath.LogPath;
     //console.log("url=", url);
     return axios.request<GeneralResult>({
       url,
@@ -119,7 +115,7 @@ export default class ClientAPI implements IClientAPI {
   }
 
   heartbeat(key: string): Promise<AxiosResponse<GeneralResult>> {
-    var url = HTTP_Server + strFormat(APIPath.HeartbeatPath, key);
+    var url = Service_Server + strFormat(APIPath.HeartbeatPath, key);
     //console.log("url=", url);
     return axios.request<GeneralResult>({
       url,
@@ -134,7 +130,7 @@ export default class ClientAPI implements IClientAPI {
     deviceId: string,
     data: NetTrafficInfo
   ): Promise<AxiosResponse<GeneralResult>> {
-    var url = HTTP_Server + APIPath.NetTrafficInfoPath;
+    var url = Service_Server + APIPath.NetTrafficInfoPath;
     //console.log("url=", url);
     return axios.request<WeatherResult>({
       url,
@@ -147,7 +143,7 @@ export default class ClientAPI implements IClientAPI {
   }
 
   getWeather(city: string): Promise<AxiosResponse<WeatherResult>> {
-    var url = HTTP_Server + strFormat(APIPath.WeatherPath, city);
+    var url = Service_Server + strFormat(APIPath.WeatherPath, city);
     console.log("getweather url=", url);
     return axios.request<WeatherResult>({
       url,
@@ -162,7 +158,7 @@ export default class ClientAPI implements IClientAPI {
     channelId: number,
     deviceId: number
   ): Promise<AxiosResponse<GeneralResult>> {
-    var url = HTTP_Server + APIPath.PlayCountPath;
+    var url = Service_Server + APIPath.PlayCountPath;
     //console.log("url=", url);
     return axios.request<WeatherResult>({
       url,

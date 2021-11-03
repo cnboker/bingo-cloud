@@ -1,8 +1,6 @@
 using System;
 using System.Linq;
 using Ioliz.Service.Models;
-using Ioliz.Shared.Utils;
-using Microsoft.Extensions.Configuration;
 using System.Data;
 using Dapper;
 
@@ -138,7 +136,7 @@ namespace Ioliz.Service.Repositories
         instance = new Instance();
         instance.UserName = userName;
         instance.CreateDate = DateTime.Now;
-        instance.ResourceServer = resourceServer;
+        instance.FileServer = resourceServer;
         ctx.Instances.Add(instance);
       }
 

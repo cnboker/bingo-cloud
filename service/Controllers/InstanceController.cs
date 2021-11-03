@@ -17,7 +17,7 @@ namespace Ioliz.Service.Controllers {
 
         [Route ("/api/instances")]
         public List<Instance> GetServerInstances ([FromBody] string server) {
-            return ctx.Instances.AsQueryable().Where (x => x.ResourceServer == server).ToList ();
+            return ctx.Instances.AsQueryable().Where (x => x.FileServer == server).ToList ();
         }
 
         [Route ("/api/instance")]
@@ -33,7 +33,7 @@ namespace Ioliz.Service.Controllers {
             if (instance != null) {
                 // model.InstanceAvailiable = true;
                 model.CreateDate = instance.CreateDate;
-                model.Server = instance.ResourceServer;
+                model.Server = instance.FileServer;
                 model.IsTrial = instance.IsTrial;
             }
 
@@ -64,7 +64,6 @@ namespace Ioliz.Service.Controllers {
                 model.LicenseCount = licenses.Count ();
                 model.AvailiableLicenseCount = licenses.Count (x => !x.ActivationdDate.HasValue);
                 model.UsedLicenseCount = model.LicenseCount - model.AvailiableLicenseCount;
-
             }
 
             return model;
@@ -110,7 +109,7 @@ namespace Ioliz.Service.Controllers {
                 instance = new Instance ();
                 instance.UserName = userName;
                 instance.CreateDate = DateTime.Now;
-                instance.ResourceServer = resourceServer;
+                instance.FileServer = resourceServer;
                 
                 //var identity = ctx.Instances.AsQueryable().Select (x => x.Id).DefaultIfEmpty ().Max () + 1;
                

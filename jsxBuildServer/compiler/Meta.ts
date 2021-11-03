@@ -1,5 +1,5 @@
 import CSS from 'csstype';
-
+import { Animations } from './constants';
 export interface IProps  {
   style: CSS.Properties,
 }
@@ -8,10 +8,8 @@ export interface IMeta<T> {
   tag: T,
 } 
 
-type AnimationAction = 'bounce' | 'flash' | 'pulse'
-
 export type AnimationProps =  {
-  action: AnimationAction
+  action: Animations
 }
 
 export type View<T> = IMeta<T> & {
@@ -26,11 +24,12 @@ export type ImageProps =  {
   src: string
 }
 
-export type ImagePlayerProps = {
+export type ImageListProps = {
+  images:string[],
   duration: number
 }
 
-export type TextProps<T> = IMeta<T> & {
+export type TextProps =  {
   text: string
 }
 

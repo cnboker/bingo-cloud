@@ -25,6 +25,7 @@ import FilePicker from 'src/views/components/widgets/FilePicker'
 import * as Dialog from 'src/views/components/dialog/Index'
 import { uniqueID } from 'src/lib/string'
 import './patch.css'
+
 setChonkyDefaults({ iconComponent: ChonkyIconFA })
 
 interface FsMap {
@@ -375,7 +376,7 @@ export const VFSBrowser: React.FC<DataVFSProps> = React.memo((props) => {
         onClick={resetFileMap}
         style={{ marginBottom: 15 }}
       >
-        Reset file map
+        Reset file ma
       </Button>
       <div style={{ height: 640 }}>
         <FullFileBrowser

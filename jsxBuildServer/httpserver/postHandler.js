@@ -7,6 +7,7 @@ exports.make = async (username, data) => {
   //create entry file
   //build file
   //return
+  console.log('begin make...')
   const dataContent = JSON.stringify(data);
   const tmpfile = makeid(10);
   const entryFile = `${process.cwd()}/entry/${tmpfile}.js`;
@@ -18,7 +19,7 @@ exports.make = async (username, data) => {
       App(MetaMap)
     `;
     await writeFile(entryFile, jsx);
-    return esbuild.make(username, entryFile);
+    return await esbuild.build(username, entryFile);
   } 
   catch (e) {
     rm(entryFile);

@@ -3,7 +3,7 @@ import * as api from "./api";
 
 export const RECEIVE_QR = "RECEIVE_QR";
 export const RECEIVE_TOKEN = "RECEIVE_TOKEN";
-export const RECEIVE_LICENSE = "RECEIVE_LICENSE";
+export const RECEIVE_CONFIG = "RECEIVE_CONFIG";
 export const RECEIVE_INSTANCE = "RECEIVE_INSTANCE";
 
 export const receiveQR = payload => {
@@ -15,26 +15,25 @@ export const receiveToken = payload => {
     return { type: RECEIVE_TOKEN, payload };
 };
 
-export const receiveLicense = payload => {
-    return { type: RECEIVE_LICENSE, payload };
+export const receiveConfig = payload => {
+    return { type: RECEIVE_CONFIG, payload };
 };
 
 export const receiveInstance = payload => {
     return { type: RECEIVE_INSTANCE, payload };
 };
 
-//-------------------function
 
 export const requestQR = () => dispatch => {
     api.requestQR().then(response => {
         dispatch(receiveQR(response.data));
-    }).catch(e=>console.log(e))
+    }).catch(e=>console.log(e));
 };
 
 export const requestToken = authorizeCode => dispatch => {
     api.requestToken(authorizeCode).then(response => {
         dispatch(receiveToken(response.data));
-    }).catch(e=>console.log(e))
+    }).catch(e=>console.log(e));
 };
 
 export const postDeviceInfo =  (
@@ -50,9 +49,9 @@ export const postDeviceInfo =  (
 };
 
 //key:deviceId
-export const requestLicense = (token,key) => dispatch =>{
-    api.requestLicense(token,key).then(response => {
-        dispatch(receiveLicense(response.data));
+export const requestConfig = (token,key) => dispatch =>{
+    api.requestConfig(token,key).then(response => {
+        dispatch(receiveConfig(response.data));
     });
 };
 

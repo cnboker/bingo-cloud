@@ -1,8 +1,7 @@
-import React from 'react'
-import { AnimationProps } from '../Meta';
+import React from "react";
+import { AnimationProps } from "../Meta";
 
 export const Animation: React.FC<AnimationProps> = ({ children, action }) => {
-  return <React.Fragment>
-    {children}
-  </React.Fragment>
-}
+  const className = `animated ${action}`;
+  return <div className={className}>{children}</div>;
+};

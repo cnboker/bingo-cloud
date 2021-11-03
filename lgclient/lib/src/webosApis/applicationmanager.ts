@@ -1,4 +1,4 @@
-import { APPID } from "../config";
+import { APPID } from "../configer";
 
 export const restart = (): Promise<void> => {
     return close().then(res=>{

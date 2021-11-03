@@ -13,7 +13,11 @@ export default () => {
       <CCardBody>
         {visible && (
           <Offcanvas visible={visible} placement="start" onHide={() => setVisible(false)}>
-            <Trial />
+            <Trial
+              onCreate={() => {
+                setVisible(false)
+              }}
+            />
           </Offcanvas>
         )}
         <CCardTitle>欢迎使用粒子数字标牌云发布系统</CCardTitle>

@@ -154,14 +154,6 @@ namespace Ioliz.Service.Controllers
       };
       return model;
     }
-    [Authorize]
-    [HttpGet("/api/requestLicense/{deviceId}")]
-    //设备POLL有效证书
-    //设备调用同一用FromForm
-    public License RequestLicense(string deviceId)
-    {
-      return ctx.Licenses.FirstOrDefault(x => x.Status == LicenseStatus.Active);
-    }
-
+    
   }
 }

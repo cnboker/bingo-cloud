@@ -2,7 +2,7 @@ const { readFile, writeFile, mkdir } = require("fs").promises;
 const esbuild = require("esbuild");
 const util = require("../util");
 
-exports.make = async (username, entryFile) => {
+exports.build = async (username, entryFile) => {
   let randomDir = util.makeid(10);
   const relationPath = `/publish/${username}`;
   const outdir = `${process.cwd()}${relationPath}`
@@ -11,18 +11,8 @@ exports.make = async (username, entryFile) => {
   const script = esbuild.buildSync({
     entryPoints: [entryFile],
     bundle: true,
-    //platform: 'node',
-    //outfile: 'dist/builder.js',
-    //outfile: args.outFile,
-    sourcemap: true,
-    //target: 'node12',
-    //external: Object.keys(require('./package.json').dependencies),
-    // watch: {
-    //   onRebuild(error, result) {
-    //     if (error) console.error('watch build failed:', error)
-    //     else console.log('watch build succeeded:', result)
-    //   },
-    // },
+    //sourcemap: true,
+    minify: true,
     format: "esm",
     target: ["esnext"],
     write: false
@@ -31,7 +21,8 @@ exports.make = async (username, entryFile) => {
   const html = await readFile(`${__dirname}/index.html`, {
     encoding: "utf8"
   });
-  //console.log("script.outputFile", script);
-  await writeFile(`${outdir}/index.html`, `<script type="module">${script.outputFiles[0].text}</script>${html}`)
+  
+  await writeFile(`${outdir}/index.html`,html)
+  await writeFile(`${outdir}/main.js`, script.outputFiles[0].text)
   return `${relationPath}/index.html`;
 };

@@ -4,10 +4,11 @@
 //
 //   "Set quicktype target language"
 
-export interface License {
+export interface Config {
     userName : string;
     deviceId : string;
-    resourceServer : string;
+    FileServer : string;
+    MQTTServer:string;
     token : string;
 }
 
@@ -15,7 +16,7 @@ export interface Device {
     deviceId : string;
     name : string;
     os : string;
-    resolution : null;
+    resolution? : string;
     mac : string;
     ip : string;
     status : number;
@@ -24,6 +25,4 @@ export interface Device {
     authorizeStatus : number;
     authorizeCode : string;
     authorizeDate : string;
-    currentLicenseId : number;
-    sensorCode : null;
 }

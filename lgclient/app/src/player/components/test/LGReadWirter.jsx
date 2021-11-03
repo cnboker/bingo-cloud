@@ -37,7 +37,7 @@ export default class LGReadWriter extends React.Component{
     render(){
         return(
             <div>
-                <img src={ this.state.url }/>
+             
                 <button className="btn-primary" onClick={ this.write.bind(this) }>write file</button>
                 <button className="btn-secondary" onClick={ this.read.bind(this) }>read file</button>
                 <button className="btn-secondary" onClick={ this.usbunzip.bind(this) }>usb unzip</button>

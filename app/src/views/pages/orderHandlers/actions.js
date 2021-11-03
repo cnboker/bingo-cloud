@@ -42,6 +42,7 @@ export const createTrial = () => (dispatch) => {
   dispatch(
     post({
       url: `${process.env.REACT_APP_SERVICE_URL}/api/instance/create`,
+      data: { isTrial: true },
       responseAction: trialResponse,
     }),
   )

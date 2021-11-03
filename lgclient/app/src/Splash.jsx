@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { config } from "lgservice";
+import { configer } from "lgservice";
 import { useHistory } from "react-router";
 
 export default() => {
@@ -7,7 +7,7 @@ export default() => {
     const history = useHistory();
 
     useEffect(() => {
-        config
+        configer
             .instance
             .read()
             .then(c => {

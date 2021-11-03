@@ -1,6 +1,6 @@
 import {
+    RECEIVE_CONFIG,
     RECEIVE_INSTANCE,
-    RECEIVE_LICENSE,
     RECEIVE_QR,
     RECEIVE_TOKEN
 } from "./actions";
@@ -9,7 +9,7 @@ import merge from "lodash/merge";
 var defaultState = {
     QR: {},
     token: {},
-    license: {},
+    configInfo: {},
     instance: {}
 };
 
@@ -23,8 +23,8 @@ export const qrReducer = (state = defaultState, action) => {
     case RECEIVE_TOKEN:
         newState.token = action.payload;
         return newState;
-    case RECEIVE_LICENSE:
-        newState.license = action.payload;
+    case RECEIVE_CONFIG:
+        newState.configInfo = action.payload;
         return newState;
     case RECEIVE_INSTANCE:
         newState.instance = action.payload;

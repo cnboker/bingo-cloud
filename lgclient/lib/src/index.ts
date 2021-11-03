@@ -2,7 +2,7 @@ require("./string");
 import * as DataModel from "./dataModels/ContentPackage";
 import ContentWorker from "./imps/ContentWorker";
 import * as util from "./imps/util";
-import * as config from "./config";
+import * as configer from "./configer";
 import ClientAPI from "./imps/ClientAPI";
 import * as downloadManager from './webosApis/downloadManager';
 import * as systemservice from './webosApis/systemservice'
@@ -26,7 +26,7 @@ export {
     ContentWorker,
     DataModel,
     util,
-    config,
+    configer,
     ClientAPI,
     webosApis
 }

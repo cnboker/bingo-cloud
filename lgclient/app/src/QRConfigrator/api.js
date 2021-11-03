@@ -21,7 +21,7 @@ export const requestToken = sessionId => {
     return axios({ url, method: "get" });
 };
 
-export const requestDeviceInfo = async() => {
+export const getDeviceInfo = async() => {
     const { queryDeviceInfo, queryosInfo } = webosApis.systemservice;
     const deviceInfo = await queryDeviceInfo();
     const osInfo = await queryosInfo();
@@ -62,8 +62,8 @@ export const postDeviceInfo = (token, authorizeCode, deviceInfo) => {
 };
 
 //key:deviceId
-export const requestLicense = (token, key) => {
-    var url = `${process.env.REACT_APP_MEMBER_URL}/api/requestLicense/${key}`;
+export const requestConfig = (token) => {
+    var url = `${process.env.REACT_APP_MEMBER_URL}/api/requestConfig`;
     return axios({
         url,
         method: "get",

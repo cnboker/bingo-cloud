@@ -1,4 +1,5 @@
 node_modules
+build
 public
 /src/serviceWorker.js
 /src/player
