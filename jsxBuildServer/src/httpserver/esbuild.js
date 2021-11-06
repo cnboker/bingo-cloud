@@ -21,8 +21,8 @@ exports.build = async (username, entryFile) => {
   const html = await readFile(`${__dirname}/index.html`, {
     encoding: "utf8"
   });
-  
-  await writeFile(`${outdir}/index.html`,html)
   await writeFile(`${outdir}/main.js`, script.outputFiles[0].text)
+  await writeFile(`${outdir}/index.html`,html)
+  
   return `${relationPath}/index.html`;
 };

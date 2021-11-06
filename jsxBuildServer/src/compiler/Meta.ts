@@ -5,7 +5,7 @@ export interface IProps  {
 }
 
 export interface IMeta<T> {
-  tag: T,
+  tag: T, 
 } 
 
 export type AnimationProps =  {

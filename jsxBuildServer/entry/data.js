@@ -8,9 +8,9 @@ exports.MetaMap = {
       childrenIds:['a2']
     },
     'a2':{
-      tag:'Animation',
+      tag:'BB',
       action:'bounch',
-      childrenIds:['a3']
+      childrenIds:null
     },
     'a3':{
       tag:'Fragment',
@@ -18,7 +18,7 @@ exports.MetaMap = {
     },
     'a4':{
       tag:'Image',
-      src:'#'
+      src:'#' 
     }
   }
 }

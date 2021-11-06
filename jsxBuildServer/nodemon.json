@@ -1,7 +1,4 @@
 {
-  "verbose": true,
-  "ignore": ["publish/*", "entry/*"],
-  "execMap": {
-   
-  }
+  "watch": ["index.js","package.json", "src/"],
+  "ext": "js, css,jsx,tsx,json"
 }

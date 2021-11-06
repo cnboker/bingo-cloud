@@ -21,7 +21,7 @@ export const Renderer = ({ metaData }) => {
       </MetaComponent>
     })
   }
-
+  
   return (
     <>
       <MetaComponent {...rest} tag={CL[root.tag]}>

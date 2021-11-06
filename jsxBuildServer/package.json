@@ -1,5 +1,5 @@
 {
-  "name": "playgound",
+  "name": "jsbuildserver",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -10,6 +10,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@farbenmeer/react-spring-slider": "^1.5.2",
+    "@types/react-transition-group": "^4.4.4",
+    "animatelo": "^1.0.3",
     "body-parser": "^1.19.0",
     "bootstrap": "^5.1.3",
     "cors": "^2.8.5",

@@ -14,7 +14,7 @@ exports.make = async (username, data) => {
   try {
     console.log("entryFile", entryFile);
     const jsx = `
-      import {App} from '../compiler/app'
+      import {App} from '../src/compiler/app'
       const MetaMap = ${dataContent}
       App(MetaMap)
     `;
