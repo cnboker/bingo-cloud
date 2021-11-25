@@ -8,7 +8,7 @@ import { ResourceDownloader } from "./ResourceDownloader";
 import ContentNotify from "./ContentNotify";
 import DiskClear from "./DiskClear";
 import EventDispatcher from "../EventDispatcher";
-import { CONTENT_READY_EVENT,SNAPSHOT_EVENT } from '../constants'
+import { CONTENT_READY_EVENT,SINGLE_FILE_DOWNLOAD_COMPLETE_EVENT,SNAPSHOT_EVENT } from '../constants'
 import {readFile} from './WebOSFileService'
 export default class ContentWorker implements IContentWorker {
   contentPackage: ContentPackage;
@@ -31,7 +31,7 @@ export default class ContentWorker implements IContentWorker {
       var resourceDownloader = new ResourceDownloader(data);
       resourceDownloader
         .dispatcher
-        .subscribe((res: IResourceInfo[]) => {
+        .subscribe(SINGLE_FILE_DOWNLOAD_COMPLETE_EVENT,(res: IResourceInfo[]) => {
            this.diskClean(data);
           cb(data);
         });

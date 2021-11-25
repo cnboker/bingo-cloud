@@ -7,7 +7,7 @@ namespace FileServer
   {
 
     //验证服务器地址
-    public string AuthServer { get; set; }
+    //public string AuthServer { get; set; }
 
 
     private IServiceProvider provider;
@@ -30,7 +30,7 @@ namespace FileServer
 
     public void LoadConfig(IConfiguration configRoot)
     {
-      AuthServer = configRoot.GetSection("AppSettings:authServer").Value;
+      //AuthServer = configRoot.GetSection("AppSettings:authServer").Value;
       Domain = configRoot.GetSection("AppSettings:domain").Value;
     }
   }

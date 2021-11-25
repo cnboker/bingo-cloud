@@ -40,6 +40,7 @@ const defaultProps = {
   radius: 0,
   width: '100%',
   height: 'auto',
+  position:'absolution'
 };
 
 export const Container = (props: Partial<ContainerProps>) => {
@@ -79,7 +80,7 @@ export const Container = (props: Partial<ContainerProps>) => {
             ? 'none'
             : `0px 3px 100px ${shadow}px rgba(0, 0, 0, 0.13)`,
         borderRadius: `${radius}px`,
-        flex: fillSpace === 'yes' ? 1 : 'unset',
+        //flex: fillSpace === 'yes' ? 1 : 'unset',
         position,
         left,
         top,

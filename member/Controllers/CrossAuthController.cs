@@ -40,7 +40,7 @@ namespace Member.Controllers
       ctx.ApiAuthSessions.Add(session);
       ctx.SaveChanges();
       var config = AppInstance.Instance.Config;
-      var qrUrl = config.MemberServer + "authorize/" + sessionid;
+      var qrUrl = config.MemberServer + "/#authorize/" + sessionid;
       logger.LogInformation("AuthSession parameter qrUrl=" + qrUrl);
       return new QRResult()
       {

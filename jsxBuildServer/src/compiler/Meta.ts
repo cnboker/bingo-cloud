@@ -25,8 +25,10 @@ export type ImageProps =  {
 }
 
 export type ImageListProps = {
-  images:string[],
-  duration: number
+  urls:string[],
+  duration: number,
+  animation:string,
+  exit:()=>void
 }
 
 export type TextProps =  {

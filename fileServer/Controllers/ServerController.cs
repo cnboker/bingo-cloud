@@ -25,7 +25,7 @@ namespace FileServer.Controllers
     public IActionResult Index()
     {
       string dir = Path.Combine(_hostingEnvironment.WebRootPath, User.Identity.Name);
-      if (!System.IO.File.Exists(dir))
+      if (!System.IO.Directory.Exists(dir))
       {
         System.IO.Directory.CreateDirectory(dir);
       }

@@ -18,7 +18,7 @@ export const qrReducer = (state = defaultState, action) => {
     let newState = merge({}, state);
     switch (action.type) {
     case RECEIVE_QR:
-        newState.QR = action.payload;
+        newState.QR = action.payload;           
         return newState;
     case RECEIVE_TOKEN:
         newState.token = action.payload;

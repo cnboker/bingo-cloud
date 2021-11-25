@@ -113,6 +113,7 @@ export const latlngUpdate = (deviceId, latlng) => (dispatch) => {
     .then((response) => {
       // console.log("update device name success"); dispatch(receiveDeviceUpdateName({
       // deviceId, newName, resolution}));
+      console.log('latlngUpdate', response)
     })
     .catch((err) => {
       console.log(err)
@@ -134,8 +135,8 @@ export const deviceUpdateName = (deviceId, newName, resolution) => (dispatch) =>
     },
     headers,
   })
-    .then((response) => {
-      //console.log("update device name success");
+    .then((res) => {
+      console.log('deviceUpdateName', res)
       dispatch(receiveDeviceUpdateName({ deviceId, newName, resolution }))
     })
     .catch((err) => {
@@ -157,7 +158,7 @@ export const deviceGroupUpdate = (deviceId, groupName) => (dispatch) => {
     },
     headers,
   })
-    .then((response) => {
+    .then(() => {
       //console.log("update device name success");
       dispatch(receiveGroupUpdate({ deviceId, groupName }))
     })

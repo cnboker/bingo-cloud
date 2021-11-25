@@ -10,7 +10,7 @@ export default class MockContentNotify implements IContentNotify {
         var conentJson = require('../__test__/content.json');
         var contentPackage: ContentPackage = conentJson
         //console.log("MockContentNotify watch", contentPackage);
-        this.dispatcher.dispatch(contentPackage)
+        this.dispatcher.dispatch(CONTENT_READY_EVENT,contentPackage)
     }
 
 }

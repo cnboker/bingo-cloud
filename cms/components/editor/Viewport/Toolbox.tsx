@@ -7,6 +7,7 @@ import ButtonSvg from '../../../public/icons/toolbox/button.svg';
 import SquareSvg from '../../../public/icons/toolbox/rectangle.svg';
 import TypeSvg from '../../../public/icons/toolbox/text.svg';
 import YoutubeSvg from '../../../public/icons/toolbox/video-line.svg';
+import ImagesSvg from '../../../public/icons/toolbox/images.svg';
 import { Button } from '../../selectors/Button';
 import { Container } from '../../selectors/Container';
 import { Text } from '../../selectors/Text';
@@ -24,7 +25,7 @@ const Item = styled.a<{ move?: boolean }>`
     height: 22px;
     fill: #707070;
   }
-  ${(props) =>
+  ${(props) => 
     props.move &&
     `
     cursor: move;
@@ -81,6 +82,13 @@ export const Toolbox = () => {
           <Tooltip title="Button" placement="right">
             <Item className="m-2 pb-2 cursor-pointer block" move>
               <ButtonSvg />
+            </Item>
+          </Tooltip>
+        </div>
+        <div ref={(ref) => create(ref, <Video />)}>
+          <Tooltip title="Images" placement="right">
+            <Item className="m-2 pb-2 cursor-pointer block" move>
+              <ImagesSvg />
             </Item>
           </Tooltip>
         </div>

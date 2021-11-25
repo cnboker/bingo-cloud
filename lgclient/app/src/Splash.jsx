@@ -26,7 +26,7 @@ export default() => {
     return (
         <div className="centercontainer">
             <div className="centercontent">
-                <img src="512x512.png" alt=""/>
+                <img src="256x256.png" alt=""/>
                 <div className="alert alert-info" role="alert">
                     { message }
                 </div>

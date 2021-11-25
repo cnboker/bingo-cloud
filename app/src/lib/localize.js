@@ -1,10 +1,10 @@
 import LocalizedStrings from 'react-localization'
 import Cookies from 'js-cookie'
-
+import { language } from '../config'
 export const langLoader = (localeData) => {
   const R = new LocalizedStrings(localeData)
-  var language = Cookies.get('language') || R.getLanguage()
-  R.setLanguage(language)
+  var lang = language || Cookies.get('language') || R.getLanguage()
+  R.setLanguage(lang)
   return R
 }
 

@@ -22,7 +22,6 @@ exports.make = async (username, data) => {
     return await esbuild.build(username, entryFile);
   } 
   catch (e) {
-    rm(entryFile);
     console.log(e);
   }
   finally{

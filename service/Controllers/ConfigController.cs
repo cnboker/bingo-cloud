@@ -10,7 +10,7 @@ using Microsoft.Extensions.Logging;
 namespace Ioliz.Service.Controllers
 {
   [Route("/api/[controller]/[action]")]
-  [Authorize(Roles = "Administrators")]
+  //[Authorize(Roles = "Administrators")]
   public class ConfigController : Controller
   {
     private readonly ServiceContext ctx;
@@ -60,7 +60,7 @@ namespace Ioliz.Service.Controllers
         return Ok(new
         {
           FileServer = instance.FileServer,
-          MQTTServer = instance.MQTTServer,
+          MQTTServer = AppInstance.Instance.Config.MQTTServer,
           UserName = instance.UserName
         });
       }

@@ -3,26 +3,26 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { tokenPost, authorizeRequest, unAuthorizeListRequest } from './actions'
 import * as Dialog from 'src/views/components/dialog/Index'
-import G from 'src/locale'
-import { useParams } from 'react-roouter-dom'
+import G from '~/locale'
+import { useParams } from 'react-router-dom'
 import { CCard, CCardHeader, CCardBody, CRow, CCol, CButton, CAlert } from '@coreui/react'
 
 export default () => {
   const dispatch = useDispatch()
-  const { id: authorizeCode } = useParams()
-  const unAuthorizeReducer = useSelector((state) => state.unAuthorizeReducer)
+  const { id: urlAuthorizeCode } = useParams()
+  const authorizeReducer = useSelector((state) => state.authorizeReducer)
   const waittingMessage = '正在请求认证信息...'
-
+  //console.log('authorizeCode', urlAuthorizeCode)
   useEffect(() => {
     dispatch(unAuthorizeListRequest())
-    if (authorizeCode.length > 1) {
-      dispatch(tokenPost(authorizeCode))
+    if (urlAuthorizeCode.length > 1) {
+      dispatch(tokenPost(urlAuthorizeCode))
     }
   }, [])
 
   const authorizeHandle = (id) => {
     Dialog.confirm(G.confirmInfo, () => {
-      dispatch(authorizeRequest({ id }))
+      dispatch(authorizeRequest(id))
     })
   }
 
@@ -30,37 +30,41 @@ export default () => {
     <CCard>
       <CCardHeader component="h5">Device Authorize</CCardHeader>
       <CCardBody>
-        {unAuthorizeReducer.map((item, index) => {
-          return <DeviceComoponent data={item} key={index} authorizeHandle={authorizeHandle} />
+        {authorizeReducer.map((item, index) => {
+          return (
+            <DeviceComoponent
+              data={item}
+              key={index}
+              authorizeHandle={authorizeHandle}
+              urlAuthorizeCode={urlAuthorizeCode}
+            />
+          )
         })}
-        {unAuthorizeReducer.length === 0 && <CAlert>{waittingMessage}</CAlert>}
+        {authorizeReducer.length === 0 && <CAlert color="secondary">{waittingMessage}</CAlert>}
       </CCardBody>
     </CCard>
   )
 }
 
-const DeviceComoponent = ({ data, urlAuthorCode, authorizeHandle }) => {
-  const { name, os, resolution, authorizeStatus, authorizeCode, deviceId } = data
+const DeviceComoponent = ({ data, urlAuthorizeCode, authorizeHandle }) => {
+  const { name, os, authorizeStatus, authorizeCode, deviceId } = data
   return (
-    <>
+    <React.Fragment>
       <CRow xs={{ cols: 'auto' }}>
         <CCol>{name}</CCol>
       </CRow>
       <CRow xs={{ cols: 'auto' }}>
         <CCol>OS:{os}</CCol>
-        <CCol>
-          {G.resolution}:{resolution}
-        </CCol>
       </CRow>
       <CRow xs={{ cols: 'auto' }}>
         <CCol>
-          {authorizeCode === urlAuthorCode && authorizeStatus === 0 && (
+          {authorizeCode === urlAuthorizeCode && authorizeStatus === 0 && (
             <CButton color="primary" onClick={() => authorizeHandle(deviceId)}>
               {G.authorize}
             </CButton>
           )}
         </CCol>
       </CRow>
-    </>
+    </React.Fragment>
   )
 }

@@ -24,8 +24,9 @@ namespace Ioliz.Service.Controllers
     [HttpPost]
     public ApiResult PostDeviceInfo([FromForm] Device model)
     {
+       Console.WriteLine("UploadDeviceInfo,deviceId=" + model.DeviceId);
       // if (ctx.Devices.Any(x => x.MAC == model.MAC)) 
-      var device = ctx.Devices.FirstOrDefault(x => x.DeviceId == model.MAC);
+      var device = ctx.Devices.FirstOrDefault(x => x.DeviceId == model.DeviceId);
       if (device != null)
       {
 

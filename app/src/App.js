@@ -18,9 +18,10 @@ const Logout = React.lazy(() => import('./views/pages/Logout'))
 const Register = React.lazy(() => import('./views/pages/signup/index'))
 const Page404 = React.lazy(() => import('./views/pages/page404/Page404'))
 const Page500 = React.lazy(() => import('./views/pages/page500/Page500'))
-
+const Authorize = React.lazy(() => import('./views/pages/authorize/index'))
 export default () => {
   const dispatch = useDispatch()
+
   return (
     <HashRouter>
       <React.Suspense fallback={loading}>
@@ -35,6 +36,7 @@ export default () => {
           />
           <Route exact path="/404" name="Page 404" render={(props) => <Page404 {...props} />} />
           <Route exact path="/500" name="Page 500" render={(props) => <Page500 {...props} />} />
+          <Route path="/authorize/:id" render={(props) => <Authorize {...props} />} />
           <PrivateRoute dispatch={dispatch} path="/" name="Home" component={DefaultLayout} />
         </Switch>
       </React.Suspense>

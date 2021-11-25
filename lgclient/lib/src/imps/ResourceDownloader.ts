@@ -8,16 +8,17 @@ import {
 import { connect } from "mqtt";
 import { instance } from "../configer";
 import { ResrouceParser } from "./ResourceParser";
-import { SINGLE_FILE_DOWNLOAD_COMPLETE_EVENT } from '../constants'
+import { SINGLE_FILE_DOWNLOAD_COMPLETE_EVENT,DOWNLAOD_COMPLETE_EVENT } from '../constants'
 import EventDispatcher from "../EventDispatcher";
 import { writeFile, exists } from './WebOSFileService'
 import { download } from '../webosApis/downloadManager'
 var client: any;
-if (client === undefined || !client.connected) {
-  client = connect(instance.mqttServer);
-}
+
 
 function mqttSend(json: any) {
+  if (client === undefined || !client.connected) {
+    client = connect(instance.mqttServer);
+  }
   var jsonString = JSON.stringify({
     deviceId: instance.deviceId,
     ...json
@@ -62,7 +63,7 @@ export class ResourceDownloader implements IResourceDownloader {
               return;
             }
           });
-        this.dispatcher.dispatch(result);
+        this.dispatcher.dispatch(SINGLE_FILE_DOWNLOAD_COMPLETE_EVENT, result);
       }
     });
 
@@ -70,7 +71,7 @@ export class ResourceDownloader implements IResourceDownloader {
     if (resourceInfo.length > 0) {
       this.singleFileDownload(resourceInfo[0]);
     } else {
-      this.dispatcher.dispatch(result);
+      this.dispatcher.dispatch(DOWNLAOD_COMPLETE_EVENT,result);
     }
 
     //generate media playlist

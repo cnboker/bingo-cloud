@@ -110,7 +110,7 @@ namespace Ioliz.Service.Controllers {
                 instance.UserName = userName;
                 instance.CreateDate = DateTime.Now;
                 instance.FileServer = resourceServer;
-                
+                instance.MQTTServer = AppInstance.Instance.Config.MQTTServer;
                 //var identity = ctx.Instances.AsQueryable().Select (x => x.Id).DefaultIfEmpty ().Max () + 1;
                
                 instance.IsTrial = model.IsTrial;

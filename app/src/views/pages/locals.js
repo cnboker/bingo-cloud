@@ -1,7 +1,6 @@
-import LocalizedStrings from 'react-localization'
-import Cookies from 'js-cookie'
+import { langLoader } from '~/lib/localize'
 
-const resources = new LocalizedStrings({
+const data = {
   en: {
     login: 'Login',
     userName: 'User Name',
@@ -22,10 +21,5 @@ const resources = new LocalizedStrings({
     register: '注册',
     login_success: '登录成功',
   },
-})
-
-var language = Cookies.get('language') || resources.getLanguage()
-//console.log('language', language,Cookies.get('language'))
-resources.setLanguage(language)
-
-export default resources
+}
+export default langLoader(data)

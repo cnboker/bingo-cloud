@@ -1,0 +1,26 @@
+
+.slider-enter {
+  transform: translateX(-100%);
+}
+.slider-enter-active {
+  transform: translateX(0);
+}
+.slider-exit {
+  transform: translateX(0);
+}
+.slider-exit-active {
+ transform: translateX(100%);
+}
+
+.slider-reverse-enter {
+  transform: translateX(100%);
+}
+.slider-reverse-enter-active {
+  transform: translateX(0);
+}
+.slider-reverse-exit {
+  transform: translateX(0);
+}
+.slider-reverse-exit-active {
+ transform: translateX(-100%);
+} 

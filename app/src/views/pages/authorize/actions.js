@@ -5,8 +5,8 @@ import {
 } from './constants'
 import { get, post } from 'src/lib/api'
 
-const authorizeUrl = `${process.env.REACT_APP_ORDER_URL}/api/license/deviceAuthorize`
-const unAuthorizeListUrl = `${process.env.REACT_APP_ORDER_URL}/api/license/unAuthorizedList`
+const authorizeUrl = `${process.env.REACT_APP_SERVICE_URL}/api/license/authorize`
+const unAuthorizeListUrl = `${process.env.REACT_APP_SERVICE_URL}/api/license/unAuthorizedList`
 const sessionTokenUrl = `${process.env.REACT_APP_AUTH_URL}/api/authSessionToken/`
 
 export const authorizeResponse = (payload) => {

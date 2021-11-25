@@ -4,13 +4,9 @@ export function exists(path: string): Promise<boolean> {
     var bridge = window.webosBridge;
     bridge.onservicecallback = (msg: string) => {
       var response = JSON.parse(msg);
-      console.log('exists response',response)
-      const { returnValue, errorText, exists } = response;
-      if (returnValue) {
-        resolve(exists);
-      } else {
-        reject(errorText);
-      }
+      console.log('exists response', response)
+      const { returnValue } = response;
+      resolve(returnValue)
     }
     var url = "luna://com.ioliz.dc.app.fileservice/exists";
     var params = JSON.stringify({ path });

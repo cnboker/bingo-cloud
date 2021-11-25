@@ -11,10 +11,11 @@ type CProps = {
   placement: 'start' | 'end' | 'top' | 'bottom'
   children: React.ReactChildren
   visible: boolean
+  title: string
   onHide: () => void
 }
 
-export default ({ children, placement, visible, onHide }: CProps) => {
+export default ({ title, children, placement, visible, onHide }: CProps) => {
   return (
     <>
       <COffcanvas
@@ -25,7 +26,7 @@ export default ({ children, placement, visible, onHide }: CProps) => {
         }}
       >
         <COffcanvasHeader>
-          <COffcanvasTitle>Offcanvas</COffcanvasTitle>
+          <COffcanvasTitle>{title}</COffcanvasTitle>
           <CCloseButton
             className="text-reset"
             onClick={() => {

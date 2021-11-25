@@ -15,6 +15,7 @@ import CIcon from '@coreui/icons-react'
 import { cilLockLocked, cilUser } from '@coreui/icons'
 import { useForm } from 'react-hook-form'
 import ValidatorSpan from '~/views/ValidatorSpan'
+import R from '../locale'
 
 const Register = ({ onsubmit, error }) => {
   const {
@@ -36,8 +37,8 @@ const Register = ({ onsubmit, error }) => {
             <CCard className="mx-4">
               <CCardBody className="p-4">
                 <CForm onSubmit={handleSubmit(_onsubmit)}>
-                  <h1>Register</h1>
-                  <p className="text-medium-emphasis">Create your account</p>
+                  <h1>{R.register}</h1>
+                  <p className="text-medium-emphasis">{R.registerTitle}</p>
                   <CInputGroup className="mb-3">
                     <CInputGroupText>
                       <CIcon icon={cilUser} />
@@ -83,7 +84,7 @@ const Register = ({ onsubmit, error }) => {
                         validate: {
                           matchesPreviousPassword: (value) => {
                             const { password } = getValues()
-                            return password === value || 'Passwords should match!'
+                            return password === value || R.password_mismatch
                           },
                         },
                       })}
@@ -94,7 +95,7 @@ const Register = ({ onsubmit, error }) => {
                   </CInputGroup>
                   <div className="d-grid">
                     <CButton color="success" type="submit">
-                      Create Account
+                      {R.create_account}
                     </CButton>
                   </div>
                   <ValidatorSpan message={error} />

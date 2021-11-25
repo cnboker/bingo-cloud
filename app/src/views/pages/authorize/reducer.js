@@ -7,7 +7,7 @@ import merge from 'lodash/merge'
 
 const initialState = []
 
-export const unAuthorizeReducer = (state = initialState, action) => {
+export const authorizeReducer = (state = initialState, action) => {
   var newState = merge([], state)
   switch (action.type) {
     case DEVICE_AUTHORIZE_RESPONSE:

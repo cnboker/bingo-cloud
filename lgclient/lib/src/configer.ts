@@ -66,7 +66,7 @@ class Configer {
 }
 
 export const APPID = "com.ioliz.dc.app";
-export const APP_ROOT = "/meida/internal/dclient";
+export const APP_ROOT = "/media/internal/dclient";
 export const USB_ROOT = "/tmp/usb/sda/sda1";
 export const instance: Configer = Configer.instance;
 export const Service_Server = process.env.REACT_APP_MEMBER_URL;

@@ -4,6 +4,8 @@ import { CCard, CCardBody, CCardTitle } from '@coreui/react'
 import 'bs-stepper/dist/css/bs-stepper.min.css'
 import { steps } from './constants'
 import { useSelector } from 'react-redux'
+import G from '~/locale'
+
 export default () => {
   var stepper
   var stepIndex = 1
@@ -50,7 +52,7 @@ export default () => {
               stepper.previous()
             }}
           >
-            Last
+            {G.last}
           </button>{' '}
           <button
             className="btn btn-light"
@@ -61,7 +63,7 @@ export default () => {
               stepper.next()
             }}
           >
-            Next
+            {G.next}
           </button>
         </StepContent>
       )

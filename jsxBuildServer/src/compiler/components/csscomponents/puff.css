@@ -1,0 +1,48 @@
+@keyframes puffIn {
+  0% {
+    opacity: 0;
+    transform-origin: 50% 50%;
+    transform: scale(2, 2);
+    filter: blur(2px);
+  }
+  100% {
+    opacity: 1;
+    transform-origin: 50% 50%;
+    transform: scale(1, 1);
+    filter: blur(0px);
+  }
+}
+
+@keyframes puffOut {
+  0% {
+    opacity: 1;
+    transform-origin: 50% 50%;
+    transform: scale(1, 1);
+    filter: blur(0px);
+  }
+  100% {
+    opacity: 0;
+    transform-origin: 50% 50%;
+    transform: scale(2, 2);
+    filter: blur(2px);
+  }
+}
+
+.puff-enter {
+  opacity: 0;
+  
+}
+
+.puff-enter-active {
+  opacity: 1;
+  animation: puffIn 1.5s;
+}
+
+.puff-exit {
+  opacity: 1;
+}
+
+.puff-exit-active {
+  opacity: 0;
+  animation:puffOut 1.5s;
+} 

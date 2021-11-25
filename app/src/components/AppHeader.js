@@ -12,12 +12,12 @@ import {
   CNavItem,
 } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
-import { cilBell, cilEnvelopeOpen, cilList, cilMenu } from '@coreui/icons'
+import { cilFolder, cilDevices, cilMenu } from '@coreui/icons'
 
 import { AppBreadcrumb } from './index'
 import { AppHeaderDropdown } from './header/index'
 import { logo } from 'src/assets/brand/logo'
-
+import R from './locale'
 const AppHeader = () => {
   const dispatch = useDispatch()
   const { sidebarShow } = useSelector((state) => state.siderBarReducer)
@@ -37,27 +37,22 @@ const AppHeader = () => {
         <CHeaderNav className="d-none d-md-flex me-auto">
           <CNavItem>
             <CNavLink to="/dashboard" component={NavLink} activeClassName="active">
-              Dashboard
+              {R.dashboard}
             </CNavLink>
           </CNavItem>
           <CNavItem>
-            <CNavLink href="#quickStart">Quick Start</CNavLink>
+            <CNavLink href="#quickStart">{R.quickStart}</CNavLink>
           </CNavItem>
         </CHeaderNav>
         <CHeaderNav>
           <CNavItem>
-            <CNavLink href="#">
-              <CIcon icon={cilBell} size="lg" />
+            <CNavLink href="/fileManager">
+              <CIcon icon={cilFolder} size="lg" />
             </CNavLink>
           </CNavItem>
           <CNavItem>
-            <CNavLink href="#">
-              <CIcon icon={cilList} size="lg" />
-            </CNavLink>
-          </CNavItem>
-          <CNavItem>
-            <CNavLink href="#">
-              <CIcon icon={cilEnvelopeOpen} size="lg" />
+            <CNavLink href="/device">
+              <CIcon icon={cilDevices} size="lg" />
             </CNavLink>
           </CNavItem>
         </CHeaderNav>

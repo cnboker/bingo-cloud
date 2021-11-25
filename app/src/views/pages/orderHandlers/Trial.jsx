@@ -3,6 +3,8 @@ import { useSelector, useDispatch } from 'react-redux'
 import { CButton, CCard, CCardBody, CAlert } from '@coreui/react'
 import { createTrial } from './actions'
 import TextRow from 'src/views/components/forms/TextRow'
+import R from './locale'
+import G from '~/locale'
 
 export default ({ onCreate }) => {
   const dispatch = useDispatch()
@@ -11,9 +13,9 @@ export default ({ onCreate }) => {
   return (
     <CCard>
       <CCardBody>
-        <CAlert color="info">欢迎试用,您的支持是对我们最大的信任</CAlert>
-        <TextRow size="sm" label="试用期" text={orderContextReducer.trialDays} />
-        <TextRow size="sm" label="最大试用设备" text={orderContextReducer.trialDeviceCount} />
+        <CAlert color="info">{R.trial_tips}</CAlert>
+        <TextRow size="sm" label={R.trial_days} text={orderContextReducer.trialDays} />
+        <TextRow size="sm" label={R.trial_max_device} text={orderContextReducer.trialDeviceCount} />
 
         <CButton
           type="button"
@@ -25,7 +27,7 @@ export default ({ onCreate }) => {
             }
           }}
         >
-          确认
+          {G.confirm}
         </CButton>
       </CCardBody>
     </CCard>

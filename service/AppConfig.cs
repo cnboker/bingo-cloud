@@ -32,12 +32,9 @@ namespace Ioliz.Service
         public decimal TrialMaxUploadVideoFileSize { get; set; }
         public int TrialMaxUsePictureCount { get; set; }
         public int MaxBenefitCountByDay { get; set; }
-        //初始化内容服务器链接
-        public string CreateInstanceUrl { get; set; }
-        //获取内容服务器设备状态链接
-        public string DeviceStatusUrl { get; set; }
+        
         //AppSecret,初始化内容服务器key值
-        public string Authkey { get; set; }
+        //public string Authkey { get; set; }
         //验证服务器地址
         public string AuthServer { get; set; }
 
@@ -60,7 +57,7 @@ namespace Ioliz.Service
         public string MQTTConnectionString;
         public string MemberConnectionString;
         public string IdentityConnectionString;
-
+        public string MQTTServer;
         //4g網絡配額
         public long Quota4G { get; set; }
         public ResourceServerConfig[] ResourceServers {get;set;}
@@ -79,11 +76,10 @@ namespace Ioliz.Service
         
         public void LoadConfig(IConfigurationRoot configRoot)
         {
-            CreateInstanceUrl = configRoot.GetSection("AppSettings:createInstanceUrl").Value;
-            DeviceStatusUrl = configRoot.GetSection("AppSettings:deviceStatusUrl").Value;
+            MQTTServer = configRoot.GetSection("AppSettings:mqttServer").Value;
             AuthServer = configRoot.GetSection("AppSettings:authServer").Value;
             Domain = configRoot.GetSection("AppSettings:domain").Value;
-            Authkey = configRoot.GetSection("AppSettings:authkey").Value;
+            //Authkey = configRoot.GetSection("AppSettings:authkey").Value;
 
             MemberConnectionString = Microsoft.Extensions.Configuration
          .ConfigurationExtensions.GetConnectionString(configRoot, "MemberConnection");

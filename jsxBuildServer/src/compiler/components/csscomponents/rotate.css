@@ -1,0 +1,41 @@
+@keyframes rotateIn {
+  from {
+    transform: rotate3d(0, 0, 1, -200deg);
+    opacity: 0;
+  }
+
+  to {
+    transform: translate3d(0, 0, 0);
+    opacity: 1;
+  }
+}
+
+@keyframes rotateOut {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    transform: rotate3d(0, 0, 1, 200deg);
+    opacity: 0;
+  }
+}
+
+
+.rotate-enter {
+  opacity: 0;
+  animation: rotateIn 2s;
+}
+
+.rotate-enter-active {
+  opacity: 1;
+}
+
+.rotate-exit {
+  opacity: 1;
+}
+
+.rotate-exit-active {
+  opacity: 0;
+  animation:rotateOut 2s;
+} 

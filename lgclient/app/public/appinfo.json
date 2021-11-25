@@ -6,7 +6,7 @@
   "main": "index.html",
   "title": "XPlayer",
   "icon": "256x256.png",
-  "largeIcon": "512x512.png",
+  "largeIcon": "256x256.png",
   "appDescription": "ioliz Signage App",
   "inspectable": true ,
   "trustLevel": "trusted",

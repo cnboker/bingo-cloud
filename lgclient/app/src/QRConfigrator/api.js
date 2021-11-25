@@ -5,6 +5,7 @@ const qs = require("querystring");
 
 export const requestQR = () => {
     var url = `${process.env.REACT_APP_AUTH_URL}/api/authSession`;
+    console.log("url",url);
     var sessionId = uuidv4().replace(/-/g, "");
     return axios({
         url,
@@ -41,7 +42,7 @@ export const getDeviceInfo = async() => {
 };
 
 export const postDeviceInfo = (token, authorizeCode, deviceInfo) => {
-    var url = `${process.env.REACT_APP_MEMBER_URL}/api/License/UploadDeviceInfo`;
+    var url = `${process.env.REACT_APP_MEMBER_URL}/api/License/PostDeviceInfo`;
     const { wired_addr } = deviceInfo;
     return axios({
         url,

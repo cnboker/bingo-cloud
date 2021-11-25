@@ -4,7 +4,6 @@
   "private": true,
   "homepage": "./",
   "dependencies": {
-    "animate.css": "^3.7.2",
     "axios": "^0.19.0",
     "chinese-lunar": "^0.1.4",
     "classnames": "^2.2.6",
@@ -57,12 +56,12 @@
     "@types/node": "^12.7.4",
     "@types/react": "^16.9.2",
     "@types/react-dom": "^16.9.0",
-    "react-app-rewired": "^2.1.5",
     "eslint-config-react-app": "^6.0.0",
     "eslint-plugin-jest": "^25.2.2",
     "eslint-plugin-jsx-a11y": "^6.4.1",
     "eslint-plugin-react": "^7.26.1",
     "eslint-plugin-react-hooks": "^4.2.0",
-    "eslint-plugin-testing-library": "^4.12.4"
+    "eslint-plugin-testing-library": "^4.12.4",
+    "react-app-rewired": "^2.1.5"
   }
 }

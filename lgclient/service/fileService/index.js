@@ -79,18 +79,9 @@ service.register("exists", function(message) {
   var path =  message.payload.path;
 
   fs.exists(path, function(exists) {
-    if (!exists) {
-      message.respond({
-        returnValue: false,
-        errorCode: "-1",
-        errorText: "Not found"
-      });
-    } else {
-      message.respond({
-        returnValue: true,
-        exists: exists
-      });
-    }
+    message.respond({
+      returnValue: exists,
+    });
   });
 });
 

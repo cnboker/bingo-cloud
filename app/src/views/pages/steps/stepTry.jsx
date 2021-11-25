@@ -3,7 +3,7 @@ import { CCard, CCardBody, CCardText, CButton, CCardTitle } from '@coreui/react'
 import Offcanvas from '~/views/components/dialog/Offcanvas'
 import Trial from '../orderHandlers/Trial'
 import { useSelector } from 'react-redux'
-
+import G from '~/locale'
 export default () => {
   const [visible, setVisible] = useState(false)
   const context = useSelector((state) => state.orderContextReducer)
@@ -12,7 +12,12 @@ export default () => {
     <CCard>
       <CCardBody>
         {visible && (
-          <Offcanvas visible={visible} placement="start" onHide={() => setVisible(false)}>
+          <Offcanvas
+            title={G.info}
+            visible={visible}
+            placement="start"
+            onHide={() => setVisible(false)}
+          >
             <Trial
               onCreate={() => {
                 setVisible(false)
@@ -28,7 +33,7 @@ export default () => {
               <CButton onClick={() => setVisible(true)}>开始试用</CButton> <br />
             </React.Fragment>
           )}
-          老用户如果需要续费，点击<CButton href="#orderHandlers/create">下单续费</CButton> <br />
+          老用户如果需要续费，点击<CButton href="#orderHandlers/create">续费</CButton> <br />
         </CCardText>
       </CCardBody>
     </CCard>

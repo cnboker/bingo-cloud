@@ -58,7 +58,7 @@ export default class ContentNotify implements IContentNotify {
     this.doCapture().then(data => {
       clientAPI.updateSnapshot2(data);
     });
-    this.dispatcher.dispatch(SNAPSHOT_EVENT)
+    this.dispatcher.dispatch(SNAPSHOT_EVENT,null)
   }
 
   doCapture(): Promise<string> {

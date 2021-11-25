@@ -13,7 +13,7 @@ const AppFooter = () => {
       <div className="ms-auto">
         <span className="me-1">Powered by</span>
         <a href="https://ioliz.com" target="_blank" rel="noopener noreferrer">
-          IronCloud
+          ioliz.com
         </a>
       </div>
     </CFooter>

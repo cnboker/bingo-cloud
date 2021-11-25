@@ -1,7 +1,5 @@
-import LocalizedStrings from 'react-localization'
-import Cookies from 'js-cookie'
-
-const resources = new LocalizedStrings({
+import { langLoader } from '~/lib/localize'
+const data = {
   en: {
     password_mismatch: 'Password do not match',
     register_failure: 'Register failure',
@@ -12,7 +10,8 @@ const resources = new LocalizedStrings({
     confirm_password: 'Confirm password',
     registered: 'Registerd?Click {0}',
     login: 'Login',
-    create: 'Create',
+    register: 'Register',
+    registerTitle: 'Create your account',
   },
   zh: {
     password_mismatch: '密码不匹配',
@@ -24,10 +23,8 @@ const resources = new LocalizedStrings({
     confirm_password: '确认密码',
     registered: '已注册?点击{0}',
     login: '登录',
-    create: '创建',
+    register: '注册',
+    registerTitle: '为您创建账号',
   },
-})
-
-var language = Cookies.get('language') || resources.getLanguage()
-resources.setLanguage(language)
-export default resources
+}
+export default langLoader(data)

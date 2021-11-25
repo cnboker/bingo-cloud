@@ -17,6 +17,7 @@ import CIcon from '@coreui/icons-react'
 import { cilLockLocked, cilUser } from '@coreui/icons'
 import { useForm } from 'react-hook-form'
 import ValidatorSpan from 'src/views/ValidatorSpan'
+import R from '../locale'
 const Login = ({ submit, error }) => {
   const {
     register,
@@ -38,8 +39,8 @@ const Login = ({ submit, error }) => {
               <CCard className="p-4">
                 <CCardBody>
                   <CForm onSubmit={handleSubmit(onSumit)}>
-                    <h1>Login</h1>
-                    <p className="text-medium-emphasis">Sign In to your account</p>
+                    <h1>{R.login}</h1>
+                    <p className="text-medium-emphasis">{R.loginTitle}</p>
                     <CInputGroup className="mb-3">
                       <CInputGroupText>
                         <CIcon icon={cilUser} />
@@ -71,7 +72,7 @@ const Login = ({ submit, error }) => {
                       </CCol>
                       <CCol xs={6} className="text-right">
                         <CButton color="link" className="px-0">
-                          Forgot password?
+                          {R.forgetPassword}?
                         </CButton>
                       </CCol>
                     </CRow>
@@ -89,14 +90,11 @@ const Login = ({ submit, error }) => {
               >
                 <CCardBody className="text-center">
                   <div>
-                    <h2>Sign up</h2>
-                    <p>
-                      Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                      tempor incididunt ut labore et dolore magna aliqua.
-                    </p>
+                    <h2>{R.signup}</h2>
+                    <p>{R.signupDesc}</p>
                     <Link to="/register">
                       <CButton color="primary" className="mt-3" active tabIndex={-1}>
-                        Register Now!
+                        {R.signup}
                       </CButton>
                     </Link>
                   </div>

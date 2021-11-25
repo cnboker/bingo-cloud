@@ -7,7 +7,7 @@ import { orderContextReducer } from './views/pages/orderHandlers/reducer'
 import { deviceListReducer } from './views/pages/device/reducer'
 import tagReducer from './views/pages/tags/reducer'
 import siderBarReducer from './store'
-
+import { authorizeReducer } from './views/pages/authorize/reducer'
 const appReducer = combineReducers({
   securityReducer,
   userReducer,
@@ -17,6 +17,7 @@ const appReducer = combineReducers({
   deviceListReducer,
   tagReducer,
   siderBarReducer,
+  authorizeReducer,
 })
 
 const IndexReducer = (state, action) => {
