@@ -1,96 +1,32 @@
-import IClientAPI from "../interfaces/IClientAPI";
 import axios, { AxiosResponse } from "axios";
 import * as APIPath from "../constants/apiPaths";
-import NotificationResult from "../dataModels/notificationResult";
 import GeneralResult from "../dataModels/generalResult";
-import GetContentResult from "../dataModels/getContentResult";
-import WeatherResult from "../dataModels/weatherResult";
 import NetTrafficInfo from "../dataModels/netTrafficInfo";
-import { instance,Service_Server } from "../configer";
+import {instance, Service_Server } from "../configer";
+import IClientAPI from "../interfaces/IClientAPI";
 
 const strFormat = require("string-format");
 
 export default class ClientAPI implements IClientAPI {
-  get token(): string {
-    return instance.token;
-  }
 
-  get key(): string {
-    return instance.deviceId;
-  }
-
-
-  notify(): Promise<AxiosResponse<NotificationResult>> {
-    var url = Service_Server + strFormat(APIPath.NotifyPath, this.key);
-    //console.log("url=", url);
-    return axios.request<NotificationResult>({
-      url,
-      method: "get",
-      headers: {
-        Authorization: "Bearer " + this.token
-      }
-    });
-  }
-
-  notifyPost(notificationId: number): Promise<AxiosResponse<GeneralResult>> {
-    var url = Service_Server + strFormat(APIPath.NotifyPath, notificationId);
-    //console.log("url=", url);
-    return axios.request<GeneralResult>({
-      url,
-      method: "post",
-      headers: {
-        Authorization: "Bearer " + this.token
-      }
-    });
-  }
-
-  getContent(contentId: number): Promise<AxiosResponse<GetContentResult>> {
-    const qs = require("querystring");
-    var url = Service_Server + strFormat(APIPath.GetContentPath, contentId);
-    //console.log("url=", url);
-    return axios.request<GetContentResult>({
-      url,
-      method: "get",
-      headers: {
-        Authorization: "Bearer " + this.token
-      }
-    });
-  }
-
-  updateSnapshot(key: string, snapshotPath: string): void {
-    throw new Error("Method not implemented.");
-  }
-
-  updateSnapshot2(imageBaseData: string): void {
-    var url = Service_Server + APIPath.SnapshotPath2;
+  updateSnapshot(imageBaseData: string): void {
+    var url = Service_Server + APIPath.SnapshotPath;
     //console.log("url=", url);
     axios
       .request<GeneralResult>({
         url,
         method: "post",
         data: {
-          key:this.key,
+          key:instance.deviceId,
           content: imageBaseData
         },
         headers: {
-          Authorization: "Bearer " + this.token
+          Authorization: "Bearer " + instance.token
         }
       })
       .then(x => {
         console.log("updateSnapshot2", x.data);
       });
-  }
-
-  uploadMyinformation(
-    key: string,
-    playProgram: string,
-    channel: string,
-    slots: string,
-    fileName: string,
-    fileSize: string,
-    filePercent: string
-  ): import("../dataModels/generalResult").default {
-    throw new Error("Method not implemented.");
   }
 
   log(
@@ -109,7 +45,7 @@ export default class ClientAPI implements IClientAPI {
         message
       },
       headers: {
-        Authorization: "Bearer " + this.token
+        Authorization: "Bearer " + instance.token
       }
     });
   }
@@ -121,7 +57,7 @@ export default class ClientAPI implements IClientAPI {
       url,
       method: "get",
       headers: {
-        Authorization: "Bearer " + this.token
+        Authorization: "Bearer " + instance.token
       }
     });
   }
@@ -132,44 +68,14 @@ export default class ClientAPI implements IClientAPI {
   ): Promise<AxiosResponse<GeneralResult>> {
     var url = Service_Server + APIPath.NetTrafficInfoPath;
     //console.log("url=", url);
-    return axios.request<WeatherResult>({
+    return axios.request<NetTrafficInfo>({
       url,
       method: "post",
       data,
       headers: {
-        Authorization: "Bearer " + this.token
+        Authorization: "Bearer " + instance.token
       }
     });
   }
 
-  getWeather(city: string): Promise<AxiosResponse<WeatherResult>> {
-    var url = Service_Server + strFormat(APIPath.WeatherPath, city);
-    console.log("getweather url=", url);
-    return axios.request<WeatherResult>({
-      url,
-      method: "get",
-      headers: {
-        Authorization: "Bearer " + this.token
-      }
-    });
-  }
-
-  playCount(
-    channelId: number,
-    deviceId: number
-  ): Promise<AxiosResponse<GeneralResult>> {
-    var url = Service_Server + APIPath.PlayCountPath;
-    //console.log("url=", url);
-    return axios.request<WeatherResult>({
-      url,
-      method: "post",
-      data: {
-        channelId,
-        deviceId
-      },
-      headers: {
-        Authorization: "Bearer " + this.token
-      }
-    });
-  }
 }

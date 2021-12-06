@@ -1,6 +1,5 @@
 require("../config");
 import ContentWorker from "../imps/ContentWorker";
-import MockContentNotify from "../imps/MockContentNotify";
 import { expect } from "chai";
 import "mocha";
 

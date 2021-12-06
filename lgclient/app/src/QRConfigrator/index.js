@@ -18,7 +18,6 @@ export default () => {
         RequestConfig: 3,
         Finished: 4
     });
-    const { exists, mkdir } = webosApis.webosFileService;
     const { appbootInstall, httpserverInstall } = webosApis.bootservice;
     const [runStep, setRunStep] = useState(RunStep.RequestQR);
     const [message, setMessage] = useState();
@@ -28,7 +27,6 @@ export default () => {
     const history = useHistory();
     const qrState = useSelector((state) => state.qrReducer);
     const { QR, token, configInfo } = qrState;
-    const { APP_ROOT } = configer;
 
     const stateLoop = () => {
         console.log("qr", qrState);
@@ -71,26 +69,8 @@ export default () => {
             .then((res) => {
                 console.log("install->", res);
             });
-        dirReady();
         dispatch(requestQR());
     }, []);
-
-
-    const dirReady = () => {
-        exists(APP_ROOT)
-            .then((exist) => {
-                if (!exist) {
-                    return mkdir(APP_ROOT);
-                }
-                return true;
-            })
-            .then((res) => {
-                console.log(res);
-            })
-            .catch((e) => {
-                console.log("mkdsDir", e);
-            });
-    };
 
 
     const saveConfig = () => {
@@ -111,18 +91,18 @@ export default () => {
     };
 
     return (
-        <div className="container-fluid" style={divStyles}>
+        <div className="container-fluid" style={ divStyles }>
             <div className="row">
                 <div className="col">
-                    {QR.qrUrl && (
-                        <QRCode value={QR.qrUrl} size={256} className="float-right" />
-                    )}
+                    { QR.qrUrl && (
+                        <QRCode value={ QR.qrUrl } size={ 256 } className="float-right" />
+                    ) }
                 </div>
                 <div
                     className="col"
-                    style={{
+                    style={ {
                         padding: "5%"
-                    }}
+                    } }
                 >
                     <h1>Scan QR code to activate device,Please.</h1>
                     <div>
@@ -130,7 +110,7 @@ export default () => {
                         scan the QR code
                     </div>
                     <div>
-                        {message}
+                        { message }
                     </div>
                 </div>
             </div>

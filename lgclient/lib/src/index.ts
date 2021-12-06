@@ -1,9 +1,5 @@
-require("./string");
-import * as DataModel from "./dataModels/ContentPackage";
-import ContentWorker from "./imps/ContentWorker";
-import * as util from "./imps/util";
+import { IContentWorker } from "./interfaces/IContentWorker";
 import * as configer from "./configer";
-import ClientAPI from "./imps/ClientAPI";
 import * as downloadManager from './webosApis/downloadManager';
 import * as systemservice from './webosApis/systemservice'
 import * as storageAccess from './webosApis/systemservice'
@@ -11,6 +7,7 @@ import * as webosFileService from './imps/WebOSFileService'
 import * as usbservice from './webosApis/usbservice'
 import * as applicationmanager from './webosApis/applicationmanager'
 import * as bootservice from './imps/bootservice'
+import { serviceRegister, getService } from './imps/ServiceProiver'
 
 const webosApis = {
     downloadManager,
@@ -23,10 +20,9 @@ const webosApis = {
 }
 
 export {
-    ContentWorker,
-    DataModel,
-    util,
+    IContentWorker,
     configer,
-    ClientAPI,
-    webosApis
+    webosApis,
+    serviceRegister,
+    getService
 }

@@ -1,11 +1,11 @@
 require("dotenv").config();
-import { readFile, writeFile, removeFile } from "./imps/WebOSFileService";
-import { Config } from "./configModels";
+import { readFile, writeFile, removeFile, exists, mkdir } from "./imps/WebOSFileService";
+import { ConfigModel } from "./dataModels/ConfigModel"
 import { EventEmitter } from "fbemitter";
 
 class Configer {
   private static _instance: Configer;
-  _configInstance: Config;
+  _configInstance: ConfigModel;
   _emitter: EventEmitter;
 
   private constructor() {
@@ -13,9 +13,10 @@ class Configer {
     this._emitter.addListener("log", (type: EventType, message: string) => {
       console.log(`${type},${message}`);
     });
+    this.rootDirReady();
   }
 
-  read(): Promise<Config> {
+  read(): Promise<ConfigModel> {
     return new Promise((resolve, reject) => {
       readFile(`${APP_ROOT}/config.json`)
         .then(content => {
@@ -32,7 +33,7 @@ class Configer {
     removeFile(`${APP_ROOT}/config.json`);
   }
 
-  write(config: Config): Promise<boolean> {
+  write(config: ConfigModel): Promise<boolean> {
     this._configInstance = config;
     return writeFile(
       `${APP_ROOT}/config.json`,
@@ -40,19 +41,35 @@ class Configer {
     );
   }
 
+  rootDirReady = () => {
+    exists(APP_ROOT)
+      .then((exist) => {
+        if (!exist) {
+          return mkdir(APP_ROOT);
+        }
+        return true;
+      })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((e) => {
+        console.log("mkdsDir", e);
+      });
+  };
+
   get deviceId(): string {
     return this._configInstance.deviceId;
   }
 
-  get token():string{
+  get token(): string {
     return this._configInstance.token;
   }
 
-  get fileServer():string{
+  get fileServer(): string {
     return this._configInstance.FileServer
   }
-  
-  get mqttServer():string{
+
+  get mqttServer(): string {
     return this._configInstance.MQTTServer
   }
 

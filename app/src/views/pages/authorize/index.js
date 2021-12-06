@@ -1,24 +1,36 @@
 /* eslint-disable no-use-before-define */
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { tokenPost, authorizeRequest, unAuthorizeListRequest } from './actions'
 import * as Dialog from 'src/views/components/dialog/Index'
-import G from '~/locale'
 import { useParams } from 'react-router-dom'
 import { CCard, CCardHeader, CCardBody, CRow, CCol, CButton, CAlert } from '@coreui/react'
+import R from './locale'
+import G from '~/locale'
 
 export default () => {
   const dispatch = useDispatch()
   const { id: urlAuthorizeCode } = useParams()
   const authorizeReducer = useSelector((state) => state.authorizeReducer)
-  const waittingMessage = '正在请求认证信息...'
-  //console.log('authorizeCode', urlAuthorizeCode)
+  const [message, setMessage] = useState(R.authorizeRequest)
+
   useEffect(() => {
     dispatch(unAuthorizeListRequest())
     if (urlAuthorizeCode.length > 1) {
       dispatch(tokenPost(urlAuthorizeCode))
     }
   }, [])
+
+  useEffect(() => {
+    setMessage('')
+    if (authorizeReducer.length === 0) {
+      setMessage(R.nodevice)
+    }
+    const current = authorizeReducer.find((x) => x.authorizeCode === urlAuthorizeCode)
+    if (current && current.authorizeStatus === 1) {
+      setMessage(R.authenticationSuccessMessage)
+    }
+  }, [authorizeReducer])
 
   const authorizeHandle = (id) => {
     Dialog.confirm(G.confirmInfo, () => {
@@ -28,7 +40,7 @@ export default () => {
 
   return (
     <CCard>
-      <CCardHeader component="h5">Device Authorize</CCardHeader>
+      <CCardHeader component="h5">{R.deviceAuthentication}</CCardHeader>
       <CCardBody>
         {authorizeReducer.map((item, index) => {
           return (
@@ -40,7 +52,7 @@ export default () => {
             />
           )
         })}
-        {authorizeReducer.length === 0 && <CAlert color="secondary">{waittingMessage}</CAlert>}
+        <div>{message}</div>
       </CCardBody>
     </CCard>
   )

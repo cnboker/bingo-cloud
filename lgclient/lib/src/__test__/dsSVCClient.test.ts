@@ -23,10 +23,3 @@ const client = new DSSvcClient();
 //   });
 // });
 
-describe("api getweather", async () => {
-  it("api getweather return is not null", async () => {
-    var x = await client.getWeather("深圳");
-    console.log(x.data);
-    expect(x.data).to.not.be.null;
-  });
-});

@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "@wessberg/di": "^2.0.3"
+  }
+}

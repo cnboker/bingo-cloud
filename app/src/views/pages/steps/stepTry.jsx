@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { CCard, CCardBody, CCardText, CButton, CCardTitle } from '@coreui/react'
 import Offcanvas from '~/views/components/dialog/Offcanvas'
-import Trial from '../orderHandlers/Trial'
+import Trial from '../orderActions/Trial'
 import { useSelector } from 'react-redux'
 import G from '~/locale'
 export default () => {
@@ -33,7 +33,7 @@ export default () => {
               <CButton onClick={() => setVisible(true)}>开始试用</CButton> <br />
             </React.Fragment>
           )}
-          老用户如果需要续费，点击<CButton href="#orderHandlers/create">续费</CButton> <br />
+          老用户如果需要续费，点击<CButton href="#orderActions/create">续费</CButton> <br />
         </CCardText>
       </CCardBody>
     </CCard>

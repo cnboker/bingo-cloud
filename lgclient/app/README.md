@@ -51,8 +51,3 @@ ares-setup-device --add target -i "host=192.168.50.205" -i "port-22" -i "usernam
 ares-setup-device --default target //设置默认远程设备
 ares-install --device target com.domain.app_1.0.0_all.ipk //远程安装app
 ares-shell --device target //远程shell
-
-
-### package install in termianl
-
-opkg install <package-name>.ipk

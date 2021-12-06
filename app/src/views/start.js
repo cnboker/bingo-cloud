@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { getOrderSession } from './pages/orderHandlers/actions'
+import { getOrderSession } from './pages/orderActions/actions'
 
 export default () => {
   const history = useHistory()

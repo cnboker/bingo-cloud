@@ -1,19 +1,19 @@
 import { ContentPackage } from "../dataModels/ContentPackage";
-import { ResrouceParser } from "./ResourceParser";
-import { safeUrl } from "./util";
 import { IResourceInfo } from "../interfaces/IContentWorker";
 import {listAllFile,removeFile} from './WebOSFileService'
 export default class DiskClear {
   //当前播放的资源包
-  contentPackage: ContentPackage;
+  fileList: IResourceInfo[];
   constructor(contentPackage: ContentPackage) {
-    this.contentPackage = contentPackage;
+    this.fileList = contentPackage.files.map(x=>{
+      return <IResourceInfo>{
+        resourceUrl:x,
+      }
+    });
   }
 
   async clean(): Promise<void> {
-    var parser = new ResrouceParser(this.contentPackage);
-    var reslist = parser.parseResource();
-    await this.clearOldResource(reslist).then(() => console.log("clear files ok"));
+    await this.clearOldResource(this.fileList).then(() => console.log("clear files ok"));
   }
 
   private async clearOldResource(result: IResourceInfo[]): Promise<void> {
@@ -24,7 +24,7 @@ export default class DiskClear {
     console.log("allfiles", JSON.stringify(outFiles));
     //exclude files
     const removeFiles = outFiles.filter(function(x) {
-      return result.map(e => safeUrl(e.resourceUrl)).indexOf(x) < 0;
+      return result.map(e => e.resourceUrl).indexOf(x) < 0;
     });
     //remove
     console.log("remove old files",removeFiles);

@@ -14,7 +14,7 @@ import {
   FullFileBrowser,
 } from 'chonky'
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import Button from '@material-ui/core/Button'
+
 //import { showActionNotification } from './util'
 import { setChonkyDefaults } from 'chonky'
 import { ChonkyIconFA } from 'chonky-icon-fontawesome'
@@ -369,15 +369,6 @@ export const VFSBrowser: React.FC<DataVFSProps> = React.memo((props) => {
   )
   return (
     <>
-      <Button
-        size="small"
-        color="primary"
-        variant="contained"
-        onClick={resetFileMap}
-        style={{ marginBottom: 15 }}
-      >
-        Reset file ma
-      </Button>
       <div style={{ height: 640 }}>
         <FullFileBrowser
           files={files}

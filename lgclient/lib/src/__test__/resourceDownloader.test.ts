@@ -2,11 +2,7 @@ require('../config')
 
 import { expect } from 'chai';
 import 'mocha';
-
-import jsonObj from './region.json';
-import contentPackage from './content.json';
-import { Region, JsonImage,ContentPackage } from '../dataModels/ContentPackage';
-import { ResourceDownloader } from "../imps/ResourceDownloader";
+import { FileDownloader } from "../imps/FileDownloader";
 
 
 // describe('regionJson Convert test', () => {

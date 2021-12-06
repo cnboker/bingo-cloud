@@ -2,63 +2,61 @@ import { ContentPackage } from "../dataModels/ContentPackage";
 import {
   IContentWorker,
   IContentNotify,
-  IResourceInfo
+  IResourceInfo,
+  IFileDownloader
 } from "../interfaces/IContentWorker";
-import { ResourceDownloader } from "./ResourceDownloader";
-import ContentNotify from "./ContentNotify";
-import DiskClear from "./DiskClear";
-import EventDispatcher from "../EventDispatcher";
-import { CONTENT_READY_EVENT,SINGLE_FILE_DOWNLOAD_COMPLETE_EVENT,SNAPSHOT_EVENT } from '../constants'
-import {readFile} from './WebOSFileService'
+import { FileDownloader } from "./FileDownloader";
+import { readFile } from './WebOSFileService'
+import { getService } from "./ServiceProiver";
+
 export default class ContentWorker implements IContentWorker {
-  contentPackage: ContentPackage;
+ 
   contentNotify: IContentNotify;
+  fileDownloader: IFileDownloader;
 
-  constructor(contentNotify?: IContentNotify) {
-    this.contentNotify = contentNotify || new ContentNotify(new EventDispatcher());
-  }
-
-  get package() {
-    return this.contentPackage;
+  constructor() {
+    this.contentNotify = getService<IContentNotify>();
+    this.fileDownloader = getService<IFileDownloader>();
   }
 
   //callback defined
-  execute(cb: { (resource: ContentPackage): void }): void {
-    this.contentNotify.dispatcher.subscribe(CONTENT_READY_EVENT, (data: ContentPackage) => {
-      console.log("contentNotify", data.name);
-      this.contentPackage = data;
-     
-      var resourceDownloader = new ResourceDownloader(data);
-      resourceDownloader
-        .dispatcher
-        .subscribe(SINGLE_FILE_DOWNLOAD_COMPLETE_EVENT,(res: IResourceInfo[]) => {
-           this.diskClean(data);
-          cb(data);
-        });
-      resourceDownloader.download();
+  execute(cb: { (): void }): void {
+    this.contentNotify.onContentReady((data: ContentPackage) => {
+      var fileList = data.files.map(x => <IResourceInfo>{
+        resourceUrl: x,
+        status: 0
+      });
+      this.download(fileList, cb)
     });
-
-    this.contentNotify.dispatcher.subscribe(SNAPSHOT_EVENT, () => {
-      console.log("snapshot");
-    });
+    //如果上次下载未完成，读未下载数据继续下载
+    readFile('downloadlist.json')
+      .then(text => JSON.parse(text))
+      .then(fileList => {
+        this.download(fileList, cb)
+      }).catch(e => {
+        console.log("read package.json", e);
+      });
 
     this.contentNotify.watch();
-
-    //检查package.json是否存在
-    readFile("package.json")
-      .then(content => {
-        var json = JSON.parse(content);
-        this.contentPackage = json;
-        //this.diskClean(json);
-        cb(json);
-      })
-      .catch(e => {
-        console.log("package.json not exsit");
-      });
   }
   //
 
-  diskClean(data: ContentPackage) {
+  download(fileList: IResourceInfo[], cb: { (): void }) {
+    if (fileList.length > 0) {
+      if (this.fileDownloader) {
+        this.fileDownloader.cancel();
+      }
+      this.fileDownloader = new FileDownloader(fileList);
+      this.fileDownloader
+        .onDownloadComplete(() => {
+          this.diskClean(fileList);
+          if (cb) { cb(); }
+        });
+      this.fileDownloader.download();
+    }
+  }
+
+  diskClean(data: IResourceInfo[]) {
     //const ONE_HOUR = 3600 * 1000;
     // var timer = setTimeout(() => {
     //   clearTimeout(timer);
