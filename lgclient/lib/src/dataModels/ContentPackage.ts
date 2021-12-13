@@ -6,6 +6,6 @@
 //   "Set quicktype target language"
 
 export interface ContentPackage {
-    server: string;
+    //server: string;
     files: string[]
 }

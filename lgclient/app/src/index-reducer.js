@@ -1,10 +1,8 @@
 import { combineReducers } from "redux";
 import { qrReducer } from "./QRConfigrator/reducer";
-import { playerReducer } from "./player/reducer";
 
 const appReducer = combineReducers({
-    qrReducer,
-    playerReducer
+    qrReducer
 });
 
 //https://stackoverflow.com/questions/35622588/how-to-reset-the-state-of-a-redux-store

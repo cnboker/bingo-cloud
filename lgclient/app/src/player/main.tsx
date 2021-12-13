@@ -4,7 +4,6 @@ import Shim from "./components/Shim";
 import config from "../config";
 import WebpagePlayer from "./components/WebpagePlayer";
 
-const worker = getService<IContentWorker>();
 
 export default class Main extends React.Component<{}, any> {
     constructor(props: {}) {
@@ -16,8 +15,10 @@ export default class Main extends React.Component<{}, any> {
     }
 
     componentDidMount() {
+        console.log("player->main->componentDidMount");
         var self = this;
         serviceRegister();
+        const worker = getService("IContentWorker") as IContentWorker;
         worker.execute(() => {
             self.setState({ url: `${config.REACT_APP_LG_URL}index.html`, shim: false });
         });

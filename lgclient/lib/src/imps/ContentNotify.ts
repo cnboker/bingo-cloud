@@ -1,44 +1,35 @@
 import { IContentNotify } from "../interfaces/IContentWorker";
-import ClientAPI from "./ClientAPI";
 import EventDispatcher from "./EventDispatcher";
-import { CONTENT_READY_EVENT,SNAPSHOT_EVENT } from '../constants'
+import { CONTENT_READY_EVENT, SNAPSHOT_EVENT } from '../constants'
 import { instance } from "../configer";
-import { mqttConnect, mqttSubscrible, MQTT_CONTENT_NOTIFY, MQTT_SNAPSHOT_NOTIFY } from "./MQTTDispatcher";
 import { ContentPackage } from "../dataModels/ContentPackage";
-
-const clientAPI = new ClientAPI();
+import IClientAPI from "../interfaces/IClientAPI";
+import { getService } from "./ServiceProiver";
+import { IMQTTDispatcher } from "../interfaces/IMQTTDispatcher";
 export default class ContentNotify implements IContentNotify {
-  timeout: number = 1000 * 10;
-  dispatcher: EventDispatcher;
-
-  constructor() {
-    this.dispatcher = new EventDispatcher();
-    mqttConnect(instance.mqttServer, (title: string, message: string) => {
-      var jsonObj = JSON.parse(message)
-      if (title === `${MQTT_CONTENT_NOTIFY}/${instance.deviceId}`) {
-        this.dispatcher.dispatch(CONTENT_READY_EVENT, jsonObj);
-      } else if (title === `${MQTT_SNAPSHOT_NOTIFY}/${instance.deviceId}`) {
-        this.snapshotProcess();
-      }
-    })
-    mqttSubscrible(instance.deviceId, MQTT_CONTENT_NOTIFY)
-    mqttSubscrible(instance.deviceId, MQTT_SNAPSHOT_NOTIFY)
-  }
-  onContentReady(callback: (contentPackage: ContentPackage) => void): void {
-    this.dispatcher.subscribe(CONTENT_READY_EVENT, callback);
-  }
+  private timeout: number = 1000 * 10;
+  private dispatcher: EventDispatcher;
+  private clientAPI: IClientAPI
 
   onSnapshot(callback: () => void): void {
-    this.dispatcher.subscribe(SNAPSHOT_EVENT,callback)
+    this.dispatcher.subscribe(SNAPSHOT_EVENT, callback)
   }
 
   watch(): void {
+    this.dispatcher = new EventDispatcher();
+    this.clientAPI = <IClientAPI>getService("IClientAPI");
+    const mqttDispather = <IMQTTDispatcher>getService("IMQTTDispatcher");
+  
+    mqttDispather.onSubSnapshotNotify = () => {
+      this.snapshotProcess();
+    }
+
     setInterval(this.updateBeatheart.bind(this), this.timeout);
   }
 
   private updateBeatheart() {
     if (!instance.token) return;
-    clientAPI.heartbeat(instance.deviceId).then(x => {
+    this.clientAPI.heartbeat(instance.deviceId).then(x => {
       //console.log("update beatheart", x.data);
     });
   }
@@ -46,7 +37,7 @@ export default class ContentNotify implements IContentNotify {
   snapshotProcess(): void {
     console.log("snapshotProcess call...");
     this.doCapture().then(data => {
-      clientAPI.updateSnapshot(data);
+      this.clientAPI.updateSnapshot(data);
     });
   }
 

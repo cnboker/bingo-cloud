@@ -29,6 +29,7 @@ exports.httpserver = () => {
     postHandler
       .make(username, data)
       .then(res => {
+        console.log('make filelist:',res)
         res.send(res)
       })
   }) 

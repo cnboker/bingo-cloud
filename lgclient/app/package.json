@@ -33,10 +33,9 @@
     "lint": "eslint -c .eslintrc.js --ext .js,.jsx,.ts,.tsx .",
     "lint:fix": "npm run lint -- --fix",
     "start": "REACT_APP_STAGE=dev react-scripts start",
-    "build": "bash ./before_build.sh && react-app-rewired build",
+    "pub": "bash ./before_build.sh && react-app-rewired build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "postbuild": "bash ./post_build_osx",
+    "postbuild": "./post_build_osx",
     "postbuild1": "@powershell -NoProfile -ExecutionPolicy Unrestricted -Command ./post_build.ps1"
   },
   "browserslist": {

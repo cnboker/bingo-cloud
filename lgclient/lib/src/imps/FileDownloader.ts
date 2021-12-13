@@ -3,26 +3,16 @@ import {
   IResourceInfo
 } from "../interfaces/IContentWorker";
 import { instance } from "../configer";
-import { SINGLE_FILE_DOWNLOAD_COMPLETE_EVENT, DOWNLAOD_COMPLETE_EVENT } from '../constants'
-import EventDispatcher from "./EventDispatcher";
 import { writeFile } from './WebOSFileService'
 import { download } from '../webosApis/downloadManager'
-import { mqttConnect, mqttDownloadProgressPublish } from "./MQTTDispatcher";
+import { IMQTTDispatcher } from "../interfaces/IMQTTDispatcher";
+import { getService } from "./ServiceProiver";
 
 export class FileDownloader implements IFileDownloader {
   fileList: IResourceInfo[];
-  private dispatcher: EventDispatcher;
 
-  constructor(fileList: IResourceInfo[]) {
-    this.dispatcher = new EventDispatcher();
-    //过滤代下载资源
-    this.fileList = fileList.filter(x => x.status === 0);;
-    mqttConnect(instance.mqttServer)
-  }
-
-  onDownloadComplete(callback: (fileList: IResourceInfo[]) => void): void {
-    this.dispatcher.subscribe(DOWNLAOD_COMPLETE_EVENT, callback)
-  }
+  onDownloadComplete: (fileList: IResourceInfo[]) => void;
+  onOneDownloadComplete: (file: IResourceInfo) => void;
 
   cancel(): void {
     this.fileList = [];
@@ -30,9 +20,11 @@ export class FileDownloader implements IFileDownloader {
     //待处理
   }
 
-  download(): void {
+  download(fileList: IResourceInfo[]): void {
+    this.fileList = fileList;
     var result: IResourceInfo[] = [];
-    this.onSingleDownloadComplete((res: IResourceInfo) => {
+
+    this.onOneDownloadComplete = (res: IResourceInfo) => {
       //console.log("file download completed", res);
       result.push(res);
       this.fileList = this.fileList.filter(x => {
@@ -48,31 +40,30 @@ export class FileDownloader implements IFileDownloader {
       if (this.fileList.length > 0) {
         this.singleFileDownload(this.fileList[0]);
       } else {
-        this.dispatcher.dispatch(DOWNLAOD_COMPLETE_EVENT, result);
+        //this.dispatcher.dispatch(DOWNLAOD_COMPLETE_EVENT, result);
+        this.onDownloadComplete(this.fileList);
       }
-    });
+    }
     //download first file
     if (this.fileList.length > 0) {
       this.singleFileDownload(this.fileList[0]);
     } else {
-      this.dispatcher.dispatch(DOWNLAOD_COMPLETE_EVENT,this.fileList);
+      //this.dispatcher.dispatch(DOWNLAOD_COMPLETE_EVENT,this.fileList);
+      this.onDownloadComplete(this.fileList)
     }
   }
-  private onSingleDownloadComplete(callback: (file: IResourceInfo) => void): void {
-    this.dispatcher.subscribe(SINGLE_FILE_DOWNLOAD_COMPLETE_EVENT, callback)
-  }
-  
+
   private singleFileDownload(resource: IResourceInfo): void {
     console.log("begin download", resource.resourceUrl);
     resource.status = 3;
     var apiUrl = `${instance.fileServer}${resource.resourceUrl}`;
-
+    const mqttDispather = <IMQTTDispatcher>getService("IMQTTDispatcher");
     download(
       apiUrl,
       resource.resourceUrl,
       percentResult => {
         console.log("download result:", JSON.stringify(percentResult));
-        mqttDownloadProgressPublish(instance.deviceId, percentResult)
+        mqttDispather.pubDownloadProgress(percentResult)
       }
     )
       .then(() => {
@@ -86,7 +77,7 @@ export class FileDownloader implements IFileDownloader {
       })
       .then(resource => {
         console.log("singleDispatcher execute");
-        this.dispatcher.dispatch(SINGLE_FILE_DOWNLOAD_COMPLETE_EVENT, resource);
+        this.onOneDownloadComplete(resource)
       });
   }
 

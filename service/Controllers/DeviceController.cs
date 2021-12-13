@@ -80,6 +80,11 @@ namespace Ioliz.Service.Controllers
       return Ok();
     }
 
+    [HttpGet("/api/heartbeat/{id}")]
+    public IActionResult HeartBeat(string id){
+      return Ok();
+    }
+
     [HttpGet("/api/device/list/{id}")]
     public IEnumerable<DeviceModel> List(string id)
     {

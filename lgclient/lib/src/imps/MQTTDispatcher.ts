@@ -1,4 +1,6 @@
 import { connect } from "mqtt";
+import { ContentPackage } from "../dataModels/ContentPackage";
+import { IMQTTDispatcher } from "../interfaces/IMQTTDispatcher";
 //
 //文件下载进度
 export const MQTT_DOWNLOAD_PROGRESS = 'mqttDownloadProgress'
@@ -7,35 +9,48 @@ export const MQTT_CONTENT_NOTIFY = 'mqttContentNotify'
 //服务器抓取照片通知
 export const MQTT_SNAPSHOT_NOTIFY = 'mqttSnapshotNotify'
 
-var client: any;
 
-export const mqttDownloadProgressPublish = (deviceId: string, data: any) => {
-  if (client.connected) {
-    var jsonString = JSON.stringify({
-      deviceId: deviceId,
-      ...data
-    });
-    console.log(`${MQTT_DOWNLOAD_PROGRESS}/${deviceId}`, jsonString)
-    client.publish(`${MQTT_DOWNLOAD_PROGRESS}/${deviceId}`, jsonString);
-  } else {
-    console.warn('client disconnected or not call mqttConnect!')
+export class MQTTDispatcher implements IMQTTDispatcher {
+  private client: any;
+  private deviceId: string;
+
+  connect(server: string, deviceId: string): void {
+    this.deviceId = deviceId;
+    console.log('mqttDispatcher', server, deviceId)
+    if (this.client === undefined || !this.client.connected) {
+      this.client = connect(server);
+    }
+    this.client.on('connect', () => {
+      console.log('mqtt connected...')
+      this.subscrible(MQTT_CONTENT_NOTIFY);
+      this.subscrible(MQTT_SNAPSHOT_NOTIFY);
+    })
+    this.client.on('message', (title: string, message: string) => {
+      var jsonObj = JSON.parse(message)
+      if (title === `${MQTT_CONTENT_NOTIFY}/${this.deviceId}`) {
+        this.onSubContentNotify(jsonObj);
+      } else if (title === `${MQTT_SNAPSHOT_NOTIFY}/${this.deviceId}`) {
+        this.onSubSnapshotNotify();
+      }
+    })
   }
-}
 
-export const mqttSubscrible = (deviceId: string, key: string) => {
-  if (client.connected) {
-    client.subscrible(`${key}/${deviceId}`, (err: any) => {
+  private subscrible(messageId: string): void {
+    this.client.subscrible(`${messageId}/${this.deviceId}`, (err: any) => {
       if (err) {
         console.log('err', err)
       }
     })
   }
-}
 
-
-export const mqttConnect = (mqttServer: string, onMessage?: (topic: string, message: string) => void) => {
-  if (client === undefined || !client.connected) {
-    client = connect(mqttServer);
+  pubDownloadProgress(data: any) {
+    var jsonString = JSON.stringify({
+      deviceId: this.deviceId,
+      ...data
+    });
+    this.client.publish(`${MQTT_DOWNLOAD_PROGRESS}/${this.deviceId}`, jsonString);
   }
-  client.on('message', onMessage)
+  //callback
+  onSubContentNotify: (data: ContentPackage) => void;
+  onSubSnapshotNotify: () => void;
 }

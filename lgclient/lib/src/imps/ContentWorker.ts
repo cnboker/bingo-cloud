@@ -1,40 +1,43 @@
-import { ContentPackage } from "../dataModels/ContentPackage";
 import {
   IContentWorker,
   IContentNotify,
   IResourceInfo,
   IFileDownloader
 } from "../interfaces/IContentWorker";
-import { FileDownloader } from "./FileDownloader";
-import { readFile } from './WebOSFileService'
+import { readFile } from "./WebOSFileService";
 import { getService } from "./ServiceProiver";
-
+import { IMQTTDispatcher } from "../interfaces/IMQTTDispatcher";
+import { instance,isInTest } from "../configer";
 export default class ContentWorker implements IContentWorker {
- 
   contentNotify: IContentNotify;
   fileDownloader: IFileDownloader;
-
-  constructor() {
-    this.contentNotify = getService<IContentNotify>();
-    this.fileDownloader = getService<IFileDownloader>();
-  }
+  mqttDispather: IMQTTDispatcher;
 
   //callback defined
   execute(cb: { (): void }): void {
-    this.contentNotify.onContentReady((data: ContentPackage) => {
+    this.contentNotify = <IContentNotify>getService("IContentNotify");
+    this.fileDownloader = <IFileDownloader>getService("IFileDownloader");
+    this.mqttDispather = <IMQTTDispatcher>getService("IMQTTDispatcher");
+    if(!isInTest){
+      this.mqttDispather.connect(instance.mqttServer,instance.deviceId);
+    }
+    this.mqttDispather.onSubContentNotify = (data) => {
+      //fileServer:http://ip:port/scott
+      //发布目录/dist/index.html
       var fileList = data.files.map(x => <IResourceInfo>{
-        resourceUrl: x,
+        resourceUrl: `${instance.fileServer}/dist/${x}`,
         status: 0
       });
       this.download(fileList, cb)
-    });
+    }
+  
     //如果上次下载未完成，读未下载数据继续下载
     readFile('downloadlist.json')
       .then(text => JSON.parse(text))
       .then(fileList => {
         this.download(fileList, cb)
       }).catch(e => {
-        console.log("read package.json", e);
+        console.log("read downloadlist.json", e);
       });
 
     this.contentNotify.watch();
@@ -46,13 +49,11 @@ export default class ContentWorker implements IContentWorker {
       if (this.fileDownloader) {
         this.fileDownloader.cancel();
       }
-      this.fileDownloader = new FileDownloader(fileList);
-      this.fileDownloader
-        .onDownloadComplete(() => {
-          this.diskClean(fileList);
-          if (cb) { cb(); }
-        });
-      this.fileDownloader.download();
+      this.fileDownloader.onDownloadComplete = (fileList:IResourceInfo[])=>{
+        this.diskClean(fileList);
+        if (cb) { cb(); }
+      }
+      this.fileDownloader.download(fileList);
     }
   }
 

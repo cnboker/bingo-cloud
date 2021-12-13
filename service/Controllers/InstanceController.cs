@@ -9,7 +9,6 @@ using Microsoft.Extensions.Logging;
 
 
 namespace Ioliz.Service.Controllers {
-
     [Route ("/api/[controller]/[action]")]
     [Authorize]
     public class InstanceController : BaseController {

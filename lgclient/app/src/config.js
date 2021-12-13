@@ -1,7 +1,7 @@
 const dev = {
-    REACT_APP_LG_URL: "http://localhost:8888/",
+    REACT_APP_LG_URL: "http://localhost:8888/"
     ///defaultApp: require ('./player/components/test/webapp').default
-    defaultApp: require ("./vidoeTest").default
+    //defaultApp: require ("./vidoeTest").default
 };
 
 const prod = {

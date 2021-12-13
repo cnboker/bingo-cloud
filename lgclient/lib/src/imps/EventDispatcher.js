@@ -1,4 +1,4 @@
-export default class EventDispatcher {
+export default class EventDispatcher1 {
 	constructor() {
 		this.listeners = {};
 	}

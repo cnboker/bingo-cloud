@@ -1,13 +1,16 @@
-require("../config");
-import ContentWorker from "../imps/ContentWorker";
 import { expect } from "chai";
 import "mocha";
+import {IContentWorker} from '../interfaces/IContentWorker'
+import {serviceRegister,getService} from '../imps/ServiceProiver'
 
-// var worker = new ContentWorker(new MockContentNotify());
-// describe("ContentWorker test", () => {
-//   it("contentWorker callback return array lenght equal 2", () => {
-//     worker.execute(data => {
-//       expect(data).to.exist
-//     });
-//   });
-// });
+describe("service provider test", ()=>{
+  beforeEach(function() {
+    serviceRegister();
+  });
+  it('get service not null',()=>{
+    var contentWorker = <IContentWorker>getService("IContentWorker");
+    //console.log('contentWorker',contentWorker)
+    expect(contentWorker).is.not.null;
+  })
+})
+

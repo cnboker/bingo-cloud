@@ -8,8 +8,10 @@ const {cssFilePlugin} = require('./cssFilePlugin')
 
 function clearDir(dir) {
   fs.readdir(dir, (err, files) => {
-    if (err) 
-      throw err;
+    if (err) {
+      return;
+    }
+      
     for (const file of files) {
       fs.unlink(path.join(dir, file), err => {
         if (err) 
@@ -21,7 +23,7 @@ function clearDir(dir) {
 }
 exports.build = async(username, entryFile) => {
   let randomDir = util.makeid(10);
-  const relationPath = `/publish/${username}`;
+  const relationPath = `/wwwroot/${username}/dist`;
   const outdir = `${process.cwd()}${relationPath}`
   clearDir(outdir)
   await mkdir(outdir, {recursive: true});
@@ -45,5 +47,8 @@ exports.build = async(username, entryFile) => {
  
   await writeFile(`${outdir}/index.html`,html.replace('###',`./${path.basename(entryFile)}`))
   
-  return `${relationPath}/index.html`;
+  return [
+    `index.html`,
+    `main.css`,
+    `${path.basename(entryFile)}`];
 };

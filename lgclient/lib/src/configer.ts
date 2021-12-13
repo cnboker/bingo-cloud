@@ -10,10 +10,13 @@ class Configer {
 
   private constructor() {
     this._emitter = new EventEmitter();
+    this._configInstance = <ConfigModel>{
+      
+    }
     this._emitter.addListener("log", (type: EventType, message: string) => {
       console.log(`${type},${message}`);
     });
-    this.rootDirReady();
+    //this.rootDirReady();
   }
 
   read(): Promise<ConfigModel> {
@@ -66,11 +69,11 @@ class Configer {
   }
 
   get fileServer(): string {
-    return this._configInstance.FileServer
+    return this._configInstance.fileServer
   }
 
   get mqttServer(): string {
-    return this._configInstance.MQTTServer
+    return this._configInstance.mqttServer
   }
 
   get emitter() {
@@ -88,7 +91,8 @@ export const USB_ROOT = "/tmp/usb/sda/sda1";
 export const instance: Configer = Configer.instance;
 export const Service_Server = process.env.REACT_APP_MEMBER_URL;
 export const Auth_Server = process.env.REACT_APP_AUTH_URL;
-
+//是否是单元测试
+export const isInTest = typeof global.it === 'function';
 //事件类型
 export enum EventType {
   FileDownload

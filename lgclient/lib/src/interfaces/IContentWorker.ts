@@ -1,4 +1,3 @@
-import { ContentPackage } from '../dataModels/ContentPackage';
 /*
 1. 定时轮询监视是否有新的通知
 2. 如果有更新通知，并根据通知类型做相应处理
@@ -11,8 +10,7 @@ export interface IContentWorker {
 export interface IContentNotify {
     //通知监控
     watch(): void;
-    //接收新内容发布通知，根据通知类型做处理
-    onContentReady(callback: (contentPackage: ContentPackage) => void): void;
+    
     //接受截屏通知
     onSnapshot(callback: () => void): void;
 }
@@ -28,9 +26,10 @@ export interface IFileDownloader {
     //资源列表
     fileList: IResourceInfo[];
     //开始下载
-    download(): void;
+    download(fileList: IResourceInfo[]): void;
+    onOneDownloadComplete:(file:IResourceInfo)=>void
     //下载完成
-    onDownloadComplete(callback:(fileList:IResourceInfo[])=>void):void;
+    onDownloadComplete:(fileList:IResourceInfo[])=>void
     //取消所有下载
     cancel():void;
 }
