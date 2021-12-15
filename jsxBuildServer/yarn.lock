@@ -471,11 +471,6 @@
   "resolved" "https://registry.nlark.com/encodeurl/download/encodeurl-1.0.2.tgz"
   "version" "1.0.2"
 
-"esbuild-darwin-64@0.13.12":
-  "integrity" "sha1-9cWeYilVwB8FDlp6ycHUHbcUuU0="
-  "resolved" "https://registry.npmmirror.com/esbuild-darwin-64/download/esbuild-darwin-64-0.13.12.tgz"
-  "version" "0.13.12"
-
 "esbuild@^0.13.10":
   "integrity" "sha1-nKxkFZS/A880FFJYwJPXQ+u958o="
   "resolved" "https://registry.npmmirror.com/esbuild/download/esbuild-0.13.12.tgz"

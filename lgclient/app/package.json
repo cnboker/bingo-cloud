@@ -7,6 +7,7 @@
     "axios": "^0.19.0",
     "chinese-lunar": "^0.1.4",
     "classnames": "^2.2.6",
+    "cross-env": "^7.0.3",
     "es6-object-assign": "^1.1.0",
     "fbemitter": "^2.1.1",
     "lodash": "^4.17.15",
@@ -32,11 +33,10 @@
   "scripts": {
     "lint": "eslint -c .eslintrc.js --ext .js,.jsx,.ts,.tsx .",
     "lint:fix": "npm run lint -- --fix",
-    "start": "REACT_APP_STAGE=dev react-scripts start",
-    "pub": "bash ./before_build.sh && react-app-rewired build",
-    "test": "react-scripts test",
-    "postbuild": "./post_build_osx",
-    "postbuild1": "@powershell -NoProfile -ExecutionPolicy Unrestricted -Command ./post_build.ps1"
+    "start": "cross-env REACT_APP_STAGE=dev react-scripts build",
+    "ospub": "bash ./before_build.sh && react-app-rewired build && ./post_build_osx",
+    "winpub": "cross-env REACT_APP_STAGE=dev  @powershell -NoProfile -ExecutionPolicy Unrestricted -Command ./before_build_win.ps1 && react-scripts build && @powershell -NoProfile -ExecutionPolicy Unrestricted -Command ./post_build.ps1",
+    "test": "react-scripts test"
   },
   "browserslist": {
     "production": [
