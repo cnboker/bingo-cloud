@@ -24,6 +24,8 @@ namespace FileServer.Controllers
     [HttpGet("/api/server")]
     public IActionResult Index()
     {
+      
+      Console.WriteLine("_hostingEnvironment.WebRootPath=" + _hostingEnvironment.WebRootPath);
       string dir = Path.Combine(_hostingEnvironment.WebRootPath, User.Identity.Name);
       if (!System.IO.Directory.Exists(dir))
       {

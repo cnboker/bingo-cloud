@@ -1,9 +1,3 @@
-## 关于工厂登录切换到客户账户的实现逻辑
-
-* 原来工厂操作客户数据，需要用客户账户登录进行操作， 为了实现不用切换账户功能，需要对网页client对象进行改造
-原先client对象的属性包括access_token,expired,usersetting, isAgent,userName; 为了实现账户的自由切换，在
-增加一个属性factory,factory也包含上面几个属性，一个工厂账户登录，工厂账户是可以自由切换到他的客户账户的，当做切换的时候， 工厂账户调用 /api/customerToken{clientUserName},获取token, 原先access_token,expired,usersetting,isAgent,userName数据迁移到factory属性下， 获取的新的数据把原先的数据覆盖，这个时候所有调用API的接口都是用客户的TOKEN调用了， 如果切换回工厂账户，则将factory下的数据重新覆盖
-
 
 ## This application consists of:
 

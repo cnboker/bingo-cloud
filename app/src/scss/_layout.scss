@@ -10,3 +10,8 @@
   border-top-right-radius: 0.25rem;
   background-color: white;
 }
+
+
+html:not([dir=rtl]) .offcanvas-start {
+  transform: translateX(0%);
+}

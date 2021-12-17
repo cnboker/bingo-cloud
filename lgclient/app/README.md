@@ -49,5 +49,5 @@ Flzx3qc14yhl9T
 ares-setup-device --list // 列出所有关联远程设备
 ares-setup-device --add target -i "host=192.168.50.205" -i "port-22" -i "username-root" -i "default=true" // 添加远程关联设备，使用ssh关联， 默认远程密码没有
 ares-setup-device --default target //设置默认远程设备
-ares-install --device target com.domain.app_1.0.0_all.ipk //远程安装app
-ares-shell --device target //远程shell
+ares-install -d target com.domain.app_1.0.0_all.ipk //远程安装app
+ares-shell -d target //远程shell

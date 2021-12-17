@@ -1,6 +1,7 @@
 /* eslint-disable no-use-before-define */
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { useHistory } from 'react-router-dom'
 import { tokenPost, authorizeRequest, unAuthorizeListRequest } from './actions'
 import * as Dialog from 'src/views/components/dialog/Index'
 import { useParams } from 'react-router-dom'
@@ -10,7 +11,9 @@ import G from '~/locale'
 
 export default () => {
   const dispatch = useDispatch()
+  const history = useHistory()
   const { id: urlAuthorizeCode } = useParams()
+
   const authorizeReducer = useSelector((state) => state.authorizeReducer)
   const [message, setMessage] = useState(R.authorizeRequest)
 

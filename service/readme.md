@@ -9,19 +9,26 @@
 
 ```bash
 docker run -p 3306:3306 -d --name mysql -e MYSQL_ROOT_PASSWORD=1 mysql/mysql-server
+#-v volume d:/data是本地目录, /var/lib/mysql 是容器默认目录
+docker run --name=mysql -p 3306:3306 -v d:/data/mysql:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=1 -d mysql/mysql-server
 docker exec -it mysql bash
 docker ps
+# list all container
+docker ps -a
 ```
 
 更新账号客户端才可以正常连接
 
 ```sql
 --update passowrd_policy
-SHOW VARIABLES LIKE 'validate_password%';
-SET GLOBAL validate_password.length = 6;
-SET GLOBAL validate_password.number_count = 0;
+--SHOW VARIABLES LIKE 'validate_password%';
+--SET GLOBAL validate_password.length = 6;
+--SET GLOBAL validate_password.number_count = 0;
 
-update user set host='%' where user='root'
-alter user 'root' identified with mysql_native_password by '1';
+update user set host='%' where user='root';
+--alter user 'root' identified with mysql_native_password by '1';
 flush privileges;
 ```
+## package dependency
+2.0.9 runtime is required
+https://download.microsoft.com/download/3/a/3/3a3bda26-560d-4d8e-922e-6f6bc4553a84/dotnet-runtime-2.0.9-win-x64.exe
