@@ -1,0 +1,11 @@
+version: "3.9"
+services:
+  server:
+    build:
+      #设置父目录为根目录，只有这样才能在Dockerfile文件将service和shared目录文件copy到docker conatiner
+      #service项目依赖shared项目
+      context: ../
+      #指定Dockerfile文件位置
+      dockerfile: ./service/Dockerfile
+    ports:
+      - "6001:80"

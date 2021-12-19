@@ -8,14 +8,20 @@
 ### docker mysql
 
 ```bash
-docker run -p 3306:3306 -d --name mysql -e MYSQL_ROOT_PASSWORD=1 mysql/mysql-server
 #-v volume d:/data是本地目录, /var/lib/mysql 是容器默认目录
-docker run --name=mysql -p 3306:3306 -v d:/data/mysql:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=1 -d mysql/mysql-server
+docker run --name=mysql -p 3306:3306 -v /home/scott/code/ioliz/data/mysql:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=1 -d mysql/mysql-server
 docker exec -it mysql bash
 docker ps
 # list all container
 docker ps -a
 ```
+- 获取mysql docker ip
+
+``` bash
+ docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' mysql
+```
+手动更新appsettings.json连接字符串
+
 
 更新账号客户端才可以正常连接
 
