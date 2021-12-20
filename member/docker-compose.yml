@@ -7,5 +7,30 @@ services:
       context: ../
       #指定Dockerfile文件位置
       dockerfile: ./member/Dockerfile
+    # depends_on:
+    #   - "db"
+    # command: ["./wait-for-it.sh"]
     ports:
-      - "7800:80"
+    #(HOST:CONTAINER),
+      - "7800:7800"
+    networks:
+    # cmd: docker network create myNetwork
+      - "myNetwork"
+networks:
+  myNetwork:
+    external: true
+
+# db:
+#   container_name: mysql
+#   image: mysql
+#   ports:
+#       - "3306"
+#   environment:
+#         MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+#         MYSQL_USER: "root"
+#         MYSQL_PASSWORD: "1"
+#         MYSQL_DATABASE: "mysql"
+#   healthcheck:
+#         test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+#         timeout: 20s
+#         retries: 10

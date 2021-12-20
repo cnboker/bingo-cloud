@@ -1,5 +1,5 @@
 #!/bin/bash
 
 set -e
-run_cmd="dotnet run --urls http://*:80"
+run_cmd="dotnet fileServer.dll --urls http://*:80"
 exec $run_cmd

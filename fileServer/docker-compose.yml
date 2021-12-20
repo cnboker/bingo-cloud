@@ -9,5 +9,13 @@ services:
       dockerfile: ./fileServer/Dockerfile
     ports:
       - "5000:80"
+    networks:
+      - "myNetwork"
+    
     volumes:
-      - /home/scott/code/ioliz/data/files:/usr/share/files:ro
+    #host:container
+      - /home/scott/code/ioliz/data/files:/release/wwwroot
+
+networks:
+  myNetwork:
+    external: true

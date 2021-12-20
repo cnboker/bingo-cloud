@@ -9,7 +9,7 @@
 
 ```bash
 #-v volume d:/data是本地目录, /var/lib/mysql 是容器默认目录
-docker run --name=mysql -p 3306:3306 -v /home/scott/code/ioliz/data/mysql:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=1 -d mysql/mysql-server
+docker run --name=mysql -p 3306:3306  -v /home/scott/code/ioliz/data/mysql:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=1 -d mysql/mysql-server
 docker exec -it mysql bash
 docker ps
 # list all container
