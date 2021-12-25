@@ -1,35 +1,36 @@
 const webpack = require("webpack");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
-
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const { env } = process;
-
+const path = require('path');
 const options = {
   mode: env.NODE_ENV,
-  entry: "./src/index.js",
+  entry: "./index.js",
   output: {
-    filename: "[name].js",
+    filename: 'index.js',
+    path: path.resolve(__dirname, 'dist'),
   },
   module: {
     rules: [
       { test: /\.(js|jsx)$/, loader: "babel-loader", exclude: /node_modules/ },
-      { test: /\.tsx$/, loader: "ts-loader" },
+      { test: /\.(tsx|ts)$/, loader: "ts-loader", exclude: /node_modules/, },
     ],
   },
   resolve: {
-    extensions: ["*", ".js", ".jsx", ".tsx"],
+    extensions: ["*", ".js", ".jsx", ".tsx", ".ts"],
   },
   plugins: [
-    new webpack.DefinePlugin({
-      "process.env.NODE_ENV": JSON.stringify(env.NODE_ENV),
-    }),
-    new HtmlWebpackPlugin(),
+    // new webpack.DefinePlugin({
+    //   "process.env.NODE_ENV": JSON.stringify(env.NODE_ENV),
+    // }),
+    new CleanWebpackPlugin(),
   ],
 
   devServer: {
     hot: true,
   },
   devtool:
-    env.NODE_ENV === "development" ? "eval-cheap-module-source-map" : undefined,
+    env.NODE_ENV === "development" ? "source-map" : undefined,
 };
 
 module.exports = options;

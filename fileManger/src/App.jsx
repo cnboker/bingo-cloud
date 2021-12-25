@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { hot } from 'react-hot-loader/root';
-import C1 from './C1'
+import C1 from './Example'
 const useGithub = userName => {
   const [user, setUser] = useState();
   useEffect(() => {
