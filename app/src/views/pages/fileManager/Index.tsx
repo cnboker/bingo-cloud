@@ -1,9 +1,4 @@
-/**
- * @author Timur Kuzhagaliyev <tim.kuzh@gmail.com>
- * @copyright 2020
- * @license MIT
- */
-
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import {
   ChonkyActions,
   ChonkyFileActionData,
@@ -13,11 +8,9 @@ import {
   FileHelper,
   FullFileBrowser,
 } from 'chonky'
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
-
 //import { showActionNotification } from './util'
 import { setChonkyDefaults } from 'chonky'
-import { ChonkyIconFA } from 'chonky-icon-fontawesome'
+//import { ChonkyIconFA } from 'chonky-icon-fontawesome'
 import { asyncGet, asyncDelete, asyncPost } from 'src/lib/api'
 import { useAsyncCallback } from 'src/lib/asynchronous'
 import { FileListUrl, FileDeleteUrl, DirCreateUrl } from './constants'
@@ -26,7 +19,7 @@ import * as Dialog from 'src/views/components/dialog/Index'
 import { uniqueID } from 'src/lib/string'
 import './patch.css'
 
-setChonkyDefaults({ iconComponent: ChonkyIconFA })
+//setChonkyDefaults({ iconComponent: ChonkyIconFA })
 
 interface FsMap {
   fileMap: CustomFileData
@@ -318,7 +311,7 @@ export const useFileActionHandler = (
 export type VFSProps = Partial<FileBrowserProps>
 type DataVFSProps = VFSProps & { data: FsMap }
 
-export const ServerVFSBrowser: React.FC<VFSProps> = React.memo((props) => {
+export const ServerVFSBrowser: React.FC<VFSProps> = (props) => {
   const [data, setData] = useState(null)
   const [run, state] = useFetchCustomFileMap()
   useEffect(() => {
@@ -327,12 +320,20 @@ export const ServerVFSBrowser: React.FC<VFSProps> = React.memo((props) => {
   useEffect(() => {
     if (state.data) {
       setData(state.data)
+      debugger
     }
   }, [state])
   return data == null ? null : <VFSBrowser data={data as FsMap} {...props} />
-})
-
-export const VFSBrowser: React.FC<DataVFSProps> = React.memo((props) => {
+}
+console.log('ChonkyActions', ChonkyActions)
+const fileActions = [
+  ChonkyActions.CreateFolder, // Adds a button to the toolbar
+  ChonkyActions.UploadFiles, // Adds a button
+  ChonkyActions.DownloadFiles, // Adds a button
+  ChonkyActions.CopyFiles, // Adds a button and a shortcut: Ctrl+C
+  ChonkyActions.DeleteFiles, // Adds a button and a shortcut: Delete
+]
+export const VFSBrowser: React.FC<DataVFSProps> = (props) => {
   const {
     fileMap,
     currentFolderId,
@@ -352,32 +353,17 @@ export const VFSBrowser: React.FC<DataVFSProps> = React.memo((props) => {
     createFolder,
     uploadFiles,
   )
-  //const fileActions = useMemo(() => [ChonkyActions.CreateFolder, ChonkyActions.DeleteFiles], [])
-  // const thumbnailGenerator = useCallback(
-  //   (file: FileData) => (file.thumbnailUrl ? `https://chonky.io${file.thumbnailUrl}` : null),
-  //   [],
-  // )
-  const fileActions = React.useMemo(
-    () => [
-      ChonkyActions.CreateFolder, // Adds a button to the toolbar
-      ChonkyActions.UploadFiles, // Adds a button
-      ChonkyActions.DownloadFiles, // Adds a button
-      ChonkyActions.CopyFiles, // Adds a button and a shortcut: Ctrl+C
-      ChonkyActions.DeleteFiles, // Adds a button and a shortcut: Delete
-    ],
-    [],
-  )
+
   return (
     <>
       <div style={{ height: 640 }}>
         <FullFileBrowser
           files={files}
           folderChain={folderChain}
-          fileActions={fileActions}
           onFileAction={handleFileAction}
           {...props}
         />
       </div>
     </>
   )
-})
+}

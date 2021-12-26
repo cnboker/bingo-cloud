@@ -38,3 +38,9 @@ flush privileges;
 ## package dependency
 2.0.9 runtime is required
 https://download.microsoft.com/download/3/a/3/3a3bda26-560d-4d8e-922e-6f6bc4553a84/dotnet-runtime-2.0.9-win-x64.exe
+
+## wsl2 git push error
+在bash下执行下面命令，使得wsl2下面的git命令采用host下的验证信息
+```bash
+git config --global credential.helper "/mnt/c/Program\ Files/Git/mingw64/libexec/git-core/git-credential-manager.exe"
+```

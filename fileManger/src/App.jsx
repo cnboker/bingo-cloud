@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { hot } from 'react-hot-loader/root';
-import C1 from './Example'
+import Example from './Example'
 const useGithub = userName => {
   const [user, setUser] = useState();
   useEffect(() => {
@@ -23,7 +23,7 @@ function App() {
     <div>
       Hello <b>{user.login}</b>
       <p>{user.bio}</p>
-      <C1></C1>
+      <Example></Example>
     </div>
   );
 }

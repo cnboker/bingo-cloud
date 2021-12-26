@@ -13,8 +13,8 @@
     "rootDir": "./src",
     "sourceMap": true,
     "jsx": "react",
-    // "target": "ES6",
-    // "module": "CommonJS",
+     "target": "ES6",
+    "module": "CommonJS",
     "baseUrl": ".",
     "paths": {
       "*": ["*", "src/*"]

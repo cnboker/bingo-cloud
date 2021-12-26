@@ -13,7 +13,7 @@ module.exports = async function override(config) {
 
 async function  cmd(){
     const { exec } = require("child_process");
-    console.log('process.platform ',process.platform )
+    
     var isWin = process.platform === "win32";
     var cmdLine = '@powershell -NoProfile -ExecutionPolicy Unrestricted -Command ./before_build_win.ps1'
     if(!isWin){

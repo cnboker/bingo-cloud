@@ -1,7 +1,14 @@
 import * as React from "react";
 
-import { FullFileBrowser } from "./Index";
-
+import { FullFileBrowser,ChonkyActions } from "./Index";
+const fileActions = [
+  ChonkyActions.CreateFolder, // Adds a button to the toolbar
+  ChonkyActions.UploadFiles, // Adds a button
+  ChonkyActions.DownloadFiles, // Adds a button
+  ChonkyActions.CopyFiles, // Adds a button and a shortcut: Ctrl+C
+  ChonkyActions.DeleteFiles, // Adds a button and a shortcut: Delete
+]
+console.log('fileActions',fileActions)
 const Example = () => {
   const files = [
     { id: "lht", name: "ff", isDir: true },
@@ -18,6 +25,7 @@ const Example = () => {
       <FullFileBrowser
         files={files}
         folderChain={folderChain}
+        fileActions={fileActions}
         instanceId="test"
       />
     </div>
