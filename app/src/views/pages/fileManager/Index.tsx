@@ -9,8 +9,7 @@ import {
   FullFileBrowser,
 } from 'chonky'
 //import { showActionNotification } from './util'
-import { setChonkyDefaults } from 'chonky'
-//import { ChonkyIconFA } from 'chonky-icon-fontawesome'
+import { setChonkyDefaults, ChonkyIconFA } from 'chonky'
 import { asyncGet, asyncDelete, asyncPost } from 'src/lib/api'
 import { useAsyncCallback } from 'src/lib/asynchronous'
 import { FileListUrl, FileDeleteUrl, DirCreateUrl } from './constants'
@@ -19,7 +18,7 @@ import * as Dialog from 'src/views/components/dialog/Index'
 import { uniqueID } from 'src/lib/string'
 import './patch.css'
 
-//setChonkyDefaults({ iconComponent: ChonkyIconFA })
+setChonkyDefaults({ iconComponent: ChonkyIconFA })
 
 interface FsMap {
   fileMap: CustomFileData

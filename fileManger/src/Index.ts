@@ -44,3 +44,4 @@ export type ChonkyFileActionData = MapFileActionsToData<ChonkyActionUnion>;
 
 // Extensions
 export * from './extensions/index';
+export * from './iconFA/index'

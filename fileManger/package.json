@@ -38,7 +38,11 @@
     "react-window": "^1.8.6",
     "redux-watch": "^1.2.0",
     "shortid": "^2.2.16",
-    "tsdef": "^0.0.14"
+    "tsdef": "^0.0.14",
+    "@fortawesome/fontawesome-svg-core": "^1.2.32",
+    "@fortawesome/free-brands-svg-icons": "5.13.1",
+    "@fortawesome/free-solid-svg-icons": "^5.13.1",
+    "@fortawesome/react-fontawesome": "^0.1.12"
   },
   "devDependencies": {
     "@babel/core": "^7.16.5",
