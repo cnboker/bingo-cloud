@@ -24,7 +24,6 @@ namespace FileServer.Controllers
     [HttpGet("/api/server")]
     public IActionResult Index()
     {
-      
       Console.WriteLine("_hostingEnvironment.WebRootPath=" + _hostingEnvironment.WebRootPath);
       string dir = Path.Combine(_hostingEnvironment.WebRootPath, User.Identity.Name);
       if (!System.IO.Directory.Exists(dir))
@@ -33,9 +32,10 @@ namespace FileServer.Controllers
       }
       DirectoryJsonGenerator generator = new DirectoryJsonGenerator(dir);
       generator.CreateFolderHierarchy();
+      
       foreach (var node in generator.fileMap.Values)
       {
-        node.ThumbnailUrl = !string.IsNullOrEmpty(node.ThumbnailUrl) ? AppInstance.Instance.Config.Domain + User.Identity.Name + node.ThumbnailUrl : "";
+        node.ThumbnailUrl = !string.IsNullOrEmpty(node.ThumbnailUrl) ?  User.Identity.Name + node.ThumbnailUrl : "";
       }
       var outputJson = new
       {
