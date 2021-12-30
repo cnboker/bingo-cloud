@@ -3,12 +3,12 @@ const { writeFile, rm } = require("fs").promises;
 const { makeid } = require("../util");
 const path = require("path");
 
-exports.make = async (username, data) => {
+exports.make = async (username, entity) => {
   //create entry file
   //build file
   //return
   console.log('begin make...')
-  const dataContent = JSON.stringify(data);
+  const dataContent = JSON.stringify(entity);
   const tmpfile = makeid(10);
   const entryFile = `${process.cwd()}/entry/${tmpfile}.js`;
   try {

@@ -141,9 +141,9 @@ export const GridEntryPreviewFile: React.FC<FileEntryPreviewProps> = React.memo(
     return (
         <div className={className}>
             <GridEntryDndIndicator className={fileClasses.dndIndicator} dndState={dndState} />
-            <div className={fileClasses.fileIcon}>
+            {/* <div className={fileClasses.fileIcon}>
                 <ChonkyIcon icon={entryState.icon} spin={entryState.iconSpin} />
-            </div>
+            </div> */}
             <div className={commonClasses.selectionIndicator}></div>
             <FileThumbnail className={fileClasses.thumbnail} thumbnailUrl={entryState.thumbnailUrl} />
         </div>

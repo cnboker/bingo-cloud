@@ -25,12 +25,12 @@ exports.httpserver = () => {
   })
 
   app.post('/', async(req, res) => {
-    const {username, data} = req.body
+    const {username, entity} = req.body
     postHandler
-      .make(username, data)
-      .then(res => {
-        console.log('make filelist:',res)
-        res.send(res)
+      .make(username, entity)
+      .then(p => {
+        //console.log('make filelist:',res)
+        res.send(p)
       })
   }) 
  

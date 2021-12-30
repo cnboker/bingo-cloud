@@ -105,7 +105,7 @@ export const useFileNameComponent = (file: Nullable<FileData>) => {
             //@ts-ignore
             extension = file.ext ?? _extname(file.name);
             //@ts-ignore
-            name = file.name.substr(0, file.name.length - extension??length);
+            name = file.name.substr(0, file.name.length - extension.length);
         }
 
         return (

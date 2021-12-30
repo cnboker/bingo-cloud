@@ -11,7 +11,8 @@
     "clean": "rimraf dist",
     "start": "cross-env NODE_ENV=development webpack-dev-server --hot",
     "build": "cross-env NODE_ENV=development webpack",
-    "pub": "npm run clean && tsc -p .",
+    "pub": "tsc -p .",
+    "cpub": "npm run clean && tsc -p .",
     "lint": "eslint ./src"
   },
   "peerDependencies": {
@@ -19,7 +20,12 @@
     "react-dom": "^17.0.2"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.32",
+    "@fortawesome/free-brands-svg-icons": "5.13.1",
+    "@fortawesome/free-solid-svg-icons": "^5.13.1",
+    "@fortawesome/react-fontawesome": "^0.1.12",
     "@material-ui/core": "^4.12.3",
+    "@material-ui/icons": "^4.11.2",
     "@reduxjs/toolkit": "^1.7.1",
     "classnames": "^2.3.1",
     "deepmerge": "^4.2.2",
@@ -38,11 +44,7 @@
     "react-window": "^1.8.6",
     "redux-watch": "^1.2.0",
     "shortid": "^2.2.16",
-    "tsdef": "^0.0.14",
-    "@fortawesome/fontawesome-svg-core": "^1.2.32",
-    "@fortawesome/free-brands-svg-icons": "5.13.1",
-    "@fortawesome/free-solid-svg-icons": "^5.13.1",
-    "@fortawesome/react-fontawesome": "^0.1.12"
+    "tsdef": "^0.0.14"
   },
   "devDependencies": {
     "@babel/core": "^7.16.5",
