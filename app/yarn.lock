@@ -1032,12 +1032,26 @@
     "core-js-pure" "^3.19.0"
     "regenerator-runtime" "^0.13.4"
 
-"@babel/runtime@^7.0.0", "@babel/runtime@^7.1.2", "@babel/runtime@^7.10.2", "@babel/runtime@^7.12.0", "@babel/runtime@^7.12.1", "@babel/runtime@^7.12.13", "@babel/runtime@^7.12.5", "@babel/runtime@^7.13.10", "@babel/runtime@^7.15.4", "@babel/runtime@^7.16.3", "@babel/runtime@^7.3.1", "@babel/runtime@^7.4.4", "@babel/runtime@^7.5.5", "@babel/runtime@^7.6.3", "@babel/runtime@^7.8.3", "@babel/runtime@^7.8.4", "@babel/runtime@^7.8.7", "@babel/runtime@^7.9.2":
+"@babel/runtime@^7.1.2", "@babel/runtime@^7.10.2", "@babel/runtime@^7.12.0", "@babel/runtime@^7.12.1", "@babel/runtime@^7.12.13", "@babel/runtime@^7.12.5", "@babel/runtime@^7.13.10", "@babel/runtime@^7.15.4", "@babel/runtime@^7.16.3", "@babel/runtime@^7.3.1", "@babel/runtime@^7.4.4", "@babel/runtime@^7.5.5", "@babel/runtime@^7.6.3", "@babel/runtime@^7.8.3", "@babel/runtime@^7.8.4", "@babel/runtime@^7.8.7", "@babel/runtime@^7.9.2":
   "integrity" "sha512-TXWihFIS3Pyv5hzR7j6ihmeLkZfrXGxAr5UfSl8CHf+6q/wpiYDkUau0czckpYG8QmnCIuPpdLtuA9VmuGGyMA=="
   "resolved" "https://registry.npmmirror.com/@babel/runtime/download/@babel/runtime-7.16.5.tgz"
   "version" "7.16.5"
   dependencies:
     "regenerator-runtime" "^0.13.4"
+
+"@babel/runtime@^7.2.0":
+  "integrity" "sha512-9E9FJowqAsytyOY6LG+1KuueckRL+aQW+mKvXRXnuFGyRAyepJPmEo9vgMfXUA6O9u3IeEdv9MAkppFcaQwogQ=="
+  "resolved" "https://registry.npmmirror.com/@babel/runtime/download/@babel/runtime-7.16.7.tgz"
+  "version" "7.16.7"
+  dependencies:
+    "regenerator-runtime" "^0.13.4"
+
+"@babel/runtime@7.0.0":
+  "integrity" "sha1-ret4/t/IVaoFvAQWQPP2+Y6FQkw="
+  "resolved" "https://registry.npmmirror.com/@babel/runtime/download/@babel/runtime-7.0.0.tgz"
+  "version" "7.0.0"
+  dependencies:
+    "regenerator-runtime" "^0.12.0"
 
 "@babel/template@^7.10.4", "@babel/template@^7.16.0", "@babel/template@^7.3.3":
   "integrity" "sha1-0Wo16/TNdOICCDNW+rId2JNj3dY="
@@ -1157,13 +1171,6 @@
   "resolved" "https://registry.npm.taobao.org/@emotion/hash/download/@emotion/hash-0.8.0.tgz"
   "version" "0.8.0"
 
-"@emotion/is-prop-valid@^0.7.3":
-  "integrity" "sha1-pr9PpTh8u6WdROaYpGgPSBqNpsw="
-  "resolved" "https://registry.npmmirror.com/@emotion/is-prop-valid/download/@emotion/is-prop-valid-0.7.3.tgz"
-  "version" "0.7.3"
-  dependencies:
-    "@emotion/memoize" "0.7.1"
-
 "@emotion/is-prop-valid@^0.8.8":
   "integrity" "sha1-2yixxDaKJZtgqXMR1qlS1P0BrBo="
   "resolved" "https://registry.npmmirror.com/@emotion/is-prop-valid/download/@emotion/is-prop-valid-0.8.8.tgz"
@@ -1175,11 +1182,6 @@
   "integrity" "sha1-LED4FEmk5VTp/GOWkQ7UhD7CvlA="
   "resolved" "https://registry.npm.taobao.org/@emotion/memoize/download/@emotion/memoize-0.7.5.tgz"
   "version" "0.7.5"
-
-"@emotion/memoize@0.7.1":
-  "integrity" "sha1-6TwTlCWSz17wGqgpdETcGSvu5S8="
-  "resolved" "https://registry.npm.taobao.org/@emotion/memoize/download/@emotion/memoize-0.7.1.tgz"
-  "version" "0.7.1"
 
 "@emotion/memoize@0.7.4":
   "integrity" "sha1-Gb8PWvGRSREcQNmLsM+CEZ9dnus="
@@ -1249,109 +1251,6 @@
     "js-yaml" "^3.13.1"
     "minimatch" "^3.0.4"
     "strip-json-comments" "^3.1.1"
-
-"@formatjs/ecma402-abstract@1.11.0":
-  "integrity" "sha512-TOp5La9wmSh9G5bqFGN/ApmOXtJDzBGkYW+OTRd3ukY7J32RVGZPpN4O9BD651JUy66nj3g9CIENTNCgm4IRXQ=="
-  "resolved" "https://registry.npmmirror.com/@formatjs/ecma402-abstract/download/@formatjs/ecma402-abstract-1.11.0.tgz"
-  "version" "1.11.0"
-  dependencies:
-    "@formatjs/intl-localematcher" "0.2.21"
-    "tslib" "^2.1.0"
-
-"@formatjs/fast-memoize@1.2.1":
-  "integrity" "sha512-Rg0e76nomkz3vF9IPlKeV+Qynok0r7YZjL6syLz4/urSg0IbjPZCB/iYUMNsYA643gh4mgrX3T7KEIFIxJBQeg=="
-  "resolved" "https://registry.npmmirror.com/@formatjs/fast-memoize/download/@formatjs/fast-memoize-1.2.1.tgz"
-  "version" "1.2.1"
-  dependencies:
-    "tslib" "^2.1.0"
-
-"@formatjs/icu-messageformat-parser@2.0.15":
-  "integrity" "sha512-nnRbkK+nz4ZL1l1lUbztL8qrEUGQKF/NU38itLnzLm8QLEacFS5qGOxxp/0DSIehhX99tNroNtudtjdOvzruAQ=="
-  "resolved" "https://registry.npmmirror.com/@formatjs/icu-messageformat-parser/download/@formatjs/icu-messageformat-parser-2.0.15.tgz"
-  "version" "2.0.15"
-  dependencies:
-    "@formatjs/ecma402-abstract" "1.11.0"
-    "@formatjs/icu-skeleton-parser" "1.3.2"
-    "tslib" "^2.1.0"
-
-"@formatjs/icu-skeleton-parser@1.3.2":
-  "integrity" "sha512-ChKmnVCE/LbJzedRgA/EeL5+tfjx/6ZWunqNiEC5BtqHnnwmLN/oPuCPb8b3NhuGiwTqp+LkaS70tga5kXRHxg=="
-  "resolved" "https://registry.npmmirror.com/@formatjs/icu-skeleton-parser/download/@formatjs/icu-skeleton-parser-1.3.2.tgz"
-  "version" "1.3.2"
-  dependencies:
-    "@formatjs/ecma402-abstract" "1.11.0"
-    "tslib" "^2.1.0"
-
-"@formatjs/intl-displaynames@5.3.0":
-  "integrity" "sha512-QTwQitgjeExoKEl2TLWOsv3vxdd7tvugwVnT1Bh9RD+fjQXQbOts2crGI65fxlOruCgXVqRp99t5HxyzjX53kw=="
-  "resolved" "https://registry.npmmirror.com/@formatjs/intl-displaynames/download/@formatjs/intl-displaynames-5.3.0.tgz"
-  "version" "5.3.0"
-  dependencies:
-    "@formatjs/ecma402-abstract" "1.11.0"
-    "@formatjs/intl-localematcher" "0.2.21"
-    "tslib" "^2.1.0"
-
-"@formatjs/intl-listformat@6.4.0":
-  "integrity" "sha512-QUmvXaQFSiEIuU1i/Dk3MT23D+ClDrJFkqQVufjQqbSm/wZ+CPvG7/eua1eFfLkz0wMJS9yBxIXf7M/ynxtltw=="
-  "resolved" "https://registry.npmmirror.com/@formatjs/intl-listformat/download/@formatjs/intl-listformat-6.4.0.tgz"
-  "version" "6.4.0"
-  dependencies:
-    "@formatjs/ecma402-abstract" "1.11.0"
-    "@formatjs/intl-localematcher" "0.2.21"
-    "tslib" "^2.1.0"
-
-"@formatjs/intl-localematcher@0.2.21":
-  "integrity" "sha1-Oe8z1wH+gITz1pPNP/fL4DzdOkk="
-  "resolved" "https://registry.npmmirror.com/@formatjs/intl-localematcher/download/@formatjs/intl-localematcher-0.2.21.tgz"
-  "version" "0.2.21"
-  dependencies:
-    "tslib" "^2.1.0"
-
-"@formatjs/intl@1.18.0":
-  "integrity" "sha512-qPdfj4sjzQiLyY154JM0ktQVYc7spksV3Ak8glgzAz7IG/xC3JOBKYrQzV3cGrUeN1+cG/dEzxLMYkvjqoNNUA=="
-  "resolved" "https://registry.npmmirror.com/@formatjs/intl/download/@formatjs/intl-1.18.0.tgz"
-  "version" "1.18.0"
-  dependencies:
-    "@formatjs/ecma402-abstract" "1.11.0"
-    "@formatjs/fast-memoize" "1.2.1"
-    "@formatjs/icu-messageformat-parser" "2.0.15"
-    "@formatjs/intl-displaynames" "5.3.0"
-    "@formatjs/intl-listformat" "6.4.0"
-    "intl-messageformat" "9.11.0"
-    "tslib" "^2.1.0"
-
-"@fortawesome/fontawesome-common-types@^0.2.29", "@fortawesome/fontawesome-common-types@^0.2.36":
-  "integrity" "sha1-tE5S2ztrIFI+DFfvjELTFVMsuQM="
-  "resolved" "https://registry.npmmirror.com/@fortawesome/fontawesome-common-types/download/@fortawesome/fontawesome-common-types-0.2.36.tgz"
-  "version" "0.2.36"
-
-"@fortawesome/fontawesome-svg-core@^1.2.32", "@fortawesome/fontawesome-svg-core@~1 || >=1.3.0-beta1":
-  "integrity" "sha1-Ty6m93gpjgxHxlJM4uf9WOtpMOM="
-  "resolved" "https://registry.npmmirror.com/@fortawesome/fontawesome-svg-core/download/@fortawesome/fontawesome-svg-core-1.2.36.tgz"
-  "version" "1.2.36"
-  dependencies:
-    "@fortawesome/fontawesome-common-types" "^0.2.36"
-
-"@fortawesome/free-brands-svg-icons@5.13.1":
-  "integrity" "sha1-/vB6S5V9wXCPIZGpTN/NaQHDU4M="
-  "resolved" "https://registry.npmmirror.com/@fortawesome/free-brands-svg-icons/download/@fortawesome/free-brands-svg-icons-5.13.1.tgz"
-  "version" "5.13.1"
-  dependencies:
-    "@fortawesome/fontawesome-common-types" "^0.2.29"
-
-"@fortawesome/free-solid-svg-icons@^5.13.1":
-  "integrity" "sha1-Kmjz/D3doS5SZFZUFCueTo+7bMU="
-  "resolved" "https://registry.npmmirror.com/@fortawesome/free-solid-svg-icons/download/@fortawesome/free-solid-svg-icons-5.15.4.tgz"
-  "version" "5.15.4"
-  dependencies:
-    "@fortawesome/fontawesome-common-types" "^0.2.36"
-
-"@fortawesome/react-fontawesome@^0.1.12":
-  "integrity" "sha1-znZlSQIU4g+Sk2jWtl9oiEqZJ2o="
-  "resolved" "https://registry.npmmirror.com/@fortawesome/react-fontawesome/download/@fortawesome/react-fontawesome-0.1.16.tgz"
-  "version" "0.1.16"
-  dependencies:
-    "prop-types" "^15.7.2"
 
 "@gar/promisify@^1.0.1":
   "integrity" "sha1-MKqCXxHUOGcdWFvUTn/VZFNfwhA="
@@ -1625,25 +1524,7 @@
     "react-is" "^16.8.0 || ^17.0.0"
     "react-transition-group" "^4.4.0"
 
-"@material-ui/core@4.11.3":
-  "integrity" "sha1-8i5Bd1sL0HXjanoJPUOVG/f2OFA="
-  "resolved" "https://registry.npmmirror.com/@material-ui/core/download/@material-ui/core-4.11.3.tgz"
-  "version" "4.11.3"
-  dependencies:
-    "@babel/runtime" "^7.4.4"
-    "@material-ui/styles" "^4.11.3"
-    "@material-ui/system" "^4.11.3"
-    "@material-ui/types" "^5.1.0"
-    "@material-ui/utils" "^4.11.2"
-    "@types/react-transition-group" "^4.2.0"
-    "clsx" "^1.0.4"
-    "hoist-non-react-statics" "^3.3.2"
-    "popper.js" "1.16.1-lts"
-    "prop-types" "^15.7.2"
-    "react-is" "^16.8.0 || ^17.0.0"
-    "react-transition-group" "^4.4.0"
-
-"@material-ui/styles@^4.11.3", "@material-ui/styles@^4.11.4":
+"@material-ui/styles@^4.11.4":
   "integrity" "sha1-6538z8wtIIJD2YZFff8CVJevoA0="
   "resolved" "https://registry.npmmirror.com/@material-ui/styles/download/@material-ui/styles-4.11.4.tgz"
   "version" "4.11.4"
@@ -1665,7 +1546,7 @@
     "jss-plugin-vendor-prefixer" "^10.5.1"
     "prop-types" "^15.7.2"
 
-"@material-ui/system@^4.11.3", "@material-ui/system@^4.12.1":
+"@material-ui/system@^4.12.1":
   "integrity" "sha1-LdlsJD+MCjMbK7bUbv13caOZcHw="
   "resolved" "https://registry.npmmirror.com/@material-ui/system/download/@material-ui/system-4.12.1.tgz"
   "version" "4.12.1"
@@ -1675,7 +1556,7 @@
     "csstype" "^2.5.2"
     "prop-types" "^15.7.2"
 
-"@material-ui/types@^5.1.0", "@material-ui/types@5.1.0":
+"@material-ui/types@5.1.0":
   "integrity" "sha1-76HHoLDqpMfIesA5BEXw+IsNiPI="
   "resolved" "https://registry.npmmirror.com/@material-ui/types/download/@material-ui/types-5.1.0.tgz"
   "version" "5.1.0"
@@ -1743,21 +1624,6 @@
   "resolved" "https://registry.npmmirror.com/@popperjs/core/download/@popperjs/core-2.11.0.tgz"
   "version" "2.11.0"
 
-"@react-dnd/asap@^4.0.0":
-  "integrity" "sha1-swDu7YPpgB9RvWawM3yabwRUhlE="
-  "resolved" "https://registry.nlark.com/@react-dnd/asap/download/@react-dnd/asap-4.0.0.tgz"
-  "version" "4.0.0"
-
-"@react-dnd/invariant@^2.0.0":
-  "integrity" "sha1-CdLoHNOeDnZ9faYt+TJYYPJOUX4="
-  "resolved" "https://registry.npm.taobao.org/@react-dnd/invariant/download/@react-dnd/invariant-2.0.0.tgz"
-  "version" "2.0.0"
-
-"@react-dnd/shallowequal@^2.0.0":
-  "integrity" "sha1-owMetUEp8sZrJ1P4QEJm7Hv2fwo="
-  "resolved" "https://registry.npm.taobao.org/@react-dnd/shallowequal/download/@react-dnd/shallowequal-2.0.0.tgz"
-  "version" "2.0.0"
-
 "@redux-saga/core@^1.1.3":
   "integrity" "sha1-MIUJe1ek6o21Uo1YZz8gzglQ9qQ="
   "resolved" "https://registry.npm.taobao.org/@redux-saga/core/download/@redux-saga/core-1.1.3.tgz"
@@ -1801,16 +1667,6 @@
   "integrity" "sha1-DoHOVrSIO0sqMAHr4aspi4QjcgQ="
   "resolved" "https://registry.npm.taobao.org/@redux-saga/types/download/@redux-saga/types-1.1.0.tgz"
   "version" "1.1.0"
-
-"@reduxjs/toolkit@^1.5.0":
-  "integrity" "sha512-wXwXYjBVz/ItxB7SMzEAMmEE/FBiY1ze18N+VVVX7NtVbRUrdOGKhpQMHivIJfkbJvSdLUU923a/yAagJQzY0Q=="
-  "resolved" "https://registry.npmmirror.com/@reduxjs/toolkit/download/@reduxjs/toolkit-1.7.1.tgz"
-  "version" "1.7.1"
-  dependencies:
-    "immer" "^9.0.7"
-    "redux" "^4.1.2"
-    "redux-thunk" "^2.4.1"
-    "reselect" "^4.1.5"
 
 "@rollup/plugin-node-resolve@^7.1.1":
   "integrity" "sha1-gN44Tt+9e/yRARZJEPhgeBUaPso="
@@ -2003,13 +1859,6 @@
   dependencies:
     "@babel/types" "^7.3.0"
 
-"@types/classnames@^2.2.11":
-  "integrity" "sha1-PCRnqg8ak/HwIeO5vPk4vV39wN0="
-  "resolved" "https://registry.nlark.com/@types/classnames/download/@types/classnames-2.3.1.tgz?cache=0&sync_timestamp=1618929797687&other_urls=https%3A%2F%2Fregistry.nlark.com%2F%40types%2Fclassnames%2Fdownload%2F%40types%2Fclassnames-2.3.1.tgz"
-  "version" "2.3.1"
-  dependencies:
-    "classnames" "*"
-
 "@types/eslint@^7.28.2":
   "integrity" "sha512-VNcvioYDH8/FxaeTKkM4/TiTwt6pBV9E3OfGmvaw8tPl0rrHCJ4Ll15HRT+pMiFAf/MLQvAzC+6RzUMEL9Ceng=="
   "resolved" "https://registry.npmmirror.com/@types/eslint/download/@types/eslint-7.29.0.tgz"
@@ -2028,11 +1877,6 @@
   "resolved" "https://registry.npmmirror.com/@types/estree/download/@types/estree-0.0.39.tgz"
   "version" "0.0.39"
 
-"@types/fuzzy-search@^2.1.0":
-  "integrity" "sha512-YOqA50Z3xcycm4Br5+MBUpSumfdOAcv34A8A8yFn62zBQPTzJSXQk11qYE5w8BWQ0KrVThXUgEQh7ZLrYI1NaQ=="
-  "resolved" "https://registry.npmmirror.com/@types/fuzzy-search/download/@types/fuzzy-search-2.1.2.tgz"
-  "version" "2.1.2"
-
 "@types/glob@^7.1.1":
   "integrity" "sha1-vBtb86qS8lvV3TnzXFc2G9zlsus="
   "resolved" "https://registry.npmmirror.com/@types/glob/download/@types/glob-7.2.0.tgz"
@@ -2048,7 +1892,7 @@
   dependencies:
     "@types/node" "*"
 
-"@types/hoist-non-react-statics@^3.3.0", "@types/hoist-non-react-statics@^3.3.1":
+"@types/hoist-non-react-statics@*", "@types/hoist-non-react-statics@^3.3.0":
   "integrity" "sha1-ESSq/lEYy1kZd66xzqrtEHDrA58="
   "resolved" "https://registry.npmmirror.com/@types/hoist-non-react-statics/download/@types/hoist-non-react-statics-3.3.1.tgz"
   "version" "3.3.1"
@@ -2098,11 +1942,6 @@
   "resolved" "https://registry.npm.taobao.org/@types/json5/download/@types/json5-0.0.29.tgz"
   "version" "0.0.29"
 
-"@types/memoizee@^0.4.5":
-  "integrity" "sha1-pLp6PqYfpFvpFvFIdjvsLKOMNM8="
-  "resolved" "https://registry.npmmirror.com/@types/memoizee/download/@types/memoizee-0.4.6.tgz"
-  "version" "0.4.6"
-
 "@types/minimatch@*":
   "integrity" "sha1-EAHMXmo3BLg8I2An538vWOoBD0A="
   "resolved" "https://registry.npmmirror.com/@types/minimatch/download/@types/minimatch-3.0.5.tgz?cache=0&sync_timestamp=1637267454587&other_urls=https%3A%2F%2Fregistry.npmmirror.com%2F%40types%2Fminimatch%2Fdownload%2F%40types%2Fminimatch-3.0.5.tgz"
@@ -2150,7 +1989,7 @@
   dependencies:
     "@types/react" "*"
 
-"@types/react-redux@^7.1.16", "@types/react-redux@^7.1.20":
+"@types/react-redux@^7.1.20":
   "integrity" "sha1-QvDmGrq7Yh4SxmyW3alMWEI7198="
   "resolved" "https://registry.npmmirror.com/@types/react-redux/download/@types/react-redux-7.1.20.tgz"
   "version" "7.1.20"
@@ -2160,6 +1999,13 @@
     "hoist-non-react-statics" "^3.3.0"
     "redux" "^4.0.0"
 
+"@types/react-swipeable-views@^0.13.1":
+  "integrity" "sha1-OByFE97vVCZiOqhRAz/09IMa4Vw="
+  "resolved" "https://registry.npmmirror.com/@types/react-swipeable-views/download/@types/react-swipeable-views-0.13.1.tgz"
+  "version" "0.13.1"
+  dependencies:
+    "@types/react" "*"
+
 "@types/react-transition-group@^4.2.0", "@types/react-transition-group@^4.4.0":
   "integrity" "sha1-rNTM6qK+a3V9th7XtDLhAyQtFj4="
   "resolved" "https://registry.npmmirror.com/@types/react-transition-group/download/@types/react-transition-group-4.4.4.tgz"
@@ -2167,21 +2013,7 @@
   dependencies:
     "@types/react" "*"
 
-"@types/react-virtualized-auto-sizer@^1.0.0":
-  "integrity" "sha1-sxh9rh38TBWIDJz8W0XycZ6m69Q="
-  "resolved" "https://registry.npmmirror.com/@types/react-virtualized-auto-sizer/download/@types/react-virtualized-auto-sizer-1.0.1.tgz"
-  "version" "1.0.1"
-  dependencies:
-    "@types/react" "*"
-
-"@types/react-window@^1.8.2":
-  "integrity" "sha1-KF/MXOpwPu942Q9JnhRX6bXAL8E="
-  "resolved" "https://registry.npmmirror.com/@types/react-window/download/@types/react-window-1.8.5.tgz"
-  "version" "1.8.5"
-  dependencies:
-    "@types/react" "*"
-
-"@types/react@*", "@types/react@^16.8.6 || ^17.0.0", "@types/react@^17.0.24", "@types/react@^17.0.3", "@types/react@16 || 17":
+"@types/react@*", "@types/react@^16.8.6 || ^17.0.0", "@types/react@^17.0.24":
   "integrity" "sha512-SI92X1IA+FMnP3qM5m4QReluXzhcmovhZnLNm3pyeQlooi02qI7sLiepEYqT678uNiyc25XfCqxREFpy3W7YhQ=="
   "resolved" "https://registry.npmmirror.com/@types/react/download/@types/react-17.0.38.tgz"
   "version" "17.0.38"
@@ -2189,11 +2021,6 @@
     "@types/prop-types" "*"
     "@types/scheduler" "*"
     "csstype" "^3.0.2"
-
-"@types/redux-watch@^1.1.0":
-  "integrity" "sha1-sgAm/UIHyVzlgsKOGywY+0AolEc="
-  "resolved" "https://registry.npmmirror.com/@types/redux-watch/download/@types/redux-watch-1.1.0.tgz"
-  "version" "1.1.0"
 
 "@types/resolve@0.0.8":
   "integrity" "sha1-8mB00jjgJlnjI84aE9BB7uKA4ZQ="
@@ -2207,11 +2034,6 @@
   "resolved" "https://registry.npmmirror.com/@types/scheduler/download/@types/scheduler-0.16.2.tgz"
   "version" "0.16.2"
 
-"@types/shortid@^0.0.29":
-  "integrity" "sha1-gJPuBBam4r8qpjOBCRFLP7/6Dps="
-  "resolved" "https://registry.npmmirror.com/@types/shortid/download/@types/shortid-0.0.29.tgz"
-  "version" "0.0.29"
-
 "@types/source-list-map@*":
   "integrity" "sha1-AHiDYGP/rxdBI0m7o2QIfgrALsk="
   "resolved" "https://registry.npmmirror.com/@types/source-list-map/download/@types/source-list-map-0.1.2.tgz"
@@ -2221,6 +2043,15 @@
   "integrity" "sha1-IPGClPeX8iCbX2XI47XI6CYdEnw="
   "resolved" "https://registry.npmmirror.com/@types/stack-utils/download/@types/stack-utils-2.0.1.tgz"
   "version" "2.0.1"
+
+"@types/styled-components@^5.1.19":
+  "integrity" "sha512-hNj14Oamk7Jhb/fMMQG7TUkd3e8uMMgxsCTH+ueJNGdFo/PuhlGDQTPChqyilpZP0WttgBHkc2YyT5UG+yc6Yw=="
+  "resolved" "https://registry.npmmirror.com/@types/styled-components/download/@types/styled-components-5.1.19.tgz"
+  "version" "5.1.19"
+  dependencies:
+    "@types/hoist-non-react-statics" "*"
+    "@types/react" "*"
+    "csstype" "^3.0.2"
 
 "@types/tapable@^1", "@types/tapable@^1.0.5":
   "integrity" "sha1-uUpDkchWZse3Mpn9OtedT6pDUxA="
@@ -3267,7 +3098,7 @@
     "mixin-deep" "^1.2.0"
     "pascalcase" "^0.1.1"
 
-"base64-js@^1.0.2":
+"base64-js@^1.0.2", "base64-js@^1.3.1":
   "integrity" "sha1-GxtEAWClv3rUC2UPCVljSBkDkwo="
   "resolved" "https://registry.nlark.com/base64-js/download/base64-js-1.5.1.tgz"
   "version" "1.5.1"
@@ -3301,6 +3132,15 @@
   "integrity" "sha1-dfUC7q+f/eQvyYgpZFvk6na9ni0="
   "resolved" "https://registry.npm.taobao.org/binary-extensions/download/binary-extensions-2.2.0.tgz?cache=0&sync_timestamp=1610299308660&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fbinary-extensions%2Fdownload%2Fbinary-extensions-2.2.0.tgz"
   "version" "2.2.0"
+
+"bl@^4.0.2":
+  "integrity" "sha1-RRU1JkGCvsL7vIOmKrmM8R2fezo="
+  "resolved" "https://registry.nlark.com/bl/download/bl-4.1.0.tgz"
+  "version" "4.1.0"
+  dependencies:
+    "buffer" "^5.5.0"
+    "inherits" "^2.0.4"
+    "readable-stream" "^3.4.0"
 
 "bluebird@^3.5.5":
   "integrity" "sha1-nyKcFb4nJFT/qXOs4NvueaGww28="
@@ -3520,6 +3360,14 @@
     "base64-js" "^1.0.2"
     "ieee754" "^1.1.4"
     "isarray" "^1.0.0"
+
+"buffer@^5.5.0":
+  "integrity" "sha512-EHcyIPBQ4BSGlvjB16k5KgAJ27CIsHY/2JBmCRReo48y9rQ3MaUzWX3KVlBa4U7MyX02HdVj0K7C3WaB3ju7FQ=="
+  "resolved" "https://registry.npmmirror.com/buffer/download/buffer-5.7.1.tgz"
+  "version" "5.7.1"
+  dependencies:
+    "base64-js" "^1.3.1"
+    "ieee754" "^1.1.13"
 
 "builtin-modules@^3.1.0":
   "integrity" "sha1-RdXbmefuXmvE82LgCL+RerUEmIc="
@@ -3830,71 +3678,6 @@
   optionalDependencies:
     "fsevents" "~2.3.2"
 
-"chonky@^2.3.0":
-  "integrity" "sha512-s62AV/IiczIOd4gzMPOuTEOBNXZdrk+mP/ZPXKF5qKoQ7KeZZF+b1sXiOAoRqWqbo4OCbgCrGGVelMJBxDY8VA=="
-  "resolved" "https://registry.npmmirror.com/chonky/download/chonky-2.3.0.tgz"
-  "version" "2.3.0"
-  dependencies:
-    "@material-ui/core" "4.11.3"
-    "@reduxjs/toolkit" "^1.5.0"
-    "@types/classnames" "^2.2.11"
-    "@types/fuzzy-search" "^2.1.0"
-    "@types/memoizee" "^0.4.5"
-    "@types/react" "^17.0.3"
-    "@types/react-redux" "^7.1.16"
-    "@types/react-virtualized-auto-sizer" "^1.0.0"
-    "@types/react-window" "^1.8.2"
-    "@types/redux-watch" "^1.1.0"
-    "@types/shortid" "^0.0.29"
-    "classnames" "^2.2.6"
-    "deepmerge" "^4.2.2"
-    "exact-trie" "^1.0.13"
-    "fast-sort" "^2.2.0"
-    "filesize" "^6.1.0"
-    "fuzzy-search" "^3.2.1"
-    "hotkeys-js" "^3.8.3"
-    "react-dnd" "11"
-    "react-dnd-html5-backend" "11"
-    "react-intl" "^5.13.2"
-    "react-jss" "^10.5.1"
-    "react-redux" "^7.2.2"
-    "react-virtualized-auto-sizer" "^1.0.5"
-    "react-window" "^1.8.6"
-    "redux-watch" "^1.2.0"
-    "shortid" "^2.2.16"
-    "styled-components" "^5.3.0"
-    "tsdef" "^0.0.14"
-
-"chonky@file:../fileManger":
-  "resolved" "file:../fileManger"
-  "version" "1.0.0"
-  dependencies:
-    "@fortawesome/fontawesome-svg-core" "^1.2.32"
-    "@fortawesome/free-brands-svg-icons" "5.13.1"
-    "@fortawesome/free-solid-svg-icons" "^5.13.1"
-    "@fortawesome/react-fontawesome" "^0.1.12"
-    "@material-ui/core" "^4.12.3"
-    "@material-ui/icons" "^4.11.2"
-    "@reduxjs/toolkit" "^1.7.1"
-    "classnames" "^2.3.1"
-    "deepmerge" "^4.2.2"
-    "exact-trie" "^1.0.13"
-    "fast-sort" "^3.1.1"
-    "filesize" "^8.0.6"
-    "fuzzy-search" "^3.2.1"
-    "hotkeys-js" "^3.8.7"
-    "react-dnd" "11"
-    "react-dnd-html5-backend" "11"
-    "react-hot-loader" "^4.13.0"
-    "react-intl" "^5.24.0"
-    "react-jss" "^10.9.0"
-    "react-redux" "^7.2.6"
-    "react-virtualized-auto-sizer" "^1.0.6"
-    "react-window" "^1.8.6"
-    "redux-watch" "^1.2.0"
-    "shortid" "^2.2.16"
-    "tsdef" "^0.0.14"
-
 "chownr@^1.1.1":
   "integrity" "sha1-b8nXtC0ypYNZYzdmbn0ICE2izGs="
   "resolved" "https://registry.nlark.com/chownr/download/chownr-1.1.4.tgz"
@@ -3938,7 +3721,7 @@
     "isobject" "^3.0.0"
     "static-extend" "^0.1.1"
 
-"classnames@*", "classnames@^2.2.6", "classnames@^2.3.1":
+"classnames@^2.2.6", "classnames@^2.3.1":
   "integrity" "sha512-OlQdbZ7gLfGarSqxesMesDa5uz7KFbID8Kpq/SxIoNGDqY8lSYs0D+hhtBXhcdB3rcbXArFr7vlHheLk1voeNA=="
   "resolved" "https://registry.npmmirror.com/classnames/download/classnames-2.3.1.tgz"
   "version" "2.3.1"
@@ -4005,6 +3788,13 @@
     "map-visit" "^1.0.0"
     "object-visit" "^1.0.0"
 
+"collections@^5.1.13":
+  "integrity" "sha512-SCb6Qd+d3Z02corWQ7/mqXiXeeTdHvkP6TeFSYfGYdCFp1WrjSNZ3j6y8Y3T/7osGEe0iOcU2g1d346l99m4Lg=="
+  "resolved" "https://registry.npmmirror.com/collections/download/collections-5.1.13.tgz"
+  "version" "5.1.13"
+  dependencies:
+    "weak-map" "~1.0.x"
+
 "color-convert@^1.9.0", "color-convert@^1.9.3":
   "integrity" "sha1-u3GFBpDh8TZWfeYp0tVHHe2kweg="
   "resolved" "https://registry.npmmirror.com/color-convert/download/color-convert-1.9.3.tgz"
@@ -4067,6 +3857,14 @@
   "resolved" "https://registry.npmmirror.com/commander/download/commander-5.1.0.tgz"
   "version" "5.1.0"
 
+"commist@^1.0.0":
+  "integrity" "sha1-F4EexpePbBXuTegMRcm+t3zuNdU="
+  "resolved" "https://registry.nlark.com/commist/download/commist-1.1.0.tgz"
+  "version" "1.1.0"
+  dependencies:
+    "leven" "^2.1.0"
+    "minimist" "^1.1.0"
+
 "common-tags@^1.8.0":
   "integrity" "sha512-gk/Z852D2Wtb//0I+kRFNKKE9dIIVirjoqPoA1wJU+XePVXZfGeBpk45+A1rKO4Q43prqWBNY/MiIeRLbPWUaA=="
   "resolved" "https://registry.npmmirror.com/common-tags/download/common-tags-1.8.2.tgz?cache=0&sync_timestamp=1637093349705&other_urls=https%3A%2F%2Fregistry.npmmirror.com%2Fcommon-tags%2Fdownload%2Fcommon-tags-1.8.2.tgz"
@@ -4122,6 +3920,16 @@
     "buffer-from" "^1.0.0"
     "inherits" "^2.0.3"
     "readable-stream" "^2.2.2"
+    "typedarray" "^0.0.6"
+
+"concat-stream@^2.0.0":
+  "integrity" "sha1-QUz1r3kKSMYKub5FJ9VtXkETPLE="
+  "resolved" "https://registry.npm.taobao.org/concat-stream/download/concat-stream-2.0.0.tgz"
+  "version" "2.0.0"
+  dependencies:
+    "buffer-from" "^1.0.0"
+    "inherits" "^2.0.3"
+    "readable-stream" "^3.0.2"
     "typedarray" "^0.0.6"
 
 "confusing-browser-globals@^1.0.10":
@@ -4363,15 +4171,6 @@
   dependencies:
     "postcss" "^7.0.6"
     "postcss-selector-parser" "^5.0.0-rc.4"
-
-"css-jss@10.9.0":
-  "integrity" "sha512-CpYclti5ZQ18PfAeXaHQ2bEw4DEUfjC0lTS9sQcUlTRF8hC/Va0h3DIowlRm6AH/Ka/O/+tp41Q5zn9MJQoRsA=="
-  "resolved" "https://registry.npmmirror.com/css-jss/download/css-jss-10.9.0.tgz"
-  "version" "10.9.0"
-  dependencies:
-    "@babel/runtime" "^7.3.1"
-    "jss" "10.9.0"
-    "jss-preset-default" "10.9.0"
 
 "css-loader@4.3.0":
   "integrity" "sha1-yIivZLKlsuhUYscsD0qFx+Lggh4="
@@ -4860,15 +4659,6 @@
   "resolved" "https://registry.npm.taobao.org/discontinuous-range/download/discontinuous-range-1.0.0.tgz"
   "version" "1.0.0"
 
-"dnd-core@^11.1.3":
-  "integrity" "sha1-+SCZunJF5Jcp0kMxVwMaYmevzJg="
-  "resolved" "https://registry.npmmirror.com/dnd-core/download/dnd-core-11.1.3.tgz"
-  "version" "11.1.3"
-  dependencies:
-    "@react-dnd/asap" "^4.0.0"
-    "@react-dnd/invariant" "^2.0.0"
-    "redux" "^4.0.4"
-
 "dns-equal@^1.0.0":
   "integrity" "sha1-s55/HabrCnW6nBcySzR1PEfgZU0="
   "resolved" "https://registry.npm.taobao.org/dns-equal/download/dns-equal-1.0.0.tgz"
@@ -5021,6 +4811,16 @@
     "readable-stream" "^2.0.0"
     "stream-shift" "^1.0.0"
 
+"duplexify@^4.1.1":
+  "integrity" "sha1-GLT40oKJEy+guVc8iY2fkD+Bx7A="
+  "resolved" "https://registry.nlark.com/duplexify/download/duplexify-4.1.2.tgz"
+  "version" "4.1.2"
+  dependencies:
+    "end-of-stream" "^1.4.1"
+    "inherits" "^2.0.3"
+    "readable-stream" "^3.1.1"
+    "stream-shift" "^1.0.0"
+
 "ee-first@1.1.1":
   "integrity" "sha1-WQxhFWsK4vTwJVcyoViyZrxWsh0="
   "resolved" "https://registry.npm.taobao.org/ee-first/download/ee-first-1.1.1.tgz"
@@ -5084,7 +4884,7 @@
   "resolved" "https://registry.nlark.com/encodeurl/download/encodeurl-1.0.2.tgz"
   "version" "1.0.2"
 
-"end-of-stream@^1.0.0", "end-of-stream@^1.1.0":
+"end-of-stream@^1.0.0", "end-of-stream@^1.1.0", "end-of-stream@^1.4.1":
   "integrity" "sha1-WuZKX0UFe682JuwU2gyl5LJDHrA="
   "resolved" "https://registry.nlark.com/end-of-stream/download/end-of-stream-1.4.4.tgz"
   "version" "1.4.4"
@@ -5578,11 +5378,6 @@
     "md5.js" "^1.3.4"
     "safe-buffer" "^5.1.1"
 
-"exact-trie@^1.0.13":
-  "integrity" "sha1-++cUn0ekofh/dT+rFmDsKj/wVX4="
-  "resolved" "https://registry.npmmirror.com/exact-trie/download/exact-trie-1.0.13.tgz"
-  "version" "1.0.13"
-
 "exec-sh@^0.3.2":
   "integrity" "sha1-/yZPnjJVGaYMteJzaSlDSDzKY7w="
   "resolved" "https://registry.npm.taobao.org/exec-sh/download/exec-sh-0.3.6.tgz?cache=0&sync_timestamp=1616788824594&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fexec-sh%2Fdownload%2Fexec-sh-0.3.6.tgz"
@@ -5757,11 +5552,6 @@
   "resolved" "https://registry.nlark.com/fast-levenshtein/download/fast-levenshtein-2.0.6.tgz"
   "version" "2.0.6"
 
-"fast-sort@^2.2.0":
-  "integrity" "sha1-IJA3Y1MfvLtByd9asb9fLO/IR2o="
-  "resolved" "https://registry.npmmirror.com/fast-sort/download/fast-sort-2.2.0.tgz"
-  "version" "2.2.0"
-
 "fastq@^1.6.0":
   "integrity" "sha1-YWdg+Ip1Jr38WWt8q4wYk4w2uYw="
   "resolved" "https://registry.nlark.com/fastq/download/fastq-1.13.0.tgz"
@@ -5828,7 +5618,7 @@
   "resolved" "https://registry.npmmirror.com/filepond/download/filepond-4.30.3.tgz"
   "version" "4.30.3"
 
-"filesize@^6.1.0", "filesize@6.1.0":
+"filesize@6.1.0":
   "integrity" "sha1-6Bvap4DiRR1xTXHA16TzI403rQA="
   "resolved" "https://registry.npmmirror.com/filesize/download/filesize-6.1.0.tgz?cache=0&sync_timestamp=1635763993879&other_urls=https%3A%2F%2Fregistry.npmmirror.com%2Ffilesize%2Fdownload%2Ffilesize-6.1.0.tgz"
   "version" "6.1.0"
@@ -6060,11 +5850,6 @@
   "integrity" "sha1-mNk5kcOdqTYfjlCzN8T25B8SDiE="
   "resolved" "https://registry.npm.taobao.org/functions-have-names/download/functions-have-names-1.2.2.tgz?cache=0&sync_timestamp=1610025859163&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Ffunctions-have-names%2Fdownload%2Ffunctions-have-names-1.2.2.tgz"
   "version" "1.2.2"
-
-"fuzzy-search@^3.2.1":
-  "integrity" "sha1-ZdX6rWvGM67obxiYt3iN/jEqxsk="
-  "resolved" "https://registry.nlark.com/fuzzy-search/download/fuzzy-search-3.2.1.tgz"
-  "version" "3.2.1"
 
 "gensync@^1.0.0-beta.1", "gensync@^1.0.0-beta.2":
   "integrity" "sha1-MqbudsPX9S1GsrGuXZP+qFgKJeA="
@@ -6346,6 +6131,14 @@
   "resolved" "https://registry.npm.taobao.org/he/download/he-1.2.0.tgz"
   "version" "1.2.0"
 
+"help-me@^3.0.0":
+  "integrity" "sha1-mAPIG180atK84sagugG4IlfTGeg="
+  "resolved" "https://registry.nlark.com/help-me/download/help-me-3.0.0.tgz"
+  "version" "3.0.0"
+  dependencies:
+    "glob" "^7.1.6"
+    "readable-stream" "^3.6.0"
+
 "hex-color-regex@^1.1.0":
   "integrity" "sha1-TAb8y0YC/iYCs8k9+C1+fb8aio4="
   "resolved" "https://registry.nlark.com/hex-color-regex/download/hex-color-regex-1.1.0.tgz"
@@ -6372,7 +6165,7 @@
     "minimalistic-assert" "^1.0.0"
     "minimalistic-crypto-utils" "^1.0.1"
 
-"hoist-non-react-statics@^3.0.0", "hoist-non-react-statics@^3.1.0", "hoist-non-react-statics@^3.2.0", "hoist-non-react-statics@^3.3.0", "hoist-non-react-statics@^3.3.1", "hoist-non-react-statics@^3.3.2":
+"hoist-non-react-statics@^3.0.0", "hoist-non-react-statics@^3.1.0", "hoist-non-react-statics@^3.3.0", "hoist-non-react-statics@^3.3.1", "hoist-non-react-statics@^3.3.2":
   "integrity" "sha1-7OCsr3HWLClpwuxZ/v9CpLGoW0U="
   "resolved" "https://registry.npm.taobao.org/hoist-non-react-statics/download/hoist-non-react-statics-3.3.2.tgz"
   "version" "3.3.2"
@@ -6388,11 +6181,6 @@
   "integrity" "sha1-3/wL+aIcAiCQkPKqaUKeFBTa8/k="
   "resolved" "https://registry.npmmirror.com/hosted-git-info/download/hosted-git-info-2.8.9.tgz"
   "version" "2.8.9"
-
-"hotkeys-js@^3.8.3":
-  "integrity" "sha1-wWyrl4tT1yQvhgyjky6Xa5I5mYE="
-  "resolved" "https://registry.nlark.com/hotkeys-js/download/hotkeys-js-3.8.7.tgz"
-  "version" "3.8.7"
 
 "hpack.js@^2.1.6":
   "integrity" "sha1-h3dMCUnlE/QuhFdbPEVoH63ioLI="
@@ -6580,7 +6368,7 @@
   dependencies:
     "harmony-reflect" "^1.4.6"
 
-"ieee754@^1.1.4":
+"ieee754@^1.1.13", "ieee754@^1.1.4":
   "integrity" "sha1-jrehCmP/8l0VpXsAFYbRd9Gw01I="
   "resolved" "https://registry.npm.taobao.org/ieee754/download/ieee754-1.2.1.tgz?cache=0&sync_timestamp=1603838208740&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fieee754%2Fdownload%2Fieee754-1.2.1.tgz"
   "version" "1.2.1"
@@ -6599,11 +6387,6 @@
   "integrity" "sha512-CmxgYGiEPCLhfLnpPp1MoRmifwEIOgjcHXxOBjv7mY96c+eWScsOP9c112ZyLdWHi0FxHjI+4uVhKYp/gcdRmQ=="
   "resolved" "https://registry.npmmirror.com/ignore/download/ignore-5.2.0.tgz"
   "version" "5.2.0"
-
-"immer@^9.0.7":
-  "integrity" "sha512-KGllzpbamZDvOIxnmJ0jI840g7Oikx58lBPWV0hUh7dtAyZpFqqrBZdKka5GlTwMTZ1Tjc/bKKW4VSFAt6BqMA=="
-  "resolved" "https://registry.npmmirror.com/immer/download/immer-9.0.7.tgz"
-  "version" "9.0.7"
 
 "immer@8.0.1":
   "integrity" "sha1-nHPbaD4rOXXEJPsFcq9YiYd65lY="
@@ -6725,16 +6508,6 @@
     "get-intrinsic" "^1.1.0"
     "has" "^1.0.3"
     "side-channel" "^1.0.4"
-
-"intl-messageformat@9.11.0":
-  "integrity" "sha512-LqV23YGQ5FvKiHmqDtVbx88jNZbJ25d/LE4jRX92TTshBDAofKwBjCi3WVb5pdWbLjDj+upeU+zbUJLlHfj/Wg=="
-  "resolved" "https://registry.npmmirror.com/intl-messageformat/download/intl-messageformat-9.11.0.tgz"
-  "version" "9.11.0"
-  dependencies:
-    "@formatjs/ecma402-abstract" "1.11.0"
-    "@formatjs/fast-memoize" "1.2.1"
-    "@formatjs/icu-messageformat-parser" "2.0.15"
-    "tslib" "^2.1.0"
 
 "ip-regex@^2.1.0":
   "integrity" "sha1-+ni/XS5pE8kRzp+BnuUUa7bYROk="
@@ -7797,7 +7570,7 @@
   optionalDependencies:
     "graceful-fs" "^4.1.6"
 
-"jss-plugin-camel-case@^10.5.1", "jss-plugin-camel-case@10.9.0":
+"jss-plugin-camel-case@^10.5.1":
   "integrity" "sha512-UH6uPpnDk413/r/2Olmw4+y54yEF2lRIV8XIZyuYpgPYTITLlPOsq6XB9qeqv+75SQSg3KLocq5jUBXW8qWWww=="
   "resolved" "https://registry.npmmirror.com/jss-plugin-camel-case/download/jss-plugin-camel-case-10.9.0.tgz"
   "version" "10.9.0"
@@ -7806,16 +7579,7 @@
     "hyphenate-style-name" "^1.0.3"
     "jss" "10.9.0"
 
-"jss-plugin-compose@10.9.0":
-  "integrity" "sha512-Q/0FEZhDwGUpf3/b7+PspmMi6MVSlN3YlTDmvrft7I6N346jUpd8MYkYP/6qM1ZMuVj4v8ky/XYqr1v2ganLLg=="
-  "resolved" "https://registry.npmmirror.com/jss-plugin-compose/download/jss-plugin-compose-10.9.0.tgz"
-  "version" "10.9.0"
-  dependencies:
-    "@babel/runtime" "^7.3.1"
-    "jss" "10.9.0"
-    "tiny-warning" "^1.0.2"
-
-"jss-plugin-default-unit@^10.5.1", "jss-plugin-default-unit@10.9.0":
+"jss-plugin-default-unit@^10.5.1":
   "integrity" "sha512-7Ju4Q9wJ/MZPsxfu4T84mzdn7pLHWeqoGd/D8O3eDNNJ93Xc8PxnLmV8s8ZPNRYkLdxZqKtm1nPQ0BM4JRlq2w=="
   "resolved" "https://registry.npmmirror.com/jss-plugin-default-unit/download/jss-plugin-default-unit-10.9.0.tgz"
   "version" "10.9.0"
@@ -7823,24 +7587,7 @@
     "@babel/runtime" "^7.3.1"
     "jss" "10.9.0"
 
-"jss-plugin-expand@10.9.0":
-  "integrity" "sha512-QfZ9jld0HpF1OiYU7cGWQ4q+f6+Wu93mV4X+cA1iVRssiUbSbygwdfZkUwX23UOhS1WWRJeQlLK1aJC94K8/0A=="
-  "resolved" "https://registry.npmmirror.com/jss-plugin-expand/download/jss-plugin-expand-10.9.0.tgz"
-  "version" "10.9.0"
-  dependencies:
-    "@babel/runtime" "^7.3.1"
-    "jss" "10.9.0"
-
-"jss-plugin-extend@10.9.0":
-  "integrity" "sha512-xvmosUh3RsKVsm9L14ml6PL3i0Ejj5gB6eo/jTMkGW1kIy42gNXV1EthR8cD5xiowWstnvugQ3JF0pI5+QkPMg=="
-  "resolved" "https://registry.npmmirror.com/jss-plugin-extend/download/jss-plugin-extend-10.9.0.tgz"
-  "version" "10.9.0"
-  dependencies:
-    "@babel/runtime" "^7.3.1"
-    "jss" "10.9.0"
-    "tiny-warning" "^1.0.2"
-
-"jss-plugin-global@^10.5.1", "jss-plugin-global@10.9.0":
+"jss-plugin-global@^10.5.1":
   "integrity" "sha512-4G8PHNJ0x6nwAFsEzcuVDiBlyMsj2y3VjmFAx/uHk/R/gzJV+yRHICjT4MKGGu1cJq2hfowFWCyrr/Gg37FbgQ=="
   "resolved" "https://registry.npmmirror.com/jss-plugin-global/download/jss-plugin-global-10.9.0.tgz"
   "version" "10.9.0"
@@ -7848,7 +7595,7 @@
     "@babel/runtime" "^7.3.1"
     "jss" "10.9.0"
 
-"jss-plugin-nested@^10.5.1", "jss-plugin-nested@10.9.0":
+"jss-plugin-nested@^10.5.1":
   "integrity" "sha512-2UJnDrfCZpMYcpPYR16oZB7VAC6b/1QLsRiAutOt7wJaaqwCBvNsosLEu/fUyKNQNGdvg2PPJFDO5AX7dwxtoA=="
   "resolved" "https://registry.npmmirror.com/jss-plugin-nested/download/jss-plugin-nested-10.9.0.tgz"
   "version" "10.9.0"
@@ -7857,7 +7604,7 @@
     "jss" "10.9.0"
     "tiny-warning" "^1.0.2"
 
-"jss-plugin-props-sort@^10.5.1", "jss-plugin-props-sort@10.9.0":
+"jss-plugin-props-sort@^10.5.1":
   "integrity" "sha512-7A76HI8bzwqrsMOJTWKx/uD5v+U8piLnp5bvru7g/3ZEQOu1+PjHvv7bFdNO3DwNPC9oM0a//KwIJsIcDCjDzw=="
   "resolved" "https://registry.npmmirror.com/jss-plugin-props-sort/download/jss-plugin-props-sort-10.9.0.tgz"
   "version" "10.9.0"
@@ -7865,7 +7612,7 @@
     "@babel/runtime" "^7.3.1"
     "jss" "10.9.0"
 
-"jss-plugin-rule-value-function@^10.5.1", "jss-plugin-rule-value-function@10.9.0":
+"jss-plugin-rule-value-function@^10.5.1":
   "integrity" "sha512-IHJv6YrEf8pRzkY207cPmdbBstBaE+z8pazhPShfz0tZSDtRdQua5jjg6NMz3IbTasVx9FdnmptxPqSWL5tyJg=="
   "resolved" "https://registry.npmmirror.com/jss-plugin-rule-value-function/download/jss-plugin-rule-value-function-10.9.0.tgz"
   "version" "10.9.0"
@@ -7874,25 +7621,7 @@
     "jss" "10.9.0"
     "tiny-warning" "^1.0.2"
 
-"jss-plugin-rule-value-observable@10.9.0":
-  "integrity" "sha512-/MWVPJVEn41+ofzQdsvH1GR4wusDqFqNnchh/98HVc580MxPy4NVkmUa2SAEpbHhnJ93sCoETZccW3HJKuvH4A=="
-  "resolved" "https://registry.npmmirror.com/jss-plugin-rule-value-observable/download/jss-plugin-rule-value-observable-10.9.0.tgz"
-  "version" "10.9.0"
-  dependencies:
-    "@babel/runtime" "^7.3.1"
-    "jss" "10.9.0"
-    "symbol-observable" "^1.2.0"
-
-"jss-plugin-template@10.9.0":
-  "integrity" "sha512-lxThUvdt0drCi7xhuJWxADWTgLLy1IWCeFO5k+dtba900xJsNg0IGZplpP9w9UpaJsYS3WUwWMXw8Sxn1dobfQ=="
-  "resolved" "https://registry.npmmirror.com/jss-plugin-template/download/jss-plugin-template-10.9.0.tgz"
-  "version" "10.9.0"
-  dependencies:
-    "@babel/runtime" "^7.3.1"
-    "jss" "10.9.0"
-    "tiny-warning" "^1.0.2"
-
-"jss-plugin-vendor-prefixer@^10.5.1", "jss-plugin-vendor-prefixer@10.9.0":
+"jss-plugin-vendor-prefixer@^10.5.1":
   "integrity" "sha512-MbvsaXP7iiVdYVSEoi+blrW+AYnTDvHTW6I6zqi7JcwXdc6I9Kbm234nEblayhF38EftoenbM+5218pidmC5gA=="
   "resolved" "https://registry.npmmirror.com/jss-plugin-vendor-prefixer/download/jss-plugin-vendor-prefixer-10.9.0.tgz"
   "version" "10.9.0"
@@ -7900,26 +7629,6 @@
     "@babel/runtime" "^7.3.1"
     "css-vendor" "^2.0.8"
     "jss" "10.9.0"
-
-"jss-preset-default@10.9.0":
-  "integrity" "sha512-Zdsj+R+UTn7OOJ1TFQi+l8PfEL7APSAM6vRPaU8mJywT8OrMjgslMKckFLrgq1k+qk1hJR1ePAMesvZ5aAXGOQ=="
-  "resolved" "https://registry.npmmirror.com/jss-preset-default/download/jss-preset-default-10.9.0.tgz"
-  "version" "10.9.0"
-  dependencies:
-    "@babel/runtime" "^7.3.1"
-    "jss" "10.9.0"
-    "jss-plugin-camel-case" "10.9.0"
-    "jss-plugin-compose" "10.9.0"
-    "jss-plugin-default-unit" "10.9.0"
-    "jss-plugin-expand" "10.9.0"
-    "jss-plugin-extend" "10.9.0"
-    "jss-plugin-global" "10.9.0"
-    "jss-plugin-nested" "10.9.0"
-    "jss-plugin-props-sort" "10.9.0"
-    "jss-plugin-rule-value-function" "10.9.0"
-    "jss-plugin-rule-value-observable" "10.9.0"
-    "jss-plugin-template" "10.9.0"
-    "jss-plugin-vendor-prefixer" "10.9.0"
 
 "jss@^10.5.1", "jss@10.9.0":
   "integrity" "sha512-YpzpreB6kUunQBbrlArlsMpXYyndt9JATbt95tajx0t4MTJJcCJdd4hdNpHmOIDiUJrF/oX5wtVFrS3uofWfGw=="
@@ -7943,6 +7652,11 @@
   "integrity" "sha1-P7MZ82daLfDCiVyPXp+ktnsE7Vk="
   "resolved" "https://registry.npm.taobao.org/jwt-decode/download/jwt-decode-3.1.2.tgz"
   "version" "3.1.2"
+
+"keycode@^2.1.7":
+  "integrity" "sha512-Rdgz9Hl9Iv4QKi8b0OlCRQEzp4AgVxyCtz5S/+VIHezDmrDhkp2N2TqBWOLz0/gbeREXOOiI9/4b8BY9uw2vFg=="
+  "resolved" "https://registry.npmmirror.com/keycode/download/keycode-2.2.1.tgz"
+  "version" "2.2.1"
 
 "killable@^1.0.1":
   "integrity" "sha1-TIzkQRh6Bhx0dPuHygjipjgZSJI="
@@ -8007,6 +7721,11 @@
   dependencies:
     "lodash" "^4.17.5"
     "webpack-sources" "^1.1.0"
+
+"leven@^2.1.0":
+  "integrity" "sha1-wuep93IJTe6dNCAq6KzORoeHVYA="
+  "resolved" "https://registry.nlark.com/leven/download/leven-2.1.0.tgz?cache=0&sync_timestamp=1628597847220&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fleven%2Fdownload%2Fleven-2.1.0.tgz"
+  "version" "2.1.0"
 
 "leven@^3.1.0":
   "integrity" "sha1-d4kd6DQGTMy6gq54QrtrFKE+1/I="
@@ -8294,7 +8013,7 @@
   "resolved" "https://registry.npm.taobao.org/media-typer/download/media-typer-0.3.0.tgz"
   "version" "0.3.0"
 
-"memoize-one@^5.0.0", "memoize-one@>=3.1.1 <6":
+"memoize-one@^5.0.0":
   "integrity" "sha1-gzeqPEM1WBg57AHD1ZQJDOvo8A4="
   "resolved" "https://registry.npmmirror.com/memoize-one/download/memoize-one-5.2.1.tgz"
   "version" "5.2.1"
@@ -8456,7 +8175,7 @@
   dependencies:
     "brace-expansion" "^1.1.7"
 
-"minimist@^1.1.1", "minimist@^1.2.0", "minimist@^1.2.5":
+"minimist@^1.1.0", "minimist@^1.1.1", "minimist@^1.2.0", "minimist@^1.2.5":
   "integrity" "sha1-Z9ZgFLZqaoqqDAg8X9WN9OTpdgI="
   "resolved" "https://registry.nlark.com/minimist/download/minimist-1.2.5.tgz?cache=0&sync_timestamp=1618846813226&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fminimist%2Fdownload%2Fminimist-1.2.5.tgz"
   "version" "1.2.5"
@@ -8565,6 +8284,38 @@
     "rimraf" "^2.5.4"
     "run-queue" "^1.0.3"
 
+"mqtt-packet@^6.8.0":
+  "integrity" "sha1-yLUHgyxBUuPlEcDvoQSuSmTNQY8="
+  "resolved" "https://registry.nlark.com/mqtt-packet/download/mqtt-packet-6.10.0.tgz"
+  "version" "6.10.0"
+  dependencies:
+    "bl" "^4.0.2"
+    "debug" "^4.1.1"
+    "process-nextick-args" "^2.0.1"
+
+"mqtt@^4.3.2":
+  "integrity" "sha512-cSmPOvTL9diVV7nZVHobwFR//fLZw8c1Yw04z49sLwJx45ooiiqcg2soFLYdjI4iXlkw49lP6BZ2ZRv9kGpOyw=="
+  "resolved" "https://registry.npmmirror.com/mqtt/download/mqtt-4.3.2.tgz"
+  "version" "4.3.2"
+  dependencies:
+    "collections" "^5.1.13"
+    "commist" "^1.0.0"
+    "concat-stream" "^2.0.0"
+    "debug" "^4.1.1"
+    "duplexify" "^4.1.1"
+    "help-me" "^3.0.0"
+    "inherits" "^2.0.3"
+    "minimist" "^1.2.5"
+    "mqtt-packet" "^6.8.0"
+    "number-allocator" "^1.0.8"
+    "pump" "^3.0.0"
+    "readable-stream" "^3.6.0"
+    "reinterval" "^1.1.0"
+    "rfdc" "^1.3.0"
+    "split2" "^3.1.0"
+    "ws" "^7.5.5"
+    "xtend" "^4.0.2"
+
 "ms@^2.1.1", "ms@2.1.3":
   "integrity" "sha1-V0yBOM4dK1hh8LRFedut1gxmFbI="
   "resolved" "https://registry.npmmirror.com/ms/download/ms-2.1.3.tgz"
@@ -8592,11 +8343,6 @@
   dependencies:
     "dns-packet" "^1.3.1"
     "thunky" "^1.0.2"
-
-"nanoid@^2.1.0":
-  "integrity" "sha512-s/snB+WGm6uwi0WjsZdaVcuf3KJXlfGl2LcxgwkEwJF0D/BWzVWAZW/XY4bFaiR7s0Jk3FPvlnepg1H1b1UwlA=="
-  "resolved" "https://registry.npmmirror.com/nanoid/download/nanoid-2.1.11.tgz"
-  "version" "2.1.11"
 
 "nanoid@^3.1.30":
   "integrity" "sha512-zJpuPDwOv8D2zq2WRoMe1HsfZthVewpel9CAvTfc/2mBD1uUT/agc5f7GHGWXlYkFvi1mVxe4IjvP2HNrop7nQ=="
@@ -8813,6 +8559,14 @@
   "resolved" "https://registry.npm.taobao.org/num2fraction/download/num2fraction-1.2.2.tgz"
   "version" "1.2.2"
 
+"number-allocator@^1.0.8":
+  "integrity" "sha512-5lhaurSl3Kvn6j47S2ELzyv5X7b+UvvcZONUjL5/bFGNiOU7GkG/HUmtqef9ayEzS2i6BtsqB0FTTyu+8QrRrg=="
+  "resolved" "https://registry.npmmirror.com/number-allocator/download/number-allocator-1.0.8.tgz"
+  "version" "1.0.8"
+  dependencies:
+    "collections" "^5.1.13"
+    "debug" "^4.3.1"
+
 "nwsapi@^2.2.0":
   "integrity" "sha1-IEh5qePQaP8qVROcLHcngGgaOLc="
   "resolved" "https://registry.npm.taobao.org/nwsapi/download/nwsapi-2.2.0.tgz"
@@ -8849,11 +8603,6 @@
   "integrity" "sha1-HEfyct8nfzsdrwYWd9nILiMixg4="
   "resolved" "https://registry.npm.taobao.org/object-keys/download/object-keys-1.1.1.tgz"
   "version" "1.1.1"
-
-"object-path@^0.11.5":
-  "integrity" "sha1-7QAsArvdAHC3iidFXorgH8FNR0I="
-  "resolved" "https://registry.nlark.com/object-path/download/object-path-0.11.8.tgz?cache=0&sync_timestamp=1631790304737&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fobject-path%2Fdownload%2Fobject-path-0.11.8.tgz"
-  "version" "0.11.8"
 
 "object-visit@^1.0.0":
   "integrity" "sha1-95xEk68MU3e1n+OdOV5BBC3QRbs="
@@ -10112,7 +9861,7 @@
     "ansi-styles" "^5.0.0"
     "react-is" "^17.0.1"
 
-"process-nextick-args@~2.0.0":
+"process-nextick-args@^2.0.1", "process-nextick-args@~2.0.0":
   "integrity" "sha1-eCDZsWEgzFXKmud5JoCufbptf+I="
   "resolved" "https://registry.npm.taobao.org/process-nextick-args/download/process-nextick-args-2.0.1.tgz"
   "version" "2.0.1"
@@ -10155,7 +9904,7 @@
     "kleur" "^3.0.3"
     "sisteransi" "^1.0.5"
 
-"prop-types@^15.0.0", "prop-types@^15.5.8", "prop-types@^15.6.0", "prop-types@^15.6.1", "prop-types@^15.6.2", "prop-types@^15.7.0", "prop-types@^15.7.2":
+"prop-types@^15.0.0", "prop-types@^15.5.4", "prop-types@^15.6.0", "prop-types@^15.6.1", "prop-types@^15.6.2", "prop-types@^15.7.0", "prop-types@^15.7.2":
   "integrity" "sha512-fDGekdaHh65eI3lMi5OnErU6a8Ighg2KjcjQxO7m8VHyWjcPyj5kiOgV1LQDOOOgVy3+5FgjXvdSSX7B8/5/4g=="
   "resolved" "https://registry.npmmirror.com/prop-types/download/prop-types-15.8.0.tgz"
   "version" "15.8.0"
@@ -10402,29 +10151,7 @@
     "strip-ansi" "6.0.0"
     "text-table" "0.2.0"
 
-"react-display-name@^0.2.4":
-  "integrity" "sha1-MEx8v7We5AOJ1DbhqCLBf+J5NsY="
-  "resolved" "https://registry.npm.taobao.org/react-display-name/download/react-display-name-0.2.5.tgz"
-  "version" "0.2.5"
-
-"react-dnd-html5-backend@11":
-  "integrity" "sha1-J0nwT0FuwjDqGT9cH76i3n3/uPc="
-  "resolved" "https://registry.npmmirror.com/react-dnd-html5-backend/download/react-dnd-html5-backend-11.1.3.tgz"
-  "version" "11.1.3"
-  dependencies:
-    "dnd-core" "^11.1.3"
-
-"react-dnd@11":
-  "integrity" "sha1-+YRPVpnMxV38gUYsLBn3JuZwwa8="
-  "resolved" "https://registry.npmmirror.com/react-dnd/download/react-dnd-11.1.3.tgz"
-  "version" "11.1.3"
-  dependencies:
-    "@react-dnd/shallowequal" "^2.0.0"
-    "@types/hoist-non-react-statics" "^3.3.1"
-    "dnd-core" "^11.1.3"
-    "hoist-non-react-statics" "^3.3.0"
-
-"react-dom@^0.14.9 || ^15.3.0 || ^16.0.0-rc || ^16.0 || ^17.0", "react-dom@^15.0.0 || ^16.0.0 || ^17.0.0", "react-dom@^15.3.0 || ^16.0.0-alpha || ^17.0.0", "react-dom@^15.5.x || ^16.x || ^17.x", "react-dom@^16.8.0 || ^17.0.0", "react-dom@^16.9.0 || ^17", "react-dom@^17", "react-dom@^17.0.0-0", "react-dom@^17.0.2", "react-dom@>= 16.8.0", "react-dom@>= 16.9.0", "react-dom@>=16.6.0", "react-dom@16 - 18":
+"react-dom@^0.14.9 || ^15.3.0 || ^16.0.0-rc || ^16.0 || ^17.0", "react-dom@^15.5.x || ^16.x || ^17.x", "react-dom@^16.8.0 || ^17.0.0", "react-dom@^16.9.0 || ^17", "react-dom@^17", "react-dom@^17.0.0-0", "react-dom@^17.0.2", "react-dom@>= 16.8.0", "react-dom@>=16.6.0", "react-dom@16 - 18":
   "integrity" "sha512-s4h96KtLDUQlsENhMn1ar8t2bEa+q/YAtj8pPPdIjPDGBDIVNsrD9aXNWqspUe6AzKCIG0C1HZZLqLV7qpOBGA=="
   "resolved" "https://registry.npmmirror.com/react-dom/download/react-dom-17.0.2.tgz"
   "version" "17.0.2"
@@ -10437,6 +10164,15 @@
   "integrity" "sha512-mKR90fX7Pm5seCOfz8q9F+66VCc1PGsWSBxKbITjfKVQHMNF2zudxHnMdJiB1fRCb+XsbQV9sO9DCkgsMQgBIA=="
   "resolved" "https://registry.npmmirror.com/react-error-overlay/download/react-error-overlay-6.0.10.tgz"
   "version" "6.0.10"
+
+"react-event-listener@^0.6.0":
+  "integrity" "sha1-dY97mRytkIbdOf0p+tchJ+HYlio="
+  "resolved" "https://registry.nlark.com/react-event-listener/download/react-event-listener-0.6.6.tgz"
+  "version" "0.6.6"
+  dependencies:
+    "@babel/runtime" "^7.2.0"
+    "prop-types" "^15.6.0"
+    "warning" "^4.0.1"
 
 "react-fast-compare@^3.0.1":
   "integrity" "sha1-ZBqdqBtqYyDycOiXJPtFoLOeQ7s="
@@ -10452,22 +10188,6 @@
   "integrity" "sha512-F8Ezs55y0PwLhBncOrJoRSP02SgDzDDeM/N4wNDTAYlettg2ZSJuEp20cbJUL7BZj8fvKVeFySPbXF145b0I6w=="
   "resolved" "https://registry.npmmirror.com/react-hook-form/download/react-hook-form-7.22.4.tgz"
   "version" "7.22.4"
-
-"react-intl@^5.13.2":
-  "integrity" "sha512-SKsVQuHspcXg/glA/bntX7F+PTaVj4ElimgBxGUx2B4CRQQh0asgg9KjE6+nfHIXaODz3S5K0IKlM/XcA6rZfA=="
-  "resolved" "https://registry.npmmirror.com/react-intl/download/react-intl-5.24.0.tgz"
-  "version" "5.24.0"
-  dependencies:
-    "@formatjs/ecma402-abstract" "1.11.0"
-    "@formatjs/icu-messageformat-parser" "2.0.15"
-    "@formatjs/intl" "1.18.0"
-    "@formatjs/intl-displaynames" "5.3.0"
-    "@formatjs/intl-listformat" "6.4.0"
-    "@types/hoist-non-react-statics" "^3.3.1"
-    "@types/react" "16 || 17"
-    "hoist-non-react-statics" "^3.3.2"
-    "intl-messageformat" "9.11.0"
-    "tslib" "^2.1.0"
 
 "react-is@^16.12.0 || ^17.0.0", "react-is@^16.8.0 || ^17.0.0", "react-is@^17.0.0", "react-is@^17.0.1", "react-is@^17.0.2", "react-is@>= 16.8.0":
   "integrity" "sha1-5pHUqOnHiTZWVVOas3J2Kw77VPA="
@@ -10488,23 +10208,6 @@
   "integrity" "sha1-eJcppNw23imZ3BVt1sHZwYzqVqQ="
   "resolved" "https://registry.npmmirror.com/react-is/download/react-is-16.13.1.tgz"
   "version" "16.13.1"
-
-"react-jss@^10.5.1":
-  "integrity" "sha512-xKXTEejrSkzINF+dutFtLllIfYSN6tOA1XmnpiZGjsWZqy7Hum6fjjgAE2TbBmV9h2CW62ekmGj/Mx27ZuMjuw=="
-  "resolved" "https://registry.npmmirror.com/react-jss/download/react-jss-10.9.0.tgz"
-  "version" "10.9.0"
-  dependencies:
-    "@babel/runtime" "^7.3.1"
-    "@emotion/is-prop-valid" "^0.7.3"
-    "css-jss" "10.9.0"
-    "hoist-non-react-statics" "^3.2.0"
-    "is-in-browser" "^1.1.3"
-    "jss" "10.9.0"
-    "jss-preset-default" "10.9.0"
-    "prop-types" "^15.6.0"
-    "shallow-equal" "^1.2.0"
-    "theming" "^3.3.0"
-    "tiny-warning" "^1.0.2"
 
 "react-localization@^1.0.17":
   "integrity" "sha1-8S94yMXhbepQFc1EsYccLe4J6Z0="
@@ -10533,7 +10236,7 @@
     "react-fast-compare" "^3.0.1"
     "warning" "^4.0.2"
 
-"react-redux@^7.2.1 || ^8.0.0-beta", "react-redux@^7.2.2", "react-redux@^7.2.5":
+"react-redux@^7.2.5":
   "integrity" "sha1-SWM6JP5VK1+cr1j+uKE4k23f6ao="
   "resolved" "https://registry.npmmirror.com/react-redux/download/react-redux-7.2.6.tgz"
   "version" "7.2.6"
@@ -10666,6 +10369,37 @@
     "object-assign" "^4.1.1"
     "react-is" "^16.12.0 || ^17.0.0"
 
+"react-swipeable-views-core@^0.14.0":
+  "integrity" "sha1-asRDp8x7xeoCL71UkpK7X/82HM4="
+  "resolved" "https://registry.nlark.com/react-swipeable-views-core/download/react-swipeable-views-core-0.14.0.tgz"
+  "version" "0.14.0"
+  dependencies:
+    "@babel/runtime" "7.0.0"
+    "warning" "^4.0.1"
+
+"react-swipeable-views-utils@^0.14.0":
+  "integrity" "sha1-a3biUZBnR0gnMMIgAv5HqxAUujI="
+  "resolved" "https://registry.nlark.com/react-swipeable-views-utils/download/react-swipeable-views-utils-0.14.0.tgz"
+  "version" "0.14.0"
+  dependencies:
+    "@babel/runtime" "7.0.0"
+    "keycode" "^2.1.7"
+    "prop-types" "^15.6.0"
+    "react-event-listener" "^0.6.0"
+    "react-swipeable-views-core" "^0.14.0"
+    "shallow-equal" "^1.2.1"
+
+"react-swipeable-views@^0.14.0":
+  "integrity" "sha1-FJwN89kiIMyJ4/bVwEp43+Rvm1Q="
+  "resolved" "https://registry.nlark.com/react-swipeable-views/download/react-swipeable-views-0.14.0.tgz"
+  "version" "0.14.0"
+  dependencies:
+    "@babel/runtime" "7.0.0"
+    "prop-types" "^15.5.4"
+    "react-swipeable-views-core" "^0.14.0"
+    "react-swipeable-views-utils" "^0.14.0"
+    "warning" "^4.0.1"
+
 "react-test-renderer@^17.0.0":
   "integrity" "sha1-TNSuXvGtVnD8Dvd26Mx+EjHZhmw="
   "resolved" "https://registry.npmmirror.com/react-test-renderer/download/react-test-renderer-17.0.2.tgz"
@@ -10686,26 +10420,22 @@
     "loose-envify" "^1.4.0"
     "prop-types" "^15.6.2"
 
-"react-virtualized-auto-sizer@^1.0.5":
-  "integrity" "sha1-ZsWxySeAZMXvFpntQKKcEVGPl8o="
-  "resolved" "https://registry.nlark.com/react-virtualized-auto-sizer/download/react-virtualized-auto-sizer-1.0.6.tgz"
-  "version" "1.0.6"
-
-"react-window@^1.8.6":
-  "integrity" "sha1-0BGVCsZDqZQRhjJmWq0MY4LioRI="
-  "resolved" "https://registry.npm.taobao.org/react-window/download/react-window-1.8.6.tgz"
-  "version" "1.8.6"
-  dependencies:
-    "@babel/runtime" "^7.0.0"
-    "memoize-one" ">=3.1.1 <6"
-
-"react@^0.14.0 || ^15.0.0 || ^16.0.0 || ^17.0.0", "react@^0.14.9 || ^15.3.0 || ^16.0.0-rc || ^16.0 || ^17.0", "react@^15.0.0 || ^16.0.0 || ^17.0.0", "react@^15.3.0 || ^16.0.0-alpha || ^17.0.0", "react@^15.5.3 || ^16.0.0 || ^17.0.0", "react@^15.5.x || ^16.x || ^17.x", "react@^16 || ^17", "react@^16.0.0 || ^17.0.0", "react@^16.3.0 || 17", "react@^16.8.0 || ^17", "react@^16.8.0 || ^17.0.0", "react@^16.8.3 || ^17", "react@^16.9.0 || ^17", "react@^16.9.0 || ^17.0.0 || 18.0.0-beta", "react@^17", "react@^17.0.0 || ^16.0.0 || ^15.6.0", "react@^17.0.0-0", "react@^17.0.2", "react@>= 16", "react@>= 16.8.0", "react@>= 16.9.0", "react@>=15", "react@>=16", "react@>=16.3", "react@>=16.6.0", "react@>=16.8.0", "react@>=16.8.6", "react@>=16.x", "react@16 - 18", "react@17.0.2":
+"react@^0.14.0 || ^15.0.0 || ^16.0.0 || ^17.0.0", "react@^0.14.9 || ^15.3.0 || ^16.0.0-rc || ^16.0 || ^17.0", "react@^15.3.0 || ^16.0.0 || ^17.0.0", "react@^15.5.3 || ^16.0.0 || ^17.0.0", "react@^15.5.x || ^16.x || ^17.x", "react@^16 || ^17", "react@^16.0.0 || ^17.0.0", "react@^16.8.0 || ^17", "react@^16.8.0 || ^17.0.0", "react@^16.8.3 || ^17", "react@^16.9.0 || ^17", "react@^17", "react@^17.0.0 || ^16.0.0 || ^15.6.0", "react@^17.0.0-0", "react@^17.0.2", "react@>= 16", "react@>= 16.8.0", "react@>=15", "react@>=16.6.0", "react@>=16.8.0", "react@16 - 18", "react@17.0.2":
   "integrity" "sha512-gnhPt75i/dq/z3/6q/0asP78D0u592D5L1pd7M8P+dck6Fu/jJeL6iVVK23fptSUZj8Vjf++7wXA8UNclGQcbA=="
   "resolved" "https://registry.npmmirror.com/react/download/react-17.0.2.tgz"
   "version" "17.0.2"
   dependencies:
     "loose-envify" "^1.1.0"
     "object-assign" "^4.1.1"
+
+"react@^16.3.0":
+  "integrity" "sha512-0X2CImDkJGApiAlcf0ODKIneSwBPhqJawOa5wCtKbu7ZECrmS26NvtSILynQ66cgkT/RJ4LidJOc3bUESwmU8g=="
+  "resolved" "https://registry.npmmirror.com/react/download/react-16.14.0.tgz"
+  "version" "16.14.0"
+  dependencies:
+    "loose-envify" "^1.1.0"
+    "object-assign" "^4.1.1"
+    "prop-types" "^15.6.2"
 
 "read-pkg-up@^7.0.1":
   "integrity" "sha1-86YTV1hFlzOuK5VjgFbhhU5+9Qc="
@@ -10739,6 +10469,24 @@
     "string_decoder" "~1.1.1"
     "util-deprecate" "~1.0.1"
 
+"readable-stream@^3.0.0":
+  "integrity" "sha1-M3u9o63AcGvT4CRCaihtS0sskZg="
+  "resolved" "https://registry.npm.taobao.org/readable-stream/download/readable-stream-3.6.0.tgz"
+  "version" "3.6.0"
+  dependencies:
+    "inherits" "^2.0.3"
+    "string_decoder" "^1.1.1"
+    "util-deprecate" "^1.0.1"
+
+"readable-stream@^3.0.2", "readable-stream@^3.1.1", "readable-stream@^3.6.0":
+  "integrity" "sha1-M3u9o63AcGvT4CRCaihtS0sskZg="
+  "resolved" "https://registry.npm.taobao.org/readable-stream/download/readable-stream-3.6.0.tgz"
+  "version" "3.6.0"
+  dependencies:
+    "inherits" "^2.0.3"
+    "string_decoder" "^1.1.1"
+    "util-deprecate" "^1.0.1"
+
 "readable-stream@^3.0.6":
   "integrity" "sha1-M3u9o63AcGvT4CRCaihtS0sskZg="
   "resolved" "https://registry.npm.taobao.org/readable-stream/download/readable-stream-3.6.0.tgz"
@@ -10748,7 +10496,7 @@
     "string_decoder" "^1.1.1"
     "util-deprecate" "^1.0.1"
 
-"readable-stream@^3.6.0":
+"readable-stream@^3.4.0":
   "integrity" "sha1-M3u9o63AcGvT4CRCaihtS0sskZg="
   "resolved" "https://registry.npm.taobao.org/readable-stream/download/readable-stream-3.6.0.tgz"
   "version" "3.6.0"
@@ -10792,17 +10540,10 @@
   dependencies:
     "@redux-saga/core" "^1.1.3"
 
-"redux-thunk@^2.3.0", "redux-thunk@^2.4.1":
+"redux-thunk@^2.3.0":
   "integrity" "sha512-OOYGNY5Jy2TWvTL1KgAlVy6dcx3siPJ1wTq741EPyUKfn6W6nChdICjZwCd0p8AZBs5kWpZlbkXW2nE/zjUa+Q=="
   "resolved" "https://registry.npmmirror.com/redux-thunk/download/redux-thunk-2.4.1.tgz"
   "version" "2.4.1"
-
-"redux-watch@^1.2.0":
-  "integrity" "sha1-s6dF4VhV73LbDgamCksv42dteac="
-  "resolved" "https://registry.nlark.com/redux-watch/download/redux-watch-1.2.0.tgz"
-  "version" "1.2.0"
-  dependencies:
-    "object-path" "^0.11.5"
 
 "redux@^4.0.0":
   "integrity" "sha1-FA81Qm2Zu0cpr3YK/PeeqqxAcQQ="
@@ -10811,14 +10552,14 @@
   dependencies:
     "@babel/runtime" "^7.9.2"
 
-"redux@^4.1.2":
+"redux@^4.0.4":
   "integrity" "sha1-FA81Qm2Zu0cpr3YK/PeeqqxAcQQ="
   "resolved" "https://registry.npmmirror.com/redux/download/redux-4.1.2.tgz?cache=0&sync_timestamp=1635663041213&other_urls=https%3A%2F%2Fregistry.npmmirror.com%2Fredux%2Fdownload%2Fredux-4.1.2.tgz"
   "version" "4.1.2"
   dependencies:
     "@babel/runtime" "^7.9.2"
 
-"redux@^4", "redux@^4.0.4", "redux@4.1.1":
+"redux@^4", "redux@4.1.1":
   "integrity" "sha1-dvHEObtCBD+YX72b8hmQ5gvWf0c="
   "resolved" "https://registry.npmmirror.com/redux/download/redux-4.1.1.tgz?cache=0&sync_timestamp=1635663041213&other_urls=https%3A%2F%2Fregistry.npmmirror.com%2Fredux%2Fdownload%2Fredux-4.1.1.tgz"
   "version" "4.1.1"
@@ -10841,6 +10582,11 @@
   "integrity" "sha1-vgWtf5v30i4Fb5cmzuUBf78Z4uk="
   "resolved" "https://registry.nlark.com/regenerator-runtime/download/regenerator-runtime-0.11.1.tgz?cache=0&sync_timestamp=1626993001371&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fregenerator-runtime%2Fdownload%2Fregenerator-runtime-0.11.1.tgz"
   "version" "0.11.1"
+
+"regenerator-runtime@^0.12.0":
+  "integrity" "sha1-+hpxVEdkwDb4xJsToIsllMn4oN4="
+  "resolved" "https://registry.nlark.com/regenerator-runtime/download/regenerator-runtime-0.12.1.tgz?cache=0&sync_timestamp=1626993001371&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fregenerator-runtime%2Fdownload%2Fregenerator-runtime-0.12.1.tgz"
+  "version" "0.12.1"
 
 "regenerator-runtime@^0.13.4", "regenerator-runtime@^0.13.7":
   "integrity" "sha1-iSV0Kpj/2QgUmI11Zq0wyjsmO1I="
@@ -10904,6 +10650,11 @@
   dependencies:
     "jsesc" "~0.5.0"
 
+"reinterval@^1.1.0":
+  "integrity" "sha1-M2Hs+jymwYKDOA3Qu5VG85D17Oc="
+  "resolved" "https://registry.npm.taobao.org/reinterval/download/reinterval-1.1.0.tgz"
+  "version" "1.1.0"
+
 "relateurl@^0.2.7":
   "integrity" "sha1-VNvzd+UUQKypCkzSdGANP/LYiKk="
   "resolved" "https://registry.nlark.com/relateurl/download/relateurl-0.2.7.tgz"
@@ -10954,11 +10705,6 @@
   "integrity" "sha1-kl0mAdOaxIXgkc8NpcbmlNw9yv8="
   "resolved" "https://registry.npm.taobao.org/requires-port/download/requires-port-1.0.0.tgz"
   "version" "1.0.0"
-
-"reselect@^4.1.5":
-  "integrity" "sha512-uVdlz8J7OO+ASpBYoz1Zypgx0KasCY20H+N8JD13oUMtPvSHQuscrHop4KbXrbsBcdB9Ds7lVK7eRkBIfO43vQ=="
-  "resolved" "https://registry.npmmirror.com/reselect/download/reselect-4.1.5.tgz"
-  "version" "4.1.5"
 
 "resolve-cwd@^2.0.0":
   "integrity" "sha1-AKn3OHVW4nA46uIyyqNypqWbZlo="
@@ -11066,6 +10812,11 @@
   dependencies:
     "convert-source-map" "^0.3.3"
     "css" "^2.0.0"
+
+"rfdc@^1.3.0":
+  "integrity" "sha1-0LfEQasnINBdxM8m4ByJYx2doIs="
+  "resolved" "https://registry.npm.taobao.org/rfdc/download/rfdc-1.3.0.tgz"
+  "version" "1.3.0"
 
 "rgb-regex@^1.0.1":
   "integrity" "sha1-wODWiC3w4jviVKR16O3UGRX+rrE="
@@ -11471,7 +11222,7 @@
     "inherits" "^2.0.1"
     "safe-buffer" "^5.0.1"
 
-"shallow-equal@^1.2.0":
+"shallow-equal@^1.2.1":
   "integrity" "sha1-TBar+lYEOqINBQMk76aJQLDaedo="
   "resolved" "https://registry.npm.taobao.org/shallow-equal/download/shallow-equal-1.2.1.tgz"
   "version" "1.2.1"
@@ -11514,13 +11265,6 @@
   "integrity" "sha1-1rkYHBpI05cyTISHHvvPxz/AZUs="
   "resolved" "https://registry.npm.taobao.org/shellwords/download/shellwords-0.1.1.tgz"
   "version" "0.1.1"
-
-"shortid@^2.2.16":
-  "integrity" "sha512-Ugt+GIZqvGXCIItnsL+lvFJOiN7RYqlGy7QE41O3YC1xbNSeDGIRO7xg2JJXIAj1cAGnOeC1r7/T9pgrtQbv4g=="
-  "resolved" "https://registry.npmmirror.com/shortid/download/shortid-2.2.16.tgz"
-  "version" "2.2.16"
-  dependencies:
-    "nanoid" "^2.1.0"
 
 "side-channel@^1.0.4":
   "integrity" "sha1-785cj9wQTudRslxY1CkAEfpeos8="
@@ -11759,6 +11503,13 @@
   "version" "3.1.0"
   dependencies:
     "extend-shallow" "^3.0.0"
+
+"split2@^3.1.0":
+  "integrity" "sha1-vyzyo32DgxLCSciSBv16F90SNl8="
+  "resolved" "https://registry.npmmirror.com/split2/download/split2-3.2.2.tgz?cache=0&sync_timestamp=1635305203974&other_urls=https%3A%2F%2Fregistry.npmmirror.com%2Fsplit2%2Fdownload%2Fsplit2-3.2.2.tgz"
+  "version" "3.2.2"
+  dependencies:
+    "readable-stream" "^3.0.0"
 
 "sprintf-js@~1.0.2":
   "integrity" "sha1-BOaSb2YolTVPPdAVIDYzuFcpfiw="
@@ -12022,7 +11773,7 @@
     "loader-utils" "^2.0.0"
     "schema-utils" "^2.7.0"
 
-"styled-components@^5.3.0", "styled-components@>= 2":
+"styled-components@^5.3.3", "styled-components@>= 2":
   "integrity" "sha1-MSo9mlSfRwjw+w7cgp6zS94DJ0M="
   "resolved" "https://registry.npmmirror.com/styled-components/download/styled-components-5.3.3.tgz"
   "version" "5.3.3"
@@ -12118,11 +11869,6 @@
     "stable" "^0.1.8"
     "unquote" "~1.1.1"
     "util.promisify" "~1.0.0"
-
-"symbol-observable@^1.2.0":
-  "integrity" "sha1-wiaIrtTqs83C3+rLtWFmBWCgCAQ="
-  "resolved" "https://registry.npm.taobao.org/symbol-observable/download/symbol-observable-1.2.0.tgz?cache=0&sync_timestamp=1618452296973&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fsymbol-observable%2Fdownload%2Fsymbol-observable-1.2.0.tgz"
-  "version" "1.2.0"
 
 "symbol-tree@^3.2.4":
   "integrity" "sha1-QwY30ki6d+B4iDlR+5qg7tfGP6I="
@@ -12240,16 +11986,6 @@
   "integrity" "sha1-f17oI66AUgfACvLfSoTsP8+lcLQ="
   "resolved" "https://registry.npm.taobao.org/text-table/download/text-table-0.2.0.tgz"
   "version" "0.2.0"
-
-"theming@^3.3.0":
-  "integrity" "sha1-2sq/BKpont3jXx4cEX7G3nP7+HA="
-  "resolved" "https://registry.nlark.com/theming/download/theming-3.3.0.tgz"
-  "version" "3.3.0"
-  dependencies:
-    "hoist-non-react-statics" "^3.3.0"
-    "prop-types" "^15.5.8"
-    "react-display-name" "^0.2.4"
-    "tiny-warning" "^1.0.2"
 
 "throat@^5.0.0":
   "integrity" "sha1-xRmSNYA6rRh1SmZ9ZZtecs4Wdks="
@@ -12384,17 +12120,12 @@
     "minimist" "^1.2.0"
     "strip-bom" "^3.0.0"
 
-"tsdef@^0.0.14":
-  "integrity" "sha1-+0AdWNXAhpkJGUKYGsG1+o7yNBI="
-  "resolved" "https://registry.nlark.com/tsdef/download/tsdef-0.0.14.tgz"
-  "version" "0.0.14"
-
 "tslib@^1.8.1":
   "integrity" "sha1-zy04vcNKE0vK8QkcQfZhni9nLQA="
   "resolved" "https://registry.nlark.com/tslib/download/tslib-1.14.1.tgz?cache=0&sync_timestamp=1628722556410&other_urls=https%3A%2F%2Fregistry.nlark.com%2Ftslib%2Fdownload%2Ftslib-1.14.1.tgz"
   "version" "1.14.1"
 
-"tslib@^2.0.3", "tslib@^2.1.0", "tslib@^2.2.0":
+"tslib@^2.0.3", "tslib@^2.2.0":
   "integrity" "sha1-6KM1rdXOrlGqJh0ypJAVjvBC7wE="
   "resolved" "https://registry.nlark.com/tslib/download/tslib-2.3.1.tgz?cache=0&sync_timestamp=1628722556410&other_urls=https%3A%2F%2Fregistry.nlark.com%2Ftslib%2Fdownload%2Ftslib-2.3.1.tgz"
   "version" "2.3.1"
@@ -12511,7 +12242,7 @@
   dependencies:
     "typescript-compare" "^0.0.2"
 
-"typescript@^3.2.1 || ^4", "typescript@^4.2.3", "typescript@^4.5", "typescript@>=2.8.0 || >= 3.2.0-dev || >= 3.3.0-dev || >= 3.4.0-dev || >= 3.5.0-dev || >= 3.6.0-dev || >= 3.6.0-beta || >= 3.7.0-dev || >= 3.7.0-beta":
+"typescript@^3.2.1 || ^4", "typescript@^4.2.3", "typescript@>=2.8.0 || >= 3.2.0-dev || >= 3.3.0-dev || >= 3.4.0-dev || >= 3.5.0-dev || >= 3.6.0-dev || >= 3.6.0-beta || >= 3.7.0-dev || >= 3.7.0-beta":
   "integrity" "sha512-VgYs2A2QIRuGphtzFV7aQJduJ2gyfTljngLzjpfW9FoYZF6xuw1W0vW9ghCKLfcWrCFxK81CSGRAvS1pn4fIUg=="
   "resolved" "https://registry.npmmirror.com/typescript/download/typescript-4.5.4.tgz"
   "version" "4.5.4"
@@ -12790,7 +12521,7 @@
   dependencies:
     "makeerror" "1.0.12"
 
-"warning@^4.0.2":
+"warning@^4.0.1", "warning@^4.0.2":
   "integrity" "sha1-Fungd+uKhtavfWSqHgX9hbRnjKM="
   "resolved" "https://registry.nlark.com/warning/download/warning-4.0.3.tgz"
   "version" "4.0.3"
@@ -12821,6 +12552,11 @@
   "version" "1.7.3"
   dependencies:
     "minimalistic-assert" "^1.0.0"
+
+"weak-map@~1.0.x":
+  "integrity" "sha1-eWkVhNmGB/UHC9O3CkDmuyLkAes="
+  "resolved" "https://registry.nlark.com/weak-map/download/weak-map-1.0.5.tgz"
+  "version" "1.0.5"
 
 "webidl-conversions@^3.0.0":
   "integrity" "sha1-JFNCdeKnvGvnvIZhHMFq4KVlSHE="
@@ -13249,6 +12985,11 @@
   "resolved" "https://registry.npmmirror.com/ws/download/ws-7.5.6.tgz"
   "version" "7.5.6"
 
+"ws@^7.5.5":
+  "integrity" "sha512-6GLgCqo2cy2A2rjCNFlxQS6ZljG/coZfZXclldI8FB/1G3CCI36Zd8xy2HrFVACi8tfk5XrgLQEk+P0Tnz9UcA=="
+  "resolved" "https://registry.npmmirror.com/ws/download/ws-7.5.6.tgz"
+  "version" "7.5.6"
+
 "xml-name-validator@^3.0.0":
   "integrity" "sha1-auc+Bt5NjG5H+fsYH3jWSK1FfGo="
   "resolved" "https://registry.nlark.com/xml-name-validator/download/xml-name-validator-3.0.0.tgz?cache=0&sync_timestamp=1632002514407&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fxml-name-validator%2Fdownload%2Fxml-name-validator-3.0.0.tgz"
@@ -13259,7 +13000,7 @@
   "resolved" "https://registry.nlark.com/xmlchars/download/xmlchars-2.2.0.tgz"
   "version" "2.2.0"
 
-"xtend@^4.0.0", "xtend@~4.0.1":
+"xtend@^4.0.0", "xtend@^4.0.2", "xtend@~4.0.1":
   "integrity" "sha1-u3J3n1+kZRhrH0OPZ0+jR/2121Q="
   "resolved" "https://registry.nlark.com/xtend/download/xtend-4.0.2.tgz"
   "version" "4.0.2"

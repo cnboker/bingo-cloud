@@ -18,7 +18,7 @@ exports.httpserver = () => {
   app.use(cors())
   app.use(bodyParser.json())
   app.use(morgan('combined'))
-  app.use(express.static(`${process.cwd()}/publish`))
+  app.use(express.static(`${process.cwd()}/wwwroot`))
 
   app.get('/', (req, res) => {
     res.send(ads)

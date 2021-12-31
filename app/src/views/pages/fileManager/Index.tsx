@@ -143,7 +143,7 @@ export const VFSBrowser: React.FC<DataVFSProps> = (props) => {
       animation: 'vanish',
       childrenIds: [],
     }
-
+    const clientIds = ['abc']
     asyncPost({
       url: PubUrl,
       data: {
@@ -152,6 +152,7 @@ export const VFSBrowser: React.FC<DataVFSProps> = (props) => {
       },
     }).then((resp) => {
       console.log(resp)
+      useMqttPub(clientIds, resp.data)
     })
   }
 
@@ -171,3 +172,7 @@ export const VFSBrowser: React.FC<DataVFSProps> = (props) => {
     </>
   )
 }
+function useMqttPub(clientIds: string[], data: any) {
+  throw new Error('Function not implemented.')
+}
+

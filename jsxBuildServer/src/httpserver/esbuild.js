@@ -48,7 +48,7 @@ exports.build = async(username, entryFile) => {
   await writeFile(`${outdir}/index.html`,html.replace('###',`./${path.basename(entryFile)}`))
   
   return [
-    `index.html`,
-    `main.css`,
-    `${path.basename(entryFile)}`];
+    `/${username}/dist/index.html`,
+    `/${username}/dist/main.css`,
+    `/${username}/dist/${path.basename(entryFile)}`];
 };
