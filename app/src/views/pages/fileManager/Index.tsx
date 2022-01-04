@@ -9,7 +9,7 @@ import {
   FileActionHandler,
 } from 'chonky'
 import { setChonkyDefaults, ChonkyIconFA } from 'chonky'
-import { useSelector, RootStateOrAny } from 'react-redux'
+import { useSelector, RootStateOrAny, useDispatch } from 'react-redux'
 import { useAsyncCallback } from 'src/lib/asynchronous'
 import { FileListUrl, PubUrl } from './constants'
 import './patch.css'
@@ -19,6 +19,8 @@ import { useCustomFileMap } from './useCustomFileMap'
 import { useFileActionHandler } from './useFileActionHandler'
 import { MetaMap } from './MetaMap'
 import { uniqueID } from 'src/lib/string'
+import { PubForms } from './pubComponents/Index'
+import { requestDeviceList } from '../device/actions'
 
 setChonkyDefaults({ iconComponent: ChonkyIconFA })
 
@@ -117,8 +119,14 @@ export const VFSBrowser: React.FC<DataVFSProps> = (props) => {
     fileSelectAction(data)
     handleFileAction(data)
   }, [])
+  const dispatch = useDispatch()
+  const deviceReduer = useSelector((state: RootStateOrAny) => state.deviceReducer)
+  useEffect(() => {
+    //call getdeviceList
+    dispatch(requestDeviceList())
+  }, [])
 
-  const onPub = () => {
+  const onPub = async () => {
     console.log('pub...')
     const rootId = uniqueID()
     const imageListId = uniqueID()
@@ -152,13 +160,22 @@ export const VFSBrowser: React.FC<DataVFSProps> = (props) => {
       },
     }).then((resp) => {
       console.log(resp)
-      useMqttPub(clientIds, resp.data)
+      //useMqttPub(clientIds, resp.data)
     })
+    return ''
   }
 
   return (
     <>
-      <SelectFileList fileList={selectedFiles} onSubmit={onPub} onRemove={handleRemove} />
+      <SelectFileList onSubmit={onPub} fileList={selectedFiles}>
+        <PubForms
+          fileList={selectedFiles}
+          onRemove={handleRemove}
+          deviceList={deviceReduer.map((x: any) => {
+            return { label: x.deviceName, value: x.deviceId }
+          })}
+        />
+      </SelectFileList>
       <div style={{ height: 640 }}>
         <FullFileBrowser
           disableDefaultFileActions={true}
@@ -175,4 +192,3 @@ export const VFSBrowser: React.FC<DataVFSProps> = (props) => {
 function useMqttPub(clientIds: string[], data: any) {
   throw new Error('Function not implemented.')
 }
-

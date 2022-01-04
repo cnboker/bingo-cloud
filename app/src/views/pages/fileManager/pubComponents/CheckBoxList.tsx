@@ -1,8 +1,7 @@
-import React from 'react'
+import React, { forwardRef, useImperativeHandle } from 'react'
 import { ListItem, ListItemText } from '@material-ui/core'
 import { ListItemIcon } from '@material-ui/core'
 import { Checkbox } from '@material-ui/core'
-import { IconButton } from '@material-ui/core'
 import styled from 'styled-components'
 
 import {
@@ -32,8 +31,19 @@ export type ListItemData = {
   value: string
 }
 
-export const CheckboxList = (data: ListItemData[]) => {
+type CheckboxListProps = {
+  data: ListItemData[]
+}
+
+export const CheckBoxList = forwardRef((props: CheckboxListProps, ref) => {
+  const { data } = props
   const [checked, setChecked] = React.useState<string[]>([])
+
+  useImperativeHandle(ref, () => ({
+    getData() {
+      return checked
+    },
+  }))
 
   const handleToggle = (value: string) => () => {
     const currentIndex = checked.indexOf(value)
@@ -68,4 +78,4 @@ export const CheckboxList = (data: ListItemData[]) => {
       })}
     </List>
   )
-}
+})

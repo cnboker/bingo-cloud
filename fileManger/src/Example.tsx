@@ -56,17 +56,16 @@ export default () => {
 
   const { selectedFiles, handleAction, handleRemove } = useFilePicker();
 
-  const onPub = () => {
+  const onPub = async () => {
     console.log("pub...");
+    return "";
   };
 
   return (
     <div style={{ height: 400 }}>
-      <SelectFileList
-        fileList={selectedFiles}
-        onSubmit={onPub}
-        onRemove={handleRemove}
-      />
+      <SelectFileList fileList={selectedFiles} onSubmit={onPub}>
+        <div>test</div>
+      </SelectFileList>
       <FullFileBrowser
         files={files}
         folderChain={folderChain}
