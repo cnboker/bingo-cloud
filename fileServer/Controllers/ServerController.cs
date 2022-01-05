@@ -36,6 +36,7 @@ namespace FileServer.Controllers
       foreach (var node in generator.fileMap.Values)
       {
         node.ThumbnailUrl = !string.IsNullOrEmpty(node.ThumbnailUrl) ?  User.Identity.Name + node.ThumbnailUrl : "";
+        node.Path = !string.IsNullOrEmpty(node.Path) ?  User.Identity.Name + node.Path : "";
       }
       var outputJson = new
       {
