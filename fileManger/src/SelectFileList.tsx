@@ -39,7 +39,7 @@ export const SelectFileList: React.FC<SelectFileInfo> = ({
       <Button variant="contained" onClick={handleClickOpen}>
         待发布项{fileList.length}
       </Button>
-      <Dialog open={open} onClose={handleClose} maxWidth="lg" fullWidth={true}>
+      <Dialog open={open} onClose={handleClose} maxWidth="lg" fullWidth={true} disableEnforceFocus >
         <DialogTitle>待发布素材列表</DialogTitle>
         <DialogContent>{children}</DialogContent>
         <DialogActions>
@@ -47,10 +47,8 @@ export const SelectFileList: React.FC<SelectFileInfo> = ({
           <Button
             onClick={() => {
               onSubmit().then((result) => {
-                if (!result) {
+                if (result) {
                   handleClose();
-                } else {
-                  alert(result);
                 }
               });
             }}

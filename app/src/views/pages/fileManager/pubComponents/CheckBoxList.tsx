@@ -40,7 +40,7 @@ export const CheckBoxList = forwardRef((props: CheckboxListProps, ref) => {
   const [checked, setChecked] = React.useState<string[]>([])
 
   useImperativeHandle(ref, () => ({
-    getData() {
+    formData() {
       return checked
     },
   }))

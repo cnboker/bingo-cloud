@@ -28,9 +28,9 @@
 $root = (get-item $pwd).parent.FullName
 
 echo start post build
-ares-package $root'/build' $root'/service/fileService/dist'  $root'/service/bootservice' -o $root'app/build'
+ares-package $root'/app/build' $root'/service/fileService/dist'  $root'/service/bootservice' -o $root'/app/build'
 # cp ./build/com.lg.app.signage_0.0.1_all.ipk /Volumes/ESD-USB/application/com.lg.app.signage.ipk
-ares-install --device target ./build/com.ioliz.dc.app_1.0.0_all.ipk -v
+ares-install --device target  $root'/app/build/com.ioliz.dc.app_1.0.0_all.ipk' -v
 ares-launch --device target com.ioliz.dc.app
 ares-inspect --device target com.ioliz.dc.app
 # rm ./build/com.lg.app.signage_0.0.1_all.ipk

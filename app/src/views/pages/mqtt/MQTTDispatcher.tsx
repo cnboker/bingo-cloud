@@ -11,17 +11,17 @@ export const MQTT_SNAPSHOT_NOTIFY = 'mqttSnapshotNotify'
 
 export class MQTTDispatcher {
   private client: any
-  
+
   connect(): void {
     if (this.client === undefined || !this.client.connected) {
       this.client = connect(mqttServer)
-      this.client.on('connect',()=>{
-        if(this.onConnect){
+      this.client.on('connect', () => {
+        if (this.onConnect) {
           this.onConnect()
         }
       })
       this.client.on('message', (title: string, message: string) => {
-        var jsonObj = JSON.parse(message)
+        const jsonObj = JSON.parse(message)
         console.log('receive message', jsonObj)
       })
     }
@@ -36,7 +36,7 @@ export class MQTTDispatcher {
   }
 
   contentPub(deviceId: string, data: any) {
-    var jsonString = JSON.stringify({
+    const jsonString = JSON.stringify({
       deviceId: deviceId,
       ...data,
     })
@@ -44,5 +44,4 @@ export class MQTTDispatcher {
   }
 
   onConnect: (() => void) | undefined
-
 }
