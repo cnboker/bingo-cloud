@@ -53,6 +53,6 @@ docker pull eclipse-mosquitto
 - 执行docker 启动命令
   
 ``` shell
-docker run -it --name mosquitoo -p 1883:1883 -p 8000:8000 -v $PWD:/mosquitto/ -v /mosquitto/data -v /mosquitto/log eclipse-mosquitto
+docker run -it --name mosquitoo -p 1883:1883 -p 8000:8000 -v /home/mosquitto/ -v /mosquitto/data -v /mosquitto/log eclipse-mosquitto --restart=always
 ```
 * -v $PWD:/mosiquitto map docker
