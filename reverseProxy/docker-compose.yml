@@ -1,9 +1,12 @@
 version: '3.3'
 
 services:
-   revproxy:
-     container_name: revproxy
-     build: nginx_revproxy
+   reverseproxy:
+     container_name: reverseproxy
+     image: nginx
      restart: always
      networks:
-       - myNetwork
+       - "myNetwork"
+networks:
+  myNetwork:
+    external: true
