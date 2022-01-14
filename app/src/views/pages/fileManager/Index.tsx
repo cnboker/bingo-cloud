@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useEffect, useMemo, useState, useRef } from 'react'
 import {
   ChonkyActions,
   FileArray,
@@ -19,9 +19,9 @@ import { useCustomFileMap } from './useCustomFileMap'
 import { useFileActionHandler } from './useFileActionHandler'
 import { MetaMap } from './MetaMap'
 import { uniqueID } from 'src/lib/string'
-import { PubForms } from './pubComponents/Index'
+import { PubFormResultProps, PubForms } from './pubComponents/Index'
 import { requestDeviceList } from '../device/actions'
-
+import { mqttPub } from './mqttPub'
 setChonkyDefaults({ iconComponent: ChonkyIconFA })
 
 // Helper method to attach our custom TypeScript types to the imported JSON file map.
@@ -94,7 +94,6 @@ const fileActions = [
 
 export const VFSBrowser: React.FC<DataVFSProps> = (props) => {
   const securityReducer = useSelector((state: RootStateOrAny) => state.securityReducer)
-  console.log('securityReducer', securityReducer)
   const {
     fileMap,
     currentFolderId,
@@ -120,14 +119,21 @@ export const VFSBrowser: React.FC<DataVFSProps> = (props) => {
     handleFileAction(data)
   }, [])
   const dispatch = useDispatch()
-  const deviceReduer = useSelector((state: RootStateOrAny) => state.deviceReducer)
+  const pubFormsRef = useRef(null)
+  const deviceReduer = useSelector((state: RootStateOrAny) => state.deviceListReducer)
   useEffect(() => {
     //call getdeviceList
-    dispatch(requestDeviceList())
+    dispatch(requestDeviceList(securityReducer.userName))
   }, [])
 
   const onPub = async () => {
-    console.log('pub...')
+    const pubRef = pubFormsRef.current
+    const validated = pubRef.dataValidate()
+    if (!validated) return validated
+    const data = pubRef.formData()
+    const { settings, deviceList } = data
+    console.log('pub data...', data)
+
     const rootId = uniqueID()
     const imageListId = uniqueID()
     const metaMap: MetaMap = {
@@ -138,20 +144,15 @@ export const VFSBrowser: React.FC<DataVFSProps> = (props) => {
       tag: 'View',
       childrenIds: [imageListId],
     }
+    const fileUrls = data.fileList.map((x: any) => x.path)
     metaMap.map[imageListId] = {
       tag: 'ImageList',
-      urls: [
-        'https://t7.baidu.com/it/u=1819248061,230866778&fm=193&f=GIF',
-        'https://t7.baidu.com/it/u=963301259,1982396977&fm=193&f=GIF',
-        'https://t7.baidu.com/it/u=2168645659,3174029352&fm=193&f=GIF',
-        'https://t7.baidu.com/it/u=2531125946,3055766435&fm=193&f=GIF',
-        'https://t7.baidu.com/it/u=1330338603,908538247&fm=193&f=GIF',
-      ],
-      duration: 5000,
-      animation: 'vanish',
+      urls: fileUrls,
+      duration: settings.duration,
+      animation: settings.effect,
       childrenIds: [],
     }
-    const clientIds = ['abc']
+
     asyncPost({
       url: PubUrl,
       data: {
@@ -160,19 +161,24 @@ export const VFSBrowser: React.FC<DataVFSProps> = (props) => {
       },
     }).then((resp) => {
       console.log(resp)
-      //useMqttPub(clientIds, resp.data)
+      resp.data.push(...fileUrls)
+      mqttPub(
+        deviceList.map((x: any) => x.value),
+        resp.data,
+      )
     })
-    return ''
+    return true
   }
 
   return (
     <>
       <SelectFileList onSubmit={onPub} fileList={selectedFiles}>
         <PubForms
+          ref={pubFormsRef}
           fileList={selectedFiles}
           onRemove={handleRemove}
           deviceList={deviceReduer.map((x: any) => {
-            return { label: x.deviceName, value: x.deviceId }
+            return { name: `${x.name}(${x.deviceId})`, value: x.deviceId }
           })}
         />
       </SelectFileList>
@@ -188,7 +194,4 @@ export const VFSBrowser: React.FC<DataVFSProps> = (props) => {
       </div>
     </>
   )
-}
-function useMqttPub(clientIds: string[], data: any) {
-  throw new Error('Function not implemented.')
 }

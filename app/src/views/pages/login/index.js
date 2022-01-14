@@ -22,6 +22,8 @@ export default () => {
   }
 
   const getReturnUrl = () => {
+    console.log('location', location)
+
     if (!location) {
       return '/'
     }

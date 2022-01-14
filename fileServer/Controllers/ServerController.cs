@@ -32,7 +32,7 @@ namespace FileServer.Controllers
       }
       DirectoryJsonGenerator generator = new DirectoryJsonGenerator(dir);
       generator.CreateFolderHierarchy();
-      
+       string hostUrl = Request.Url.Scheme + "://" + Request.Url.Host + "/";
       foreach (var node in generator.fileMap.Values)
       {
         node.ThumbnailUrl = !string.IsNullOrEmpty(node.ThumbnailUrl) ?  User.Identity.Name + node.ThumbnailUrl : "";

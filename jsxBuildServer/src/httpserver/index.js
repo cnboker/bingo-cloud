@@ -30,6 +30,7 @@ exports.httpserver = () => {
       .make(username, entity)
       .then(p => {
         //console.log('make filelist:',res)
+        p = p.map(x=>`http://${req.get('host')}${x}`)
         res.send(p)
       })
   }) 
