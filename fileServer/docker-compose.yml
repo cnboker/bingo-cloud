@@ -14,7 +14,7 @@ services:
     
     volumes:
     #host:container
-      - /home/scott/code/ioliz/data/wwwroot:/release/wwwroot
+      - /home/data/files:/release/wwwroot
 
 networks:
   myNetwork:
