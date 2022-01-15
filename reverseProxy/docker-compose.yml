@@ -12,21 +12,24 @@ services:
     authapi:
         depends_on:
             - reverseproxy
-        image: member_server
+        image: member_server:latest
         restart: always
-
+        ports:
+            - "7800"
     serviceapi:
         depends_on:
             - reverseproxy
-        image: service_server
+        image: service_server:latest
         restart: always
-
+        ports:
+            - "6001"
     fileapi:
         depends_on:
             - reverseproxy
-        image: fileserver_server
+        image: fileserver_server:latest
         restart: always
-
+        ports:
+            - "5000"
 networks:
   myNetwork:
     external: true
