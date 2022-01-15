@@ -1,13 +1,32 @@
 version: '3.3'
 
 services:
-   reverseproxy:
-     container_name: reverseproxy
-     restart: always
-     ports:
-      - "80"
-     networks:
-       - "myNetwork"
+    reverseproxy:
+        build: .
+        ports:
+            - "80"
+        networks:
+            - "myNetwork"
+        restart: always
+
+    authapi:
+        depends_on:
+            - reverseproxy
+        image: member_server
+        restart: always
+
+    serviceapi:
+        depends_on:
+            - reverseproxy
+        image: service_server
+        restart: always
+
+    fileapi:
+        depends_on:
+            - reverseproxy
+        image: fileserver_server
+        restart: always
+
 networks:
   myNetwork:
     external: true
