@@ -32,7 +32,7 @@ namespace Ioliz
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddSingleton<IConfigurationRoot>(Configuration);
+           
             // add CORS services
             services.AddCors(
               o => o.AddPolicy("policy", b =>
@@ -49,6 +49,7 @@ namespace Ioliz
             services.AddDbContext<IolizContext>(
                      options => {
                          var connetionString = Configuration.GetConnectionString("DefaultConnection");
+                         Console.WriteLine("connetionString=" + connetionString);
                          options.UseMySql(connetionString, ServerVersion.AutoDetect(connetionString));});
 
            
@@ -59,6 +60,7 @@ namespace Ioliz
 
                    .AddEntityFrameworkStores<IolizContext>()
                    .AddDefaultTokenProviders();
+            services.AddSingleton<IConfigurationRoot>(Configuration);
             ConfigureAuthService(services);
             services.AddScoped<Microsoft.AspNetCore.Identity.IUserClaimsPrincipalFactory<ApplicationUser>, AppClaimsPrincipalFactory>();
 
