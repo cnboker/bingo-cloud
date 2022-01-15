@@ -1,4 +1,7 @@
-$wsl_ip = (wsl hostname -I).trim() 
+-- $wsl_ip = (wsl hostname -I).trim() 
+$wsl_ip = docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' member_server_1
+echo $wsl_ip
+$wsl_ip = 172.18.0.3
 $port = 7800
 netsh interface portproxy add v4tov4 listenaddress=0.0.0.0 listenport=$port connectaddress=$wsl_ip connectport=$port
 netsh advfirewall firewall add rule name="myauthApp" dir=in action=allow protocol=TCP localport=$port remoteport=$port

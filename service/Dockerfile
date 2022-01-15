@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/dotnet/nightly/sdk:3.1 AS build
+FROM mcr.microsoft.com/dotnet/core/sdk:3.1 AS build
 WORKDIR /service
 COPY ["./service/Iolize.service.csproj","/service"]
 RUN ["dotnet","restore"]
@@ -7,7 +7,7 @@ COPY ./shared /shared
 RUN dotnet build -c Release -o output
 
 # 使用aspnet执行程序，这样可以减少容器文件的大小,未优化前1G，采用aspnet后200M
-FROM mcr.microsoft.com/dotnet/nightly/aspnet:3.1 AS runtime
+FROM mcr.microsoft.com/dotnet/core/aspnet:3.1 AS runtime
 COPY --from=build /service/output ./release
 WORKDIR /release
 #EXPOSE 80/tcp

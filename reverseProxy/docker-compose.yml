@@ -3,7 +3,6 @@ version: '3.3'
 services:
    reverseproxy:
      container_name: reverseproxy
-     image: nginx
      restart: always
      ports:
       - "80"

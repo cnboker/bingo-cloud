@@ -32,13 +32,13 @@ docker ps -a
 --SET GLOBAL validate_password.number_count = 0;
 
 update user set host='%' where user='root';
+ALTER USER 'root'@'%' IDENTIFIED WITH mysql_native_password BY '1';
 --alter user 'root' identified with mysql_native_password by '1';
 flush privileges;
 ```
 ## package dependency
 2.0.9 runtime is required
-https://download.microsoft.com/download/3/a/3/3a3bda26-560d-4d8e-922e-6f6bc4553a84/dotnet-runtime-2.0.9-win-x64.exe
-
+https://dotnet.microsoft.com/en-us/download/dotnet/2.0
 ## wsl2 git push error
 在bash下执行下面命令，使得wsl2下面的git命令采用host下的验证信息
 ```bash
