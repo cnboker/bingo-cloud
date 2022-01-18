@@ -35,8 +35,8 @@ namespace FileServer.Controllers
        string hostUrl = Request.Scheme + "://" + Request.Host + "/";
       foreach (var node in generator.fileMap.Values)
       {
-        node.ThumbnailUrl = !string.IsNullOrEmpty(node.ThumbnailUrl) ?  User.Identity.Name + node.ThumbnailUrl : "";
-        node.Path = !string.IsNullOrEmpty(node.Path) ?  User.Identity.Name + node.Path : "";
+        node.ThumbnailUrl = !string.IsNullOrEmpty(node.ThumbnailUrl) ?  hostUrl + User.Identity.Name + node.ThumbnailUrl : "";
+        node.Path = !string.IsNullOrEmpty(node.Path) ?  hostUrl + User.Identity.Name + node.Path : "";
       }
       var outputJson = new
       {

@@ -10,6 +10,7 @@
     "cross-env": "^7.0.3",
     "es6-object-assign": "^1.1.0",
     "fbemitter": "^2.1.1",
+    "lgservice": "^1.0.21",
     "lodash": "^4.17.15",
     "moment": "^2.24.0",
     "qrcode.react": "^0.9.3",
@@ -26,15 +27,13 @@
     "reactstrap": "^8.0.1",
     "redux": "^4.0.4",
     "redux-thunk": "^2.3.0",
-    "typescript": "^3.6.2",
-    "video.js": "^7.15.4",
-    "videojs-playlist": "^4.3.1"
+    "typescript": "^3.6.2"
   },
   "scripts": {
     "lint": "eslint -c .eslintrc.js --ext .js,.jsx,.ts,.tsx .",
     "lint:fix": "npm run lint -- --fix",
     "start": "cross-env REACT_APP_STAGE=dev react-scripts build",
-    "ospub": "bash ./before_build.sh && react-app-rewired build && ./post_build_osx",
+    "ospub": "bash ./before_build.sh && react-scripts build && ./post_build_osx",
     "winpub": "cross-env REACT_APP_STAGE=dev  @powershell -NoProfile -ExecutionPolicy Unrestricted -Command ./before_build_win.ps1 && react-scripts build && @powershell -NoProfile -ExecutionPolicy Unrestricted -Command ./post_build.ps1",
     "test": "react-scripts test"
   },
@@ -61,6 +60,6 @@
     "eslint-plugin-react": "^7.26.1",
     "eslint-plugin-react-hooks": "^4.2.0",
     "eslint-plugin-testing-library": "^4.12.4",
-    "react-app-rewired": "^2.1.5"
+    "react-app-rewired": "^2.1.11"
   }
 }

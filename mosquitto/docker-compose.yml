@@ -1,0 +1,19 @@
+version: '3.3'
+services:
+  mosquitto:
+      image: eclipse-mosquitto
+      hostname: mosquitto
+      restart: always
+      container_name: mosquitto
+      ports:
+        - "1883:1883"
+        - "8000:8000"
+      volumes: 
+        - /home/mosquitto/data:/mosquitto/data
+        - ./config/mosquitto.conf:/mosquitto/config/mosquitto.conf
+        - /home/mosquitoo/log:/mosquitoo/log
+      networks:
+        - webnet
+
+networks:
+  webnet:

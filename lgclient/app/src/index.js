@@ -11,17 +11,20 @@ import config from "./config";
 // Polyfill, modifying the global Object
 require("es6-object-assign").polyfill();
 /*eslint-disable */
-const composeSetup = process.env.NODE_ENV !== "production" && typeof window === "object" && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
-  ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
-  : compose;
+const composeSetup =
+  process.env.NODE_ENV !== "production" &&
+  typeof window === "object" &&
+  window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
+    ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
+    : compose;
 /*eslint-enable */
 const store = createStore(IndexReducer, composeSetup(applyMiddleware(thunk)));
 
-var render = Component => (
+var render = (Component) => (
     <Provider store={ store }>
         <Router>
             <Switch>
-                <Route path="/" extact component={ Component }/>
+                <Route path="/" extact component={ Component } />
             </Switch>
         </Router>
     </Provider>
