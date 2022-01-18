@@ -9,6 +9,7 @@ services:
       #指定Dockerfile文件位置
       dockerfile: ./service/Dockerfile
     ports:
+    #HOST:CONTAINER
       - "6001:6001"
     networks:
       - "myNetwork"

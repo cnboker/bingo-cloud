@@ -50,7 +50,7 @@ namespace Ioliz.Service
 
         public const string PlatformId = "Ioliz";
 
-        public string Domain { get; set; }
+        public string ServieServer { get; set; }
         public string WeixinToken { get; set; }
         public string WeixinEncodingAESKey { get; set; }
         public string WeixinAppId { get; set; }
@@ -78,7 +78,7 @@ namespace Ioliz.Service
         {
             MQTTServer = configRoot.GetSection("AppSettings:mqttServer").Value;
             AuthServer = configRoot.GetSection("AppSettings:authServer").Value;
-            Domain = configRoot.GetSection("AppSettings:domain").Value;
+            ServieServer = configRoot.GetSection("AppSettings:servieServer").Value;
             //Authkey = configRoot.GetSection("AppSettings:authkey").Value;
 
             MemberConnectionString = Microsoft.Extensions.Configuration

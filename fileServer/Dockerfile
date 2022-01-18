@@ -21,7 +21,7 @@ RUN apt update -y && apt install -y libgdiplus
 COPY --from=build /fileServer/output ./release
 #COPY /fileServer/entrypoint.sh .
 WORKDIR /release
-EXPOSE 80/tcp
+EXPOSE 5000/tcp
 ENTRYPOINT ["dotnet", "fileServer.dll"]
 #RUN chmod +x ./entrypoint.sh
 #CMD /bin/bash ./entrypoint.sh

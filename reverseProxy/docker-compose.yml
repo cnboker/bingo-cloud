@@ -4,7 +4,8 @@ services:
     reverseproxy:
         build: .
         ports:
-            - "80"
+        #[host:container]
+            - "80:80"
         networks:
             - "myNetwork"
         restart: always
@@ -14,22 +15,31 @@ services:
             - reverseproxy
         image: member_server:latest
         restart: always
+        networks:
+            - "myNetwork"
         ports:
-            - "7800"
+            - "7800:7800"
     serviceapi:
         depends_on:
             - reverseproxy
         image: service_server:latest
         restart: always
+        networks:
+            - "myNetwork"
         ports:
-            - "6001"
+            - "6001:6001"
     fileapi:
         depends_on:
             - reverseproxy
         image: fileserver_server:latest
         restart: always
+        networks:
+            - "myNetwork"
+        volumes:
+            #host:container
+            - /home/data/files:/release/wwwroot
         ports:
-            - "5000"
+            - "5000:5000"
 networks:
   myNetwork:
     external: true

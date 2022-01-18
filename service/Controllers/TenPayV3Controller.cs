@@ -27,7 +27,7 @@ namespace Ioliz.Service.Controllers
 
         public ActionResult Index(string ServiceNo, int hc = 0)
         {
-            var returnUrl = string.Format("{0}tenpayV3/JsApi/", AppInstance.Instance.Config.Domain);
+            var returnUrl = string.Format("{0}tenpayV3/JsApi/", AppInstance.Instance.Config.ServieServer);
             var state = string.Format("{0}|{1}", ServiceNo, hc);
             var tenpay = AppInstance.Instance.Config.TenPayV3Info;
             var url = OAuthApi.GetAuthorizeUrl(tenpay.AppId, returnUrl, state, OAuthScope.snsapi_userinfo);
