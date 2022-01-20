@@ -141,7 +141,7 @@ export const VFSBrowser: React.FC<DataVFSProps> = (props) => {
       map: {},
     }
     metaMap.map[rootId] = {
-      tag: 'View',
+      tag: 'Viewport',
       childrenIds: [imageListId],
     }
     const fileUrls = fileList.map((x: any) => x.path)

@@ -21,18 +21,18 @@ const composeSetup =
 const store = createStore(IndexReducer, composeSetup(applyMiddleware(thunk)));
 
 var render = (Component) => (
-    <Provider store={ store }>
-        <Router>
-            <Switch>
-                <Route path="/" extact component={ Component } />
-            </Switch>
-        </Router>
-    </Provider>
+  <Provider store={store}>
+    <Router>
+      <Switch>
+        <Route path="/" extact component={Component} />
+      </Switch>
+    </Router>
+  </Provider>
 );
 
 window.addEventListener("load", () => {
-    var root = document.getElementById("root");
-    ReactDOM.render(render(config.defaultApp), root);
+  var root = document.getElementById("root");
+  ReactDOM.render(render(config.defaultApp), root);
 });
 
 serviceWorker.unregister();

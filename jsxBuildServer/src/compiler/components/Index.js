@@ -3,4 +3,5 @@ import {Image} from "./Image";
 import {View} from "./View";
 import {Animations} from './Animations';
 import { ImageList } from "./ImageList";
-export {Fragment, Image, View, Animations,ImageList}
+import { Viewport } from "./Viewport";
+export {Fragment, Image, View, Animations,ImageList, Viewport}
