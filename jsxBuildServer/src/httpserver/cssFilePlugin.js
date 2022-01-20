@@ -23,7 +23,7 @@ exports.cssFilePlugin = {
       filter: /.*/,
       namespace: 'css-file'
     }, async(args) => {
-      console.log('cssplugin', args)
+      //console.log('cssplugin', args)
       const CleanCSS = require('clean-css')
       const cleanCss = new CleanCSS({})
       const {outdir} = build.initialOptions

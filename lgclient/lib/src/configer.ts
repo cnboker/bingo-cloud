@@ -21,7 +21,7 @@ class Configer {
 
   read(): Promise<ConfigModel> {
     return new Promise((resolve, reject) => {
-      readFile(`${APP_ROOT}/config.json`)
+      readFile(`${APP_DIR}/config.json`)
         .then(content => {
           this._configInstance = JSON.parse(content);
           resolve(this._configInstance);
@@ -33,22 +33,22 @@ class Configer {
   }
 
   reset() {
-    removeFile(`${APP_ROOT}/config.json`);
+    removeFile(`${APP_DIR}/config.json`);
   }
 
   write(config: ConfigModel): Promise<boolean> {
     this._configInstance = config;
     return writeFile(
-      `${APP_ROOT}/config.json`,
+      `${APP_DIR}/config.json`,
       JSON.stringify(config)
     );
   }
 
   rootDirReady = () => {
-    exists(APP_ROOT)
+    exists(APP_DIR)
       .then((exist) => {
         if (!exist) {
-          return mkdir(APP_ROOT);
+          return mkdir(APP_DIR);
         }
         return true;
       })
@@ -86,7 +86,8 @@ class Configer {
 }
 
 export const APPID = "com.ioliz.dc.app";
-export const APP_ROOT = "/media/internal/dclient";
+export const APP_DIR = "/media/internal/dclient";
+export const APP_DOWNLOAD_DIR = "/media/internal/downloads";
 export const USB_ROOT = "/tmp/usb/sda/sda1";
 export const instance: Configer = Configer.instance;
 export const Service_Server = process.env.REACT_APP_MEMBER_URL;

@@ -131,7 +131,7 @@ export const VFSBrowser: React.FC<DataVFSProps> = (props) => {
     const validated = pubRef.dataValidate()
     if (!validated) return validated
     const data = pubRef.formData()
-    const { settings, deviceList } = data
+    const { settings, deviceList, fileList } = data
     console.log('pub data...', data)
 
     const rootId = uniqueID()
@@ -144,11 +144,11 @@ export const VFSBrowser: React.FC<DataVFSProps> = (props) => {
       tag: 'View',
       childrenIds: [imageListId],
     }
-    const fileUrls = data.fileList.map((x: any) => x.path)
+    const fileUrls = fileList.map((x: any) => x.path)
     metaMap.map[imageListId] = {
       tag: 'ImageList',
       urls: fileUrls,
-      duration: settings.duration,
+      duration: settings.duration * 1000,
       animation: settings.effect,
       childrenIds: [],
     }
@@ -160,12 +160,8 @@ export const VFSBrowser: React.FC<DataVFSProps> = (props) => {
         entity: metaMap,
       },
     }).then((resp) => {
-      console.log(resp)
-      resp.data.push(...fileUrls)
-      mqttPub(
-        deviceList.map((x: any) => x.value),
-        resp.data,
-      )
+      console.log('return result', resp.data, deviceList, fileUrls)
+      mqttPub(deviceList, [...fileUrls, ...resp.data])
     })
     return true
   }

@@ -7,7 +7,7 @@ import {
 import { readFile } from "./WebOSFileService";
 import { getService } from "./ServiceProiver";
 import { IMQTTDispatcher } from "../interfaces/IMQTTDispatcher";
-import { instance,isInTest } from "../configer";
+import { APP_DIR, instance,isInTest } from "../configer";
 export default class ContentWorker implements IContentWorker {
   contentNotify: IContentNotify;
   fileDownloader: IFileDownloader;
@@ -25,14 +25,14 @@ export default class ContentWorker implements IContentWorker {
       //fileServer:http://ip:port/scott
       //发布目录/dist/index.html
       var fileList = data.files.map(x => <IResourceInfo>{
-        resourceUrl: `${instance.fileServer}/dist/${x}`,
+        resourceUrl: `${x}`,
         status: 0
       });
       this.download(fileList, cb)
     }
   
     //如果上次下载未完成，读未下载数据继续下载
-    readFile('downloadlist.json')
+    readFile(`${APP_DIR}/downloadlist.json`)
       .then(text => JSON.parse(text))
       .then(fileList => {
         this.download(fileList, cb)

@@ -20,7 +20,7 @@ export default class Main extends React.Component<{}, any> {
         serviceRegister();
         const worker = getService("IContentWorker") as IContentWorker;
         worker.execute(() => {
-            self.setState({ url: `${config.REACT_APP_LG_URL}index.html`, shim: false });
+            self.setState({ url: `${config.REACT_APP_LG_URL}index.html?${Date.now()}`, shim: false });
         });
     }
 

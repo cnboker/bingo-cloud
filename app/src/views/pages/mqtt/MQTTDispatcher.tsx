@@ -1,4 +1,4 @@
-import { connect } from 'mqtt'
+import { connect, MqttClient } from 'mqtt'
 const mqttServer = process.env.REACT_APP_MQTT_URL
 
 //
@@ -10,10 +10,14 @@ export const MQTT_CONTENT_NOTIFY = 'mqttContentNotify'
 export const MQTT_SNAPSHOT_NOTIFY = 'mqttSnapshotNotify'
 
 export class MQTTDispatcher {
-  private client: any
+  private client: MqttClient
 
   connect(): void {
-    if (this.client === undefined || !this.client.connected) {
+    if (this.client && this.client.connected) {
+      if (this.onConnect) {
+        this.onConnect()
+      }
+    } else if (this.client === undefined || !this.client.connected) {
       this.client = connect(mqttServer)
       this.client.on('connect', () => {
         if (this.onConnect) {
@@ -27,8 +31,8 @@ export class MQTTDispatcher {
     }
   }
 
-  subscrible(messageId: string, deviceId: string): void {
-    this.client.subscrible(`${messageId}/${deviceId}`, (err: any) => {
+  subscribe(messageId: string, deviceId: string): void {
+    this.client.subscribe(`${messageId}/${deviceId}`, (err: any) => {
       if (err) {
         console.log('err', err)
       }
@@ -38,8 +42,9 @@ export class MQTTDispatcher {
   contentPub(deviceId: string, data: any) {
     const jsonString = JSON.stringify({
       deviceId: deviceId,
-      ...data,
+      files: data,
     })
+    console.log('mqtt pub:', `${MQTT_CONTENT_NOTIFY}/${deviceId}`, jsonString)
     this.client.publish(`${MQTT_CONTENT_NOTIFY}/${deviceId}`, jsonString)
   }
 

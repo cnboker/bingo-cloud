@@ -11,6 +11,7 @@ export default class WebpagePlayer extends React.Component {
                 className="myIframe"
                 display="initial"
                 position="relative"
+                scrolling="no"
                 style={ { "frameBoarder":0 } }
             />
         );

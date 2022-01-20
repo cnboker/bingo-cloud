@@ -4,7 +4,7 @@ export function exists(path: string): Promise<boolean> {
     var bridge = window.webosBridge;
     bridge.onservicecallback = (msg: string) => {
       var response = JSON.parse(msg);
-      console.log('exists response', response)
+      //console.log('exists response', response)
       const { returnValue } = response;
       resolve(returnValue)
     }
@@ -162,7 +162,7 @@ export function writeFile(path: string, data: string): Promise<boolean> {
       }
     }
     var url = "luna://com.ioliz.dc.app.fileservice/writeFile";
-    var params = JSON.stringify({ path, data, encoding: 'utf-8' });
+    var params = JSON.stringify({ path, data });
     bridge.call(url, params)
   })
 }

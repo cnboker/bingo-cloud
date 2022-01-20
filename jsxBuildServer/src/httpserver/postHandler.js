@@ -10,7 +10,7 @@ exports.make = async (username, entity) => {
   console.log('begin make...')
   const dataContent = JSON.stringify(entity);
   const tmpfile = makeid(10);
-  const entryFile = `${process.cwd()}/entry/${tmpfile}.js`;
+  const entryFile = `${process.cwd()}/entry/builder.js`;
   try {
     console.log("entryFile", entryFile);
     const jsx = `
@@ -18,6 +18,7 @@ exports.make = async (username, entity) => {
       const MetaMap = ${dataContent}
       App(MetaMap)
     `;
+    console.log('jsx', jsx)
     await writeFile(entryFile, jsx);
     return await esbuild.build(username, entryFile);
   } 

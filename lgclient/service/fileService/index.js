@@ -25,200 +25,207 @@ Oct 17 18:06:10 raspberrypi4 ls-hubd[1534]:     at Function.Module._load (intern
 Oct 17 18:06:10 raspberrypi4 ls-hubd[1534]:     at Module.require (internal/modules/cjs/loader.js:887:19)
 */
 const Service = require("webos-service");
-const pkgInfo = require('./package.json');
+const pkgInfo = require("./package.json");
 const service = new Service(pkgInfo.name);
-service.activityManager.idleTimeout = 5
+service.activityManager.idleTimeout = 5;
 
 //const crypto = require("crypto");
 const fs = require("fs");
 
 // copyFile
-service.register("copyFile", function(message) {
-  var originalPath =  message.payload.originalPath;
-  var copyPath =  message.payload.copyPath;
+service.register("copyFile", function (message) {
+  var originalPath = message.payload.originalPath;
+  var copyPath = message.payload.copyPath;
 
   // createReadStream & createWriteStream
   var inputFile = fs.createReadStream(originalPath);
   var outputFile = fs.createWriteStream(copyPath);
 
   // Error handling
-  inputFile.on("error", function(err) {
+  inputFile.on("error", function (err) {
     message.respond({
       returnValue: false,
       errorCode: "copyFile createReadStream ERROR",
-      errorText: err
+      errorText: err,
     });
   });
 
-  outputFile.on("error", function(err) {
+  outputFile.on("error", function (err) {
     message.respond({
       returnValue: false,
       errorCode: "copyFile createWriteStream ERROR",
-      errorText: err
+      errorText: err,
     });
   });
 
   // Do copy & End event
-  inputFile.pipe(outputFile).on("close", function(err) {
+  inputFile.pipe(outputFile).on("close", function (err) {
     if (err) {
       message.respond({
         returnValue: false,
         errorCode: "copyFile createWriteStream ERROR",
-        errorText: err
+        errorText: err,
       });
     } else {
       message.respond({
-        returnValue: true
+        returnValue: true,
       });
     }
   });
 });
 
 // exists
-service.register("exists", function(message) {
-  var path =  message.payload.path;
+service.register("exists", function (message) {
+  var path = message.payload.path;
+  let exists = false;
+  try {
+    if (fs.existsSync(path)) {
+      console.log("The file exists.");
+      exists = true;
+    }
+  } catch (err) {
+    console.error(err);
+  }
 
-  fs.exists(path, function(exists) {
-    message.respond({
-      returnValue: exists,
-    });
+  message.respond({
+    returnValue: exists,
   });
 });
 
 // listFiles
-service.register("listFiles", function(message) {
-  var path =  message.payload.path;
+service.register("listFiles", function (message) {
+  var path = message.payload.path;
 
-  fs.readdir(path, function(err, files) {
+  fs.readdir(path, function (err, files) {
     if (err) {
       message.respond({
         returnValue: false,
         errorCode: "listFiles ERROR",
-        errorText: err
+        errorText: err,
       });
     } else {
       message.respond({
         returnValue: true,
-        files: files
+        files: files,
       });
     }
   });
 });
 
 // mkdir
-service.register("mkdir", function(message) {
-  var path =  message.payload.path;
+service.register("mkdir", function (message) {
+  var path = message.payload.path;
   console.log("path", path);
-  fs.mkdir(path, function(err) {
+  fs.mkdir(path, function (err) {
     if (err) {
       message.respond({
         returnValue: false,
         errorCode: "mkdir ERROR",
-        errorText: err
+        errorText: err,
       });
     } else {
       message.respond({
-        returnValue: true
+        returnValue: true,
       });
     }
   });
 });
 
 // rmdir
-service.register("rmdir", function(message) {
-  var path =  message.payload.path;
+service.register("rmdir", function (message) {
+  var path = message.payload.path;
 
-  fs.rmdir(path, function(err) {
+  fs.rmdir(path, function (err) {
     if (err) {
       message.respond({
         returnValue: false,
         errorCode: "rmdir ERROR",
-        errorText: err
+        errorText: err,
       });
     } else {
       message.respond({
-        returnValue: true
+        returnValue: true,
       });
     }
   });
 });
 
 // moveFile
-service.register("moveFile", function(message) {
-  var originalPath =  message.payload.originalPath;
-  var destinationPath =  message.payload.destinationPath;
+service.register("moveFile", function (message) {
+  var originalPath = message.payload.originalPath;
+  var destinationPath = message.payload.destinationPath;
 
-  fs.rename(originalPath, destinationPath, function(err) {
+  fs.rename(originalPath, destinationPath, function (err) {
     if (err) {
       message.respond({
         returnValue: false,
         errorCode: "rename ERROR",
-        errorText: err
+        errorText: err,
       });
     } else {
       message.respond({
-        returnValue: true
+        returnValue: true,
       });
     }
   });
 });
 
 // readFile
-service.register("readFile", function(message) {
-  var path =  message.payload.path;
+service.register("readFile", function (message) {
+  var path = message.payload.path;
   var encoding = message.payload.encoding;
 
-  fs.readFile(path, encoding, function(err, data) {
+  fs.readFile(path, encoding, function (err, data) {
     if (err) {
       message.respond({
         returnValue: false,
         errorCode: "readFile ERROR",
-        errorText: err
+        errorText: err,
       });
     } else {
       message.respond({
         returnValue: true,
-        data: data
+        data: data,
       });
     }
   });
 });
 
 // removeFile
-service.register("removeFile", function(message) {
-  var path =  message.payload.path;
+service.register("removeFile", function (message) {
+  var path = message.payload.path;
 
-  fs.unlink(path, function(err) {
+  fs.unlink(path, function (err) {
     if (err) {
       message.respond({
         returnValue: false,
         errorCode: "removeFile ERROR",
-        errorText: err
+        errorText: err,
       });
     } else {
       message.respond({
-        returnValue: true
+        returnValue: true,
       });
     }
   });
 });
 
 // unzipFile
-service.register("unzipFile", function(message) {
+service.register("unzipFile", function (message) {
   const unzip = require("unzip");
 
-  var zipFilePath =  message.payload.zipFilePath;
-  var extractToDirectoryPath =  message.payload.extractToDirectoryPath;
+  var zipFilePath = message.payload.zipFilePath;
+  var extractToDirectoryPath = message.payload.extractToDirectoryPath;
 
   // createReadStream
   var readStream = fs.createReadStream(zipFilePath);
 
   // Error handling
-  readStream.on("error", function(err) {
+  readStream.on("error", function (err) {
     message.respond({
       returnValue: false,
       errorCode: "unzipFile createReadStream ERROR",
-      errorText: err
+      errorText: err,
     });
   });
 
@@ -226,41 +233,39 @@ service.register("unzipFile", function(message) {
   readStream
     .pipe(
       unzip.Extract({
-        path: extractToDirectoryPath
+        path: extractToDirectoryPath,
       })
     )
-    .on("close", function(err) {
+    .on("close", function (err) {
       if (err) {
         message.respond({
           returnValue: false,
           errorCode: "unzipFile Extract ERROR",
-          errorText: err
+          errorText: err,
         });
       } else {
         message.respond({
-          returnValue: true
+          returnValue: true,
         });
       }
     });
 });
 
 // writeFile
-service.register("writeFile", function(message) {
-  var path =  message.payload.path;
-  var data = message.payload.data;
-  var encoding = message.payload.encoding;
+service.register("writeFile", function (message) {
+  const { path, data } = message.payload;
 
-  fs.writeFile(path, data, encoding, function(err) {
+  fs.writeFile(path, data, function (err) {
     if (err) {
       message.respond({
         returnValue: false,
         errorCode: "writeFile ERROR",
-        errorText: err
+        errorText: err,
       });
     } else {
       message.respond({
-        returnValue: true
+        returnValue: true,
       });
     }
   });
-})
+});

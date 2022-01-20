@@ -11,25 +11,21 @@ function clearDir(dir) {
     if (err) {
       return;
     }
-      
     for (const file of files) {
-      fs.unlink(path.join(dir, file), err => {
-        if (err) 
-          throw err;
-        }
-      )
+      fs.unlinkSync(path.join(dir, file));
     }
   })
 }
+
 exports.build = async(username, entryFile) => {
-  let randomDir = util.makeid(10);
   const relationPath = `/wwwroot/${username}/dist`;
   const outdir = `${process.cwd()}${relationPath}`
   clearDir(outdir)
   await mkdir(outdir, {recursive: true});
 
   var script = await esbuild.build({
-    entryPoints: [entryFile], bundle: true,
+    entryPoints: [entryFile], 
+    bundle: true,
     //minify: true,
     sourcemap: 'external',
     outdir,
@@ -45,7 +41,7 @@ exports.build = async(username, entryFile) => {
   });
   console.log('script', script)
  
-  await writeFile(`${outdir}/index.html`,html.replace('###',`./${path.basename(entryFile)}`))
+  await writeFile(`${outdir}/index.html`,html.replace('###',`./${path.basename(entryFile)}?t=${Date.now()}`))
   
   return [
     `/${username}/dist/index.html`,

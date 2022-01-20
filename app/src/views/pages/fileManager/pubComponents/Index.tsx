@@ -84,10 +84,23 @@ type SettingProps = {
   duration: number
   effect: 'vanish' | 'buff' | 'drop' | 'rotate' | 'bounce' | 'zoom' | 'slider' | 'opacity'
 }
+
+const getVisibilityStyle = (hiddenCondition: boolean): any => {
+  if (hiddenCondition) {
+    return {
+      visibility: 'hidden',
+      height: 0,
+    }
+  }
+  return {
+    visibility: 'visible',
+    height: 'inherit',
+  }
+}
+
 export const PubForms = React.forwardRef<dataHandle, PubFormProps>(
   ({ fileList, onRemove, deviceList }, ref) => {
     const classes = useStyles()
-    const theme = useTheme()
     const [value, setValue] = React.useState(0)
     const settingsRef = useRef(null)
     const devicelistRef = useRef(null)
@@ -108,27 +121,27 @@ export const PubForms = React.forwardRef<dataHandle, PubFormProps>(
           setValue(2)
           return false
         }
-        if (fileList.length == 0) {
+        if (fileList.length === 0) {
           setValue(0)
           return false
         }
         return true
       },
     }))
-
+    //https://stackoverflow.com/questions/61097440/reactjs-material-ui-prevent-re-render-tabs-on-enter
     return (
       <div className={classes.root}>
         <AppBar position="static" color="default">
           <Header value={value} valueChange={valueChange} />
-          <TabPanel value={value} index={0} dir={theme.direction}>
+          <div style={getVisibilityStyle(value !== 0)}>
             <ImageList fileList={fileList} onRemove={onRemove} />
-          </TabPanel>
-          <TabPanel value={value} index={1} dir={theme.direction}>
+          </div>
+          <div style={getVisibilityStyle(value !== 1)}>
             <Settings ref={settingsRef} />
-          </TabPanel>
-          <TabPanel value={value} index={2} dir={theme.direction}>
+          </div>
+          <div style={getVisibilityStyle(value !== 2)}>
             <CheckBoxList data={deviceList} ref={devicelistRef} />
-          </TabPanel>
+          </div>
         </AppBar>
       </div>
     )

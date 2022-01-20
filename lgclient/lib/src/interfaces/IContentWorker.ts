@@ -10,15 +10,23 @@ export interface IContentWorker {
 export interface IContentNotify {
     //通知监控
     watch(): void;
-    
+
     //接受截屏通知
     onSnapshot(callback: () => void): void;
 }
 
+export enum DownloadStatus{
+    Origin = 0,
+    Success = 1,
+    Failure = 2,
+    Begin = 3
+}
 //资源数据
 export interface IResourceInfo {
     resourceUrl: string,
-    status?: number //0 origin, 1 success, 2. failure, 3. begin
+    status?: DownloadStatus, //0 origin, 1 success, 2. failure, 3. begin
+    ticket: number,
+    completed:boolean
 }
 
 //资源下载器
@@ -27,9 +35,9 @@ export interface IFileDownloader {
     fileList: IResourceInfo[];
     //开始下载
     download(fileList: IResourceInfo[]): void;
-    onOneDownloadComplete:(file:IResourceInfo)=>void
+    onOneDownloadComplete: (file: IResourceInfo) => void
     //下载完成
-    onDownloadComplete:(fileList:IResourceInfo[])=>void
+    onDownloadComplete: (fileList: IResourceInfo[]) => void
     //取消所有下载
-    cancel():void;
+    cancel(): void;
 }

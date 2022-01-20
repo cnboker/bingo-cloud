@@ -1,4 +1,4 @@
-import { connect } from "mqtt";
+import { connect, MqttClient } from "mqtt";
 import { ContentPackage } from "../dataModels/ContentPackage";
 import { IMQTTDispatcher } from "../interfaces/IMQTTDispatcher";
 //
@@ -11,7 +11,7 @@ export const MQTT_SNAPSHOT_NOTIFY = 'mqttSnapshotNotify'
 
 
 export class MQTTDispatcher implements IMQTTDispatcher {
-  private client: any;
+  private client: MqttClient;
   private deviceId: string;
 
   connect(server: string, deviceId: string): void {
@@ -20,12 +20,14 @@ export class MQTTDispatcher implements IMQTTDispatcher {
     if (this.client === undefined || !this.client.connected) {
       this.client = connect(server);
     }
+    const self = this;
     this.client.on('connect', () => {
       console.log('mqtt connected...')
-      this.subscrible(MQTT_CONTENT_NOTIFY);
-      this.subscrible(MQTT_SNAPSHOT_NOTIFY);
+      self.subscrible(MQTT_CONTENT_NOTIFY);
+      self.subscrible(MQTT_SNAPSHOT_NOTIFY);
     })
-    this.client.on('message', (title: string, message: string) => {
+    this.client.on('message', (title: string, message: any) => {
+      console.log('mqtt message', title, String.fromCharCode(message))
       var jsonObj = JSON.parse(message)
       if (title === `${MQTT_CONTENT_NOTIFY}/${this.deviceId}`) {
         this.onSubContentNotify(jsonObj);
@@ -36,7 +38,7 @@ export class MQTTDispatcher implements IMQTTDispatcher {
   }
 
   private subscrible(messageId: string): void {
-    this.client.subscrible(`${messageId}/${this.deviceId}`, (err: any) => {
+    this.client.subscribe(`${messageId}/${this.deviceId}`, (err: any) => {
       if (err) {
         console.log('err', err)
       }
