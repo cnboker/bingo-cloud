@@ -6,6 +6,8 @@ services:
         ports:
         #[host:container]
             - "80:80"
+        volumes:
+            - /home/www:/release/wwwroot
         networks:
             - "myNetwork"
         restart: always
