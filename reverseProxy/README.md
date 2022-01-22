@@ -40,3 +40,23 @@ docker ps -a
 ```
 
 ### 打开appsettings.json手动更新member, server服务数据库连接字符串连接字符串
+
+### upgrade nodejs
+
+```
+curl -sL https://deb.nodesource.com/setup_16.x | sudo -E bash -
+sudo apt-get install -y nodejs
+```
+
+### 服务器发布目录结构
+
+├── /home
+│   ├── data
+|   |    └-----files #文件服务器根目录
+|   |    └-----mysql #数据库根目录
+|   |
+|   |
+│   └── ioliz #源代码
+|        └-----_wwww/build #网站目录
+
+

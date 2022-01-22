@@ -62,11 +62,11 @@ namespace Member.Models
       if (!context.Servers.Any())
       {
         await context.Servers.AddRangeAsync(new Server[]{
-            new Server(){ServerName="华南", Domain ="http://ds1.ezdsm.com",
-            APIDomain="http://dsapi1.ezdsm.com",
+            new Server(){ServerName="华南", Domain ="http://ds1.ioliz.com",
+            APIDomain="http://dsapi1.ioliz.com",
              IP=StringHelper.ToIntIP("127.0.0.1"), Actived=true, CreateDate=DateTime.Now},
-            new Server(){ServerName="华北",Domain = "http://ds2.ezdsm.com",APIDomain="http://dsapi2.ezdsm.com", IP=StringHelper.ToIntIP("127.0.0.1"), Actived = true, CreateDate=DateTime.Now},
-            new Server(){ServerName="华西", Domain = "http://ds3.ezdsm.com", APIDomain="http://dsapi3.ezdsm.com",IP=StringHelper.ToIntIP("127.0.0.1"), Actived = true,CreateDate=DateTime.Now}
+            new Server(){ServerName="华北",Domain = "http://ds2.ioliz.com",APIDomain="http://dsapi2.ioliz.com", IP=StringHelper.ToIntIP("127.0.0.1"), Actived = true, CreateDate=DateTime.Now},
+            new Server(){ServerName="华西", Domain = "http://ds3.ioliz.com", APIDomain="http://dsapi3.ioliz.com",IP=StringHelper.ToIntIP("127.0.0.1"), Actived = true,CreateDate=DateTime.Now}
         });
         await context.SaveChangesAsync();
       }

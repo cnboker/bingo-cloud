@@ -7,7 +7,7 @@ services:
         #[host:container]
             - "80:80"
         volumes:
-            - /home/www:/release/wwwroot
+            - /home/ioliz/_www/build:/www
         networks:
             - "myNetwork"
         restart: always
