@@ -5,6 +5,6 @@ import {Renderer} from './Renderer'
 import './components/csscomponents/index.js'
 
 export const App = (metaData) =>{
-  console.log(Server.renderToString(<Renderer metaData={metaData}/>))
-  ReactDOM.render(<Renderer metaData={metaData}/>,document.getElementById('root'))
+  console.log(Server.renderToString(<Renderer {...metaData}/>))
+  ReactDOM.render(<Renderer {...metaData}/>,document.getElementById('root'))
 }

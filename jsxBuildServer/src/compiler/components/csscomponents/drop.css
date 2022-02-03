@@ -28,7 +28,7 @@
 
 .drop-enter {
   opacity: 0;
-  animation: drop-in 1s;
+  animation: drop-in 2s;
 }
 
 .drop-enter-active {
@@ -41,5 +41,5 @@
 
 .drop-exit-active {
   opacity: 0;
-  animation:drop-out 1s;
+  animation:drop-out 2s;
 }

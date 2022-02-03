@@ -4,12 +4,12 @@
 }
 .opacity-enter-active {
   opacity: 1;
-  transition: opacity 3000ms ease-in;
+  transition: opacity 3s ease-in;
 }
 .opacity-exit {
   opacity: 1;
 }
 .opacity-exit-active {
   opacity: 0;
-  transition: opacity 3000ms ease-in;
+  transition: opacity 3s ease-in;
 } 

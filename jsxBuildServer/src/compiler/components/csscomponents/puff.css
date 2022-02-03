@@ -1,3 +1,5 @@
+/* https://www.minimamente.com/project/magic/ */
+
 @keyframes puffIn {
   0% {
     opacity: 0;
@@ -35,7 +37,7 @@
 
 .puff-enter-active {
   opacity: 1;
-  animation: puffIn 1.5s;
+  animation: puffIn 3s;
 }
 
 .puff-exit {
@@ -44,5 +46,5 @@
 
 .puff-exit-active {
   opacity: 0;
-  animation:puffOut 1.5s;
+  animation:puffOut 3s;
 } 

@@ -1,16 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { TransitionGroup, CSSTransition } from "react-transition-group";
-import { ImageListProps, IProps } from "../Meta";
-//import Slider from "@farbenmeer/react-spring-slider";
+import { ImageListProps } from "../Meta";
 import { Image } from "./Image";
 
-export const ImageList: React.FC<ImageListProps & IProps> = ({
+export const ImageList = <T extends unknown>({
   urls,
   duration,
   animation,
   exit,
-  style,
-}) => {
+}: ImageListProps<T>) => {
   //console.log('urls',urls)
   const [visibleIndex, setVisibleIndex] = useState(0);
   useEffect(() => {
@@ -51,13 +49,11 @@ export const ImageList: React.FC<ImageListProps & IProps> = ({
 
   return (
     <React.Fragment>
-      <div className="container">
-        <TransitionGroup>
-          {urls.map((x, index) => {
-            return itemRender(x, index);
-          })}
-        </TransitionGroup>
-      </div>
+      <TransitionGroup>
+        {urls.map((x, index) => {
+          return itemRender(x, index);
+        })}
+      </TransitionGroup>
     </React.Fragment>
   );
 };

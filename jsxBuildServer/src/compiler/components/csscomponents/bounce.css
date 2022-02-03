@@ -59,7 +59,7 @@
   animation: test 1s 2s 3 alternate backwards;
   1s = duration, 2s = delay, 3 = iterations.
   */
-  animation: bounceIn 1s;
+  animation: bounceIn 2s;
 }
 
 .bounce-exit {
@@ -68,5 +68,5 @@
 
 .bounce-exit-active {
     opacity: 0;
-    animation: bounceOutRight 1s;
+    animation: bounceOutRight 2s;
 }

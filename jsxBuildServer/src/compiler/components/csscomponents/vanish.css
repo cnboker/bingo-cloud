@@ -64,7 +64,7 @@
 
 .vanish-enter {
   opacity: 0;
-  animation: vanishIn 0.8s;
+  animation: vanishIn 2s;
 }
 
 .vanish-enter-active {
@@ -77,5 +77,5 @@
 
 .vanish-exit-active {
   opacity: 0;
-  animation:vanishOut 0.8s;
+  animation:vanishOut 2s;
 }
