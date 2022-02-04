@@ -7,20 +7,18 @@ import "videojs-playlist/dist/videojs-playlist";
 export const VideoJS = (props) => {
   const videoRef = React.useRef(null);
   const playerRef = React.useRef(null);
-  const { sources, onReady, exit } = props;
-  const _s =sources.map((x) => {
-    const url = new URL(x.src);
-    return {  ...x ,src: url.pathname,};
-  })
+  const { playlist, onReady, exit } = props;
+  let sourceCount = playlist.length
+  
   const videoJsOptions = {
     // lookup the options in the docs for more options
-    autoplay: true,
-   // controls: true,
-   // responsive: true,
-  //  fluid: true,
-    sources: _s,
+    //支持自动播放只能静音， chrome 有限制导致
+    autoplay: 'muted',
+    controls: true,
+    // responsive: true,
+    fluid: true,
   };
-  //console.log('videoJsOptions',videoJsOptions)
+
   React.useEffect(() => {
     // make sure Video.js player is only initialized once
     if (!playerRef.current) {
@@ -35,11 +33,18 @@ export const VideoJS = (props) => {
           onReady && onReady(player);
         }
       ));
-      player.on('ended',exit)
-      console.log('player', player)
-      player.playlist(_s);
+      player.on("ended", () => {
+        //chrome fix
+        //console.log("player.currentIndex()", player.playlist.currentIndex());
+        const index = player.playlist.currentIndex();
+        if (index === sourceCount - 1) {
+          exit && exit();
+        }
+      });
+      //player.on("ended", exit);
+      player.playlist(playlist);
+
       player.playlist.autoadvance(0);
-    
     }
   }, [videoJsOptions]);
 

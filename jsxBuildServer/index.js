@@ -1,10 +1,10 @@
-const { MetaMap } = require('./src/data')
-const { make } = require('./src/httpserver/postHandler')
-const {httpserver} =require('./src/httpserver/index')
-const username = 'admin';
+const { postData } = require("./src/data");
+const { make } = require("./src/httpserver/postHandler");
+const { httpserver } = require("./src/httpserver/index");
 
-make(username, MetaMap).then(res => {
-  console.log(res)
-})
+const username = "admin";
+
+make(username, postData).then((res) => {
+  console.log(res);
+});
 //httpserver()
- 
