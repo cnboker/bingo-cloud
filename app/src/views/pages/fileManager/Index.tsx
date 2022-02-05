@@ -19,7 +19,7 @@ import { useCustomFileMap } from './useCustomFileMap'
 import { useFileActionHandler } from './useFileActionHandler'
 import { MetaMap } from './MetaMap'
 import { uniqueID } from 'src/lib/string'
-import { PubFormResultProps, PubForms } from './pubComponents/Index'
+import { PubForms } from './pubComponents/Index'
 import { requestDeviceList } from '../device/actions'
 import { mqttPub } from './mqttPub'
 setChonkyDefaults({ iconComponent: ChonkyIconFA })
@@ -121,6 +121,7 @@ export const VFSBrowser: React.FC<DataVFSProps> = (props) => {
   const dispatch = useDispatch()
   const pubFormsRef = useRef(null)
   const deviceReduer = useSelector((state: RootStateOrAny) => state.deviceListReducer)
+
   useEffect(() => {
     //call getdeviceList
     dispatch(requestDeviceList(securityReducer.userName))
@@ -134,30 +135,18 @@ export const VFSBrowser: React.FC<DataVFSProps> = (props) => {
     const { settings, deviceList, fileList } = data
     console.log('pub data...', data)
 
-    const rootId = uniqueID()
-    const imageListId = uniqueID()
-    const metaMap: MetaMap = {
-      rootId,
-      map: {},
-    }
-    metaMap.map[rootId] = {
-      tag: 'Viewport',
-      childrenIds: [imageListId],
-    }
     const fileUrls = fileList.map((x: any) => x.path)
-    metaMap.map[imageListId] = {
-      tag: 'ImageList',
+    const entity = {
       urls: fileUrls,
       duration: settings.duration * 1000,
       animation: settings.effect,
-      childrenIds: [],
     }
 
     asyncPost({
       url: PubUrl,
       data: {
         username: securityReducer.userName,
-        entity: metaMap,
+        entity,
       },
     }).then((resp) => {
       console.log('return result', resp.data, deviceList, fileUrls)

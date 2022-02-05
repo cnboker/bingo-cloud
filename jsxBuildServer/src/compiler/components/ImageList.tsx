@@ -17,7 +17,8 @@ export const ImageList = <T extends unknown>({
         if (vi < urls.length - 1) {
           return vi + 1;
         } else {
-          console.log("clearInterval");
+          //console.log("clearInterval");
+          //vi = 0;
           clearInterval(timer);
           if (exit) {
             exit();

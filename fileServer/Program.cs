@@ -21,6 +21,9 @@ namespace FileServer
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder
+                    .UseKestrel(options=>{
+                        options.Limits.MaxRequestBodySize = null;
+                    })
                     .UseUrls("http://0.0.0.0:5000")
                     .UseStartup<Startup>();
                 });

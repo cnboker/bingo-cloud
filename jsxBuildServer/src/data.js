@@ -85,13 +85,13 @@ exports.MetaMap = {
 
 exports.postData = {
   urls: [
-    "http://file.ioliz.com/wwwroot/admin/2.mp4",
+    //"http://file.ioliz.com/wwwroot/admin/2.mp4",
     "http://file.ioliz.com/wwwroot/admin/7.jpeg",
     "http://file.ioliz.com/wwwroot/admin/5.jpeg",
     "http://file.ioliz.com/wwwroot/admin/1.jpeg",
     "http://file.ioliz.com/wwwroot/admin/3.jpeg",
     "http://file.ioliz.com/wwwroot/admin/2.jpeg",
-    "http://file.ioliz.com/wwwroot/admin/1.mp4"
+   // "http://file.ioliz.com/wwwroot/admin/1.mp4"
   ],
   duration: 3000,
   animation: "slider",

@@ -1,9 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { IPlayView } from "../Meta";
 
 export const Viewport = <T extends unknown>({ children }) => {
   const playViews = children as IPlayView<T>[]
   const [currentIndex, setCurrentIndex] = useState(0)
+
+  //const forceUpdate: () => void = React.useState()[1].bind(null, {})
 
   const childrenProps = React.Children.map(children, (child, index) => {
     const view = child as IPlayView<T>
@@ -23,7 +25,7 @@ export const Viewport = <T extends unknown>({ children }) => {
       throw 'viewport child must be IPlayView'
     }
   })
-  console.log('childrenProps',childrenProps)
+  //console.log('childrenProps', childrenProps)
   return (<div className="container">
     {childrenProps[currentIndex]}
   </div>)

@@ -71,6 +71,10 @@ export const transformData = (data: PostData): MetaMap => {
             root.childrenIds.push(newId)
         }
     }
+    //如果只包含image或video，则增加重复项目解决循环播放报错问题
+    if(root.childrenIds.length === 1){
+        root.childrenIds.push(root.childrenIds[0])
+    }
     return metaMap
 }
 

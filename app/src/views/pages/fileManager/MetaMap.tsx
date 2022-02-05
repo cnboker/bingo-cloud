@@ -4,9 +4,6 @@ export type ElementProps = {
 }
 
 export type ElementType = 'View' | 'ImageList' | 'Viewport'
-export type ViewProps = ElementProps & {
-  tag: 'View'
-}
 
 export type ViewportProps = ElementProps & {
   tag: 'Viewport'
@@ -21,5 +18,5 @@ export type ImageListProps = ElementProps & {
 
 export type MetaMap = {
   rootId: string
-  map: Record<string, ImageListProps | ViewProps | ViewportProps>
+  map: Record<string, ImageListProps | ViewportProps>
 }

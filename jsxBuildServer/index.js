@@ -4,7 +4,8 @@ const { httpserver } = require("./src/httpserver/index");
 
 const username = "admin";
 
-make(username, postData).then((res) => {
-  console.log(res);
-});
-//httpserver()
+// make(username, postData).then((res) => {
+//   console.log(res);
+// });
+
+httpserver()
