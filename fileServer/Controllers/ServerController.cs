@@ -96,7 +96,7 @@ namespace FileServer.Controllers
       return Ok();
     }
 
-
+    [RequestSizeLimit(1048576000)]
     [HttpPost("/api/server/upload")]
     public async Task<IActionResult> File([FromForm] IFormFile files)
     {
