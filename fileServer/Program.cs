@@ -22,7 +22,7 @@ namespace FileServer
                 {
                     webBuilder
                     .UseKestrel(options=>{
-                        options.Limits.MaxRequestBodySize = null;
+                        options.Limits.MaxRequestBodySize = 1024 * 1024 * 2000;
                     })
                     .UseUrls("http://0.0.0.0:5000")
                     .UseStartup<Startup>();
