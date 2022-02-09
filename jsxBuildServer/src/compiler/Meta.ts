@@ -13,6 +13,16 @@ export interface IMeta<T> {
   tag: T,
 }
 
+export type IPlayProps = {
+
+}
+
+export type IImageProps = IPlayProps & {
+  url: string,
+  duration: number,
+  animation: string,
+}
+
 //支持播放完成事件
 export type IPlayView<T> = IMeta<T> & {
   urls: string[],

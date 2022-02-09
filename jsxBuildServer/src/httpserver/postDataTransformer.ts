@@ -4,7 +4,7 @@ export type PostData = {
     animation: string
 }
 
-export type ElementType = 'ImageList' | 'Viewport' | 'VideoJS'
+export type ElementType = 'ImageList' | 'Viewport' | 'VideoJS' | 'VideoPlayer'
 
 export type ElementProps = {
     tag: ElementType
@@ -24,8 +24,10 @@ export type ImageListProps = ElementProps & {
 }
 
 export type VideoListProps = ElementProps & {
-    tag: 'VideoJS'
-    playlist: PlaySource[]
+    tag: 'VideoPlayer',
+    playlist: PlaySource[],
+    //视频链接
+    urls:string[],
     childrenIds: []
 }
 
@@ -65,6 +67,7 @@ export const transformData = (data: PostData): MetaMap => {
     } else {
         metaMap.map[newId] = imageList
         root.childrenIds.push(newId)
+       
         if (videoList.playlist.length > 0) {
             newId = uniqueID()
             metaMap.map[newId] = videoList
@@ -72,7 +75,7 @@ export const transformData = (data: PostData): MetaMap => {
         }
     }
     //如果只包含image或video，则增加重复项目解决循环播放报错问题
-    if(root.childrenIds.length === 1){
+    if (root.childrenIds.length === 1) {
         root.childrenIds.push(root.childrenIds[0])
     }
     return metaMap
@@ -111,11 +114,12 @@ const createVideoPlayerEntity = (data: PostData): VideoListProps => {
     const { urls, duration, animation } = data
     const _urls = urls.filter(x => {
         const ext = x.substring(x.lastIndexOf('.') + 1)
-        return ext === 'mp4'
+        return ext === 'mp4' || ext === 'webm'
     })
     return <VideoListProps>{
-        tag: 'VideoJS',
+        tag: 'VideoPlayer',
         playlist: createPlaylist(_urls),
+        urls: _urls,
         childrenIds: [],
     }
 }
@@ -135,7 +139,7 @@ const createPlaylist = (urls: string[]): PlaySource[] => {
         return <PlaySource>{
             sources: [<PlaySourceItem>{
                 src,
-                type: 'video/mp4'
+                type: 'video/' + src.substring(src.lastIndexOf('.') + 1)
             }],
             poster: ''
         }

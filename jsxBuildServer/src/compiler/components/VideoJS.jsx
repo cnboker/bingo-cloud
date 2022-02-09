@@ -8,15 +8,16 @@ export const VideoJS = (props) => {
   const videoRef = React.useRef(null);
   const playerRef = React.useRef(null);
   const { playlist, onReady, exit } = props;
-  let sourceCount = playlist.length
-  
+  let sourceCount = playlist.length;
+  console.log('playlist',playlist) 
   const videoJsOptions = {
     // lookup the options in the docs for more options
     //支持自动播放只能静音， chrome 有限制导致
-    autoplay: 'muted',
+    autoplay: "muted",
     controls: true,
     // responsive: true,
     fluid: true,
+    preload: 'auto'
   };
 
   React.useEffect(() => {
@@ -35,12 +36,30 @@ export const VideoJS = (props) => {
       ));
       player.on("ended", () => {
         //chrome fix
-        //console.log("player.currentIndex()", player.playlist.currentIndex());
         const index = player.playlist.currentIndex();
         if (index === sourceCount - 1) {
           exit && exit();
         }
       });
+
+      player.on("playing", (event) => {
+        console.log("playing", event);
+        let n = player.playlist.currentIndex() + 1;
+
+        if (n > 0 && n < sourceCount) {
+         
+          // need to actually determine the correct source here
+          let preloadlocation = 'http://localhost/' + playlist[n].sources[0].src;
+
+          var preloadLink = document.createElement("link");
+          preloadLink.href = preloadlocation;
+          preloadLink.rel = "preload";
+          preloadLink.as = "video";
+          document.head.appendChild(preloadLink);
+          console.log('preloadLink..',preloadLink)
+        }
+      });
+
       //player.on("ended", exit);
       player.playlist(playlist);
 

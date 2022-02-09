@@ -1,124 +1,164 @@
 import React, { useEffect, useRef, useState } from "react"
 import { IVidePlayerProps } from '../Meta'
 
-var uniqueID = (function () {
-    var id = 1 // This is the private persistent value
-    // The outer function returns a nested function that has access to the
-    // persistent value.  It is this nested function we're storing in the variable
-    // uniqueID above.
-    return function () {
-        return id++
-    } // Return and increment
-})() // Invoke the outer function after defining it.
-
 export const VideoPlayer = <T extends unknown>({ urls, exit }: IVidePlayerProps<T>) => {
-    const vid1 = useRef(null)
-    const vid2 = useRef(null)
+    const video = useRef(null)
+    console.log('urls', urls)
     const [currentPlaying, setCurrentPlaying] = useState(0)
-    const _urls = urls.map(x => {
-        const url = new URL(x)
-        return url.pathname
-    })
-    //console.log('urls=', _urls)
-    useEffect(() => {
-        vid1.current.name = "vid" + uniqueID()
-        vid2.current.name = "vid" + uniqueID()
 
-        vid1.current.addEventListener("ended", () => {
-            vid2.current.muted = false
-            resetPlayer(vid1.current)
-            if (currentPlaying >= urls.length && exit) {
-                exit()
-                return
-            }
-            vid2.current.play()
-
-        }, false)
-
-
-        vid2.current.addEventListener("ended", () => {
-            vid1.current.muted = false
-            resetPlayer(vid2.current)
-            //console.log("vid2 play end", this.CURRENT_PLAYING)
-            if (currentPlaying >= urls.length && exit) {
-                exit()
-                return
-            }
-            vid1.current.play()
-
-        }, false)
-
-        vid1.current.addEventListener("play", () => {
-            console.log(`${vid1.current.name} play, url:${vid1.current.src}`)
-            vid1.current.muted = false
-            vid2.current.muted = true
-
-            vid1.current.style.visibility = "visible"
-            vid2.current.style.visibility = "hidden"
-
-            setCurrentPlaying((cur) => {
-                if (cur < urls.length - 1) {
-                    vid2.current.src = _urls[cur + 1]
-                    vid2.current.load()
-                    return cur + 1
+    useEffect(() => { 
+        video.current.addEventListener('timeupdate', (event) => {
+            if (!video.current) return;
+            const { currentTime, duration } = video.current;
+            if (duration - currentTime < 1) {
+                //end
+                const index = currentPlaying + 1;
+                if (index === urls.length) {
+                    exit && exit()
+                } else {
+                    setCurrentPlaying(index)
+                    play(urls[index])
                 }
-                return cur
-            })
-        })
+            }
+        });
 
+        video.current.mute = true
 
-        vid2.current.addEventListener("play", () => {
-            console.log(`${vid2.current.name} play, url:${vid2.current.src}`)
-            vid2.current.muted = false
-            vid1.current.muted = true
-            vid2.current.style.visibility = "visible"
-            vid1.current.style.visibility = "hidden"
+        video.current.onloadeddata = () => {
+            console.log('player...')
+            //video.current.currentTime = 0.1
+            video.current.play().then(() => {
+                // TODO: 在用户开始播放视频时，获取视频的其余部分。
+            });
+        }
+        //video.current.load(); // 后续能够播放视频。
 
-            setCurrentPlaying(cur => {
-                if (cur < urls.length - 1) {
-                    vid1.current.src = _urls[cur + 1]
-                    vid1.current.load()
-                    return cur + 1
-                }
-                return cur
-            })
-        })
+        play(urls[currentPlaying])
 
-        dataPerpare()
     }, [])
 
-    const resetPlayer = (player) => {
-        player.style.visibility = "hidden"
-        console.log(`${player.name} end, url:${player.src}`)
-        player.src = ""
-    }
+    // useEffect(() => {
+    //     window.caches.open('video-pre-cache')
+    //         .then(cache => Promise.all(urls.map(videoFileUrl => fetchAndCache(videoFileUrl, cache))));
+    // }, [])
 
 
-    const dataPerpare = () => {
-        if (urls.length === 0)
-            return
-        vid1.current.muted = true
-        vid1.current.src = _urls[currentPlaying]
+    useEffect(() => {
 
-        //vid1.current.load()
-        //vid1.current.autoPlay = true
-        const playPromise = vid1.current.play()
-        if (playPromise !== undefined) {
-            playPromise.then(_ => {
-                // Automatic playback started!
-                // Show playing UI.
-            })
-                .catch(error => {
-                    // Auto-play was prevented
-                    // Show paused UI.
-                    console.error(error)
-                });
+        window.addEventListener('fetch', event => {
+            debugger
+            //@ts-ignore
+            event.respondWith(loadFromCacheOrFetch(event.request));
+        });
+
+        function loadFromCacheOrFetch(request) {
+            // 为此请求搜索所有可用的缓存。
+            return caches.match(request)
+                .then(response => {
+
+                    // 如果它尚未在缓存中，则从网络获取。
+                    if (!response) {
+                        return fetch(request);
+                        // 注意，我们可能希望将响应添加到缓存中，同时并行
+                        // 返回网络响应。
+                    }
+
+                    // 浏览器发送一个 HTTP Range 请求。 让我们从缓存中
+                    // 手动重建一个。
+                    if (request.headers.has('range')) {
+                        return response.blob()
+                            .then(data => {
+
+                                // 从 Range 请求标头中获取起始位置。
+                                const pos = Number(/^bytes\=(\d+)\-/g.exec(request.headers.get('range'))[1]);
+                                const options = {
+                                    status: 206,
+                                    statusText: 'Partial Content',
+                                    headers: response.headers
+                                }
+                                const slicedResponse = new Response(data.slice(pos), options);
+                                //@ts-ignore
+                                slicedResponse.setHeaders('Content-Range', 'bytes ' + pos + '-' +
+                                    (data.size - 1) + '/' + data.size);
+                                //@ts-ignore
+                                slicedResponse.setHeaders('X-From-Cache', 'true');
+
+                                return slicedResponse;
+                            });
+                    }
+
+                    return response;
+                })
         }
+    }, [])
+
+    const fetchAndCache = (videoFileUrl, cache) => {
+        // 首先检查视频是否在缓存中。
+        return cache.match(videoFileUrl)
+            .then(cacheResponse => {
+                // 如果视频已在缓存中，我们返回缓存的响应。
+                if (cacheResponse) {
+                    return cacheResponse;
+                }
+                // 否则，从网络获取视频
+                return fetch(videoFileUrl, { headers: { range: 'bytes=0-567139' } })
+                    .then(networkResponse => {
+                        // 将响应添加到缓存中，同时并行返回网络响应。
+                        console.log('networkResponse', networkResponse)
+                        cache.put(videoFileUrl, networkResponse.clone());
+                        return networkResponse;
+                    });
+            });
     }
+
+    const play = (url: string): void => {
+        // 后续能够播放视频。
+        video.current.load()
+        video.current.src = url;
+        return;
+        window.caches.open('video-pre-cache')
+            .then(cache => fetchAndCache(url, cache)) // 在上文定义。
+            .then(response => response.arrayBuffer())
+            .then(data => {
+                console.log('data', data)
+                const mediaSource = new MediaSource();
+                video.current.src = URL.createObjectURL(mediaSource);
+                mediaSource.addEventListener('sourceopen', () => {
+                    //检查编码 https://gpac.github.io/mp4box.js/test/filereader.html
+                    //视频预加载 https://web.dev/i18n/zh/fast-playback-with-preload/
+                    //https://ioncannon.net/utilities/1515/segmenting-webm-video-and-the-mediasource-api/
+                    const sourceBuffer = mediaSource.addSourceBuffer('video/mp4; codecs="avc1.640028"');
+                    URL.revokeObjectURL(video.current.src);
+                    sourceBuffer.appendBuffer(data);
+
+                    sourceBuffer.addEventListener("updateend", () => {
+                        if (
+                            mediaSource.readyState === "open" &&
+                            sourceBuffer &&
+                            sourceBuffer.updating === false
+                        ) {
+                            //sourceBuffer.appendBuffer(data);
+
+                        }
+                        // console.log('updateend...')
+                        // Limit the total buffer size to 20 minutes
+                        // This way we don't run out of RAM
+                        if (
+                            video.current.buffered.length &&
+                            video.current.buffered.end(0) - video.current.buffered.start(0) > 1200
+                        ) {
+                            sourceBuffer.remove(0, video.current.buffered.end(0) - 1200)
+                        }
+                    });
+                }, { once: true });
+            });
+
+    }
+
     return (
         <>
-            <video className="vid" preload="none" ref={vid1}></video>
-            <video className="vid" preload="none" ref={vid2} ></video>
+            <video ref={video} muted={true} crossOrigin="anonymous" width={1280} height={640}></video>
+
         </>
     )
 

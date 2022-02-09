@@ -1,20 +1,60 @@
-import React from "react";
-import DoubleProgram from "./DoubleProgram";
-import WeatherPlayer from "./WeatherPlayer";
+import React, { useEffect, useState } from "react";
+import { TransitionGroup, CSSTransition } from "react-transition-group";
+import { ImageListProps } from "../Meta";
+import { Image } from "./Image";
 
-export default class Playlist extends React.Component {
-    componentDidMount() {}
+export const ImageList = <T extends unknown>({
+  urls,
+  duration,
+  animation,
+  exit,
+}: ImageListProps<T>) => {
+  //console.log('urls',urls)
+  const [visibleIndex, setVisibleIndex] = useState(0);
+  useEffect(() => {
+    const timer: ReturnType<typeof setInterval> = setInterval(() => {
+      setVisibleIndex((vi) => {
+        if (vi < urls.length - 1) {
+          return vi + 1;
+        } else {
+          //console.log("clearInterval");
+          //vi = 0;
+          clearInterval(timer);
+          if (exit) {
+            exit();
+          }
+          return vi;
+        }
+      });
+    }, duration);
+    return () => clearInterval(timer);
+  }, []);
 
-    render() {
-        const { programs } = this.props;
-        if(programs.length === 0)return null;
-        console.log("programs", programs);
-        return (
-            <React.Fragment>
-      
-                <WeatherPlayer city={ programs[0].location } />
-                <DoubleProgram { ...this.props }/>
-            </React.Fragment>
-        );
-    }
-}
+  //console.log('visibleIndex', visibleIndex, urls.length)
+
+  const itemRender = (x, index) => {
+    return (
+      visibleIndex === index && (
+        <CSSTransition
+          key={"key" + index}
+          timeout={2000}
+          classNames={animation}
+        >
+          <div className="view">
+            <Image src={x} />
+          </div>
+        </CSSTransition>
+      )
+    );
+  };
+
+  return (
+    <React.Fragment>
+      <TransitionGroup>
+        {urls.map((x, index) => {
+          return itemRender(x, index);
+        })}
+      </TransitionGroup>
+    </React.Fragment>
+  );
+};
