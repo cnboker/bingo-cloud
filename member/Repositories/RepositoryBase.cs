@@ -8,8 +8,8 @@ namespace Member.Repositories
     public class RepositoryBase
     {
 
-        private string connectionString;
-        private string identityConnectionString;
+        private string memberConnectionString;
+        private string serviceConnectionString;
 
         private readonly IConfiguration configuration;
 
@@ -17,26 +17,26 @@ namespace Member.Repositories
         {
             get
             {
-                return new MySqlConnection(connectionString);
+                return new MySqlConnection(memberConnectionString);
             }
         }
 
-        public System.Data.IDbConnection IdentityConnection
+        public System.Data.IDbConnection ServiceConnection
         {
             get
             {
-                return new MySqlConnection(connectionString);
+                return new MySqlConnection(serviceConnectionString);
             }
         }
         public RepositoryBase(IConfiguration configuration)
         {
             this.configuration = configuration;
 
-            connectionString = Microsoft.Extensions.Configuration
+            memberConnectionString = Microsoft.Extensions.Configuration
             .ConfigurationExtensions.GetConnectionString(this.configuration, "MemberConnection");
 
-            identityConnectionString = Microsoft.Extensions.Configuration
-            .ConfigurationExtensions.GetConnectionString(this.configuration, "DefaultConnection");
+            serviceConnectionString = Microsoft.Extensions.Configuration
+            .ConfigurationExtensions.GetConnectionString(this.configuration, "ServiceConnection");
 
         }
 

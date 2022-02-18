@@ -13,7 +13,7 @@ export default ({ url }) => {
     setLoading(false);
   };
   return (
-    <div style={{ backgroundColor: "#4A4A4A" }}>
+    <div style={{ height: "100%", wdith: "100%" }}>
       <Iframe
         onLoad={hideSpinner}
         url={url}

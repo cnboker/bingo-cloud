@@ -1,4 +1,3 @@
-
 exports.MetaMap1 = {
   rootId: "2t53z2qntj3",
   map: {
@@ -83,19 +82,30 @@ exports.MetaMap = {
 //   },
 // ];
 
+// exports.postData = {
+//   urls: [
+//     //"http://file.ioliz.com/admin/bbc.mp4",
+//     //"http://file.ioliz.com/wwwroot/admin/3.webm",
+//     // "http://file.ioliz.com/wwwroot/admin/7.jpeg",
+//     // "http://file.ioliz.com/wwwroot/admin/5.jpeg",
+//     // "http://file.ioliz.com/wwwroot/admin/1.jpeg",
+//     // "http://file.ioliz.com/wwwroot/admin/3.jpeg",
+//      "http://file.ioliz.com/admin/2.jpeg",
+//     "http://file.ioliz.com/admin/2.mp4",
+//   ],
+//   duration: 3000,
+//   animation: "slider",
+// };
+
 exports.postData = {
-  urls: [
-    //"http://file.ioliz.com/admin/bbc.mp4",
-    //"http://file.ioliz.com/wwwroot/admin/3.webm",
-    // "http://file.ioliz.com/wwwroot/admin/7.jpeg",
-    // "http://file.ioliz.com/wwwroot/admin/5.jpeg",
-    // "http://file.ioliz.com/wwwroot/admin/1.jpeg",
-    // "http://file.ioliz.com/wwwroot/admin/3.jpeg",
-     "http://file.ioliz.com/admin/2.jpeg",
-    "http://file.ioliz.com/admin/2.mp4",
+  sources: [
+    { type: "image", url: "http://file.ioliz.com/admin/2.jpeg" },
+   // { type: "image", url: "http://file.ioliz.com/admin/1.jpeg" },
+   // { type: "image", url: "http://file.ioliz.com/admin/3.jpeg" },
+    { type: "video", url: "http://file.ioliz.com/admin/2_1080p.mp4",poster:'http://file.ioliz.com/admin/2.png' },
+    { type: "video", url: "http://file.ioliz.com/admin/bbc.mp4",poster:'http://file.ioliz.com/admin/bbc.png' },
+    //{type:'page',name:'page'},
   ],
   duration: 3000,
   animation: "slider",
 };
-
- 

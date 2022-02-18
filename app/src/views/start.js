@@ -18,8 +18,6 @@ export default () => {
     console.log('context start...')
     if (context.isCreateTrial) {
       history.push('/quickStart')
-    } else {
-      history.push('/')
     }
   }, [context.orderSessionRequestSuccess])
   return null

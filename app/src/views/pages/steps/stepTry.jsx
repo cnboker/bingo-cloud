@@ -25,7 +25,7 @@ export default () => {
             />
           </Offcanvas>
         )}
-        <CCardTitle>欢迎使用粒子数字标牌云发布系统</CCardTitle>
+        <CCardTitle>欢迎使用立方数字标牌内容发布系统</CCardTitle>
         <CCardText>
           {context.isCreateTrial && (
             <React.Fragment>

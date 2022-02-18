@@ -1,16 +1,15 @@
 import React from "react";
-import * as Server from "react-dom/server";
 import ReactDOM from "react-dom";
-import { Renderer } from "./Renderer";
 import "./components/csscomponents/index.js";
 import { registerRoute } from "workbox-routing";
 import { CacheFirst } from "workbox-strategies";
 import { CacheableResponsePlugin } from "workbox-cacheable-response";
 import { RangeRequestsPlugin } from "workbox-range-requests";
+import { Viewport } from './components/Viewport'
 
 export const App = (metaData) => {
-  console.log(Server.renderToString(<Renderer {...metaData} />));
-  ReactDOM.render(<Renderer {...metaData} />, document.getElementById("root"));
+
+  ReactDOM.render(<Viewport {...metaData} />, document.getElementById("root"));
 
   if ("serviceWorker" in navigator) {
     window.addEventListener("load", () => {

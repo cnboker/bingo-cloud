@@ -35,7 +35,7 @@ namespace FileServer.Controllers
        string hostUrl = Request.Scheme + "://" + Request.Host + "/";
       foreach (var node in generator.fileMap.Values)
       {
-        node.ThumbnailUrl = !string.IsNullOrEmpty(node.ThumbnailUrl) ?  hostUrl + User.Identity.Name + node.ThumbnailUrl : "";
+        node.ThumbnailUrl = !string.IsNullOrEmpty(node.ThumbnailUrl) ?  hostUrl + User.Identity.Name + node.ThumbnailUrl : null;
         node.Path = !string.IsNullOrEmpty(node.Path) ?  hostUrl + User.Identity.Name + node.Path : "";
       }
       var outputJson = new
@@ -96,7 +96,8 @@ namespace FileServer.Controllers
       return Ok();
     }
 
-    [RequestSizeLimit(1024 * 1024 * 2000)]
+    //[RequestSizeLimit(1024 * 1024 * 2000)]
+    [DisableRequestSizeLimit]
     [HttpPost("/api/server/upload")]
     public async Task<IActionResult> File([FromForm] IFormFile files)
     {

@@ -13,13 +13,21 @@ exports.make = async (username, entity) => {
   const entryFile = `${process.cwd()}/entry/builder.js`;
   try {
     //console.log("entryFile", entryFile);
+    // const jsx = `
+    //   import { App } from '../src/compiler/app'
+    //   import { transformData } from  '../src/httpserver/postDataTransformer'
+    //   const metamap = transformData(${dataContent})
+    //   console.log('metamap',metamap)
+    //   App(metamap)
+    // `;
     const jsx = `
-      import { App } from '../src/compiler/app'
+    import { App } from '../src/compiler/app'
       import { transformData } from  '../src/httpserver/postDataTransformer'
-      const metamap = transformData(${dataContent})
-      console.log('metamap',metamap)
-      App(metamap)
-    `;
+      const data = transformData(${dataContent})
+      console.log('ddd',data)
+      App(data)
+    
+    `
     console.log('jsx', jsx)
     await writeFile(entryFile, jsx);
     return await esbuild.build(username, entryFile);

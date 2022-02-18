@@ -14,21 +14,26 @@ export interface IMeta<T> {
 }
 
 export type IPlayProps = {
-
+  type: 'image' | 'video' | 'page'
+  animation: string;
+  exit: () => void;
 }
 
 export type IImageProps = IPlayProps & {
   url: string,
   duration: number,
-  animation: string,
 }
 
-//支持播放完成事件
-export type IPlayView<T> = IMeta<T> & {
-  urls: string[],
-  visible: boolean,
-  exit: () => void
+export type IVideoProps = IPlayProps & {
+  url: string,
+  poster:string
 }
+
+export type IPageProps = IPlayProps & {
+  pageName: string
+}
+
+
 
 export type ClockProps<T> = IMeta<T> & {
 
@@ -38,24 +43,6 @@ export type ImageProps = {
   src: string
 }
 
-export type ImageListProps<T> = IPlayView<T> & {
-  urls: string[],
-  duration: number,
-  animation: string,
-}
-
-export type Page<T> = IPlayView<T> & {
-
-}
-
 export type TextProps = {
   text: string
-}
-
-export type IVidePlayerProps<T> = IPlayView<T> & {
-
-}
-
-export type IViewProps<T> = {
-  playViews: IPlayView<T>[]
 }

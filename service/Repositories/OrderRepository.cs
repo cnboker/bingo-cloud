@@ -19,7 +19,7 @@ namespace Ioliz.Service.Repositories
     //代理商获取租户信息
     public string[] GetMyTenants(string agentUser)
     {
-      using (IDbConnection db = IdentityConnection)
+      using (IDbConnection db = MemberConnection)
       {
         string sqlText = @"select UserName from AspNetUsers where agentUser=@agentUser";
 

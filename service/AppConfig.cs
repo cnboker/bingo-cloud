@@ -56,7 +56,7 @@ namespace Ioliz.Service
         public string WeixinAppId { get; set; }
         public string MQTTConnectionString;
         public string MemberConnectionString;
-        public string IdentityConnectionString;
+        public string ServiceConnectionString;
         public string MQTTServer;
         //4g網絡配額
         public long Quota4G { get; set; }
@@ -84,8 +84,8 @@ namespace Ioliz.Service
             MemberConnectionString = Microsoft.Extensions.Configuration
          .ConfigurationExtensions.GetConnectionString(configRoot, "MemberConnection");
 
-            IdentityConnectionString = Microsoft.Extensions.Configuration
-            .ConfigurationExtensions.GetConnectionString(configRoot, "IdentityConnection");
+            ServiceConnectionString = Microsoft.Extensions.Configuration
+            .ConfigurationExtensions.GetConnectionString(configRoot, "ServiceConnection");
 
             MQTTConnectionString = Microsoft.Extensions.Configuration
             .ConfigurationExtensions.GetConnectionString(configRoot, "MQTTConnection");

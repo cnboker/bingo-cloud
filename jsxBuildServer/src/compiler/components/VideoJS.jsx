@@ -7,17 +7,16 @@ import "videojs-playlist/dist/videojs-playlist";
 export const VideoJS = (props) => {
   const videoRef = React.useRef(null);
   const playerRef = React.useRef(null);
-  const { playlist, onReady, exit } = props;
-  let sourceCount = playlist.length;
-  console.log('playlist',playlist) 
+  const { url, exit } = props;
+
   const videoJsOptions = {
     // lookup the options in the docs for more options
     //支持自动播放只能静音， chrome 有限制导致
     autoplay: "muted",
-    controls: true,
+    //controls: true,
     // responsive: true,
     fluid: true,
-    preload: 'auto'
+    preload: "auto",
   };
 
   React.useEffect(() => {
@@ -47,16 +46,16 @@ export const VideoJS = (props) => {
         let n = player.playlist.currentIndex() + 1;
 
         if (n > 0 && n < sourceCount) {
-         
           // need to actually determine the correct source here
-          let preloadlocation = 'http://localhost/' + playlist[n].sources[0].src;
+          let preloadlocation =
+            "http://localhost/" + playlist[n].sources[0].src;
 
           var preloadLink = document.createElement("link");
           preloadLink.href = preloadlocation;
           preloadLink.rel = "preload";
           preloadLink.as = "video";
           document.head.appendChild(preloadLink);
-          console.log('preloadLink..',preloadLink)
+          console.log("preloadLink..", preloadLink);
         }
       });
 
@@ -79,7 +78,9 @@ export const VideoJS = (props) => {
 
   return (
     <div data-vjs-player>
-      <video ref={videoRef} className="video-js vjs-big-play-centered" />
+      <video ref={videoRef} autoplay className="video-js vjs-big-play-centered">
+        <source src={url} type="video/mp4" />
+      </video>
     </div>
   );
 };

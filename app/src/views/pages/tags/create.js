@@ -66,7 +66,7 @@ export default ({ catelog }) => {
             dispatch(
               tagUpdate({
                 catelog: catelog,
-                content: tager.current.tagify.value.map((x) => x.value).join(),
+                content: JSON.stringify(tager.current.tagify.value.map((x) => x.value)),
               }),
             )
           }

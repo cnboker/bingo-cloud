@@ -15,7 +15,7 @@ export const fetchTags = (catelog) => (dispatch) => {
   }).then((response) => {
     var data = {
       catelog,
-      tags: response.data,
+      tags: JSON.parse(response.data),
     }
     dispatch(receiveTags(data))
   })
@@ -29,7 +29,7 @@ export const tagUpdate = (data) => (dispatch) => {
     headers: authHeader(),
   })
     .then(() => {
-      dispatch(receiveTags({ catelog: data.catelog, tags: data.content }))
+      dispatch(receiveTags({ catelog: data.catelog, tags: JSON.parse(data.content) }))
     })
     .catch((e) => {
       toast(e.message)

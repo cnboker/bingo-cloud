@@ -7,6 +7,7 @@ import {
   useFilePicker,
   SelectFileList,
   FileActionHandler,
+  ChonkyIconName,
 } from 'chonky'
 import { setChonkyDefaults, ChonkyIconFA } from 'chonky'
 import { useSelector, RootStateOrAny, useDispatch } from 'react-redux'
@@ -17,8 +18,6 @@ import { asyncGet, asyncPost } from 'src/lib/api'
 import { CustomFileMap, FsMap } from './FsMap'
 import { useCustomFileMap } from './useCustomFileMap'
 import { useFileActionHandler } from './useFileActionHandler'
-import { MetaMap } from './MetaMap'
-import { uniqueID } from 'src/lib/string'
 import { PubForms } from './pubComponents/Index'
 import { requestDeviceList } from '../device/actions'
 import { mqttPub } from './mqttPub'
@@ -127,6 +126,19 @@ export const VFSBrowser: React.FC<DataVFSProps> = (props) => {
     dispatch(requestDeviceList(securityReducer.userName))
   }, [])
 
+  const getFileType = (url: string) => {
+    if (url.endsWith('.mp4')) {
+      return 'image'
+    } else if (url.endsWith('.png') || url.endsWith('.jpg') || url.endsWith('.jpeg')) {
+      return 'video'
+    } else if (url.endsWith('.pge')) {
+      return 'page'
+    } else {
+      // eslint-disable-next-line no-throw-literal
+      throw 'not konw ext'
+    }
+  }
+
   const onPub = async () => {
     const pubRef = pubFormsRef.current
     const validated = pubRef.dataValidate()
@@ -138,6 +150,13 @@ export const VFSBrowser: React.FC<DataVFSProps> = (props) => {
     const fileUrls = fileList.map((x: any) => x.path)
     const entity = {
       urls: fileUrls,
+      sources: fileUrls.map((url: string) => {
+        return {
+          url,
+          type: getFileType(url),
+          poster: '',
+        }
+      }),
       duration: settings.duration * 1000,
       animation: settings.effect,
     }

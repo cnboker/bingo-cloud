@@ -18,11 +18,11 @@ namespace Ioliz.Service.Repositories
             }
         }
 
-        public System.Data.IDbConnection IdentityConnection
+        public System.Data.IDbConnection ServiceConnection
         {
             get
             {
-                return new MySqlConnection(AppInstance.Instance.Config.IdentityConnectionString);
+                return new MySqlConnection(AppInstance.Instance.Config.ServiceConnectionString);
             }
         }
 

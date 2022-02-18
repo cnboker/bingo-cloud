@@ -1,5 +1,5 @@
 import { Image } from "./Image";
-import { Animations } from "./Animations";
+import { Animations } from "./CSSTrans";
 import { ImageList } from "./ImageList";
 import { Viewport } from "./Viewport";
 import { VideoPlayer } from "./VideoPlayer";

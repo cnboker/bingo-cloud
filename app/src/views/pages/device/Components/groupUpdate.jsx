@@ -1,5 +1,5 @@
 import React from 'react'
-import { RowContainer } from '../../../components/Forms/RowContainer'
+import { RowContainer } from '../../../components/forms/RowContainer'
 import resources from '../locale'
 import Select from 'src/views/components/forms/input-group/InputGroup'
 

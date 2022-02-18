@@ -38,9 +38,9 @@ namespace Ioliz.Service.Controllers {
             }
         }
 
-        public System.Data.IDbConnection IdentityConnection {
+        public System.Data.IDbConnection ServiceConnection {
             get {
-                return new SqlConnection (AppInstance.Instance.Config.IdentityConnectionString);
+                return new SqlConnection (AppInstance.Instance.Config.ServiceConnectionString);
             }
         }
 
@@ -70,7 +70,7 @@ namespace Ioliz.Service.Controllers {
         protected UserSetting GetSetting(string userName){
             var sqlText = "select setting from AspNetUsers where UserName=@userName" ;
             UserSetting setting = new UserSetting();
-             using (IDbConnection db = IdentityConnection)
+             using (IDbConnection db = MemberConnection)
             {
                 var result = db.ExecuteScalar(sqlText,new {userName=userName});
                 

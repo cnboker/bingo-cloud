@@ -4,10 +4,11 @@ import {
   IResourceInfo,
   IFileDownloader
 } from "../interfaces/IContentWorker";
-import { readFile } from "./WebOSFileService";
+import { readFile,exists } from "./WebOSFileService";
 import { getService } from "./ServiceProiver";
 import { IMQTTDispatcher } from "../interfaces/IMQTTDispatcher";
-import { APP_DIR, instance,isInTest } from "../configer";
+import { APP_DIR, APP_DOWNLOAD_DIR, instance,isInTest } from "../configer";
+
 export default class ContentWorker implements IContentWorker {
   contentNotify: IContentNotify;
   fileDownloader: IFileDownloader;
@@ -39,6 +40,11 @@ export default class ContentWorker implements IContentWorker {
       }).catch(e => {
         console.log("read downloadlist.json", e);
       });
+      //检查index.html是否存在，如果存在则加载
+      exists(`${APP_DOWNLOAD_DIR}/index.html`)
+      .then((exists) => {
+        exists && cb && cb()
+      })
 
     this.contentNotify.watch();
   }

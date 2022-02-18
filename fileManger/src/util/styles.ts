@@ -56,7 +56,7 @@ export const lightTheme = {
         childrenCountSize: '1.6em',
         iconColorFocused: '#000',
         iconSize: '2.4em',
-        iconColor: '#fff',
+        iconColor: '#f9b115',
         borderRadius: 5,
         fontSize: 14,
 
