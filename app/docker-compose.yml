@@ -1,0 +1,23 @@
+version: "3.3"
+services:
+  server:
+    restart: always
+    build:
+      #设置父目录为根目录，只有这样才能在Dockerfile文件将fileServer和shared目录文件copy到docker conatiner
+      #fileServer项目依赖shared项目
+      context: ../
+      #指定Dockerfile文件位置
+      dockerfile: ./app/Dockerfile
+    ports:
+    #HOST:CONTAINER
+      - "80:80"
+    networks:
+      - "myNetwork"
+    
+    volumes:
+    #host:container
+      - /home/dist/app:/app/build
+
+networks:
+  myNetwork:
+    external: true

@@ -8,6 +8,7 @@ services:
             - "80:80"
         volumes:
             - /home/ioliz/_www/build:/www
+            - /home/dist/app:/www/app
         networks:
             - "myNetwork"
         restart: always
