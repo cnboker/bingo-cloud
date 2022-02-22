@@ -17,6 +17,8 @@ services:
     networks:
     # cmd: docker network create myNetwork
       - "myNetwork"
+    links:
+      - "mysql:mysql"
 networks:
   myNetwork:
     external: true

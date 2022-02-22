@@ -13,6 +13,8 @@ services:
       - "6001:6001"
     networks:
       - "myNetwork"
+    links:
+      - "mysql:mysql"
 networks:
   myNetwork:
     external: true

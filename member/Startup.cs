@@ -48,8 +48,7 @@ namespace Ioliz
             //product
             services.AddDbContext<IolizContext>(
                      options => {
-                         var connetionString = Configuration.GetConnectionString("DefaultConnection");
-                         Console.WriteLine("connetionString=" + connetionString);
+                         var connetionString = Configuration.GetConnectionString("MemberConnection");
                          options.UseMySql(connetionString, ServerVersion.AutoDetect(connetionString));});
 
            
