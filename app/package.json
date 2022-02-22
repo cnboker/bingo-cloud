@@ -3,7 +3,7 @@
   "description": "IronSingage",
   "version": "4.0.0-rc.0",
   "config": {
-    "coreui_library_short_version": "4.0"
+    "ironCloud": "4.0"
   },
   "author": {
     "name": "IronCloud",
@@ -101,7 +101,7 @@
   },
   "scripts": {
     "start": "cross-env NODE_ENV=development react-app-rewired start",
-    "build": "cross-env NODE_ENV=production react-app-rewired build",
+    "build": "cross-env NODE_ENV=production react-app-rewired build && scp  ./build ubuntu@ioliz.com:/home/dist/app",
     "lint": "eslint \"src/**/*.js\"",
     "test": "react-scripts test",
     "test:cov": "npm test -- --coverage --watchAll=false",
