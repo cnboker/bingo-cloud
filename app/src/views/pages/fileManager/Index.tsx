@@ -7,7 +7,6 @@ import {
   useFilePicker,
   SelectFileList,
   FileActionHandler,
-  ChonkyIconName,
 } from 'chonky'
 import { setChonkyDefaults, ChonkyIconFA } from 'chonky'
 import { useSelector, RootStateOrAny, useDispatch } from 'react-redux'
@@ -35,12 +34,25 @@ const useFetchCustomFileMap = () => {
   }, [])
 }
 
-export const useFiles = (fileMap: CustomFileMap, currentFolderId: string): FileArray => {
+export const useFiles = (
+  bashPath: string,
+  fileMap: CustomFileMap,
+  currentFolderId: string,
+): FileArray => {
   return useMemo(() => {
     const currentFolder = fileMap[currentFolderId]
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     const childrenIds = currentFolder.childrenIds!
-    const files = childrenIds.map((fileId: string) => fileMap[fileId])
+    const files = childrenIds.map((fileId: string) => {
+      const fo = fileMap[fileId]
+      if (fo.path[0] === '/') {
+        fo.path = bashPath + fo.path
+        if (fo.thumbnailUrl) {
+          fo.thumbnailUrl = bashPath + fo.thumbnailUrl
+        }
+      }
+      return fileMap[fileId]
+    })
     return files
   }, [currentFolderId, fileMap])
 }
@@ -95,7 +107,8 @@ export const VFSBrowser: React.FC<DataVFSProps> = (props) => {
   const securityReducer = useSelector((state: RootStateOrAny) => state.securityReducer)
   const {
     fileMap,
-    currentFolderId,
+    currentFolderId, //RootId
+    bashPath,
     setCurrentFolderId,
     deleteFiles,
     moveFiles,
@@ -103,7 +116,7 @@ export const VFSBrowser: React.FC<DataVFSProps> = (props) => {
     uploadFiles,
   } = useCustomFileMap(props.data)
   const { selectedFiles, handleAction: fileSelectAction, handleRemove } = useFilePicker()
-  const files = useFiles(fileMap, currentFolderId)
+  const files = useFiles(bashPath, fileMap, currentFolderId)
   const folderChain = useFolderChain(fileMap, currentFolderId)
   const handleFileAction = useFileActionHandler(
     setCurrentFolderId,
@@ -147,7 +160,7 @@ export const VFSBrowser: React.FC<DataVFSProps> = (props) => {
     const { settings, deviceList, fileList } = data
     console.log('pub data...', data)
 
-    const fileUrls = fileList.map((x: any) => x.path)
+    const fileUrls = fileList.map((x: { path: string }) => x.path)
     const entity = {
       urls: fileUrls,
       sources: fileUrls.map((url: string) => {

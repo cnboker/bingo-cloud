@@ -17,8 +17,9 @@ services:
     networks:
     # cmd: docker network create myNetwork
       - "myNetwork"
-    links:
-      - "mysql:mysql"
+    #增加链接确保数据库连接字符串可以使用mysql名称连接mysql container， 通过这种方法可以解决重新启动mysql服务器ip改变的情况
+    external_links:
+      - ":mysql"
 networks:
   myNetwork:
     external: true

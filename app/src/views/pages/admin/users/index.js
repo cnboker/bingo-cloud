@@ -1,6 +1,6 @@
 // eslint-disable-next-line no-use-before-define
 import React from 'react'
-import { CButton, CCard, CCardBody, CCardHeader } from '@coreui/react'
+import { CButton } from '@coreui/react'
 import SimpleSearchbar from 'src/views/components/forms/form-control/SimpleSearchbar'
 import Table from 'src/views/components/tables/Table'
 import { DateFormater } from 'src/views/components/tables/CellFormatter'

@@ -44,7 +44,7 @@ export function checkAuthorization(dispatch) {
   return false
 }
 
-export function PrivateRoute({ component: Component, dispatch, state, ...rest }) {
+export function PrivateRoute({ component: Component, dispatch, ...rest }) {
   const authed = checkAuthorization(dispatch)
 
   return (

@@ -112,7 +112,7 @@ const Header = ({
                       navPosition && `header-nav-${navPosition}`
                     )}>
                     <li>
-                      <Link to="/doc" onClick={closeMenu}>文档</Link>
+                      <Link to="/docs" onClick={closeMenu}>文档</Link>
                     </li>
                   </ul>
                   {!hideSignin &&
@@ -120,7 +120,7 @@ const Header = ({
                       className="list-reset header-nav-right"
                     >
                       <li>
-                        <Link to="http://app.ioliz.com/login" className="button button-primary button-wide-mobile button-sm" onClick={closeMenu}>登录</Link>
+                        <a href="http://app.ioliz.com" className="button button-primary button-wide-mobile button-sm" >登录</a>
                       </li>
                     </ul>}
                 </div>

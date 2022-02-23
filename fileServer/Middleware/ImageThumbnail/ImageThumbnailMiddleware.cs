@@ -29,7 +29,7 @@ namespace ImageThumbnail.AspNetCore.Middleware
             //var isValid = context.Request.Path.StartsWithSegments("/" + _options.ImagesDirectory);
             var isValid = !string.IsNullOrEmpty(context.Request.Query["size"]) && 
             context.Request.Query["type"] == "image";
-            Console.WriteLine("isValid=" + isValid.ToString());
+            //Console.WriteLine("isValid=" + isValid.ToString());
             if (isValid)
             {
                 var thumbnailRequest = ParseRequest(context.Request);
@@ -76,8 +76,12 @@ namespace ImageThumbnail.AspNetCore.Middleware
             req.RequestedPath = request.Path;
             req.ThumbnailSize = ParseSize(request.Query["size"]);
             req.SourceImagePath = GetPhysicalPath(request.Path);
-            req.ThumbnailImagePath = GenerateThumbnailFilePath(request.Path, req.ThumbnailSize);
-            Console.WriteLine("request," + req.SourceImagePath + "," + req.ThumbnailImagePath);
+            req.ThumbnailImagePath = GenerateThumbnailFilePath(request.Path, req.ThumbnailSize, request.Query["user"]);
+            //req.UserName = request.Query["user"];
+            Console.WriteLine("SourceImagePath=" + req.SourceImagePath);
+            Console.WriteLine("RequestedPath=" + req.RequestedPath);
+            Console.WriteLine("ThumbnailImagePath=" + req.ThumbnailImagePath);
+          
             return req;
         }
 
@@ -203,7 +207,7 @@ namespace ImageThumbnail.AspNetCore.Middleware
             return fileInfo.PhysicalPath;
         }
 
-        private string GenerateThumbnailFilePath(string path, Size? size)
+        private string GenerateThumbnailFilePath(string path, Size? size, string userName)
         {
             if (!size.HasValue)
                 return path;
@@ -211,7 +215,7 @@ namespace ImageThumbnail.AspNetCore.Middleware
             var ext = Path.GetExtension(path);
 
             //ex : sample.jpg -> sample_256x256.jpg
-            fileName = string.Format("{0}_{1}x{2}{3}", fileName, size.Value.Width, size.Value.Height, ext);
+            fileName = string.Format("{0}_{1}x{2}_{3}{4}", fileName, size.Value.Width, size.Value.Height, userName, ext);
 
             var provider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), _options.ImagesDirectory, _options.CacheDirectoryName));
             var fileInfo = provider.GetFileInfo(fileName);

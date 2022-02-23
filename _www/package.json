@@ -19,7 +19,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "pub": "react-scripts build && cp -R ./docs ./build && scp  ./build ubuntu@ioliz.com:/home/ioliz/_www",
+    "pub": "npm run build && cp -R ./docs ./build && scp  -r ./build/* ubuntu@www.ioliz.com:/home/ioliz/_www",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },

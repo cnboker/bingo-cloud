@@ -11,9 +11,13 @@ import {
   CToastBody,
   CToastClose,
   CToaster,
+  CRow,
+  CCol,
+  CFormInput,
 } from '@coreui/react'
 
-const Dialog = ({ title, body, size = 'lg', callback }) => {
+//bodydata: 收集dialog‘body的数据，比如form数据
+const Dialog = ({ title, body, bodydata, size = 'lg', callback }) => {
   const [visible, setVisible] = useState(true)
 
   return (
@@ -32,7 +36,7 @@ const Dialog = ({ title, body, size = 'lg', callback }) => {
               color="primary"
               onClick={() => {
                 if (callback) {
-                  callback()
+                  callback(bodydata)
                 }
                 setVisible(false)
               }}
@@ -61,6 +65,28 @@ export const show = (options, callback) => {
 
 export const confirm = (message, cb) => {
   show({ title: '提示信息', body: message }, cb)
+}
+
+export const prompt = (title, cb) => {
+  const bodydata = {}
+  show(
+    {
+      title,
+      bodydata,
+      body: (
+        <CRow>
+          <CCol xs>
+            <CFormInput
+              placeholder={title}
+              aria-label={title}
+              onChange={(e) => (bodydata.val = e.target.value)}
+            />
+          </CCol>
+        </CRow>
+      ),
+    },
+    cb,
+  )
 }
 
 export const toast = (message, color = 'warning') => {

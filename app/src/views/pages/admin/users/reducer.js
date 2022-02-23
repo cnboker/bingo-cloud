@@ -1,4 +1,4 @@
-import { USER_LIST_RESPONSE, USER_DELETE_RESPONSE, USER_UPDATE_RESPONSE, user } from './contants'
+import { USER_LIST_RESPONSE, USER_DELETE_RESPONSE, USER_UPDATE_RESPONSE } from './contants'
 const initialState = {
   data: [],
   pageCount: 1,

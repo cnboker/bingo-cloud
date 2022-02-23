@@ -8,7 +8,7 @@ import { DirCreateUrl } from './constants'
 // Hook that sets up our file map and defines functions used to mutate - `deleteFiles`,
 // `moveFiles`, and so on.
 export const useCustomFileMap = (data: FsMap) => {
-  const { fileMap: baseFileMap, rootFolderId } = data as FsMap
+  const { fileMap: baseFileMap, rootFolderId, bashPath } = data as FsMap
   // Setup the React state for our file map and the current folder.
   const [fileMap, setFileMap] = useState(baseFileMap)
   const [currentFolderId, setCurrentFolderId] = useState(rootFolderId)
@@ -49,7 +49,7 @@ export const useCustomFileMap = (data: FsMap) => {
         if (file.parentId) {
           // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
           const parent = newFileMap[file.parentId]!
-          const newChildrenIds = parent.childrenIds!.filter((id: string) => id !== file.id)
+          const newChildrenIds = parent.childrenIds?.filter((id: string) => id !== file.id)
           newFileMap[file.parentId] = {
             ...parent,
             childrenIds: newChildrenIds,
@@ -71,7 +71,7 @@ export const useCustomFileMap = (data: FsMap) => {
         const moveFileIds = new Set(files.map((f) => f.id))
 
         // Delete files from their source folder.
-        const newSourceChildrenIds = source.childrenIds!.filter((id) => !moveFileIds.has(id))
+        const newSourceChildrenIds = source.childrenIds?.filter((id) => !moveFileIds.has(id))
         newFileMap[source.id] = {
           ...source,
           childrenIds: newSourceChildrenIds,
@@ -79,6 +79,7 @@ export const useCustomFileMap = (data: FsMap) => {
         }
 
         // Add the files to their destination folder.
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         const newDestinationChildrenIds = [...destination.childrenIds!, ...files.map((f) => f.id)]
         newFileMap[destination.id] = {
           ...destination,
@@ -107,7 +108,7 @@ export const useCustomFileMap = (data: FsMap) => {
       const { path } = map[currentFolderIdRef.current]
       Dialog.confirm(
         <FilePicker
-          basePath={path}
+          basePath={new URL(path).pathname}
           onProcessFiles={(files) => {
             console.log('response data', files)
             appendFileNode(files)
@@ -118,8 +119,9 @@ export const useCustomFileMap = (data: FsMap) => {
     })
   }, [])
 
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   const appendFileNode = (fileInfo: any) => {
-    const { fileName, path } = fileInfo
+    const { fileName, path, thumbnailUrl } = fileInfo
     setFileMap((fileMap) => {
       const newFileId = uniqueID()
       const newFileMap = { ...fileMap }
@@ -129,12 +131,15 @@ export const useCustomFileMap = (data: FsMap) => {
         name: fileName,
         isDir: false,
         path,
+        thumbnailUrl,
         modDate: new Date(),
         parentId: currentFolderIdRef.current,
       }
+      const childrenIds = [...currentFolder.childrenIds, newFileId]
       newFileMap[currentFolderIdRef.current] = {
         ...currentFolder,
-        childrenIds: [...currentFolder.childrenIds, newFileId],
+        childrenIds: childrenIds,
+        childrenCount: childrenIds.length,
       }
       return newFileMap
     })
@@ -145,8 +150,6 @@ export const useCustomFileMap = (data: FsMap) => {
   // or MD5 hashes for file paths.
   const createFolder = useCallback((folderName: string) => {
     const newFolderId = uniqueID()
-    console.log('newfolder', fileMap[currentFolderIdRef.current])
-
     setFileMap((map) => {
       asyncPost({
         url: DirCreateUrl,
@@ -186,6 +189,7 @@ export const useCustomFileMap = (data: FsMap) => {
   return {
     fileMap,
     currentFolderId,
+    bashPath,
     setCurrentFolderId,
     resetFileMap,
     deleteFiles,

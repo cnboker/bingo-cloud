@@ -23,7 +23,7 @@ export class Tags extends React.Component {
     this.tagify.destroy()
   }
 
-  shouldComponentUpdate(nextProps, nextState) {
+  shouldComponentUpdate() {
     // do not allow react to re-render since the component is modifying its own HTML
     return false
   }

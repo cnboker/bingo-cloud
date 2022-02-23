@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import { CCard, CCardBody, CCardHeader } from '@coreui/react'
 import DateSearchbar from 'src/views/components/forms/form-control/DateSearchbar'
 import Table from 'src/views/components/tables/Table'
 import { DateFormater } from 'src/views/components/tables/CellFormatter'

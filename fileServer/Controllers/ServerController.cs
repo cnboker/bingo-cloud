@@ -10,124 +10,137 @@ using Newtonsoft.Json;
 
 namespace FileServer.Controllers
 {
-  [Route("/api/[controller]/[action]")]
-  [Authorize()]
-  public class ServerController : Controller
-  {
-    private IWebHostEnvironment _hostingEnvironment;
-
-    public ServerController(IWebHostEnvironment hostingEnvironment)
+    [Route("/api/[controller]/[action]")]
+    [Authorize()]
+    public class ServerController : Controller
     {
-      this._hostingEnvironment = hostingEnvironment;
-    }
+        private IWebHostEnvironment _hostingEnvironment;
 
-    [HttpGet("/api/server")]
-    public IActionResult Index()
-    {
-      Console.WriteLine("_hostingEnvironment.WebRootPath=" + _hostingEnvironment.WebRootPath);
-      string dir = Path.Combine(_hostingEnvironment.WebRootPath, User.Identity.Name);
-      if (!System.IO.Directory.Exists(dir))
-      {
-        System.IO.Directory.CreateDirectory(dir);
-      }
-      DirectoryJsonGenerator generator = new DirectoryJsonGenerator(dir);
-      generator.CreateFolderHierarchy();
-       string hostUrl = Request.Scheme + "://" + Request.Host + "/";
-      foreach (var node in generator.fileMap.Values)
-      {
-        node.ThumbnailUrl = !string.IsNullOrEmpty(node.ThumbnailUrl) ?  hostUrl + User.Identity.Name + node.ThumbnailUrl : null;
-        node.Path = !string.IsNullOrEmpty(node.Path) ?  hostUrl + User.Identity.Name + node.Path : "";
-      }
-      var outputJson = new
-      {
-        rootFolderId = generator.RootFolderId,
-        fileMap = generator.fileMap
-      };
-      return Json(outputJson);
-    }
-
-    [HttpPost("/api/server/mkdir")]
-    public IActionResult Mkdir([FromBody] ValueModel<string> model)
-    {
-      string rootDir = Path.Combine(_hostingEnvironment.WebRootPath, User.Identity.Name);
-      try
-      {
-        var pyDir = rootDir + model.Value;
-        Console.WriteLine("path" + pyDir);
-        if (!Directory.Exists(pyDir))
+        public ServerController(IWebHostEnvironment hostingEnvironment)
         {
-          Directory.CreateDirectory(pyDir);
+            this._hostingEnvironment = hostingEnvironment;
         }
-        else
+
+        [HttpGet("/api/server")]
+        public IActionResult Index()
         {
-          return BadRequest("has exists");
+            //Console.WriteLine("_hostingEnvironment.WebRootPath=" + _hostingEnvironment.WebRootPath);
+            string dir = Path.Combine(_hostingEnvironment.WebRootPath, User.Identity.Name);
+            if (!System.IO.Directory.Exists(dir))
+            {
+                System.IO.Directory.CreateDirectory(dir);
+            }
+            DirectoryJsonGenerator generator = new DirectoryJsonGenerator(dir,User.Identity.Name);
+            generator.CreateFolderHierarchy();
+            string hostUrl = Request.Scheme + "://" + Request.Host;
+            // foreach (var node in generator.fileMap.Values)
+            // {
+            //     node.ThumbnailUrl = !string.IsNullOrEmpty(node.ThumbnailUrl) ? hostUrl + User.Identity.Name + node.ThumbnailUrl : null;
+            //     node.Path = !string.IsNullOrEmpty(node.Path) ? hostUrl + User.Identity.Name + node.Path : "";
+            // }
+            var outputJson = new
+            {
+                rootFolderId = generator.RootFolderId,
+                bashPath = hostUrl + "/" + User.Identity.Name,
+                fileMap = generator.fileMap
+            };
+            return Json(outputJson);
         }
-      }
-      catch (Exception e)
-      {
-        Console.Write(e.Message);
-        return BadRequest(e.Message);
-      }
-      return Ok();
-    }
 
-    [HttpDelete("/api/server/rm")]
-    public IActionResult Remove([FromBody] string[] fileNames)
-    {
-      foreach (var file in fileNames)
-      {
-        try
+        [HttpPost("/api/server/mkdir")]
+        public IActionResult Mkdir([FromBody] ValueModel<string> model)
         {
-
-          var filePath = _hostingEnvironment.WebRootPath + "/" + User.Identity.Name + file;
-          if (Directory.Exists(filePath))
-          {
-            Directory.Delete(filePath, true);
-          }
-          //Console.WriteLine("file path=" + _hostingEnvironment.WebRootPath + User.Identity.Name +  file);
-          if (System.IO.File.Exists(filePath))
-          {
-            System.IO.File.Delete(filePath);
-          }
-
+            string rootDir = Path.Combine(_hostingEnvironment.WebRootPath, User.Identity.Name);
+            try
+            {
+                var pyDir = rootDir + model.Value;
+                Console.WriteLine("path" + pyDir);
+                if (!Directory.Exists(pyDir))
+                {
+                    Directory.CreateDirectory(pyDir);
+                }
+                else
+                {
+                    return BadRequest("has exists");
+                }
+            }
+            catch (Exception e)
+            {
+                Console.Write(e.Message);
+                return BadRequest(e.Message);
+            }
+            return Ok();
         }
-        catch { }
-      }
-      return Ok();
-    }
 
-    //[RequestSizeLimit(1024 * 1024 * 2000)]
-    [DisableRequestSizeLimit]
-    [HttpPost("/api/server/upload")]
-    public async Task<IActionResult> File([FromForm] IFormFile files)
-    {
-      var prefixPath = Request.Headers["basePath"];
-
-      Console.WriteLine("prefixPath=" + JsonConvert.SerializeObject(prefixPath));
-      var path = this._hostingEnvironment.WebRootPath;
-      var savePath = path + "/" + User.Identity.Name + prefixPath[0];
-      Console.WriteLine("save path", savePath);
-      if (!Directory.Exists(savePath))
-      {
-        Directory.CreateDirectory(savePath);
-      }
-      if (files.Length > 0)
-      {
-
-        using (var stream = new FileStream(Path.Combine(savePath, files.FileName), FileMode.Create))
+        [HttpDelete("/api/server/rm")]
+        public IActionResult Remove([FromBody] FileInfo[] files)
         {
-          await files.CopyToAsync(stream);
+            foreach (var file in files)
+            {
+                try
+                {
+                    if (file.Path.IndexOf("/" + User.Identity.Name + "/") == -1)
+                    {
+                        return BadRequest("Illegal operation");
+                    }
+                    var filePath = _hostingEnvironment.WebRootPath + file.Path;
+                    Console.WriteLine("filePath=" + filePath);
+                    if (file.IsDir)
+                    {
+                        if (Directory.Exists(filePath))
+                        {
+                            Directory.Delete(filePath, true);
+                        }
+                    }
+                    else
+                    {
+                        //Console.WriteLine("file path=" + _hostingEnvironment.WebRootPath + User.Identity.Name +  file);
+                        if (System.IO.File.Exists(filePath))
+                        {
+                            System.IO.File.Delete(filePath);
+                        }
+                    }
+
+                }
+                catch { }
+            }
+            return Ok();
         }
-      }
-      // process uploaded files
-      // Don't rely on or trust the FileName property without validation.
-      var vPath = AppInstance.Instance.Config.Domain + User.Identity.Name + prefixPath[0] + "/";
-      var result = new
-      {
-        path = vPath + files.FileName,
-        fileName = files.FileName
-      };
-      return Json(result);
+
+        //[RequestSizeLimit(1024 * 1024 * 2000)]
+        [DisableRequestSizeLimit]
+        [HttpPost("/api/server/upload")]
+        public async Task<IActionResult> File([FromForm] IFormFile files)
+        {
+            var prefixPath = Request.Headers["basePath"];
+
+            Console.WriteLine("prefixPath=" + JsonConvert.SerializeObject(prefixPath));
+            var path = this._hostingEnvironment.WebRootPath;
+            var savePath = path + prefixPath[0];
+            Console.WriteLine("save path=" + savePath);
+            if (!Directory.Exists(savePath))
+            {
+                Directory.CreateDirectory(savePath);
+            }
+            if (files.Length > 0)
+            {
+
+                using (var stream = new FileStream(Path.Combine(savePath, files.FileName), FileMode.Create))
+                {
+                    await files.CopyToAsync(stream);
+                }
+            }
+            string hostUrl = Request.Scheme + "://" + Request.Host;
+            // process uploaded files
+            // Don't rely on or trust the FileName property without validation.
+            path = hostUrl + prefixPath[0] + "/" + files.FileName;
+            var result = new
+            {
+                path,
+                fileName = files.FileName,
+                ThumbnailUrl = DirectoryJsonGenerator.GetThumbnailUrl(path,files.FileName, User.Identity.Name)
+            };
+            return Json(result);
+        }
     }
-  }
 }

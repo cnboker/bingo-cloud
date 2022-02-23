@@ -27,6 +27,10 @@
   "alias": {
     "react": "path.resolve('./node_modules/react')"
   },
+  "resolutions": {
+    "//": "See https://github.com/facebook/create-react-app/issues/11773",
+    "react-error-overlay": "6.0.9"
+  },
   "dependencies": {
     "@coreui/coreui": "^4.0.5",
     "@coreui/icons": "^2.0.1",
@@ -95,13 +99,15 @@
     "eslint-plugin-prettier": "^3.4.1",
     "prettier": "2.3.2",
     "react-app-rewired": "^2.1.8",
+    "react-error-overlay": "^6.0.10",
     "react-scripts": "^4.0.3",
     "sass": "^1.38.0",
     "typescript": "^4.2.3"
   },
   "scripts": {
     "start": "cross-env NODE_ENV=development react-app-rewired start",
-    "build": "cross-env NODE_ENV=production react-app-rewired build && scp  ./build ubuntu@ioliz.com:/home/dist/app",
+    "build": "cross-env NODE_ENV=production react-app-rewired build",
+    "pub": "npm run build && scp -r  ./build/*  ubuntu@www.ioliz.com:~/dist/app",
     "lint": "eslint \"src/**/*.js\"",
     "test": "react-scripts test",
     "test:cov": "npm test -- --coverage --watchAll=false",

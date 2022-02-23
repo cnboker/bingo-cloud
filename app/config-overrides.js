@@ -1,4 +1,6 @@
-const { override, addBabelPlugin,addWebpackAlias } = require('customize-cra')
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const { override, addBabelPlugin, addWebpackAlias } = require('customize-cra')
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const path = require('path')
 module.exports = override(
   addBabelPlugin([
@@ -18,9 +20,8 @@ module.exports = override(
   // reason:Maybe detect that the app has multiple instances of React and say that it may be the reason of bugs.
   // resolve:add below code
   addWebpackAlias({
-    ["react"]: path.resolve('./node_modules/react'),
+    react: path.resolve('./node_modules/react'),
   }),
- 
 )
 
 // module.exports = function override(config, env) {

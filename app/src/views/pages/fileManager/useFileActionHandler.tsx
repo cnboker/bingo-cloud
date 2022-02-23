@@ -3,7 +3,7 @@ import { CustomFileData } from 'chonky/dist/extensions/file-map'
 import { useCallback } from 'react'
 import { asyncDelete } from 'src/lib/api'
 import { FileDeleteUrl } from './constants'
-
+import * as Dialog from 'src/views/components/dialog/Index'
 export const useFileActionHandler = (
   setCurrentFolderId: (folderId: string) => void,
   deleteFiles: (files: CustomFileData[]) => void,
@@ -22,9 +22,15 @@ export const useFileActionHandler = (
         }
       } else if (data.id === ChonkyActions.DeleteFiles.id) {
         const files = data.state.selectedFilesForAction
+        console.log('delete files', files)
         asyncDelete({
           url: FileDeleteUrl,
-          data: files.map((x) => x.path),
+          data: files.map((x) => {
+            return {
+              isDir: x.isDir,
+              path: x.path.indexOf('http') === 0 ? new URL(x.path).pathname : x.path,
+            }
+          }),
         }).then(() => {
           deleteFiles(files)
         })
@@ -32,9 +38,12 @@ export const useFileActionHandler = (
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         moveFiles(data.payload.files, data.payload.source!, data.payload.destination)
       } else if (data.id === ChonkyActions.CreateFolder.id) {
-        console.log('create dir', data)
-        const folderName = prompt('Provide the name for your new folder:')
-        if (folderName) createFolder(folderName)
+        //console.log('create dir', data)
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        //@ts-ignore
+        Dialog.prompt('Provide the name for your new folder', ({ val }) => {
+          if (val) createFolder(val)
+        })
       } else if (data.id === ChonkyActions.UploadFiles.id) {
         console.log('upload file trigger!')
         uploadFiles()

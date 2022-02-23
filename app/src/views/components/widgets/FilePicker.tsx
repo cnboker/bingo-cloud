@@ -28,7 +28,7 @@ type PickerProps = {
 }
 // Our app
 const ImagePicker = ({ basePath, onProcessFiles }: PickerProps) => {
-  const pond = useRef<any>(null)
+  const pond = useRef(null)
 
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const { access_token } = JSON.parse(localStorage.getItem('token')!)
@@ -41,7 +41,7 @@ const ImagePicker = ({ basePath, onProcessFiles }: PickerProps) => {
   function handleInit() {
     console.log('FilePond instance has initialised', pond)
     pond.current._pond.on('process-complete', () => {
-      debugger
+      //debugger
     })
   }
 
@@ -63,7 +63,7 @@ const ImagePicker = ({ basePath, onProcessFiles }: PickerProps) => {
               response.blob().then(function (myBlob) {
                 load(myBlob)
               })
-              console.log('response', response)
+              //console.log('response', response)
             })
             .catch((e) => {
               console.log(e)

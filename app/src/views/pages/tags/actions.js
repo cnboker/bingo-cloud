@@ -15,7 +15,7 @@ export const fetchTags = (catelog) => (dispatch) => {
   }).then((response) => {
     var data = {
       catelog,
-      tags: JSON.parse(response.data),
+      tags: typeof response.data === 'string' ? JSON.parse(response.data) : response.data,
     }
     dispatch(receiveTags(data))
   })

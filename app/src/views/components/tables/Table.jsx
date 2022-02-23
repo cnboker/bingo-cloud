@@ -30,7 +30,7 @@ const HTMLTable = ({ cellStyles, data, ...props }) => {
     }
     const leftTableWidth = tableWidth - fixedWidthSum
     const unFixedWidth = (1 / unfixedWidthCount) * leftTableWidth
-    for (var c of cellStyles) {
+    for (const c of cellStyles) {
       if (!c.width) {
         c.width = unFixedWidth
       }

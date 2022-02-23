@@ -1,33 +1,32 @@
-import { Paper, Tabs, Tab, Box, Typography, Theme, AppBar } from '@material-ui/core'
-import { makeStyles, useTheme } from '@material-ui/core/styles'
+import { Paper, Tabs, Tab, Theme, AppBar } from '@material-ui/core'
+import { makeStyles } from '@material-ui/core/styles'
 import { FileArray, FileData } from 'chonky'
-import React, { useRef, forwardRef, useImperativeHandle, Ref, ReactElement } from 'react'
-import SwipeableViews from 'react-swipeable-views'
+import React, { useRef, useImperativeHandle } from 'react'
 import { CheckBoxList, ListItemData } from './CheckBoxList'
 import ImageList from './ImageList'
 import { Settings } from './Settings'
 
-type TabPanelProps = {
-  children?: React.ReactNode
-  index: unknown
-  value: unknown
-  dir: unknown
-}
+// type TabPanelProps = {
+//   children?: React.ReactNode
+//   index: unknown
+//   value: unknown
+//   dir: unknown
+// }
 
-const TabPanel = (props: TabPanelProps) => {
-  const { children, index, value } = props
-  return (
-    <div role="tabpanel" hidden={value !== index} id={`tabpanel_${index}`}>
-      {value === index && (
-        <Box p={3}>
-          <Typography component={'span'} variant={'body2'}>
-            {children}
-          </Typography>
-        </Box>
-      )}
-    </div>
-  )
-}
+// const TabPanel = (props: TabPanelProps) => {
+//   const { children, index, value } = props
+//   return (
+//     <div role="tabpanel" hidden={value !== index} id={`tabpanel_${index}`}>
+//       {value === index && (
+//         <Box p={3}>
+//           <Typography component={'span'} variant={'body2'}>
+//             {children}
+//           </Typography>
+//         </Box>
+//       )}
+//     </div>
+//   )
+// }
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {

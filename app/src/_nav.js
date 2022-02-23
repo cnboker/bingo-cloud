@@ -8,50 +8,49 @@ import {
   cilFolder,
   cilDevices,
 } from '@coreui/icons'
-import { CNavItem, CNavTitle } from '@coreui/react'
-
+import { CNavItem } from '@coreui/react'
+import G from '~/locale'
 const _nav = [
   {
     component: CNavItem,
-    name: 'Dashboard',
+    name: G.dashboard,
     to: '/dashboard',
     icon: <CIcon icon={cilSpeedometer} customClassName="nav-icon" />,
     badge: {
       color: 'info',
-      text: 'NEW',
+      text: G.new,
     },
   },
   {
-    component: CNavTitle,
-    name: 'Administrator',
-  },
-  {
     component: CNavItem,
-    name: 'Users',
+    name: G.users,
     to: '/admin/users',
     icon: <CIcon icon={cilUser} customClassName="nav-icon" />,
+    roles: 'admin',
   },
   {
     component: CNavItem,
-    name: 'Orders',
+    name: G.orders,
     to: '/orders',
     icon: <CIcon icon={cilSpreadsheet} customClassName="nav-icon" />,
+    roles: 'admin',
   },
   {
     component: CNavItem,
-    name: 'Balance',
+    name: G.balance,
     to: '/admin/orderDetails',
     icon: <CIcon icon={cilYen} customClassName="nav-icon" />,
+    roles: 'admin',
   },
   {
     component: CNavItem,
-    name: 'FileManager',
+    name: G.fileManager,
     to: '/fileManager',
     icon: <CIcon icon={cilFolder} customClassName="nav-icon" />,
   },
   {
     component: CNavItem,
-    name: 'DeviceManager',
+    name: G.deviceManager,
     to: '/device',
     icon: <CIcon icon={cilDevices} customClassName="nav-icon" />,
   },

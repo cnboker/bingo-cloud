@@ -86,6 +86,9 @@ const data = {
     quickStart: 'Quick start',
     dashboard: 'Dashboard',
     orders: 'Orders',
+    balance: 'Balance',
+    fileManager: 'FileManager',
+    deviceManager: 'DeviceManager',
     orderProcess: 'Order process',
     createOrder: 'Create order',
     checkout: 'Checkout',
@@ -96,6 +99,7 @@ const data = {
     last: 'Last',
     next: 'Next',
     confirm: 'Confirm',
+    new: 'New',
   },
   zh: {
     confirm: '确认',
@@ -106,6 +110,9 @@ const data = {
     quickStart: '快速入门',
     dashboard: '仪表盘',
     orders: '订单管理',
+    balance: '付款明细',
+    fileManager: '素材管理',
+    deviceManager: '设备管理',
     orderProcess: '订单处理',
     createOrder: '下单',
     checkout: '结算',
@@ -192,6 +199,7 @@ const data = {
     value: '值',
     createDate: '创建时间',
     connection: '连接',
+    new: '新',
   },
 }
 

@@ -14,7 +14,7 @@ export default ({ groupSelect }) => {
 
   const getData = () => {
     if (!tagReducer[TagCatelog.deviceGroup]) return []
-    console.log('tagReducer', tagReducer)
+    //console.log('tagReducer', tagReducer)
     var data = tagReducer[TagCatelog.deviceGroup].map((val) => {
       return { key: val, value: val }
     })

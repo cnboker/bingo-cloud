@@ -6,9 +6,9 @@ using Ioliz.Shared;
 
 public class WebDirectory
 {
-  public static Dictionary<string, Node> FileMap(string dir)
+  public static Dictionary<string, Node> FileMap(string dir,string userName)
   {
-    DirectoryJsonGenerator generator = new DirectoryJsonGenerator(dir);
+    DirectoryJsonGenerator generator = new DirectoryJsonGenerator(dir,userName);
     generator.CreateFolderHierarchy();
     return generator.fileMap;
   }
@@ -20,11 +20,13 @@ public class DirectoryJsonGenerator
   private DirectoryInfo rootInfo;
   public Dictionary<string, Node> fileMap = new Dictionary<string, Node>();
   int rootDirLength = 0;
-  public DirectoryJsonGenerator(string dir)
+  string userName = "";
+  public DirectoryJsonGenerator(string dir,string userName)
   {
     rootInfo = new DirectoryInfo(dir);
     rootDirLength = rootInfo.FullName.Length;
     RootFolderId = StringHelper.IdGenerate();
+    this.userName = userName;
   }
 
   public void CreateFolderHierarchy()
@@ -35,7 +37,7 @@ public class DirectoryJsonGenerator
       Name = rootInfo.Name,
       ModDate = rootInfo.LastWriteTime.ToLongDateString(),
       ParentId = "",
-      Path = rootInfo.FullName.Substring(rootDirLength),
+      Path = "/",
       IsDir = true
     };
     var dirNodes = GetDirNodes(RootFolderId, this.rootInfo);
@@ -63,17 +65,17 @@ public class DirectoryJsonGenerator
         Path = path,
         ModDate = c.LastWriteTime.ToLongDateString(),
         ParentId = parentId,
-        ThumbnailUrl = GetThumbnailUrl(path, c.Name)
+        ThumbnailUrl = GetThumbnailUrl(path, c.Name, this.userName)
       };
     }).ToArray();
   }
 
-  private string GetThumbnailUrl(string path, string fileName)
+  public static string GetThumbnailUrl(string path, string fileName, string userName)
   {
     var mimeType = MimeTypes.GetMimeType(fileName);
     if (mimeType.StartsWith("image/"))
     {
-      return path + "?size=128x128&type=image";
+      return path + "?size=128x128&type=image&user=" + userName;
     }
     return "";
   }
