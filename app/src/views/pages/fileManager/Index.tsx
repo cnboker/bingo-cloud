@@ -46,7 +46,8 @@ export const useFiles = (
 ): FileArray => {
   const appendBashPath = (path: string, thumbnailUrl: string) => {
     return new Promise((resolve, reject) => {
-      let _path: string, _thumbnailUrl: string
+      let _path: string = path
+      let _thumbnailUrl: string = thumbnailUrl
       if (path[0] === '/') {
         _path = bashPath + path
         if (thumbnailUrl) {
@@ -72,6 +73,9 @@ export const useFiles = (
 
   return useAsyncMemo(async () => {
     const currentFolder = fileMap[currentFolderId]
+    if (currentFolder.path[0] === '/') {
+      fileMap[currentFolderId] = { ...currentFolder, path: bashPath + currentFolder.path }
+    }
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     const childrenIds = [...currentFolder.childrenIds!]
     //childrenIds.push(currentFolderId)
@@ -80,13 +84,10 @@ export const useFiles = (
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       //@ts-ignore
       return appendBashPath(fo.path, fo.thumbnailUrl).then((result: any) => {
-        console.log('result', result)
         return { ...fo, ...result } as FileData
       })
     })
-    const kk = await Promise.all(promises)
-    console.log('kk', kk)
-    return kk
+    return await Promise.all(promises)
   }, [currentFolderId, fileMap])
 }
 

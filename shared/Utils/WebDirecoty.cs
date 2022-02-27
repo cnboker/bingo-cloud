@@ -65,21 +65,21 @@ public class DirectoryJsonGenerator
                 Path = path,
                 ModDate = c.LastWriteTime.ToLongDateString(),
                 ParentId = parentId,
-                ThumbnailUrl = GetThumbnailUrl(path, c.Name, this.userName)
+                ThumbnailUrl = GetThumbnailUrl(c.Name, this.userName)
             };
         }).ToArray();
     }
 
-    public static string GetThumbnailUrl(string path, string fileName, string userName)
+    public static string GetThumbnailUrl(string fileName, string userName)
     {
         var mimeType = MimeTypes.GetMimeType(fileName);
         if (mimeType.StartsWith("image/"))
         {
-            return path + "?size=512x512&type=image&user=" + userName;
+            return "/" + fileName + "?size=512x512&type=image&user=" + userName;
         }
         else if (mimeType.StartsWith("video/"))
         {
-            return path + "?size=512x512&type=video&user=" + userName;
+            return "/" + fileName + "?size=512x512&type=video&user=" + userName;
         }
         return "";
     }

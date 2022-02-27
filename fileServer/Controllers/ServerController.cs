@@ -114,10 +114,10 @@ namespace FileServer.Controllers
         {
             var prefixPath = Request.Headers["basePath"];
 
-            Console.WriteLine("prefixPath=" + JsonConvert.SerializeObject(prefixPath));
+            //Console.WriteLine("prefixPath=" + JsonConvert.SerializeObject(prefixPath));
             var path = this._hostingEnvironment.WebRootPath;
             var savePath = path + prefixPath[0];
-            Console.WriteLine("save path=" + savePath);
+            //Console.WriteLine("save path=" + savePath);
             if (!Directory.Exists(savePath))
             {
                 Directory.CreateDirectory(savePath);
@@ -133,12 +133,12 @@ namespace FileServer.Controllers
             string hostUrl = Request.Scheme + "://" + Request.Host;
             // process uploaded files
             // Don't rely on or trust the FileName property without validation.
-            path = hostUrl + prefixPath[0] + files.FileName;
+            //path = files.FileName;
             var result = new
             {
-                path,
+                path = "/" + files.FileName,
                 fileName = files.FileName,
-                ThumbnailUrl = DirectoryJsonGenerator.GetThumbnailUrl(path,files.FileName, User.Identity.Name)
+                ThumbnailUrl =  DirectoryJsonGenerator.GetThumbnailUrl(files.FileName, User.Identity.Name)
             };
             return Json(result);
         }
