@@ -13,9 +13,9 @@ namespace ImageThumbnail.AspNetCore.Middleware
         public string SourceImagePath { get; set; }
 
         public string ThumbnailImagePath { get; set; }
-
+        public string ThumbnailImageUrl {get;set;}
         public Size? ThumbnailSize { get; set; }
-       
+    
 
     }
 }

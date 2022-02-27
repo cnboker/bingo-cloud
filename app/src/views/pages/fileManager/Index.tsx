@@ -7,6 +7,7 @@ import {
   useFilePicker,
   SelectFileList,
   FileActionHandler,
+  FileData,
 } from 'chonky'
 import { setChonkyDefaults, ChonkyIconFA } from 'chonky'
 import { useSelector, RootStateOrAny, useDispatch } from 'react-redux'
@@ -20,6 +21,10 @@ import { useFileActionHandler } from './useFileActionHandler'
 import { PubForms } from './pubComponents/Index'
 import { requestDeviceList } from '../device/actions'
 import { mqttPub } from './mqttPub'
+import { getLang } from 'src/lib/localize'
+import cn18n from './cn18n'
+import { useAsyncMemo } from 'use-async-memo'
+
 setChonkyDefaults({ iconComponent: ChonkyIconFA })
 
 // Helper method to attach our custom TypeScript types to the imported JSON file map.
@@ -39,21 +44,49 @@ export const useFiles = (
   fileMap: CustomFileMap,
   currentFolderId: string,
 ): FileArray => {
-  return useMemo(() => {
+  const appendBashPath = (path: string, thumbnailUrl: string) => {
+    return new Promise((resolve, reject) => {
+      let _path: string, _thumbnailUrl: string
+      if (path[0] === '/') {
+        _path = bashPath + path
+        if (thumbnailUrl) {
+          _thumbnailUrl = bashPath + thumbnailUrl
+          //如果是视频文件，需要做2次请求，第一次请求创建视频图片， 第二次请求视频图片的缩微图片
+          if (_thumbnailUrl.indexOf('.mp4') !== -1) {
+            fetch(_thumbnailUrl).then((res) => {
+              res.text().then((url) => {
+                resolve({ path: _path, thumbnailUrl: url })
+              })
+            })
+          } else {
+            resolve({ path: _path, thumbnailUrl: _thumbnailUrl })
+          }
+        } else {
+          resolve({ path: _path, thumbnailUrl: _thumbnailUrl })
+        }
+      } else {
+        resolve({ path: _path, thumbnailUrl: _thumbnailUrl })
+      }
+    })
+  }
+
+  return useAsyncMemo(async () => {
     const currentFolder = fileMap[currentFolderId]
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    const childrenIds = currentFolder.childrenIds!
-    const files = childrenIds.map((fileId: string) => {
+    const childrenIds = [...currentFolder.childrenIds!]
+    //childrenIds.push(currentFolderId)
+    const promises = childrenIds.map((fileId: string) => {
       const fo = fileMap[fileId]
-      if (fo.path[0] === '/') {
-        fo.path = bashPath + fo.path
-        if (fo.thumbnailUrl) {
-          fo.thumbnailUrl = bashPath + fo.thumbnailUrl
-        }
-      }
-      return fileMap[fileId]
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      //@ts-ignore
+      return appendBashPath(fo.path, fo.thumbnailUrl).then((result: any) => {
+        console.log('result', result)
+        return { ...fo, ...result } as FileData
+      })
     })
-    return files
+    const kk = await Promise.all(promises)
+    console.log('kk', kk)
+    return kk
   }, [currentFolderId, fileMap])
 }
 
@@ -98,8 +131,8 @@ export const ServerVFSBrowser: React.FC<VFSProps> = (props) => {
 const fileActions = [
   ChonkyActions.CreateFolder, // Adds a button to the toolbar
   ChonkyActions.UploadFiles, // Adds a button
-  ChonkyActions.DownloadFiles, // Adds a button
-  ChonkyActions.CopyFiles, // Adds a button and a shortcut: Ctrl+C
+  //ChonkyActions.DownloadFiles, // Adds a button
+  //ChonkyActions.CopyFiles, // Adds a button and a shortcut: Ctrl+C
   ChonkyActions.DeleteFiles, // Adds a button and a shortcut: Delete
 ]
 
@@ -117,6 +150,7 @@ export const VFSBrowser: React.FC<DataVFSProps> = (props) => {
   } = useCustomFileMap(props.data)
   const { selectedFiles, handleAction: fileSelectAction, handleRemove } = useFilePicker()
   const files = useFiles(bashPath, fileMap, currentFolderId)
+  console.log('files', files)
   const folderChain = useFolderChain(fileMap, currentFolderId)
   const handleFileAction = useFileActionHandler(
     setCurrentFolderId,
@@ -187,6 +221,9 @@ export const VFSBrowser: React.FC<DataVFSProps> = (props) => {
     return true
   }
 
+  const locale = getLang()
+  const i18n = useMemo(() => (locale === 'zh-CN' ? cn18n : {}), [locale])
+
   return (
     <>
       <SelectFileList onSubmit={onPub} fileList={selectedFiles}>
@@ -203,6 +240,7 @@ export const VFSBrowser: React.FC<DataVFSProps> = (props) => {
         <FullFileBrowser
           disableDefaultFileActions={true}
           files={files}
+          i18n={i18n}
           folderChain={folderChain}
           fileActions={fileActions}
           onFileAction={actionCombiner}

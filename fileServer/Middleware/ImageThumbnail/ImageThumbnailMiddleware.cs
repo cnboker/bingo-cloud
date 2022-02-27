@@ -1,3 +1,4 @@
+using ImageMagick;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.FileProviders;
 using System;
@@ -27,10 +28,9 @@ namespace ImageThumbnail.AspNetCore.Middleware
         public async Task InvokeAsync(HttpContext context)
         {
             //var isValid = context.Request.Path.StartsWithSegments("/" + _options.ImagesDirectory);
-            var isValid = !string.IsNullOrEmpty(context.Request.Query["size"]) && 
+            var isImageValid = !string.IsNullOrEmpty(context.Request.Query["size"]) &&
             context.Request.Query["type"] == "image";
-            //Console.WriteLine("isValid=" + isValid.ToString());
-            if (isValid)
+            if (isImageValid)
             {
                 var thumbnailRequest = ParseRequest(context.Request);
 
@@ -44,7 +44,7 @@ namespace ImageThumbnail.AspNetCore.Middleware
                     else if (IsThumbnailExists(thumbnailRequest) && thumbnailRequest.ThumbnailSize.HasValue)
                     {
                         //Thumbnail already exists. Send it from cache.
-                        await WriteFromCache(thumbnailRequest, context.Response.Body);
+                        await WriteFromCache(thumbnailRequest.ThumbnailImagePath, context.Response.Body);
                     }
                     else
                     {
@@ -78,12 +78,13 @@ namespace ImageThumbnail.AspNetCore.Middleware
             req.SourceImagePath = GetPhysicalPath(request.Path);
             req.ThumbnailImagePath = GenerateThumbnailFilePath(request.Path, req.ThumbnailSize, request.Query["user"]);
             //req.UserName = request.Query["user"];
-            Console.WriteLine("SourceImagePath=" + req.SourceImagePath);
-            Console.WriteLine("RequestedPath=" + req.RequestedPath);
-            Console.WriteLine("ThumbnailImagePath=" + req.ThumbnailImagePath);
-          
+            //Console.WriteLine("SourceImagePath=" + req.SourceImagePath);
+            //Console.WriteLine("RequestedPath=" + req.RequestedPath);
+            //Console.WriteLine("ThumbnailImagePath=" + req.ThumbnailImagePath);
+
             return req;
         }
+
 
         /// <summary>
         /// Generates thumbnail image, cache and write to output stream
@@ -93,49 +94,77 @@ namespace ImageThumbnail.AspNetCore.Middleware
         /// <returns></returns>
         private async Task GenerateThumbnail(ThumbnailRequest request, Stream stream)
         {
+
             if (File.Exists(request.SourceImagePath))
             {
-                Image image = Image.FromFile(request.SourceImagePath);
-
-                System.Drawing.Image thumbnail =
-                    new Bitmap(request.ThumbnailSize.Value.Width, request.ThumbnailSize.Value.Height);
-                System.Drawing.Graphics graphic =
-                             System.Drawing.Graphics.FromImage(thumbnail);
-
-                graphic.InterpolationMode = InterpolationMode.HighQualityBicubic;
-                graphic.SmoothingMode = SmoothingMode.HighQuality;
-                graphic.PixelOffsetMode = PixelOffsetMode.HighQuality;
-                graphic.CompositingQuality = CompositingQuality.HighQuality;
-
-                double ratioX = (double)request.ThumbnailSize.Value.Width / (double)image.Width;
-                double ratioY = (double)request.ThumbnailSize.Value.Height / (double)image.Height;
-                double ratio = ratioX < ratioY ? ratioX : ratioY;
-
-                int newHeight = Convert.ToInt32(image.Height * ratio);
-                int newWidth = Convert.ToInt32(image.Width * ratio);
-
-                int posX = Convert.ToInt32((request.ThumbnailSize.Value.Width - (image.Width * ratio)) / 2);
-                int posY = Convert.ToInt32((request.ThumbnailSize.Value.Height - (image.Height * ratio)) / 2);
-
-                graphic.Clear(_options.ThumbnailBackground);
-                graphic.DrawImage(image, posX, posY, newWidth, newHeight);
-
-
-                System.Drawing.Imaging.ImageCodecInfo[] info =
-                                 ImageCodecInfo.GetImageEncoders();
-                EncoderParameters encoderParameters;
-                encoderParameters = new EncoderParameters(1);
-                encoderParameters.Param[0] = new EncoderParameter(Encoder.Quality,
-                                 _options.ImageQuality);
-
-
-                thumbnail.Save(request.ThumbnailImagePath);
-                image.Dispose();
-
-                using (var fs = new FileStream(request.ThumbnailImagePath, FileMode.Open))
+                // Read from file
+                using (var image = new MagickImage(request.SourceImagePath))
                 {
-                    await fs.CopyToAsync(stream);
+                    double ratioX = (double)request.ThumbnailSize.Value.Width / (double)image.Width;
+                    double ratioY = (double)request.ThumbnailSize.Value.Height / (double)image.Height;
+                    double ratio = ratioX < ratioY ? ratioX : ratioY;
+
+                    int newHeight = Convert.ToInt32(image.Height * ratio);
+                    int newWidth = Convert.ToInt32(image.Width * ratio);
+
+                    int posX = Convert.ToInt32((request.ThumbnailSize.Value.Width - (image.Width * ratio)) / 2);
+                    int posY = Convert.ToInt32((request.ThumbnailSize.Value.Height - (image.Height * ratio)) / 2);
+
+                    var size = new MagickGeometry(posX, posY, newWidth, newHeight);
+                    // This will resize the image to a fixed size without maintaining the aspect ratio.
+                    // Normally an image will be resized to fit inside the specified size.
+                    size.IgnoreAspectRatio = true;
+
+                    image.Resize(size);
+
+                    // Save the result
+                    image.Write(request.ThumbnailImagePath);
+                    using (var fs = new FileStream(request.ThumbnailImagePath, FileMode.Open))
+                    {
+                        await fs.CopyToAsync(stream);
+                    }
                 }
+                // Image image = Image.FromFile(request.SourceImagePath);
+
+                // System.Drawing.Image thumbnail =
+                //     new Bitmap(request.ThumbnailSize.Value.Width, request.ThumbnailSize.Value.Height);
+                // System.Drawing.Graphics graphic =
+                //              System.Drawing.Graphics.FromImage(thumbnail);
+
+                // graphic.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                // graphic.SmoothingMode = SmoothingMode.HighQuality;
+                // graphic.PixelOffsetMode = PixelOffsetMode.HighQuality;
+                // graphic.CompositingQuality = CompositingQuality.HighQuality;
+
+                // double ratioX = (double)request.ThumbnailSize.Value.Width / (double)image.Width;
+                // double ratioY = (double)request.ThumbnailSize.Value.Height / (double)image.Height;
+                // double ratio = ratioX < ratioY ? ratioX : ratioY;
+
+                // int newHeight = Convert.ToInt32(image.Height * ratio);
+                // int newWidth = Convert.ToInt32(image.Width * ratio);
+
+                // int posX = Convert.ToInt32((request.ThumbnailSize.Value.Width - (image.Width * ratio)) / 2);
+                // int posY = Convert.ToInt32((request.ThumbnailSize.Value.Height - (image.Height * ratio)) / 2);
+
+                // graphic.Clear(_options.ThumbnailBackground);
+                // graphic.DrawImage(image, posX, posY, newWidth, newHeight);
+
+
+                // System.Drawing.Imaging.ImageCodecInfo[] info =
+                //                  ImageCodecInfo.GetImageEncoders();
+                // EncoderParameters encoderParameters;
+                // encoderParameters = new EncoderParameters(1);
+                // encoderParameters.Param[0] = new EncoderParameter(Encoder.Quality,
+                //                  _options.ImageQuality);
+
+
+                // thumbnail.Save(request.ThumbnailImagePath);
+                // image.Dispose();
+
+                // using (var fs = new FileStream(request.ThumbnailImagePath, FileMode.Open))
+                // {
+                //     await fs.CopyToAsync(stream);
+                // }
 
             }
         }
@@ -230,13 +259,14 @@ namespace ImageThumbnail.AspNetCore.Middleware
             }
         }
 
-        private async Task WriteFromCache(ThumbnailRequest request, Stream stream)
+        private async Task WriteFromCache(string thumbnailPath, Stream stream)
         {
-            using (var fs = new FileStream(request.ThumbnailImagePath, FileMode.Open))
+            using (var fs = new FileStream(thumbnailPath, FileMode.Open))
             {
                 await fs.CopyToAsync(stream);
             }
         }
+
 
         private async Task WriteFromSource(ThumbnailRequest request, Stream stream)
         {

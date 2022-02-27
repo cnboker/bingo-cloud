@@ -133,7 +133,7 @@ namespace FileServer.Controllers
             string hostUrl = Request.Scheme + "://" + Request.Host;
             // process uploaded files
             // Don't rely on or trust the FileName property without validation.
-            path = hostUrl + prefixPath[0] + "/" + files.FileName;
+            path = hostUrl + prefixPath[0] + files.FileName;
             var result = new
             {
                 path,

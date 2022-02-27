@@ -21,8 +21,8 @@ export default memo(
           return (
             <ImageListItem key={`key${index}`}>
               <img
-                src={`${item?.thumbnailUrl}?w=248&fit=crop&auto=format`}
-                srcSet={`${item?.thumbnailUrl}?w=248&fit=crop&auto=format&dpr=2 2x`}
+                src={`${item?.thumbnailUrl}&w=128&fit=crop&auto=format`}
+                srcSet={`${item?.thumbnailUrl}&w=128&fit=crop&auto=format&dpr=2 2x`}
                 alt={item?.name}
                 loading="lazy"
               />

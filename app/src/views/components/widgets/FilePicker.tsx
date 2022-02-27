@@ -55,7 +55,7 @@ const ImagePicker = ({ basePath, onProcessFiles }: PickerProps) => {
       labelIdle='从桌面拖拉文件或 <span class="filepond--label-action">浏览文件</span>'
       server={{
         url: `${process.env.REACT_APP_FILE_URL}/api/server/upload`,
-        headers: { Authorization: 'Bearer ' + access_token, basePath: basePath },
+        headers: { Authorization: 'Bearer ' + access_token, basePath },
         load: (source, load, _error, _progress, _abort, _headers) => {
           const myRequest = new Request(source)
           fetch(myRequest)

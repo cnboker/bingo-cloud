@@ -9,8 +9,9 @@ export const langLoader = (localeData) => {
 }
 
 export const getLang = () => {
-  var lang
-  if (navigator.languages !== undefined) lang = navigator.languages[0]
-  lang = navigator.language
-  return Cookies.get('language') || lang
+  //var lang
+  //if (navigator.languages !== undefined) lang = navigator.languages[0]
+  //lang = navigator.language
+  //return Cookies.get('language') || navigator.language
+  return 'zh-CN'
 }

@@ -23,7 +23,7 @@ const Dialog = ({ title, body, bodydata, size = 'lg', callback }) => {
   return (
     <>
       <CModal visible={visible} alignment="center" size={size}>
-        <CModalHeader onDismiss={() => setVisible(false)}>
+        <CModalHeader>
           <CModalTitle>{title}</CModalTitle>
         </CModalHeader>
         <CModalBody>{body}</CModalBody>
@@ -52,8 +52,8 @@ const Dialog = ({ title, body, bodydata, size = 'lg', callback }) => {
 
 // 每一次重新构造组件
 const WithDialog = ({ children, ...props }) => {
-  const ref = useRef()
-  const Component = () => React.createElement(Dialog, { ref, ...props }, children)
+  //const ref = useRef()
+  const Component = () => React.createElement(Dialog, { ...props }, children)
   return <Component>{children}</Component>
 }
 

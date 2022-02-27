@@ -106,9 +106,10 @@ export const useCustomFileMap = (data: FsMap) => {
     //必须在setFileMap函数里面，才能获取到新建文件夹关联数据
     setFileMap((map) => {
       const { path } = map[currentFolderIdRef.current]
+      const _path = path[0] === '/' ? path : new URL(path).pathname
       Dialog.confirm(
         <FilePicker
-          basePath={new URL(path).pathname}
+          basePath={_path}
           onProcessFiles={(files) => {
             console.log('response data', files)
             appendFileNode(files)
