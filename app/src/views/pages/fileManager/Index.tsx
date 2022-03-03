@@ -176,9 +176,9 @@ export const VFSBrowser: React.FC<DataVFSProps> = (props) => {
 
   const getFileType = (url: string) => {
     if (url.endsWith('.mp4')) {
-      return 'image'
-    } else if (url.endsWith('.png') || url.endsWith('.jpg') || url.endsWith('.jpeg')) {
       return 'video'
+    } else if (url.endsWith('.png') || url.endsWith('.jpg') || url.endsWith('.jpeg')) {
+      return 'image'
     } else if (url.endsWith('.pge')) {
       return 'page'
     } else {
@@ -195,9 +195,8 @@ export const VFSBrowser: React.FC<DataVFSProps> = (props) => {
     const { settings, deviceList, fileList } = data
     console.log('pub data...', data)
 
-    const fileUrls = fileList.map((x: { path: string }) => x.path)
+    const fileUrls = fileList.map((x: FileData) => x.path)
     const entity = {
-      urls: fileUrls,
       sources: fileUrls.map((url: string) => {
         return {
           url,

@@ -21,8 +21,8 @@ export const useFilePicker = () => {
     }
   }, []);
 
-  const handleRemove = (item) => {
-    var index = selectedFiles.indexOf(item);
+  const handleRemove = (index) => {
+    //var index = selectedFiles.indexOf(item);
 
     if (index > -1) {
       selectedFiles.splice(index, 1);

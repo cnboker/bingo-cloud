@@ -86,7 +86,7 @@ namespace ImageThumbnail.AspNetCore.Middleware
             string fileName = GetThumbnailFileName(request.Path, req.ThumbnailSize, request.Query["user"]);
             req.ThumbnailImagePath = GenerateThumbnailFilePath(fileName);
              string hostUrl = request.Scheme + "://" + request.Host;
-            req.ThumbnailImageUrl = hostUrl + "/" + _options.CacheDirectoryName + "/" + fileName + "?size=128x128&type=image&user=" + request.Query["user"];;
+            req.ThumbnailImageUrl = hostUrl + "/" + _options.CacheDirectoryName + "/" + fileName + "?size=256x256&type=image&user=" + request.Query["user"];;
             //req.UserName = request.Query["user"];
             Console.WriteLine("SourcevidoPath=" + req.SourceImagePath);
             Console.WriteLine("RequestedPath=" + req.RequestedPath);
@@ -109,11 +109,12 @@ namespace ImageThumbnail.AspNetCore.Middleware
                 var outputFile = new OutputFile(request.ThumbnailImagePath);
                 var ffmpeg = new Engine("ffmpeg");
                 // Saves the frame located on the 15th second of the video.
+                var size = request.ThumbnailSize;
                 var options = new ConversionOptions
                 {
                     Seek = TimeSpan.FromSeconds(5),
-                    CustomHeight = 256,
-                    CustomWidth = 256
+                    CustomHeight = size.HasValue? size.Value.Height : 512,
+                    CustomWidth = size.HasValue? size.Value.Width : 512
                 };
                 CancellationToken source1 = new CancellationToken();
                 await ffmpeg.GetThumbnailAsync(inputFile, outputFile, options, source1);

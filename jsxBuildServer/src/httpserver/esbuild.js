@@ -46,9 +46,9 @@ exports.build = async(username, entryFile) => {
   return [
     `/${username}/dist/index.html`,
     `/${username}/dist/main.css`,
-    `/sw.js`,
-    `/sw.js.map`,
-    `/workbox-5d0b2bdf.js`,
-    `/workbox-5d0b2bdf.js.map`,
+    //`/sw.js`,
+    //`/sw.js.map`,
+    //`/workbox-5d0b2bdf.js`,
+    //`/workbox-5d0b2bdf.js.map`,
     `/${username}/dist/${path.basename(entryFile)}`];
 };

@@ -1,10 +1,10 @@
-import { IImageProps, IPlayProps, IVideoProps } from "../compiler/Meta"
+import { IImageProps, IPageProps, IPlayProps, IVideoProps } from "../compiler/Meta"
 
 export type sourceProps = {
     type: 'image' | 'video' | 'page',
     url: string,
     name: string,
-    poster:string
+    poster: string
 }
 
 export type PostData = {
@@ -21,16 +21,22 @@ export const transformData = (data: PostData): IPlayProps[] => {
                 type: 'image',
                 animation,
                 duration,
-                url: (new URL(x.url)).pathname
+                url: (new URL(x.url)).pathname,
+
             }
         } else if (x.type === 'video') {
             return <IVideoProps>{
                 type: 'video',
-                url:(new URL(x.url)).pathname,
-                poster:(new URL(x.poster)).pathname,
+                url: (new URL(x.url)).pathname,
+                poster: x.poster.indexOf('http:') !== -1 ? (new URL(x.poster)).pathname : x.poster,
+
             }
         } else if (x.type === 'page') {
-            throw 'not implement'
+            return <IPageProps>{
+                type: 'page',
+                pageName: '',
+
+            }
         }
     })
 }

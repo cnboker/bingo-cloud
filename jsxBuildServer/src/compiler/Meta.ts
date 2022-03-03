@@ -1,22 +1,23 @@
 import CSS from 'csstype';
+import React from 'react';
 import { Animations } from './constants';
 export interface IProps {
   style: CSS.Properties,
 }
 
-export type AnimationProps = {
-  action: Animations
-}
-
-
 export interface IMeta<T> {
   tag: T,
 }
 
+
 export type IPlayProps = {
   type: 'image' | 'video' | 'page'
-  animation: string;
-  exit: () => void;
+  exit: () => void
+  animation: string
+  autoPlay?: boolean
+  visible?: boolean
+  children?: React.ReactNode
+  label?:string
 }
 
 export type IImageProps = IPlayProps & {
@@ -26,7 +27,7 @@ export type IImageProps = IPlayProps & {
 
 export type IVideoProps = IPlayProps & {
   url: string,
-  poster:string
+  poster: string
 }
 
 export type IPageProps = IPlayProps & {

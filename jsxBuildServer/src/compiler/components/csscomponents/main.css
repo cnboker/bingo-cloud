@@ -8,10 +8,9 @@ body {
       without showing any horizontal scrollbars, and each view can slide side-to-side inside the container as needed.
       */
 .container {
-  position: absolute;
-  margin: 0;
   width: 100%;
   height: 100%;
+  position: absolute;
   overflow: hidden;
   background-color: #393948;
 }
@@ -24,6 +23,11 @@ body {
   top: 0;
   will-change: transform;
   transition: transform 1s cubic-bezier(0.465, 0.183, 0.153, 0.946);
+}
+
+.view-hidden {
+  z-index: -1;
+  
 }
 
 .vjs-default-skin.vjs-paused .vjs-big-play-button {

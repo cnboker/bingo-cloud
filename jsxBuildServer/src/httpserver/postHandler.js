@@ -24,7 +24,6 @@ exports.make = async (username, entity) => {
     import { App } from '../src/compiler/app'
       import { transformData } from  '../src/httpserver/postDataTransformer'
       const data = transformData(${dataContent})
-      console.log('ddd',data)
       App(data)
     
     `

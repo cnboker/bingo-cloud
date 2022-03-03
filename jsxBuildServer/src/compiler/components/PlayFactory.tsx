@@ -1,16 +1,25 @@
 import React from 'react'
-import { IImageProps, IPageProps, IPlayProps, IVideoProps } from '../Meta'
+import { IPlayProps } from '../Meta'
 import { Image } from './Image'
 import { PagePlayer } from './PagePlayer'
-import { VideoPlayer } from './VideoPlayer'
+import VideoPlayer from './VideoPlayer'
 
-export const PlayFactory: React.FC<IPlayProps> = ({ type, ...props }) => {
+const components = []
+
+const PlayFactory: React.FC<Omit<IPlayProps, 'animation' | 'visible'>> = ({ type, autoPlay, ...props }) => {
+    let Component 
+    //console.log('components',components)
     if (type === 'image') {
-        return <Image {...props as IImageProps} />
+        Component = (Image)
     } else if (type === 'video') {
-        return <VideoPlayer {...props as IVideoProps} />
+        Component = components.shift()
+        components.push(Component)
     } else if (type === 'page') {
-        return <PagePlayer {...props as IPageProps} />
+        Component = (PagePlayer)
     }
-    return null
+   
+    return <Component {...props} />
 }
+
+
+export default PlayFactory

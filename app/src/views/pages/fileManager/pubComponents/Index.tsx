@@ -65,7 +65,7 @@ const Header = (props: HeaderProps) => {
 export type PubFormProps = {
   fileList: FileArray
   deviceList: ListItemData[]
-  onRemove: (file: FileData) => void
+  onRemove: (index: number) => void
 }
 
 export type PubFormResultProps = {

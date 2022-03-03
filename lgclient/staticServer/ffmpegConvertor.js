@@ -2,14 +2,7 @@
 //输入参数：-f  {finename}
 //输出文件名为{filename}_1080p.mp4
 //node ffmegConvertor.js -f filename
-/*
-$ node process-2.js one two=three four
-0: node
-1: /Users/mjr/work/node/process-2.js
-2: one
-3: two=three
-4: four
-*/
+
 
 const fs = require('fs')
 const child_process = require("child_process");
@@ -49,8 +42,8 @@ const ffmpegPipe = (filename,outFileName) => {
     '-minrate', '900k',
     '-maxrate', '2610k' ,
     '-c:a', 'libopus',
-    '-r', '30', //30 frames/s
-    '-vf', 'scale=-1:1080', //1080p
+    '-r', '24', //30 frames/s
+    '-vf', 'scale=1920x1080', //1080p
     outFileName,
   ])
   //fileStream.pipe(ffmpeg.stdin)

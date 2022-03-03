@@ -1,19 +1,29 @@
 import React from "react";
 import { TransitionGroup, CSSTransition } from 'react-transition-group';
 
-export const CSSTrans = ({ animation, children }) => {
+export type IPlayEffectProps = {
+  animation: string
+  visible?: boolean
+  label: string
+  children?: React.ReactNode
+}
+
+export const CSSTrans: React.FC<IPlayEffectProps> = (({ label, animation, visible, children }) => {
+  // if (visible) {
+  //   console.log('playfactory', label)
+  // }
   return (
-    <React.Fragment>
-      {animation && <TransitionGroup>
+    <>
+      <TransitionGroup>
         <CSSTransition
           timeout={2000}
           in={true}
           appear={true}
           classNames={animation}>
-          <div className="view">
+          <div className={`view ${visible ? '' : 'view-hidden'}`}>
             {children}</div>
-        </CSSTransition></TransitionGroup>}
-      {!animation && <div>{children}</div>}
-    </React.Fragment>
+        </CSSTransition>
+      </TransitionGroup>
+    </>
   )
-}
+})
