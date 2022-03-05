@@ -32,6 +32,6 @@ export const SeamLessPlayer = forwardRef((seamlessProp: ISeamlessType, ref) => {
             <Player {...horsaProps} />
             <Player {...hengestProps} />
         </React.Fragment>
-    )
+    ) 
 })
 

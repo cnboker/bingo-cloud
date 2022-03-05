@@ -27,7 +27,7 @@ body {
 
 .view-hidden {
   z-index: -1;
-  
+  visibility: hidden;
 }
 
 .vjs-default-skin.vjs-paused .vjs-big-play-button {

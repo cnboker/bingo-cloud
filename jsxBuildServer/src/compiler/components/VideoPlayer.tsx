@@ -3,7 +3,7 @@ import { IVideoProps } from '../Meta'
 import videojs from "video.js";
 import "video.js/dist/video-js.css";
 
-const VideoPlayer = ({ url, exit, poster }: IVideoProps) => {
+const VideoPlayer = ({autoPlay, url, exit, poster }: IVideoProps) => {
     const videoRef = React.useRef(null);
     const playerRef = React.useRef(null);
 
@@ -12,7 +12,7 @@ const VideoPlayer = ({ url, exit, poster }: IVideoProps) => {
         //支持自动播放只能静音， chrome 有限制导致
         //autoplay: autoPlay || false,
         //autoSetup: true,
-        autoplay: true,
+        //autoplay: true,
         muted: true,
         controls: false,
         //responsive: true,
@@ -54,19 +54,20 @@ const VideoPlayer = ({ url, exit, poster }: IVideoProps) => {
             player.on('ended', () => {
                 exit && exit()
             })
-            // if (autoPlay) {
-            //     //@ts-ignore
-            //     player.play()
-            // }
+            if (autoPlay) {
+                //@ts-ignore
+                player.play()
+            }
         } else {
             // you can update player here [update player through props]
             const player = playerRef.current;
-            // if (autoPlay) {
-            //     //@ts-ignore
-            //     player.play()
-            // }
+            console.log('success!!!!')
+            if (autoPlay) {
+                //@ts-ignore
+                player.play()
+            }
         }
-    }, [url]);
+    }, [videoJsOptions]);
 
     // Dispose the Video.js player when the functional component unmounts
     React.useEffect(() => {
@@ -93,5 +94,5 @@ const VideoPlayer = ({ url, exit, poster }: IVideoProps) => {
 
 export default React.memo(VideoPlayer, (prev, next) => {
     console.log('propsAreEqual', prev, next)
-    return prev.url === next.url
+    return prev.url === next.url && prev.autoPlay === next.autoPlay
 })

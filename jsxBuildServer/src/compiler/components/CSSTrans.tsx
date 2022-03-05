@@ -1,17 +1,20 @@
 import React from "react";
 import { TransitionGroup, CSSTransition } from 'react-transition-group';
+import { IPlayProps } from "../Meta";
 
-export type IPlayEffectProps = {
-  animation: string
-  visible?: boolean
-  label: string
-  children?: React.ReactNode
-}
 
-export const CSSTrans: React.FC<IPlayEffectProps> = (({ label, animation, visible, children }) => {
-  // if (visible) {
-  //   console.log('playfactory', label)
-  // }
+export const CSSTrans = (props: IPlayProps) => {
+  const { label, animation, visible, children, ...rest } = props
+
+  // const childrenWithProps = React.Children.map(children, child => {
+  //   // Checking isValidElement is the safe way and avoids a typescript
+  //   // error too.
+  //   if (React.isValidElement(child)) {
+  //     return React.cloneElement(child, rest);
+  //   }
+  //   return child;
+  // })
+
   return (
     <>
       <TransitionGroup>
@@ -26,4 +29,4 @@ export const CSSTrans: React.FC<IPlayEffectProps> = (({ label, animation, visibl
       </TransitionGroup>
     </>
   )
-})
+}

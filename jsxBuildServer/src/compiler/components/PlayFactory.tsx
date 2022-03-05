@@ -1,23 +1,28 @@
 import React from 'react'
 import { IPlayProps } from '../Meta'
-import { Image } from './Image'
+import { ImagePlayer } from './ImagePlayer'
 import { PagePlayer } from './PagePlayer'
 import VideoPlayer from './VideoPlayer'
 
-const components = []
+
+const components = [<VideoPlayer />, <VideoPlayer />]
 
 const PlayFactory: React.FC<Omit<IPlayProps, 'animation' | 'visible'>> = ({ type, autoPlay, ...props }) => {
-    let Component 
-    //console.log('components',components)
+    let Component
     if (type === 'image') {
-        Component = (Image)
+        Component = (ImagePlayer)
     } else if (type === 'video') {
         Component = components.shift()
+       
+        Component = React.cloneElement(Component, props, null)
+        Component.props = props
+        //console.log('Component video',Component)
         components.push(Component)
+        return Component
     } else if (type === 'page') {
         Component = (PagePlayer)
     }
-   
+
     return <Component {...props} />
 }
 

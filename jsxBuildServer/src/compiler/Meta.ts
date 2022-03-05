@@ -11,27 +11,28 @@ export interface IMeta<T> {
 
 
 export type IPlayProps = {
-  type: 'image' | 'video' | 'page'
-  exit: () => void
-  animation: string
+  type?: 'image' | 'video' | 'page'
+  exit?: () => void
+  animation?: string
   autoPlay?: boolean
   visible?: boolean
   children?: React.ReactNode
-  label?:string
+  //标示方便调试
+  label?: string
 }
 
 export type IImageProps = IPlayProps & {
-  url: string,
-  duration: number,
+  url?: string,
+  duration?: number,
 }
 
 export type IVideoProps = IPlayProps & {
-  url: string,
-  poster: string
+  url?: string,
+  poster?: string
 }
 
 export type IPageProps = IPlayProps & {
-  pageName: string
+  pageName?: string
 }
 
 
