@@ -1,43 +1,34 @@
-import React, { useState } from "react";
-import { PlayList } from "./Playlist";
-import { SeamLessPlayer } from "./SeamlessPlayer";
-import { Demo } from "./SeamlessVideoPlayer";
-import VideoPlayer from "./VideoPlayer";
+import React from "react";
+import { SeamlessPlayer, SeamlessDataProps } from "./SeamlessPlayer";
+import util from '../../util'
+import { IPlayProps } from "../Meta";
 
-export const Viewport = (props) => {
-  //const [autoPlayIndex, setAutoPlayIndex] = useState(0)
-  // const playViews = children as IPlayView<T>[]
-  // const [currentIndex, setCurrentIndex] = useState(0)
 
-  //const forceUpdate: () => void = React.useState()[1].bind(null, {})
+export const fetchNext = (source: Array<IPlayProps>, autoPlay: boolean = false) => {
+  if (source.length === 0) return null
+  const next = source.shift()
+  next.autoPlay = autoPlay
+  source.push(next)
+  return next
+}
 
-  // const childrenProps = React.Children.map(children, (child, index) => {
-  //   const view = child as IPlayView<T>
-  //   if (view) {
-  //     return React.cloneElement(child, {
-  //       visible: currentIndex === index,
-  //       exit: () => {
-  //         console.log('exit', currentIndex)
-  //         if (currentIndex < playViews.length - 1) {
-  //           setCurrentIndex(currentIndex + 1)
-  //         } else {
-  //           setCurrentIndex(0)
-  //         }
-  //       }
-  //     })
-  //   } else {
-  //     throw 'viewport child must be IPlayView'
-  //   }
-  // })
+export const peek = (source: Array<IPlayProps>, autoPlay: boolean = false) => {
+  source[0].autoPlay = autoPlay
+  return source[0]
+}
 
-  // return (<div className="container">
-  //   {/* <PlayList {...props} /> */}
-  //   <div className={`view ${autoPlayIndex == 0 ? '' : 'view-hidden'}`}>
-  //     <VideoPlayer url="/admin/2.mp4" autoPlay={autoPlayIndex == 0} exit={() => setAutoPlayIndex(1)} /></div>
-  //   <div className={`view ${autoPlayIndex == 1 ? '' : 'view-hidden'}`}>
-  //     <VideoPlayer url="/admin/4k.mp4" autoPlay={autoPlayIndex == 1} exit={() => setAutoPlayIndex(0)} /></div>
-  // </div>
 
-  //)
-  return <Demo />
+export const Viewport: React.FC<Array<IPlayProps>> = (source) => {
+  console.log('source', source)
+  const data = Object.values(source)
+  for (const item of data) {
+    item.label = util.makeid(6)
+  }
+
+  const dataProps: SeamlessDataProps = {
+    playProps: fetchNext(data, true),
+    nextProps: fetchNext(data, false)
+  }
+
+  return (<div className="container"> <SeamlessPlayer {...dataProps} source={data} /></div>)
 }

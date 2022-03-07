@@ -12,7 +12,7 @@ export interface IMeta<T> {
 
 export type IPlayProps = {
   type?: 'image' | 'video' | 'page'
-  exit?: () => void
+  exit?: (label:string) => void
   animation?: string
   autoPlay?: boolean
   visible?: boolean

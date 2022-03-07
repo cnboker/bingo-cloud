@@ -3,7 +3,7 @@ import { IVideoProps } from '../Meta'
 import videojs from "video.js";
 import "video.js/dist/video-js.css";
 
-const VideoPlayer = ({autoPlay, url, exit, poster }: IVideoProps) => {
+export default  ({label, autoPlay, url, exit, poster }: IVideoProps) => {
     const videoRef = React.useRef(null);
     const playerRef = React.useRef(null);
 
@@ -52,7 +52,7 @@ const VideoPlayer = ({autoPlay, url, exit, poster }: IVideoProps) => {
             //player.autoplay(videoJsOptions.autoplay);
             //@ts-ignore
             player.on('ended', () => {
-                exit && exit()
+                exit && exit(label)
             })
             if (autoPlay) {
                 //@ts-ignore
@@ -92,7 +92,7 @@ const VideoPlayer = ({autoPlay, url, exit, poster }: IVideoProps) => {
 }
 
 
-export default React.memo(VideoPlayer, (prev, next) => {
-    console.log('propsAreEqual', prev, next)
-    return prev.url === next.url && prev.autoPlay === next.autoPlay
-})
+// export default React.memo(VideoPlayer, (prev, next) => {
+//    // console.log('propsAreEqual', prev, next)
+//     return prev.url === next.url && prev.autoPlay === next.autoPlay
+// })

@@ -105,6 +105,6 @@ exports.postData = {
     { type: "video", url: "http://file.ioliz.com/admin/2.mp4", poster: "/" },
     { type: "video", url: "http://file.ioliz.com/admin/4k.mp4", poster: "/" },
   ],
-  duration: 5000,
+  duration: 3000,
   animation: "slider",
 };
