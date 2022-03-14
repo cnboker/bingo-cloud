@@ -5,56 +5,66 @@ namespace Ioliz.Service.Models
 {
     public class IndexModel
     {
-        public PowerStatsModel PowerStats { get; set; }
-        public DeviceStatsModel DeviceStats { get; set; }
-        public WorkTimeStatsModel workTimeStats {get;set;}
-        public ExceptionHandlerStatsModel ExceptionHandlerStats { get; set; }
-
+        public DeviceLogsStats DeviceLogsStats { get; set; }
+        public BasicInfomation BasicInfo { get; set; }
+        public PlayStats PlayStats { get; set; }
     }
 
-    public class WorkTimeStatsModel
+    public class BasicInfomation
     {
-        //设备总工作时长
-        public decimal WorkAllTimeDuration { get; set; }
-        //故障处理总时长
-        public decimal ErrorHandleTimeDuration { get; set; }
-        //平均故障处理耗时
-        public decimal ErrorHandleAverageTimeDuration { get; set; }
-    }
-
-    public class ExceptionHandlerStatsModel
-    {
-        //未处理设备数量
-        public int UnhandleCount { get; set; }
-        //设备处理中数量
-        public int HandlingCount { get; set; }
-        //已处理待确认数量
-        public int WaitingConfirmCount { get; set; }
-
-    }
-
-    public class DeviceStatsModel
-    {
-        //在线设备数量
-        public int OnlineCount { get; set; }
-        //离线设备数量
+        //设备总数
         public int OfflineCount { get; set; }
-        //警告设备数量
-        public int AlarmDeviceCount { get; set; }
-        //报修设备数量
-        public int UnderFixCount { get; set; }
-        //正常设备数量
-        public int NormalCount { get; set; }
-       
+        //在线设备总数
+        public int OnlineCount { get; set; }
+        public int LicenseCount {get;set;}
+        public int AvailiableLicenceCount {get;set;}
+        //磁盘配额
+        public int DiskQuota { get; set; }
+        //可利用磁盘数
+        public int AvailiableDisk { get; set; }
     }
 
+    public class PlayStats
+    {
+        public string MonthTitle {get;set;}
+        public string YearTitle {get;set;}
+        //当月播放时长
+        public BarItemObject[] MonthData { get; set; }
+        public BarItemObject[] LastMonthData { get; set; }
+        //年播放时长
+        public BarItemObject[] YearData { get; set; }
+    }
+
+    public class DeviceLogsStats
+    {
+        //总日志数
+        public int Total { get; set; }
+         //错误总数
+        public int ErrorTotal { get; set; }
+        //今日日志
+        public int TodayTotal { get; set; }
+       
+        //今日错误总数
+        public int TodayErrorTotal { get; set; }
+        //已修复总数
+        public int FixedCount { get; set; }
+       
+        public DeviceLog[] DeviceLogs {get;set;}
+    }
+
+    public enum ErrorType {
+        Information,
+        Warnning,
+        Error
+    }
+   
     public class BarItemObject
     {
-       public string Key {get;set;}
+        public string Key { get; set; }
         public int K { get; set; }
         public string Value { get; set; }
         //第二值
-        public string Value1 {get;set;}
+        public string Value1 { get; set; }
 
     }
 

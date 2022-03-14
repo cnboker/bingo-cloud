@@ -2,6 +2,7 @@ import React from 'react'
 import { HashRouter, Route, Switch } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import './scss/style.scss'
+//import '@coreui/coreui/dist/css/coreui.min.css'
 import { PrivateRoute } from '~/lib/check-auth'
 const loading = (
   <div className="pt-3 text-center">
@@ -19,6 +20,7 @@ const Register = React.lazy(() => import('./views/pages/signup/index'))
 const Page404 = React.lazy(() => import('./views/pages/page404/Page404'))
 const Page500 = React.lazy(() => import('./views/pages/page500/Page500'))
 const Authorize = React.lazy(() => import('./views/pages/authorize/index'))
+
 export default () => {
   const dispatch = useDispatch()
 

@@ -11,7 +11,7 @@ using System.Data;
 using Dapper;
 using System.Collections.Generic;
 
-namespace Member.Repositories
+namespace Ioliz.Service.Repositories
 {
     public class SensorMessageByDay{
         public string SensorId {get;set;}

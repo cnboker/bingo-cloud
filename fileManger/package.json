@@ -11,8 +11,7 @@
     "clean": "rimraf dist",
     "start": "cross-env NODE_ENV=development webpack-dev-server --hot",
     "build": "cross-env NODE_ENV=development webpack",
-    "pub": "tsc -p .",
-    "cpub": "npm run clean && tsc -p .",
+    "pub": "npm run clean && tsc -p .",
     "lint": "eslint ./src"
   },
   "peerDependencies": {
@@ -51,6 +50,9 @@
     "@babel/preset-env": "^7.16.5",
     "@babel/preset-react": "^7.16.5",
     "@types/react": "^17.0.38",
+    "@types/react-virtualized-auto-sizer": "^1.0.1",
+    "@types/react-window": "^1.8.5",
+    "@types/shortid": "^0.0.29",
     "babel-eslint": "^10.1.0",
     "babel-loader": "^8.2.3",
     "clean-webpack-plugin": "^4.0.0",

@@ -4,11 +4,11 @@ import {
   FileArray,
   FileBrowserProps,
   FullFileBrowser,
-  useFilePicker,
-  SelectFileList,
   FileActionHandler,
   FileData,
 } from 'chonky'
+import { useFilePicker } from './useFilePicker'
+import { SelectFileList } from './SelectFileList'
 import { setChonkyDefaults, ChonkyIconFA } from 'chonky'
 import { useSelector, RootStateOrAny, useDispatch } from 'react-redux'
 import { useAsyncCallback } from 'src/lib/asynchronous'
@@ -149,9 +149,9 @@ export const VFSBrowser: React.FC<DataVFSProps> = (props) => {
     createFolder,
     uploadFiles,
   } = useCustomFileMap(props.data)
-  const { selectedFiles, handleAction: fileSelectAction, handleRemove } = useFilePicker()
+  const [selectedFiles, setSelectedFiles] = useState<FileArray>([])
+  const { handleAction: fileSelectAction } = useFilePicker({ selectedFiles, setSelectedFiles })
   const files = useFiles(bashPath, fileMap, currentFolderId)
-  console.log('files', files)
   const folderChain = useFolderChain(fileMap, currentFolderId)
   const handleFileAction = useFileActionHandler(
     setCurrentFolderId,
@@ -189,13 +189,10 @@ export const VFSBrowser: React.FC<DataVFSProps> = (props) => {
 
   const onPub = async () => {
     const pubRef = pubFormsRef.current
-    const validated = pubRef.dataValidate()
+    const validated = pubRef.validate()
     if (!validated) return validated
-    const data = pubRef.formData()
-    const { settings, deviceList, fileList } = data
-    console.log('pub data...', data)
-
-    const fileUrls = fileList.map((x: FileData) => x.path)
+    const { settings, deviceList, selectedFiles } = pubRef.formData()
+    const fileUrls = selectedFiles.map((x: FileData) => x.path)
     const entity = {
       sources: fileUrls.map((url: string) => {
         return {
@@ -226,11 +223,12 @@ export const VFSBrowser: React.FC<DataVFSProps> = (props) => {
 
   return (
     <>
-      <SelectFileList onSubmit={onPub} fileList={selectedFiles}>
+      <SelectFileList onSubmit={onPub} selectFileCount={selectedFiles.length}>
         <PubForms
           ref={pubFormsRef}
-          fileList={selectedFiles}
-          onRemove={handleRemove}
+          selectedFiles={selectedFiles}
+          setSelectedFiles={setSelectedFiles}
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           deviceList={deviceReduer.map((x: any) => {
             return { name: `${x.name}(${x.deviceId})`, value: x.deviceId }
           })}

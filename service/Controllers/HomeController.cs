@@ -1,22 +1,26 @@
 using System;
 using Ioliz.Service.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Localization;
+using Ioliz.Service.Repositories;
 
 namespace Ioliz.Service.Controllers
 {
-  public class HomeController : Controller
+    [Authorize]
+    [Route("api/[controller]/[action]")]
+    
+  public class HomeController : BaseController
   {
-    private readonly ServiceContext ctx;
-    private ILogger<HomeController> logger;
-    public HomeController(ServiceContext context, ILogger<HomeController> logger)
+    private HomeRepository homeRep = null;
+    public HomeController(ServiceContext ctx, ILogger<HomeController> logger, IStringLocalizer<HomeController> localizer):base(ctx,logger,localizer)
     {
-      this.ctx = context;
-      this.logger = logger;
+      homeRep = new HomeRepository(localizer,User.Identity.Name);
     }
 
-    public ActionResult Index(){
-        return View();
+    public IActionResult Index(){
+        return Json(homeRep.GetIndexModel());
     }
   }
 }

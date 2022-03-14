@@ -3,6 +3,8 @@
   "compilerOptions": {
     // Generate d.ts files
     "declaration": true,
+    //TS1205 [ERROR]: Re-exporting a type when the '--isolatedModules' flag is provided requires using 'export type' #146
+    "isolatedModules": false,
     // This compiler run should
     // only output d.ts files
     //"emitDeclarationOnly": true,
@@ -14,7 +16,7 @@
     "sourceMap": true,
     "jsx": "react",
      "target": "ES6",
-    "module": "CommonJS",
+    "module": "commonjs",
     "baseUrl": ".",
     "paths": {
       "*": ["*", "src/*"]

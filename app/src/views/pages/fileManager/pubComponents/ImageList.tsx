@@ -1,40 +1,39 @@
 import { ImageList, ImageListItem, ImageListItemBar, IconButton } from '@material-ui/core'
-import { ArrowBack, ArrowForwardOutlined, DeleteOutline } from '@material-ui/icons'
-import React, { forwardRef, useImperativeHandle, useState } from 'react'
-import { FileArray, FileData } from 'chonky'
+import { ArrowBackOutlined, ArrowForwardOutlined, DeleteOutline } from '@material-ui/icons'
+import React, { forwardRef, useImperativeHandle } from 'react'
+import { FileData } from 'chonky'
+import { SelectedFilesProps } from '../useFilePicker'
 
-type ImageListProps = {
-  fileList: FileArray
-  onRemove: (index: number) => void
-}
-export default forwardRef((props: ImageListProps, ref) => {
-  const { fileList, onRemove } = props
-  const [list, setList] = useState(fileList)
-  useImperativeHandle(ref, () => ({
-    getData() {
-      return fileList
-    },
-  }))
+export default forwardRef(({ selectedFiles, setSelectedFiles }: SelectedFilesProps, ref) => {
+  useImperativeHandle(ref, () => ({}))
+
+  const onRemove = (index: number) => {
+    if (index !== -1) {
+      selectedFiles.splice(index, 1)
+      setSelectedFiles([...selectedFiles])
+    }
+    console.log('handleRemove index', index, selectedFiles)
+  }
 
   const onMoveup = (item: FileData, index: number) => {
     if (index > 0) {
-      const preNode = fileList[index - 1]
-      fileList[index - 1] = fileList[index]
-      fileList[index] = preNode
-      setList([...fileList])
+      const preNode = selectedFiles[index - 1]
+      selectedFiles[index - 1] = item
+      selectedFiles[index] = preNode
+      setSelectedFiles([...selectedFiles])
     }
   }
   const onMovedown = (item: FileData, index: number) => {
-    if (index < fileList.length - 1) {
-      const preNode = fileList[index + 1]
-      fileList[index + 1] = fileList[index]
-      fileList[index] = preNode
-      setList([...fileList])
+    if (index < selectedFiles.length - 1) {
+      const preNode = selectedFiles[index + 1]
+      selectedFiles[index + 1] = item
+      selectedFiles[index] = preNode
+      setSelectedFiles([...selectedFiles])
     }
   }
   return (
     <ImageList cols={3} rowHeight={256}>
-      {list.map((item, index) => {
+      {selectedFiles.map((item: FileData, index: number) => {
         return (
           <ImageListItem key={`key${index}`}>
             <img
@@ -45,26 +44,11 @@ export default forwardRef((props: ImageListProps, ref) => {
             />
             <ImageListItemBar
               position="top"
-              actionPosition="left"
-              actionIcon={
-                <IconButton
-                  aria-label="left"
-                  color="secondary"
-                  size="medium"
-                  title="Move last"
-                  onClick={() => onMoveup(item, index)}
-                >
-                  <ArrowBack />
-                </IconButton>
-              }
-            />
-            <ImageListItemBar
-              position="top"
               actionPosition="right"
               actionIcon={
                 <IconButton
                   aria-label="right"
-                  color="secondary"
+                  style={{ color: '#fff' }}
                   size="medium"
                   title="Move next"
                   onClick={() => onMovedown(item, index)}
@@ -80,7 +64,7 @@ export default forwardRef((props: ImageListProps, ref) => {
               actionIcon={
                 <IconButton
                   aria-label="delete"
-                  color="secondary"
+                  style={{ color: '#fff' }}
                   size="medium"
                   title="delete"
                   onClick={() => onRemove(index)}

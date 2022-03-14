@@ -4,7 +4,7 @@ import Start from '../views/start'
 
 const DefaultLayout = () => {
   return (
-    <div>
+    <>
       <Start />
       <AppSidebar />
       <div className="wrapper d-flex flex-column min-vh-100 bg-light">
@@ -14,7 +14,7 @@ const DefaultLayout = () => {
         </div>
         <AppFooter />
       </div>
-    </div>
+    </>
   )
 }
 

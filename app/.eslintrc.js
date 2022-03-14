@@ -20,10 +20,10 @@ module.exports = {
   ],
   plugins: ['react', 'react-hooks'],
   rules: {
-    "prettier/prettier": [
-      "error",
+    'prettier/prettier': [
+      'error',
       {
-        "endOfLine": "auto"
+        endOfLine: 'auto',
       },
     ],
     // Place to specify ESLint rules. Can be used to overwrite rules specified from
@@ -33,7 +33,7 @@ module.exports = {
     '@typescript-eslint/no-use-before-define': ['error'],
     'react/prop-types': 0,
     'react/display-name': 'off',
-    "@typescript-eslint/ban-ts-ignore": "off",
+    '@typescript-eslint/ban-ts-ignore': 'off',
     'no-extra-semi': 'off',
     'react-hooks/exhaustive-deps': 'off',
     '@typescript-eslint/explicit-function-return-type': 'off',

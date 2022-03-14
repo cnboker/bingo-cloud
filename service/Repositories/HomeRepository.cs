@@ -1,194 +1,170 @@
 using System;
 using System.Linq;
 using Ioliz.Service.Models;
-using Ioliz.Shared.Utils;
-using Ioliz.Service;
-using System.Net.Http;
-using Newtonsoft.Json;
-using Ioliz.Service.Repositories;
-using Microsoft.Extensions.Configuration;
 using System.Data;
 using Dapper;
-using System.Collections.Generic;
+using Microsoft.Extensions.Localization;
 
-namespace Member.Repositories
+namespace Ioliz.Service.Repositories
 {
     public class HomeRepository : RepositoryBase
     {
-
-        PowerRepository powerRep = null;
-
-        //drapper dependency
-        public HomeRepository()
+        public string userName;
+        public HomeRepository(IStringLocalizer localizer,string userName):base(localizer)
         {
-            powerRep = new PowerRepository();
+            this.userName = userName;
         }
 
-        public ExceptionHandlerStatsModel GetExceptionHandlerStats(string userName)
+        public IndexModel GetIndexModel(){
+            IndexModel model = new IndexModel();
+            model.BasicInfo = GetBasicInfomation();
+            model.DeviceLogsStats = GetDeviceLogsStats();
+            model.PlayStats = GetPlayStats();
+            return model;
+        }
+
+        private BasicInfomation GetBasicInfomation()
         {
             var tsql = @"
             select 
-            (select count(0) from RepairApplies where applyer=@userName and ApplyState=1) as UnhandleCount,
-            (select count(0) from RepairApplies where applyer=@userName and ApplyState=2) as HandlingCount,
-            (select count(0) from RepairApplies where applyer=@userName and ApplyState=3) as WaitingConfirmCount
+            (select count(0) from Devices where userName=@userName and status=0) as offlineCount,
+            (select count(0) from Devices where userName=@userName and status=1) as onlineCount,
+            (select count(0) from licenses where userName=@userName ) as licenseCount,
+            (select count(0) from licenses where userName=@userName and status=0) as availiableLicenceCount
             ";
             using (IDbConnection db = MemberConnection)
             {
-                return db.QuerySingle<ExceptionHandlerStatsModel>(tsql, new { userName = userName });
+                return db.QuerySingle<BasicInfomation>(tsql, new { userName = userName });
             }
         }
-        public WorkTimeStatsModel GetWorkTime(string userName)
-        {
-            WorkTimeStatsModel model = new WorkTimeStatsModel();
-            model.WorkAllTimeDuration = GetWorkDuration(userName);
-            var model1 = GetFaultProcessDuration(userName);
-            model.ErrorHandleTimeDuration = model1.ErrorHandleTimeDuration;
-            model.ErrorHandleAverageTimeDuration = model1.ErrorHandleAverageTimeDuration;
-            return model;
-        }
+    
         //故障处理总耗时
-        private WorkTimeStatsModel GetFaultProcessDuration(string userName)
+        private DeviceLogsStats GetDeviceLogsStats()
         {
             var tsql = @"
-            select sum(DATEDIFF(hour,AcceptDate,FactoryFinisheddDate)) as ErrorHandleTimeDuration,
-            sum(DATEDIFF(hour,AcceptDate,FactoryFinisheddDate))/count(0) as ErrorHandleAverageTimeDuration
-            from RepairApplies where applyer=@userName
-            and AcceptDate is not null and FactoryFinisheddDate is not null
+            select
+            (select sum(0) as total from DeviceLog where userName=@userName),
+            (select sum(0) as errorTotal from DeviceLog where userName=@userName and status=2),
+            (select sum(0) as todayTotal from DeviceLog where userName=@userName and createdate between (curdate() and now())),
+            (select sum(0) as TodayErrorTotal from DeviceLog where userName=@userName and status=2 and createdate between (curdate() and now())),
+            (select sum(0) as FixedCount from DeviceLog where userName=@userName and fixed=1),
+            (select top 30 * from Device where username=@userName order by createDate desc) as DeviceLogs
             ";
             using (IDbConnection db = MemberConnection)
             {
-                return db.QuerySingle<WorkTimeStatsModel>(tsql, new { userName = userName });
+                return db.QuerySingle<DeviceLogsStats>(tsql, new { userName = userName });
             }
         }
 
-        //获取设备工作总时长
-        private int GetWorkDuration(string userName)
+        private PlayStats GetPlayStats()
         {
-            var tsql = @"
-            select isnull(sum(duration)/60,0) as hours from SensorWorkTimes
-            where sensorId in( select replace(topic,'SENSORS/','') from tbl_messages where userName=@userName and topic like 'SENSORS/%')
-            ";
-
-            using (IDbConnection db = MQTTConnection)
-            {
-                var result = (IDictionary<string, object>)db.QuerySingleOrDefault(tsql, new { userName = userName });
-                return Convert.ToInt32(result["hours"]);
-            }
-        }
-        //获取设备状态
-        public DeviceStatsModel GetDeviceStatsModel(string username)
-        {
-            var tsql = @"
-                declare @offlineCount int
-                declare @onlineCount int
-                declare @warningCount int
-                declare @fixedCount int 
-                declare @normalCount int
-
-                select @offlineCount = count(0) from SensorScopes where username=@userName
-                and datediff(ss,updateTime,getdate()) >= 300
-
-                select @onlineCount = count(0) from SensorScopes where username=@userName
-                and datediff(ss,updateTime,getdate()) < 300 and  State <> 2
-
-                select @normalCount = count(0) from SensorScopes where username=@userName
-                and State=0  and datediff(ss,updateTime,getdate()) < 300
-
-                select @warningCount = count(0) from SensorScopes where username=@userName
-                and State=1  and datediff(ss,updateTime,getdate()) < 300
-
-                select @fixedCount = count(0) from SensorScopes where username=@userName
-                and State=2
-                
-                select @offlineCount as OfflineCount,@onlineCount as OnlineCount,@warningCount as AlarmDeviceCount,@normalCount as NormalCount, @fixedCount as UnderFixCount
-            ";
-
-            using (IDbConnection db = MemberConnection)
-            {
-                return db.QueryFirst<DeviceStatsModel>(tsql, new { userName = username });
-            }
-        }
-
-        public PowerStatsModel GetPowerStats(string userName)
-        {
-            PowerStatsModel model = new PowerStatsModel();
-            var sensorIds = GetSensorIdsByUser(userName);
-            model.TodayData = PaddingHours(GetTodayPower(sensorIds)).Select(c => new BarItemObject() { Key = (c.K.ToString() + '时'), Value = c.Value }).ToArray();
-            model.MonthData = PaddingDays(GetCurrentMonthPower(sensorIds)).Select(c => new BarItemObject() { Key = (c.K.ToString() + '日'), Value = c.Value }).ToArray();
-            model.LastMonthData = PaddingDays(GetLastMonthPower(sensorIds)).Select(c => new BarItemObject() { Key = (c.K.ToString() + '日'), Value = c.Value }).ToArray();
-            model.YearData = PaddingMonths(GetCurrentYearPower(sensorIds)).Select(c => new BarItemObject() { Key = (c.K.ToString() + '月'), Value = c.Value }).ToArray();
-            model.LastYearData = PaddingMonths(GetLastYearPower(sensorIds)).Select(c => new BarItemObject() { Key = (c.K.ToString() + '月'), Value = c.Value }).ToArray();
+            PlayStats model = new PlayStats();
+            model.MonthTitle = "1";
+            model.YearTitle = "";
+            var deviceIds = GetDeviceIds(userName);
+            model.MonthData = PaddingDays(GetMonthData(deviceIds)).Select(c => new BarItemObject() { Key = (c.K.ToString() + '时'), Value = c.Value }).ToArray();
+            model.LastMonthData = PaddingDays(GetLastMonth(deviceIds)).Select(c => new BarItemObject() { Key = (c.K.ToString() + '日'), Value = c.Value }).ToArray();
+            model.YearData = PaddingMonths(GetCurrentYear(deviceIds)).Select(c => new BarItemObject() { Key = (c.K.ToString() + '月'), Value = c.Value }).ToArray();
             return model;
+        }
+
+        private string[] GetDeviceIds(string userName)
+        {
+            
+            var sqlText = string.Format(@"
+                    select deviceId
+                    FROM devices where userName =@userName");
+
+            using (IDbConnection db = MemberConnection)
+            {
+                var result = db.Query<string>(sqlText, new { userName = userName });
+
+                return result.ToArray();
+            }
         }
 
         
         //获取当日电量
-        BarItemObject[] GetTodayPower(string[] sensorIds)
-        {
-            return powerRep.GetPowerByDay(sensorIds, DateTime.Now);
-        }
+        // BarItemObject[] GetTodayPower(string[] deviceIds)
+        // {
+        //     var tsql = string.Format(@"
+        //         -- 获取单日电量
+              
+        //         --set @start = cast(getdate() as date)
+        //         --set @end = getdate()
+        //         select LTRIM(datepart(HOUR,createdate)) + '时' as [key], datepart(HOUR,createdate) as K, sum(value) as value from [power.hours]
+        //         where createdate between @start and @end
+        //         and {0}
+        //         group by  createdate
+        //     ", deviceIdsWhere(deviceIds)); ;
+        //     var result = ExecuteSQL(tsql, new
+        //     {
+        //         start = DateTime.Parse(day.ToShortDateString()),
+        //         end = DateTime.Parse(day.ToShortDateString() + " 23:59:59")
+        //     });
+        //     return PaddingHours(result);
+        // }
 
-      
-
-        //获取当月电量， 上月电量
-        BarItemObject[] GetCurrentMonthPower(string[] sensorIds)
+    
+        //获取当月播放统计
+        BarItemObject[] GetMonthData(string[] deviceIds)
         {
-            if (sensorIds.Length == 0) return new BarItemObject[] { };
             var tsql = string.Format(@"
-                -- 获取本月用电量
-                select day(createDate) as k,sum(value) as value from [power.hours] 
+                -- 获取本月播放量统计
+                select day(createDate) as k,sum(duration) as value from [playRecords] 
                 where Year(createdate) = Year(CURRENT_TIMESTAMP) and Month(createDate) = Month(CURRENT_TIMESTAMP)
                 and {0}
                 group by Day(createDate)
-            ", getPowerWhere(sensorIds)); ;
+            ", deviceIdsWhere(deviceIds)); ;
             return ExecuteSQL(tsql);
         }
 
-        BarItemObject[] GetLastMonthPower(string[] sensorIds)
+        //得到上月播放统计
+        BarItemObject[] GetLastMonth(string[] deviceIds)
         {
-            if (sensorIds.Length == 0) return new BarItemObject[] { };
+            if (deviceIds.Length == 0) return new BarItemObject[] { };
             var tsql = string.Format(@"
-            -- 获取上月用电量
-                SELECT day(createDate) as k,sum(value) as value
-                FROM [power.hours]
+                -- 获取上月播放量统计
+                SELECT day(createDate) as k,sum(duration) as value
+                FROM [playrecords]
                 WHERE DATEPART(m, createDate) = DATEPART(m, DATEADD(m, -1, getdate()))
                 AND DATEPART(yyyy, createDate) = DATEPART(yyyy, DATEADD(m, -1, getdate()))
                 and {0}
                 group by Day(createDate)
-            ", getPowerWhere(sensorIds)); ;
+            ", deviceIdsWhere(deviceIds)); ;
             return ExecuteSQL(tsql);
         }
 
        
-        //获取当年电量，上年电量
-        BarItemObject[] GetCurrentYearPower(string[] sensorIds)
+        //获取当年电量
+        BarItemObject[] GetCurrentYear(string[] deviceIds)
         {
-            if (sensorIds.Length == 0) return new BarItemObject[] { };
+            if (deviceIds.Length == 0) return new BarItemObject[] { };
             var tsql = string.Format(@"
-            --获取本年用电量
-                select month(createDate) as k,sum(value) as value from [power.hours] where Year(createdate) = Year(CURRENT_TIMESTAMP) 
+                --获取本年度播放量统计
+                select month(createDate) as k,sum(duration) as value from [playrecords] where Year(createdate) = Year(CURRENT_TIMESTAMP) 
                 and {0}
                 group by month(createDate)
-            ", getPowerWhere(sensorIds));
+            ", deviceIdsWhere(deviceIds));
             return ExecuteSQL(tsql);
         }
 
-        private string getPowerWhere(string[] sensorIds)
+        private string deviceIdsWhere(string[] deviceIds)
         {
-            return string.Format(" sensorId in ({0})", string.Join(",", sensorIds.Select(c => "'" + c + "'")));
+            return string.Format(" deviceId in ({0})", string.Join(",", deviceIds.Select(c => "'" + c + "'")));
         }
 
-        BarItemObject[] GetLastYearPower(string[] sensorIds)
-        {
-            if (sensorIds.Length == 0) return new BarItemObject[] { };
-            var tsql = string.Format(@"
-            --获取去年用电量
-            select month(createDate) as k,sum(value) as value from [power.hours] where Year(createdate) = Year(CURRENT_TIMESTAMP) -1
-            and {0}
-            group by month(createDate)
-            ", getPowerWhere(sensorIds));
-            return ExecuteSQL(tsql);
-        }
+        // BarItemObject[] GetLastYearPower(string[] deviceIds)
+        // {
+        //     if (deviceIds.Length == 0) return new BarItemObject[] { };
+        //     var tsql = string.Format(@"
+        //     --获取去年用电量
+        //     select month(createDate) as k,sum(value) as value from [power.hours] where Year(createdate) = Year(CURRENT_TIMESTAMP) -1
+        //     and {0}
+        //     group by month(createDate)
+        //     ", deviceIdsWhere(deviceIds));
+        //     return ExecuteSQL(tsql);
+        // }
     }
 
 }

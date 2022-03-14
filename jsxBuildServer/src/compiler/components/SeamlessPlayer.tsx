@@ -26,22 +26,47 @@ export const SeamlessPlayer: React.FC<SeamlessDataProps & IDataSource> = ({ sour
     const [viewData, setViewData] = useState<SeamlessDataProps>({ playProps, nextProps })
 
     function exit(label) {
-        //2个播放区轮流播放内容
+        //第一次更新useState增加cssTrainsation进出效果
         setViewData((cur) => {
-            const sourceItem = fetchNext(source, false)
             const { playProps, nextProps } = cur
             //playProps播放完成， playProps需要准备下一个数据， nextProps需要开始播放
             if (playProps.label === label) {
                 nextProps.autoPlay = true
-                cur.playProps = sourceItem
+                playProps.autoPlay = false
             }
             else if (nextProps.label === label) {
                 playProps.autoPlay = true
-                cur.nextProps = sourceItem
+                nextProps.autoPlay = false
             }
-            console.log('cur', label, cur)
             return { ...cur }
         })
+        //第二次更新轮询数据,通过延时的方法来解决，这里的延时数据必须大于CSSTransition里面的timeout,但必须小于轮询周期(image's duration)
+        delay(2000, ()=>{
+            setViewData((cur) => {
+                const sourceItem = fetchNext(source, false)
+                const { playProps, nextProps } = cur
+    
+                //playProps播放完成， playProps需要准备下一个数据， nextProps需要开始播放
+                if (playProps.label === label) {
+                    cur.playProps = sourceItem
+                }
+                else if (nextProps.label === label) {
+                    cur.nextProps = sourceItem
+                }
+                //console.log('cur', label, cur)
+                return { ...cur }
+            })
+        })
+       
+    }
+
+    const delay = (timeout, cb) => {
+        const timer: ReturnType<typeof setTimeout> = setTimeout(() => {
+            if (cb) {
+                cb();
+            }
+        }, timeout);
+        return () => clearTimeout(timer);
     }
 
     return (<TransitionGroup>
@@ -88,16 +113,15 @@ const EffectionLayer: React.FC<IVideoProps | IImageProps | IPageProps> = (props)
             {player}
         </div>)
     }
-    return (autoPlay && <CSSTransition
-        key={label}
-        timeout={2000}
+    return <CSSTransition
+        appear
+        unmountOnExit
         in={autoPlay}
-        appear={true}
+        timeout={1500}
         classNames={'slider'}>
-
         <div className={`view`}>
             {player}
         </div>
-    </CSSTransition>)
+    </CSSTransition>
 
 }

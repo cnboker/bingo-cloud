@@ -38,7 +38,7 @@ namespace Ioliz.Service.Controllers
         x.GroupName = model.GroupName;
       });
       ctx.SaveChanges();
-      return Ok("");
+      return Ok();
     }
 
     [HttpPost("/api/device/updateName")]
@@ -107,7 +107,7 @@ namespace Ioliz.Service.Controllers
           licenseExpired = leftDays <= 0,
           OS = c.OS,
           LatLng = c.LatLng,
-          LicenseRemark = string.Format("valid days:{0}", leftDays ?? 0),
+          LicenseRemark = string.Format(localizer["valid days for {0}"], leftDays ?? 0),
           NetworkStatus = (int)c.Status
         });
       var model = q.ToList();
@@ -124,15 +124,15 @@ namespace Ioliz.Service.Controllers
     {
       if (status == NetworkStatus.Offline)
       {
-        return "设备离线";
+        return localizer["Offline"];
       }
       else if (status == NetworkStatus.Running)
       {
-        return "设备在线";
+        return localizer["Online"];
       }
       else
       {
-        return "未知";
+        return localizer["Unkonwn"];
       }
 
     }
@@ -142,7 +142,7 @@ namespace Ioliz.Service.Controllers
       if (license == null)
       {
         licenseExpired = false;
-        remark = "设备未授权";
+        remark = localizer["The device is not authorized"];
         return;
       }
       var days = license.ActivationdDate.Value.AddDays(license.ValidDays).Subtract(DateTime.Now).TotalDays;
@@ -150,7 +150,7 @@ namespace Ioliz.Service.Controllers
       {
         days = 0;
       }
-      remark = string.Format("有效天数{0}天", Convert.ToInt32(days));
+      remark = string.Format(localizer["valid days for {0}"], Convert.ToInt32(days));
       licenseExpired = (days <= 0);
     }
 

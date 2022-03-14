@@ -12,8 +12,6 @@ namespace Ioliz.Service.Models
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            //optionsBuilder.UseInMemoryDatabase("Servicedb");
-
         }
 
         public DbSet<MyOrder> Orders { get; set; }
@@ -30,10 +28,36 @@ namespace Ioliz.Service.Models
         public DbSet<NetTrafficInfo> NetTrafficInfos { get; set; }
 
         public DbSet<Topic> Topics { get; set; }
-       
+        public DbSet<DeviceLog> DeviceLogs {get;set;}
+        public DbSet<PlayRecord> PlayRecords {get;set;}
     }
 
-   
+    //终端播放记录
+    public class PlayRecord {
+        public int Id {get;set;}
+        public string DeviceId {get;set;}
+        public DateTime StartPlayTime {get;set;}
+        public DateTime EndPlayTIme {get;set;}
+        public string PlayFileName {get;set;}
+        //播放时长
+        public int Duration {get;set;}
+        public DateTime CreateDate {get;set;}
+    }
+
+    public class DeviceLog {
+        public int Id {get;set;}
+        public string DeviceName {get;set;}
+        public string DeviceId {get;set;}
+        public ErrorType ErrorType {get;set;}
+        public string Detail {get;set;}
+        public string userName {get;set;}
+        public DateTime? CreateDate {get;set;}
+        public bool Fixed {get;set;}
+        public DateTime? FixedDateTime {get;set;}
+        public string FixedUserName {get;set;}
+        public string FixedRemark {get;set;}
+    }
+
     public class NetTrafficInfo
     {
         public int Id { get; set; }

@@ -4,12 +4,23 @@ using Ioliz.Service.Models;
 using System.Collections.Generic;
 using System.Linq;
 using MySql.Data.MySqlClient;
+using Microsoft.Extensions.Localization;
 
 namespace Ioliz.Service.Repositories
 {
     public class RepositoryBase
     {
 
+
+        private IStringLocalizer localizer;
+        public RepositoryBase()
+        {
+        }
+
+        public RepositoryBase(IStringLocalizer localizer)
+        {
+            this.localizer = localizer;
+        }
         public System.Data.IDbConnection MemberConnection
         {
             get
@@ -34,41 +45,6 @@ namespace Ioliz.Service.Repositories
             }
         }
 
-        public string[] GetSensorIdsByFactory(string userName)
-        {
-            return GetSensorIds(userName, true);
-        }
-        public string[] GetSensorIdsByUser(string userName)
-        {
-            return GetSensorIds(userName, false);
-        }
-
-        private string[] GetSensorIds(string userName, bool isFactory)
-        {
-            var column = "userName";
-            if (isFactory)
-            {
-                column = "factory";
-            }
-            var sqlText = string.Format(@"
-                    select sensorId
-                    FROM sensorMessageView where {0} =@userName", column);
-
-            using (IDbConnection db = MemberConnection)
-            {
-                var result = db.Query<string>(sqlText, new { userName = userName });
-
-                return result.AsList().ToArray();
-            }
-        }
-
-        public RepositoryBase()
-        {
-
-        }
-
-
-
         protected BarItemObject[] PaddingHours(BarItemObject[] data)
         {
             return PaddingItems(data, 0, 23);
@@ -76,12 +52,14 @@ namespace Ioliz.Service.Repositories
 
         protected BarItemObject[] PaddingItems(BarItemObject[] data, int startIndex, int paddingRowCount)
         {
-            return data;
-            string unit="时";
-            if(paddingRowCount == 12){
-                unit = "月";
-            }else if(paddingRowCount == 31){
-                unit = "日";
+            string unit = localizer["Hour"];
+            if (paddingRowCount == 12)
+            {
+                unit = localizer["Month"];
+            }
+            else if (paddingRowCount == 31)
+            {
+                unit = localizer["Day"];
             }
             List<BarItemObject> list = new List<BarItemObject>();
             for (var i = startIndex; i <= paddingRowCount; i++)
@@ -93,7 +71,7 @@ namespace Ioliz.Service.Repositories
                 }
                 else
                 {
-                    list.Add(new BarItemObject() { K = i, Value = "0", Key=i+unit });
+                    list.Add(new BarItemObject() { K = i, Value = "0", Key = i + unit });
                 }
             }
             return list.ToArray();
@@ -109,19 +87,16 @@ namespace Ioliz.Service.Repositories
             return PaddingItems(data, 1, 12);
         }
 
-        protected BarItemObject[] ExecuteSQL(string tsql,object param = null)
+        protected BarItemObject[] ExecuteSQL(string tsql, object param = null)
         {
             using (IDbConnection db = MQTTConnection)
             {
-                var result = db.Query<BarItemObject>(tsql,param);
+                var result = db.Query<BarItemObject>(tsql, param);
 
                 return result.ToArray();
             }
         }
 
-        protected string getWhere(string[] sensorIds)
-        {
-            return string.Format(" sensorId in ({0})", string.Join(",", sensorIds.Select(c => "'" + c + "'")));
-        }
+
     }
 }

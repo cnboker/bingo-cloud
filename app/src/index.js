@@ -3,7 +3,6 @@ import 'core-js'
 import React from 'react'
 import ReactDOM from 'react-dom'
 import App from './App'
-import * as serviceWorker from './serviceWorker'
 import { Provider } from 'react-redux'
 import IndexReducer from './index-reducer'
 import { createStore, compose, applyMiddleware } from 'redux'
@@ -11,6 +10,8 @@ import createSegaMiddleware from 'redux-saga'
 import reduxReset from 'redux-reset'
 import IndexSagas from './index-sagas'
 import thunk from 'redux-thunk'
+import * as serviceWorker from './serviceWorker'
+
 const sagaMiddleware = createSegaMiddleware()
 const composeSetup =
   process.env.NODE_ENV !== 'production' &&

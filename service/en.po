@@ -1,2 +1,23 @@
-msgid "有效天数{0}天"
-msgstring "valid days for {0}"
+msgid "valid days for {0}"
+msgstring "有效天数{0}天"
+
+msgid "The device is not authorized"
+msgstring "设备未授权"
+
+msgid "Offline"
+msgstring "离线"
+
+msgid "Online"
+msgstring "在线"
+
+msgid "Unkonwn"
+msgstring "未知"
+
+msgid "Hour"
+msgstring "时"
+
+msgid "Month"
+msgstring "月"
+
+msgid "Day"
+msgstring "日"

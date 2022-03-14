@@ -1,32 +1,10 @@
 import { Paper, Tabs, Tab, Theme, AppBar } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import { FileArray, FileData } from 'chonky'
-import React, { useRef, useImperativeHandle } from 'react'
+import React, { useRef, useImperativeHandle, Dispatch, SetStateAction } from 'react'
 import { CheckBoxList, ListItemData } from './CheckBoxList'
 import ImageList from './ImageList'
 import { Settings } from './Settings'
-
-// type TabPanelProps = {
-//   children?: React.ReactNode
-//   index: unknown
-//   value: unknown
-//   dir: unknown
-// }
-
-// const TabPanel = (props: TabPanelProps) => {
-//   const { children, index, value } = props
-//   return (
-//     <div role="tabpanel" hidden={value !== index} id={`tabpanel_${index}`}>
-//       {value === index && (
-//         <Box p={3}>
-//           <Typography component={'span'} variant={'body2'}>
-//             {children}
-//           </Typography>
-//         </Box>
-//       )}
-//     </div>
-//   )
-// }
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
@@ -63,21 +41,23 @@ const Header = (props: HeaderProps) => {
 }
 
 export type PubFormProps = {
-  fileList: FileArray
+  selectedFiles: FileArray
   deviceList: ListItemData[]
-  onRemove: (index: number) => void
+  setSelectedFiles: Dispatch<SetStateAction<FileArray<FileData>>>
+  //onRemove: (index: number) => void
 }
 
 export type PubFormResultProps = {
   //选择图片列表
-  fileList: FileArray
+  selectedFiles: FileArray
   //选择设备
   deviceList: ListItemData[]
   settings: SettingProps
 }
 
-type dataHandle = {
+type ImperativeHandleProps = {
   formData(): PubFormResultProps
+  validate(): boolean
 }
 type SettingProps = {
   duration: number
@@ -97,8 +77,9 @@ const getVisibilityStyle = (hiddenCondition: boolean): any => {
   }
 }
 
-export const PubForms = React.forwardRef<dataHandle, PubFormProps>(
-  ({ fileList, onRemove, deviceList }, ref) => {
+//ImperativeHandleProps定义useImperativeHandle接口， PubFormProps表示属性
+export const PubForms = React.forwardRef<ImperativeHandleProps, PubFormProps>(
+  ({ selectedFiles, deviceList, setSelectedFiles }, ref) => {
     const classes = useStyles()
     const [value, setValue] = React.useState(0)
     const settingsRef = useRef(null)
@@ -110,17 +91,17 @@ export const PubForms = React.forwardRef<dataHandle, PubFormProps>(
     useImperativeHandle(ref, () => ({
       formData() {
         return {
-          fileList,
+          selectedFiles,
           deviceList: devicelistRef.current?.formData(),
           settings: settingsRef.current?.formData() || { duration: 5, effect: 'vanish' },
         }
       },
-      dataValidate(): boolean {
+      validate(): boolean {
         if (!devicelistRef.current || devicelistRef.current?.formData().length === 0) {
           setValue(2)
           return false
         }
-        if (fileList.length === 0) {
+        if (selectedFiles.length === 0) {
           setValue(0)
           return false
         }
@@ -133,7 +114,7 @@ export const PubForms = React.forwardRef<dataHandle, PubFormProps>(
         <AppBar position="static" color="default">
           <Header value={value} valueChange={valueChange} />
           <div style={getVisibilityStyle(value !== 0)}>
-            <ImageList fileList={fileList} onRemove={onRemove} />
+            <ImageList selectedFiles={selectedFiles} setSelectedFiles={setSelectedFiles} />
           </div>
           <div style={getVisibilityStyle(value !== 1)}>
             <Settings ref={settingsRef} />
