@@ -32,7 +32,7 @@ RDS(Raspberry Digital Signage)Player是专门为Raspberry Pi 4设计的一款App
 
 * 将做好的TF卡插入树莓派4模型B，同时插入鼠标和键盘， 启动系统， 系统会引导自动安装系统，安装完成，鼠标从桌面顶部向下拖拉系统， 会弹出设置图标，点击“配置按钮"设置无线网络或直接插网线也行，确保工作电脑和树莓板为同一网段， 并记下树莓板的ip地址
 
-![Webos启动画面](./webosose-2_0-bootup-launcher.jpeg)
+![Webos启动画面](/img/webosose-2_0-bootup-launcher.jpeg)
 
 ## 在主机操作系统安装WebOS OSE命令行工具
   

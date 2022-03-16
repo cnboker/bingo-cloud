@@ -2,7 +2,7 @@
 sidebar_position: 2
 ---
 
-# Create a Document
+# 安装RDS-Player
 
 Documents are **groups of pages** connected through:
 
