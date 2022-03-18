@@ -100,6 +100,7 @@ const data = {
     next: 'Next',
     confirm: 'Confirm',
     new: 'New',
+    activateDevice: 'Activate device',
   },
   zh: {
     confirm: '确认',
@@ -200,6 +201,7 @@ const data = {
     createDate: '创建时间',
     connection: '连接',
     new: '新',
+    activateDevice: '激活设备',
   },
 }
 

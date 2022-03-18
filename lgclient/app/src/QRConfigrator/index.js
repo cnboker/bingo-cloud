@@ -49,6 +49,7 @@ export default () => {
     } else if (!configInfo.fileServer && runStep === RunStep.RequestConfig) {
       setMessage(() => "request config information...");
       console.log("request config...");
+      //配置信息必须在用户手动授权后再返回
       dispatch(requestConfig(token.access_token));
     } else if (configInfo.fileServer && runStep === RunStep.RequestConfig) {
       setRunStep(() => RunStep.Finished);

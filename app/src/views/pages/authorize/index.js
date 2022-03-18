@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { tokenPost, authorizeRequest, unAuthorizeListRequest } from './actions'
 import * as Dialog from 'src/views/components/dialog/Index'
 import { useParams } from 'react-router-dom'
+import { useInterval } from 'src/lib/useInterval'
 import { CCard, CCardHeader, CCardBody, CRow, CCol, CButton } from '@coreui/react'
 import R from './locale'
 import G from '~/locale'
@@ -16,8 +17,12 @@ export default () => {
   const [message, setMessage] = useState(R.authorizeRequest)
 
   useEffect(() => {
-    dispatch(unAuthorizeListRequest())
+    useInterval(() => {
+      dispatch(unAuthorizeListRequest())
+    }, 1000)
+
     if (urlAuthorizeCode.length > 1) {
+      //上传token到服务器
       dispatch(tokenPost(urlAuthorizeCode))
     }
   }, [])
@@ -62,7 +67,7 @@ export default () => {
 const DeviceComoponent = ({ data, urlAuthorizeCode, authorizeHandle }) => {
   const { name, os, authorizeStatus, authorizeCode, deviceId } = data
   return (
-    <React.Fragment>
+    <>
       <CRow xs={{ cols: 'auto' }}>
         <CCol>{name}</CCol>
       </CRow>
@@ -73,11 +78,11 @@ const DeviceComoponent = ({ data, urlAuthorizeCode, authorizeHandle }) => {
         <CCol>
           {authorizeCode === urlAuthorizeCode && authorizeStatus === 0 && (
             <CButton color="primary" onClick={() => authorizeHandle(deviceId)}>
-              {G.authorize}
+              {G.activateDevice}
             </CButton>
           )}
         </CCol>
       </CRow>
-    </React.Fragment>
+    </>
   )
 }
