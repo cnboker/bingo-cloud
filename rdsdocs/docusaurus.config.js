@@ -6,8 +6,8 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-  title: 'RDS(Raspberry Digital Signage)-数字标牌应用解决方案',
-  tagline: '草莓派用户的选择',
+  title: '树莓派数字标牌应用解决方案',
+  tagline: '树莓派用户的选择',
   url: 'https://www.ioliz.com',
   baseUrl: '/',
   onBrokenLinks: 'throw',
@@ -43,7 +43,7 @@ const config = {
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
       navbar: {
-        title: 'RDS',
+        title: '首页',
         logo: {
           alt: 'RDS Logo',
           src: 'img/logo.svg',

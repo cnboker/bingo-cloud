@@ -66,13 +66,13 @@ Version: 2.x.x
 
 ### 主机连接树莓派设备
 
-  记下草莓派系统ip,并确保该ip和主机在同一网段
+  记下树莓派系统ip,并确保该ip和主机在同一网段
 ```sh
 #列出所有关联远程设备
 ares-setup-device --list 
 #增加远程设备到设备列表
 # target表示自定义设备名称，
-# host地址:192.168.50.205,即草莓派系统ip
+# host地址:192.168.50.205,即树莓派系统ip
 # port：22， ssh默认端口
 # user: root
 # default=true 表示默认设备
