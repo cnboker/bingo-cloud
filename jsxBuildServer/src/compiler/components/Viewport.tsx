@@ -6,7 +6,7 @@ import { IPlayProps } from "../Meta";
 
 export const fetchNext = (source: Array<IPlayProps>, autoPlay: boolean = false) => {
   if (source.length === 0) return null
-  const next = source.shift()
+  const next = source.shift() 
   next.autoPlay = autoPlay
   source.push(next)
   return next

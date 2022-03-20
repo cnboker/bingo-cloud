@@ -99,11 +99,12 @@ exports.MetaMap = {
 
 exports.postData = {
   sources: [
-    { type: "image", url: "http://file.ioliz.com/admin/5.jpeg" },
-    { type: "image", url: "http://file.ioliz.com/admin/2.jpeg" },
-    { type: "image", url: "http://file.ioliz.com/admin/3.jpeg" },
-    { type: "video", url: "http://file.ioliz.com/admin/2.mp4", poster: "/" },
-    { type: "video", url: "http://file.ioliz.com/admin/4k.mp4", poster: "/" },
+    // { type: "image", url: "http://file.ioliz.com/admin/5.jpeg" },
+    // { type: "image", url: "http://file.ioliz.com/admin/2.jpeg" },
+    // { type: "image", url: "http://file.ioliz.com/admin/3.jpeg" },
+    { type: "video", url: "http://file.ioliz.com/admin/videos/demo1_1080p.mp4", poster: "/" },
+    { type: "video", url: "http://file.ioliz.com/admin/videos/demo3_1080p.mp4", poster: "/" },
+    // { type: "video", url: "http://file.ioliz.com/admin/videos/video.mp4", poster: "/" },
   ],
   duration: 3000,
   animation: "slider",
