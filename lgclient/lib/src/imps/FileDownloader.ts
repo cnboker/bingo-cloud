@@ -24,13 +24,13 @@ export class FileDownloader implements IFileDownloader {
     this.onOneDownloadComplete = async (res: IResourceInfo) => {
       const downloadList = this.fileList.filter(x => x.status === DownloadStatus.Origin || x.status === undefined)
       const jsonContent = JSON.stringify(downloadList)
-      console.log('this.fileList', jsonContent)
-      try {
-        await writeFile(`${APP_DIR}/downloadlist.json`, jsonContent);
-      } catch (err) {
-        console.log("write downlaodList.json error", err);
-        return;
-      }
+      // console.log('this.fileList', jsonContent)
+      // try {
+      //   await writeFile(`${APP_DIR}/downloadlist.json`, jsonContent);
+      // } catch (err) {
+      //   console.log("write downlaodList.json error", err);
+      //   //return;
+      // }
       if (downloadList.length > 0) {
         this.singleFileDownload(downloadList[0])
       } else{

@@ -81,3 +81,8 @@ sidebar_position: 3
 usbhid.mousepoll=0
 
 ```
+
+## 启用4k视频播放
+打开config.txt, 添加下面一行代码
+
+hdmi_enable_4kp60=1

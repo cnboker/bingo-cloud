@@ -27,7 +27,7 @@ export const transformData = (data: PostData): IPlayProps[] => {
         } else if (x.type === 'video') {
             return <IVideoProps>{
                 type: 'video',
-                url: (new URL(x.url)).pathname + '?t=',
+                url: (new URL(x.url)).pathname,
                 poster: x.poster.indexOf('http:') !== -1 ? (new URL(x.poster)).pathname : x.poster,
 
             }

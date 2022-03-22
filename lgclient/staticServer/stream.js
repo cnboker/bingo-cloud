@@ -2,8 +2,9 @@
 //import config from './config'
 //development
 
-//const {root, port} = require('./config.dev')
-export const start = (root, port) =>{
+const {root, port} = require('./config')
+
+ const start = (root, port) =>{
   const http = require("http");
   const { stat, createReadStream, existsSync } = require("fs");
   const { promisify } = require("util");
@@ -25,6 +26,7 @@ export const start = (root, port) =>{
         return;
       }
       var fileType = mime.lookup(filename);
+      console.log('fileType',fileType)
       /** Calculate Size of file */
       const { size } = await fileInfo(filename);
       const range = req.headers.range;
@@ -84,3 +86,4 @@ export const start = (root, port) =>{
 }
 
 
+start(root,port)

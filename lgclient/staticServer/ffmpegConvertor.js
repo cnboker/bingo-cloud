@@ -30,6 +30,9 @@ const child_process = require("child_process");
 const ffmpegPipe = (filename,outFileName) => {
   //https://gist.github.com/dvlden/b9d923cb31775f92fa54eb8c39ccd5a9
   //https://developers.google.com/media/vp9/settings/vod
+  //ffmpeg -i demo3_1080p.mp4 -b:a 128k -codec:v libx264 -pix_fmt yuv420p -b:v 4500k -minrate 900k -maxrate 2610k -bufsize 2610k -vf scale=-1:1080 demo3.mp4
+  //下面这个支持MSE
+  //ffmpeg -i demo3_1080p.mp4 -vcodec libx264 -acodec aac -pix_fmt yuv420p -movflags empty_moov+default_base_moof+frag_keyframe -profile:v baseline demo3.mp4
   var ffmpeg = child_process.spawn("ffmpeg", [
     "-i",
     filename,
@@ -42,7 +45,8 @@ const ffmpegPipe = (filename,outFileName) => {
     '-minrate', '900k',
     '-maxrate', '2610k' ,
     '-c:a', 'libopus',
-    '-r', '24', //30 frames/s
+    '-quality', 'good',
+    '-r', '50', //30 frames/s
     '-vf', 'scale=1920x1080', //1080p
     outFileName,
   ])

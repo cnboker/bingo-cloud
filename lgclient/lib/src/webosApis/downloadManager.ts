@@ -73,13 +73,11 @@ export const downloadStatusQuery = (
         amountTotal,
         completed
       } = response
-      console.log("downloadStatusQuery", response);
-      if (returnValue) {
+      console.log("downloadStatusQuery", response, returnValue);
+      if (completed) {
         resolve({ ticket, amountReceived, amountTotal, completed });
       }
-      else if (returnValue === false) {
-        reject({ errorCode, errorText });
-      }
+     
     };
     var url = "luna://com.webos.service.downloadmanager/downloadStatusQuery";
     var params = JSON.stringify({
