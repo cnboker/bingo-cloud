@@ -13,22 +13,26 @@ export default ({ autoPlay, url, exit, label }) => {
   const sourceBufferRef = useRef(null);
   const mediaSourceRef = useRef(null);
   const rangeRef = useRef<Range>(null);
-  rangeRef.current = {
-    index: 0,
-    chunks: 0,
-    fileSize: 0,
-    chunksSize: 1024 * 2000,
-  };
-
+  //console.log('autoplay-----', autoPlay, url)
+  //url 改变重置数据
   useEffect(() => {
-     //获取文件尺寸
-     getFileLength(url).then((bytes) => {
+    rangeRef.current = {
+      index: 0,
+      chunks: 0,
+      fileSize: 0,
+      chunksSize: 1024 * 2000,
+    };
+    mediaSourceRef.current = null;
+    sourceBufferRef.current = null;
+    //获取文件尺寸
+    getFileLength(url).then((bytes) => {
       const range = rangeRef.current;
       range.fileSize = bytes;
+      range.index = 0;
       range.chunks = Math.ceil(bytes / range.chunksSize);
       addVideoBuffer();
     });
-  }, []);
+  }, [url]);
 
   async function playVideo() {
     const player = playerRef.current;
@@ -38,18 +42,9 @@ export default ({ autoPlay, url, exit, label }) => {
         console.log("playing");
         player.classList.remove("video-hidden");
         player.classList.add("video");
-        // var timer = setInterval(() => {
-        //   const { index, chunks } = rangeRef.current;
-        //   //console.log("index", index);
-        //   if (index >= chunks - 1) {
-        //     clearInterval(timer);
-        //   }
-        //   fetchSegment();
-        // }, 500);
       },
       { once: true }
     );
-    // Show loading animation.
 
     var playPromise = player.play();
 
@@ -69,28 +64,29 @@ export default ({ autoPlay, url, exit, label }) => {
   }
 
   useEffect(() => {
-    //console.log("autoPlay", autoPlay);
     const player = playerRef.current;
-    if (!player) return;
     //@ts-ignore
     if (autoPlay) {
-     
       //这里不能用 player.on, 因为再循环播放的时候会出现播放结束url不对的情况
       //@ts-ignore
       player.addEventListener(
         "ended",
         () => {
           playerRef.current.classList.add("video-hidden");
-          playerRef.current.load();
+          const buffer = sourceBufferRef.current;
           console.log("end!!!!", url);
           exit && exit(label);
         },
         { once: true }
       );
+      playVideo();
 
-      console.log("play!!!", url);
-
-      //playVideo();
+      const { index, chunks } = rangeRef.current;
+      console.log(`play!!! autoplay=${autoPlay}, index=${index}, url=${url}`);
+      if (index === 1) {
+        fetchSegment();
+        //playVideo();
+      }
     }
   }, [autoPlay]);
 
@@ -101,6 +97,8 @@ export default ({ autoPlay, url, exit, label }) => {
       if (player) {
         // player.dispose();
         playerRef.current = null;
+        // mediaSourceRef.current = null;
+        // sourceBufferRef.current = null;
       }
     };
   }, [playerRef]);
@@ -120,57 +118,68 @@ export default ({ autoPlay, url, exit, label }) => {
   const addVideoBuffer = () => {
     const player = playerRef.current;
     const mimeCodec = 'video/mp4; codecs="avc1.640032,mp4a.40.2"';
-    if(!MediaSource.isTypeSupported('video/webm; codecs="vp8,vorbis"')){
-      console.log('video/webm; codecs= vp8,vorbis API is not supported.')
+    if (!MediaSource.isTypeSupported('video/webm; codecs="vp8,vorbis"')) {
+      console.log("video/webm; codecs= vp8,vorbis API is not supported.");
     }
     if (window.MediaSource && window.MediaSource.isTypeSupported(mimeCodec)) {
+      if (mediaSourceRef.current) return;
       const mediaSource = new MediaSource();
       mediaSourceRef.current = mediaSource;
       player.src = URL.createObjectURL(mediaSource);
       mediaSource.addEventListener(
         "sourceopen",
         () => {
+          console.log("create buffer", url);
           URL.revokeObjectURL(player.src);
-          const sourceBuffer = mediaSource.addSourceBuffer(mimeCodec);
-          sourceBuffer.addEventListener("updateend", updateEnd);
-          sourceBufferRef.current = sourceBuffer;
-          //console.log("soruceopen....", url);
-          // Fetch beginning of the video by setting the Range HTTP request header.
+          sourceBufferRef.current = mediaSource.addSourceBuffer(mimeCodec);
           fetchSegment();
-        }
+        },
+        { once: true }
       );
-      
     } else {
       console.log("The Media Source Extensions API is not supported.");
     }
   };
 
+  // const readToEnd = () => {
+  //   const timer = setInterval(() => {
+  //     const { index, chunks } = rangeRef.current;
+  //     if (index < chunks) {
+  //       fetchSegment();
+  //     } else {
+  //       clearInterval(timer);
+  //       mediaSourceRef.current.endOfStream();
+  //     }
+  //   }, 200);
+  // };
+
   const updateEnd = (e) => {
-    // Video is now ready to play!
-    // const bufferedSeconds = playerRef.current.buffered.end(0) - playerRef.current.buffered.start(0);
-   // console.log(`${bufferedSeconds} seconds of video are ready to play.`);
-    // Fetch the next segment of video when user starts playing the video.
-    // loopFetch();
+    console.log(
+      "updateend",
+      sourceBufferRef.current.updating,
+      mediaSourceRef.current.readyState,
+      url
+    );
+
     if (
       !sourceBufferRef.current.updating &&
       mediaSourceRef.current.readyState === "open"
     ) {
-      
       const { index, chunks } = rangeRef.current;
-      console.log('autoplay', autoPlay, index, chunks)
-      if (autoPlay && index === 1) {
-        playVideo();
-      }
-      
+
+      // if (autoPlay && index === 1) {
+      //   playVideo();
+      //   readToEnd();
+      // }
+      console.log(
+        `updateEnd!!! autoplay=${autoPlay}, index=${index}, url=${url}, chunks=${chunks}`
+      );
       if (index < chunks && autoPlay) {
         fetchSegment();
-       //mediaSourceRef.current.endOfStream();
-      }else{
+      } else {
         mediaSourceRef.current.endOfStream();
       }
     }
-    //const { index } = rangeRef.current;
-    //console.log("updateEnd ...", index);
   };
 
   const fetchSegment = () => {
@@ -182,7 +191,7 @@ export default ({ autoPlay, url, exit, label }) => {
     if (endByte > fileSize) {
       endByte = fileSize - 1;
     }
-    
+
     console.log(
       "range",
       `bytes=${startByte}-${endByte}`,
@@ -198,6 +207,9 @@ export default ({ autoPlay, url, exit, label }) => {
       .then((data) => {
         const sourceBuffer = sourceBufferRef.current;
 
+        sourceBufferRef.current.addEventListener("updateend", updateEnd, {
+          once: true,
+        });
         sourceBuffer.appendBuffer(data);
 
         // TODO: Fetch further segment and append it.
@@ -205,6 +217,11 @@ export default ({ autoPlay, url, exit, label }) => {
   };
 
   return (
-    <video ref={playerRef} muted className="video-hidden" controls></video>
+    <video
+      ref={playerRef}
+      muted
+      className="video-hidden"
+      autoPlay={autoPlay}
+    ></video>
   );
 };

@@ -103,7 +103,7 @@ exports.postData = {
     // { type: "image", url: "http://file.ioliz.com/admin/2.jpeg" },
     // { type: "image", url: "http://file.ioliz.com/admin/3.jpeg" },
     { type: "video", url: "http://file.ioliz.com/admin/videos/demo3.mp4", poster: "/" },
-    // { type: "video", url: "http://file.ioliz.com/admin/videos/demo3.mp4", poster: "/" },
+     { type: "video", url: "http://file.ioliz.com/admin/videos/video_1080.mp4", poster: "/" },
  
     // { type: "video", url: "http://file.ioliz.com/admin/videos/video.mp4", poster: "/" },
   ],

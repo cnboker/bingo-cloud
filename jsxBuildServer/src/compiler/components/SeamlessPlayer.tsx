@@ -2,7 +2,7 @@ import React, { useRef, useState } from "react";
 import { IImageProps, IPageProps, IPlayProps, IVideoProps } from "../Meta";
 import { ImagePlayer } from "./ImagePlayer";
 import { PagePlayer } from "./PagePlayer";
-import VideoPlayer from "./VideoPlayer";
+import VideoPlayer from "./myPlayer";
 import { TransitionGroup, CSSTransition } from "react-transition-group";
 import { fetchNext, peek } from "./Viewport";
 
@@ -31,6 +31,7 @@ export const SeamlessPlayer: React.FC<SeamlessDataProps & IDataSource> = ({
   });
 
   function exit(label) {
+    
     //第一次更新useState增加cssTrainsation进出效果
     setViewData((cur) => {
       const { playProps, nextProps } = cur;
@@ -42,17 +43,18 @@ export const SeamlessPlayer: React.FC<SeamlessDataProps & IDataSource> = ({
         playProps.autoPlay = true;
         nextProps.autoPlay = false;
       }
+      console.log("first cur", cur);
       return { ...cur };
     });
     //第二次更新轮询数据,通过延时的方法来解决，这里的延时数据必须大于CSSTransition里面的timeout,但必须小于轮询周期(image's duration)
     delay(1000, () => {
       setViewData((cur) => {
         const sourceItem = fetchNext(source, false);
-        const { playProps, nextProps } = cur;
+        const { playProps } = cur;
 
         //playProps播放完成， playProps需要准备下一个数据， nextProps需要开始播放
         if (playProps.label === label) {
-          cur.playProps = sourceItem;
+          cur.playProps = sourceItem
         } else {
           cur.nextProps = sourceItem;
         }
