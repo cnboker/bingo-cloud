@@ -14,8 +14,6 @@ export type IPlayProps = {
   type?: 'image' | 'video' | 'page'
   exit?: (label:string) => void
   animation?: string
-  autoPlay?: boolean
-  visible?: boolean
   children?: React.ReactNode
   //标示方便调试
   label?: string

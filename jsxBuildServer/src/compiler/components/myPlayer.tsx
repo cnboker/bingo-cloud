@@ -1,4 +1,8 @@
 import React, { useEffect, useRef } from "react";
+import { useState } from "react";
+import { IVideoProps } from "../Meta";
+import { IDataSource } from "./SeamlessPlayer";
+import { fetchNext, peek } from "./Viewport";
 
 type Range = {
   //总共多少个数据块
@@ -8,12 +12,14 @@ type Range = {
   fileSize: number;
 };
 
-export default ({ autoPlay, url, exit, label }) => {
+export default ({ url, exit, source }: IVideoProps & IDataSource) => {
   const playerRef = useRef(null);
   const sourceBufferRef = useRef(null);
   const mediaSourceRef = useRef(null);
   const rangeRef = useRef<Range>(null);
-  //console.log('autoplay-----', autoPlay, url)
+  //const [urlState, setUrlState] = useState(url);
+  const playUrlRef = useRef(url)
+  const fetchNextRef = useRef(false)
   //url 改变重置数据
   useEffect(() => {
     rangeRef.current = {
@@ -32,16 +38,47 @@ export default ({ autoPlay, url, exit, label }) => {
       range.chunks = Math.ceil(bytes / range.chunksSize);
       addVideoBuffer();
     });
-  }, [url]);
+    
+    const player = playerRef.current;
+    player.addEventListener("timeupdate", () => {
+      //console.log('!fetchNextRef.current',!fetchNextRef.current,player.duration , mediaSourceRef.current.duration)
+      //视频总长度，系统会动态更新直到获取到最大播放长度,player.currentTime是当前播放时长
+      const playSeekDuration = timeRangesToString(player.seekable)
+      console.log(`seektime=${playSeekDuration}, duration=${player.currentTime}`)
+      //播放到快2秒就要结束时，追加下一个视频数据
+      if (playSeekDuration > 2 && playSeekDuration - player.currentTime < 2 && !fetchNextRef.current) {
+        //播放过的内容释放掉，否则会引起内存泄漏
+        sourceBufferRef.current.remove(0 /* start */, player.currentTime /* end*/);
+       // mediaSourceRef.current.duration = 0;
+        fetchNextRef.current = true
+        let nextProps: IVideoProps = peek(source);
+        if (nextProps.type === "video") {
+          nextProps = fetchNext(source);
+          playUrlRef.current = nextProps.url
+          getFileLength(nextProps.url).then((bytes) => {
+            const range = rangeRef.current;
+            range.fileSize = bytes;
+            range.index = 0;
+            range.chunks = Math.ceil(bytes / range.chunksSize);
+            fetchSegment(playUrlRef.current);
+          });
+          console.log('setURlstate.....')
+        }
+      }
+    });
+
+  }, []);
 
   async function playVideo() {
     const player = playerRef.current;
+    player.addEventListener("play", () => {}, { once: true });
+  
     player.addEventListener(
-      "play",
+      "ended",
       () => {
-        console.log("playing");
-        player.classList.remove("video-hidden");
-        player.classList.add("video");
+        const buffer = sourceBufferRef.current;
+        console.log("end!!!!", url);
+        //exit && exit("video");
       },
       { once: true }
     );
@@ -63,33 +100,6 @@ export default ({ autoPlay, url, exit, label }) => {
     }
   }
 
-  useEffect(() => {
-    const player = playerRef.current;
-    //@ts-ignore
-    if (autoPlay) {
-      //这里不能用 player.on, 因为再循环播放的时候会出现播放结束url不对的情况
-      //@ts-ignore
-      player.addEventListener(
-        "ended",
-        () => {
-          playerRef.current.classList.add("video-hidden");
-          const buffer = sourceBufferRef.current;
-          console.log("end!!!!", url);
-          exit && exit(label);
-        },
-        { once: true }
-      );
-      playVideo();
-
-      const { index, chunks } = rangeRef.current;
-      console.log(`play!!! autoplay=${autoPlay}, index=${index}, url=${url}`);
-      if (index === 1) {
-        fetchSegment();
-        //playVideo();
-      }
-    }
-  }, [autoPlay]);
-
   // Dispose the Video.js player when the functional component unmounts
   React.useEffect(() => {
     const player = playerRef.current;
@@ -97,8 +107,8 @@ export default ({ autoPlay, url, exit, label }) => {
       if (player) {
         // player.dispose();
         playerRef.current = null;
-        // mediaSourceRef.current = null;
-        // sourceBufferRef.current = null;
+        mediaSourceRef.current = null;
+        sourceBufferRef.current = null;
       }
     };
   }, [playerRef]);
@@ -132,7 +142,9 @@ export default ({ autoPlay, url, exit, label }) => {
           console.log("create buffer", url);
           URL.revokeObjectURL(player.src);
           sourceBufferRef.current = mediaSource.addSourceBuffer(mimeCodec);
-          fetchSegment();
+          //多视频文件无缝播放需要设置该参数
+          sourceBufferRef.current.mode = 'sequence';
+          fetchSegment(playUrlRef.current);
         },
         { once: true }
       );
@@ -140,49 +152,41 @@ export default ({ autoPlay, url, exit, label }) => {
       console.log("The Media Source Extensions API is not supported.");
     }
   };
-
-  // const readToEnd = () => {
-  //   const timer = setInterval(() => {
-  //     const { index, chunks } = rangeRef.current;
-  //     if (index < chunks) {
-  //       fetchSegment();
-  //     } else {
-  //       clearInterval(timer);
-  //       mediaSourceRef.current.endOfStream();
-  //     }
-  //   }, 200);
-  // };
-
+  function timeRangesToString(ranges) {
+    var s = "";
+    for (var i = 0; i < ranges.length; ++i) {
+      s += ranges.end(i).toFixed(3) 
+    }
+    return +s ;
+  }
   const updateEnd = (e) => {
-    console.log(
-      "updateend",
-      sourceBufferRef.current.updating,
-      mediaSourceRef.current.readyState,
-      url
-    );
-
+    // console.log(
+    //   "updateend",
+    //   sourceBufferRef.current.updating,
+    //   mediaSourceRef.current.readyState,
+    //   url
+    // );
+    console.log(`seek= ${timeRangesToString(playerRef.current.seekable)}`);
     if (
       !sourceBufferRef.current.updating &&
       mediaSourceRef.current.readyState === "open"
     ) {
       const { index, chunks } = rangeRef.current;
 
-      // if (autoPlay && index === 1) {
-      //   playVideo();
-      //   readToEnd();
-      // }
-      console.log(
-        `updateEnd!!! autoplay=${autoPlay}, index=${index}, url=${url}, chunks=${chunks}`
-      );
-      if (index < chunks && autoPlay) {
-        fetchSegment();
+      if (index === 1) {
+        playVideo();
+      }
+     // console.log(`updateEnd!!! index=${index}, url=${urlState}, chunks=${chunks}`);
+      if (index < chunks) {
+        fetchSegment(playUrlRef.current);
       } else {
-        mediaSourceRef.current.endOfStream();
+        fetchNextRef.current = false;
+        //mediaSourceRef.current.endOfStream();
       }
     }
   };
 
-  const fetchSegment = () => {
+  const fetchSegment = (_url: string) => {
     const range = rangeRef.current;
     const { chunksSize, index, fileSize } = range;
 
@@ -196,11 +200,11 @@ export default ({ autoPlay, url, exit, label }) => {
       "range",
       `bytes=${startByte}-${endByte}`,
       range.index,
-      url,
+      _url,
       fileSize
     );
     range.index++;
-    fetch(url, {
+    fetch(_url, {
       headers: { range: `bytes=${startByte}-${endByte}` },
     })
       .then((response) => response.arrayBuffer())
@@ -216,12 +220,5 @@ export default ({ autoPlay, url, exit, label }) => {
       });
   };
 
-  return (
-    <video
-      ref={playerRef}
-      muted
-      className="video-hidden"
-      autoPlay={autoPlay}
-    ></video>
-  );
+  return <video ref={playerRef} muted className="video" controls></video>;
 };
