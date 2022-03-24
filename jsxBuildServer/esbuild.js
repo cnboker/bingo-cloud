@@ -7,6 +7,7 @@ require('esbuild').build({
   sourcemap: true,
   //target: 'node12',
   //external: Object.keys(require('./package.json').dependencies),
+  external: [ 'fs', 'path', 'util', 'stream'],
   watch: {
     onRebuild(error, result) {
       if (error) console.error('watch build failed:', error)
