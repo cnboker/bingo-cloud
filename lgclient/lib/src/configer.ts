@@ -16,7 +16,7 @@ class Configer {
     this._emitter.addListener("log", (type: EventType, message: string) => {
       console.log(`${type},${message}`);
     });
-    //this.rootDirReady();
+    this.rootDirReady();
   }
 
   read(): Promise<ConfigModel> {

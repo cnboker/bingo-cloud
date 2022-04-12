@@ -130,7 +130,7 @@ export const ServerVFSBrowser: React.FC<VFSProps> = (props) => {
 }
 
 const fileActions = [
-  ChonkyActions.CreateFolder, // Adds a button to the toolbar
+  //ChonkyActions.CreateFolder, // Adds a button to the toolbar
   ChonkyActions.UploadFiles, // Adds a button
   //ChonkyActions.DownloadFiles, // Adds a button
   //ChonkyActions.CopyFiles, // Adds a button and a shortcut: Ctrl+C
@@ -149,10 +149,9 @@ export const VFSBrowser: React.FC<DataVFSProps> = (props) => {
     createFolder,
     uploadFiles,
   } = useCustomFileMap(props.data)
-  const [selectedFiles, setSelectedFiles] = useState<FileArray>([])
-  const { handleAction: fileSelectAction } = useFilePicker({ selectedFiles, setSelectedFiles })
+  const { selectedFiles, fileSelectAction, removeAction, onMovedown } = useFilePicker([])
   const files = useFiles(bashPath, fileMap, currentFolderId)
-  const folderChain = useFolderChain(fileMap, currentFolderId)
+  //const folderChain = useFolderChain(fileMap, currentFolderId)
   const handleFileAction = useFileActionHandler(
     setCurrentFolderId,
     deleteFiles,
@@ -227,7 +226,8 @@ export const VFSBrowser: React.FC<DataVFSProps> = (props) => {
         <PubForms
           ref={pubFormsRef}
           selectedFiles={selectedFiles}
-          setSelectedFiles={setSelectedFiles}
+          removeAction={removeAction}
+          onMovedown={onMovedown}
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
           deviceList={deviceReduer.map((x: any) => {
             return { name: `${x.name}(${x.deviceId})`, value: x.deviceId }
@@ -239,7 +239,6 @@ export const VFSBrowser: React.FC<DataVFSProps> = (props) => {
           disableDefaultFileActions={true}
           files={files}
           i18n={i18n}
-          folderChain={folderChain}
           fileActions={fileActions}
           onFileAction={actionCombiner}
           {...props}

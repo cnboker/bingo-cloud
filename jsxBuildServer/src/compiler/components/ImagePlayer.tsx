@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { IImageProps } from '../Meta';
 import * as CSS from 'csstype'
 
-export const ImagePlayer: React.FC<IImageProps> = ({ label, autoPlay, url, exit, duration }) => {
+export const ImagePlayer: React.FC<IImageProps> = ({ label, url, exit, duration }) => {
   //下载到设备需要获取本地资源播放
   const style: CSS.Properties = {
     height: '100vh',
@@ -11,7 +11,6 @@ export const ImagePlayer: React.FC<IImageProps> = ({ label, autoPlay, url, exit,
 
   useEffect(() => {
     //console.log('image play:', url)
-    if (!autoPlay) return
     const timer: ReturnType<typeof setTimeout> = setTimeout(() => {
 
       if (exit) {

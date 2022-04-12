@@ -1,38 +1,17 @@
+import React from 'react'
 import { ImageList, ImageListItem, ImageListItemBar, IconButton } from '@material-ui/core'
-import { ArrowBackOutlined, ArrowForwardOutlined, DeleteOutline } from '@material-ui/icons'
-import React, { forwardRef, useImperativeHandle } from 'react'
-import { FileData } from 'chonky'
-import { SelectedFilesProps } from '../useFilePicker'
+import { ArrowForwardOutlined, DeleteOutline } from '@material-ui/icons'
+import { FileArray, FileData } from 'chonky'
 
-export default forwardRef(({ selectedFiles, setSelectedFiles }: SelectedFilesProps, ref) => {
-  useImperativeHandle(ref, () => ({}))
+export type ImageListProps = {
+  selectedFiles: FileArray
+  removeAction: (index: number) => void
+  onMovedown: (item: FileData, index: number) => void
+}
 
-  const onRemove = (index: number) => {
-    if (index !== -1) {
-      selectedFiles.splice(index, 1)
-      setSelectedFiles([...selectedFiles])
-    }
-    console.log('handleRemove index', index, selectedFiles)
-  }
-
-  const onMoveup = (item: FileData, index: number) => {
-    if (index > 0) {
-      const preNode = selectedFiles[index - 1]
-      selectedFiles[index - 1] = item
-      selectedFiles[index] = preNode
-      setSelectedFiles([...selectedFiles])
-    }
-  }
-  const onMovedown = (item: FileData, index: number) => {
-    if (index < selectedFiles.length - 1) {
-      const preNode = selectedFiles[index + 1]
-      selectedFiles[index + 1] = item
-      selectedFiles[index] = preNode
-      setSelectedFiles([...selectedFiles])
-    }
-  }
+export default ({ selectedFiles, removeAction, onMovedown }: ImageListProps) => {
   return (
-    <ImageList cols={3} rowHeight={256}>
+    <ImageList cols={6} rowHeight={128}>
       {selectedFiles.map((item: FileData, index: number) => {
         return (
           <ImageListItem key={`key${index}`}>
@@ -67,7 +46,7 @@ export default forwardRef(({ selectedFiles, setSelectedFiles }: SelectedFilesPro
                   style={{ color: '#fff' }}
                   size="medium"
                   title="delete"
-                  onClick={() => onRemove(index)}
+                  onClick={() => removeAction(index)}
                 >
                   <DeleteOutline />
                 </IconButton>
@@ -78,4 +57,4 @@ export default forwardRef(({ selectedFiles, setSelectedFiles }: SelectedFilesPro
       })}
     </ImageList>
   )
-})
+}

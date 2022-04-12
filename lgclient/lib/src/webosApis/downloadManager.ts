@@ -59,6 +59,7 @@ export const download = (
 export const downloadStatusQuery = (
   ticket: number,
 ): Promise<downloadResult> => {
+  
   return new Promise((resolve, reject) => {
     //@ts-ignore
     var bridge = window.webosBridge;
@@ -66,13 +67,15 @@ export const downloadStatusQuery = (
       var response = JSON.parse(msg);
       const {
         returnValue,
-        errorCode,
-        errorText,
         ticket,
         amountReceived,
         amountTotal,
         completed
       } = response
+      
+      if(ticket === 0){
+        return
+      }
       console.log("downloadStatusQuery", response, returnValue);
       if (completed) {
         resolve({ ticket, amountReceived, amountTotal, completed });

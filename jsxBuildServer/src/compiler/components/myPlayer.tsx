@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import { useState } from "react";
 import { IVideoProps } from "../Meta";
-import { IDataSource } from "./SeamlessPlayer";
+import { IDataSource } from "./Playlist";
 import { fetchNext, peek } from "./Viewport";
 import MP4Box from "mp4box";
 type Range = {
@@ -10,19 +10,48 @@ type Range = {
   index: number;
   chunksSize: number;
   fileSize: number;
+  duration: number;
 };
 
-export default ({ url, exit, source }: IVideoProps & IDataSource) => {
+export default ({ url, exit, source, label }: IVideoProps & IDataSource) => {
   const playerRef = useRef(null);
-  const mimeRef = useRef(null);
   const mediaSourceRef = useRef(null);
   const rangeRef = useRef<Range>(null);
   const playUrlRef = useRef(url);
-  const fetchNextRef = useRef(false);
 
   function isCanvasSupported() {
     var elem = document.createElement("canvas");
     return !!(elem.getContext && elem.getContext("2d"));
+  }
+
+  function timeupdate() {
+    const player = playerRef.current;
+    //console.log('!fetchNextRef.current',!fetchNextRef.current,player.duration , mediaSourceRef.current.duration)
+    //视频总长度，系统会动态更新直到获取到最大播放长度,player.currentTime是当前播放时长
+    const playSeekDuration = timeRangesToString(player.seekable);
+    console.log(`seektime=${playSeekDuration}, duration=${player.currentTime}`);
+    //当前视频播放结束
+    if (playSeekDuration - player.currentTime < 1) {
+      //播放过的内容释放掉，否则会引起内存泄漏
+      const range = rangeRef.current;
+      const sourceBuffer = mediaSourceRef.current.sourceBuffers[0];
+
+      //下一位未下载完成，继续下载
+      //console.log("end...", range.index, range.chunks);
+      if (range.index < range.chunks) {
+        sourceBuffer.remove(0 /* start */, (playSeekDuration * 2) / 3 /* end*/);
+        console.log("video end, remove sourcebuffer", range.duration);
+        //playVideo()
+        fetchSegment(playUrlRef.current, true);
+      } else {
+        player.removeEventListener("timeupdate", timeupdate);
+        console.log('exit function', exit)
+        //播放完成
+        if (exit) {
+          exit(label);
+        }
+      }
+    }
   }
 
   //url 改变重置数据
@@ -36,6 +65,7 @@ export default ({ url, exit, source }: IVideoProps & IDataSource) => {
       index: 0,
       chunks: 0,
       fileSize: 0,
+      duration: 0,
       chunksSize: 1024 * 2000,
     };
     mediaSourceRef.current = null;
@@ -52,52 +82,10 @@ export default ({ url, exit, source }: IVideoProps & IDataSource) => {
     });
 
     const player = playerRef.current;
-    player.addEventListener("timeupdate", () => {
-      //console.log('!fetchNextRef.current',!fetchNextRef.current,player.duration , mediaSourceRef.current.duration)
-      //视频总长度，系统会动态更新直到获取到最大播放长度,player.currentTime是当前播放时长
-      const playSeekDuration = timeRangesToString(player.seekable);
-      console.log(
-        `seektime=${playSeekDuration}, duration=${player.currentTime}`
-      );
-      //播放到快2秒就要结束时，追加下一个视频数据
-      if (
-        playSeekDuration > 2 &&
-        playSeekDuration - player.currentTime < 2 &&
-        !fetchNextRef.current
-      ) {
-        //播放过的内容释放掉，否则会引起内存泄漏
-        // sourceBufferRef.current.remove(
-        //   0 /* start */,
-        //   player.currentTime -5 /* end*/
-        // );
-        
-        fetchNextRef.current = true;
-        let nextProps: IVideoProps = peek(source);
-        if (nextProps.type === "video") {
-          nextProps = fetchNext(source);
-          playUrlRef.current = nextProps.url;
-
-          getFileLength(nextProps.url).then((bytes) => {
-            const range = rangeRef.current;
-            range.fileSize = bytes;
-            range.index = 0;
-            range.chunks = Math.ceil(bytes / range.chunksSize);
-            videomime(playUrlRef.current,(code)=>{
-              mimeRef.current = code;
-              const sourceBuffer = mediaSourceRef.current.sourceBuffers[0]
-              //Change Audio Codecs
-              sourceBuffer.changeType(code)    
-                
-              fetchSegment(playUrlRef.current);
-            })
-          });
-          
-        }
-      }
-    });
+    player.addEventListener("timeupdate", timeupdate);
   }, []);
 
-  async function playVideo() {
+  function playVideo() {
     const player = playerRef.current;
     player.addEventListener("play", () => {}, { once: true });
 
@@ -106,6 +94,7 @@ export default ({ url, exit, source }: IVideoProps & IDataSource) => {
       () => {
         //const buffer = sourceBufferRef.current;
         console.log("end!!!!", url);
+
         //exit && exit("video");
       },
       { once: true }
@@ -164,10 +153,10 @@ export default ({ url, exit, source }: IVideoProps & IDataSource) => {
       var mp4boxfile = MP4Box.createFile();
       mp4boxfile.onError = console.error;
       mp4boxfile.onReady = function (info) {
-        const arr = info.mime.replace("Opus", "opus").split(';')
-        arr.pop()
-        const mime = arr.join(';')
-        console.log(mime,url);
+        const arr = info.mime.replace("Opus", "opus").split(";");
+        arr.pop();
+        const mime = arr.join(";");
+        console.log(mime, url);
         cb && cb(mime);
       };
       mp4boxfile.appendBuffer(fileReader.result);
@@ -178,9 +167,11 @@ export default ({ url, exit, source }: IVideoProps & IDataSource) => {
 
   const addVideoBuffer = (mimeCodec) => {
     const player = playerRef.current;
-    player.onerror = function() {
-      console.log("Error " + player.error.code + "; details: " + player.error.message);
-    }
+    player.onerror = function () {
+      console.log(
+        "Error " + player.error.code + "; details: " + player.error.message
+      );
+    };
     //const mimeCodec = 'video/mp4; codecs="avc1.42c028"';
     // if (!MediaSource.isTypeSupported('video/webm; codecs="vp8,vorbis"')) {
     //   console.log("video/webm; codecs= vp8,vorbis API is not supported.");
@@ -199,7 +190,7 @@ export default ({ url, exit, source }: IVideoProps & IDataSource) => {
           //多视频文件无缝播放需要设置该参数
           sourceBuffer.mode = "sequence";
 
-          fetchSegment(playUrlRef.current);
+          fetchSegment(playUrlRef.current, true);
         },
         { once: true }
       );
@@ -217,6 +208,7 @@ export default ({ url, exit, source }: IVideoProps & IDataSource) => {
   }
   const updateEnd = (e) => {
     const sourceBuffer = mediaSourceRef.current.sourceBuffers[0];
+    if (!sourceBuffer) return;
     console.log(
       "updateend",
       sourceBuffer.updating,
@@ -225,7 +217,7 @@ export default ({ url, exit, source }: IVideoProps & IDataSource) => {
     );
     //console.log(`seek= ${timeRangesToString(playerRef.current.seekable)}`);
     // if(mediaSourceRef.current.readyState === "ended"){
-    //   sourceBuffer.changeType(mimeRef.current) 
+    //   sourceBuffer.changeType(mimeRef.current)
     // }
     if (
       !sourceBuffer.updating &&
@@ -238,18 +230,41 @@ export default ({ url, exit, source }: IVideoProps & IDataSource) => {
       }
       // console.log(`updateEnd!!! index=${index}, url=${urlState}, chunks=${chunks}`);
       if (index < chunks) {
-        fetchSegment(playUrlRef.current);
+        fetchSegment(playUrlRef.current, true);
       } else {
-        fetchNextRef.current = false;
-        mediaSourceRef.current.endOfStream();
+        //fetchNextRef.current = false;
+        //mediaSourceRef.current.endOfStream();
+        //如果当前视频播放完成，检查下一个内容是否是视频，如果是视频先缓冲一段到缓冲区， 等到当前结束后可以继续下载，继续播放
+        tryCacheNext();
       }
     }
   };
 
-  const fetchSegment = (_url: string) => {
+  const tryCacheNext = () => {
+    let nextProps: IVideoProps = peek(source);
+    if (nextProps.type !== "video") return;
+    nextProps = fetchNext(source);
+    playUrlRef.current = nextProps.url;
+
+    getFileLength(nextProps.url).then((bytes) => {
+      const range = rangeRef.current;
+      range.fileSize = bytes;
+      range.index = 0;
+      range.duration = timeRangesToString(playerRef.current.seekable);
+      range.chunks = Math.ceil(bytes / range.chunksSize);
+      videomime(playUrlRef.current, (code) => {
+        const sourceBuffer = mediaSourceRef.current.sourceBuffers[0];
+        //Change Audio Codecs
+        sourceBuffer.changeType(code);
+        fetchSegment(playUrlRef.current, false);
+      });
+    });
+  };
+
+  const fetchSegment = (_url: string, continueFetch: boolean) => {
     const range = rangeRef.current;
     const { chunksSize, index, fileSize } = range;
-    const sourceBuffer = mediaSourceRef.current.sourceBuffers[0]
+    const sourceBuffer = mediaSourceRef.current.sourceBuffers[0];
     const startByte = chunksSize * index;
     let endByte = startByte + chunksSize - 1;
     if (endByte > fileSize) {
@@ -269,13 +284,14 @@ export default ({ url, exit, source }: IVideoProps & IDataSource) => {
     })
       .then((response) => response.arrayBuffer())
       .then((data) => {
-        sourceBuffer.addEventListener("updateend", updateEnd, {
-          once: true,
-        });
+        if (continueFetch) {
+          sourceBuffer.addEventListener("updateend", updateEnd, {
+            once: true,
+          });
+        }
         sourceBuffer.appendBuffer(data);
-
       });
   };
 
-  return <video ref={playerRef} muted className="video" controls></video>;
+  return <video ref={playerRef} muted className="video" ></video>;
 };

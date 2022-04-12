@@ -43,8 +43,8 @@ const Header = (props: HeaderProps) => {
 export type PubFormProps = {
   selectedFiles: FileArray
   deviceList: ListItemData[]
-  setSelectedFiles: Dispatch<SetStateAction<FileArray<FileData>>>
-  //onRemove: (index: number) => void
+  removeAction: (index: number) => void
+  onMovedown: (item: FileData, index: number) => void
 }
 
 export type PubFormResultProps = {
@@ -79,7 +79,7 @@ const getVisibilityStyle = (hiddenCondition: boolean): any => {
 
 //ImperativeHandleProps定义useImperativeHandle接口， PubFormProps表示属性
 export const PubForms = React.forwardRef<ImperativeHandleProps, PubFormProps>(
-  ({ selectedFiles, deviceList, setSelectedFiles }, ref) => {
+  ({ selectedFiles, deviceList, removeAction, onMovedown }, ref) => {
     const classes = useStyles()
     const [value, setValue] = React.useState(0)
     const settingsRef = useRef(null)
@@ -114,7 +114,11 @@ export const PubForms = React.forwardRef<ImperativeHandleProps, PubFormProps>(
         <AppBar position="static" color="default">
           <Header value={value} valueChange={valueChange} />
           <div style={getVisibilityStyle(value !== 0)}>
-            <ImageList selectedFiles={selectedFiles} setSelectedFiles={setSelectedFiles} />
+            <ImageList
+              selectedFiles={selectedFiles}
+              removeAction={removeAction}
+              onMovedown={onMovedown}
+            />
           </div>
           <div style={getVisibilityStyle(value !== 1)}>
             <Settings ref={settingsRef} />

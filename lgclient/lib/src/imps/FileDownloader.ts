@@ -85,7 +85,7 @@ export class FileDownloader implements IFileDownloader {
 
     //目标文件已下载，且格式是.html,.htm,.css,.js则删除重新下载
     const exist = await exists(fullFileName)
-    console.log('exist', exist, fullFileName)
+    //console.log('exist', exist, fullFileName)
     if (exist) {
       const ext = fileName.substring(fileName.lastIndexOf('.'))
       if (['.js', '.css', '.html', '.htm'].indexOf(ext) > -1) {
@@ -116,6 +116,7 @@ export class FileDownloader implements IFileDownloader {
         clearInterval(timer)
       }
       for (const item of downloadList) {
+        if(item.ticket === 0)continue
         downloadStatusQuery(item.ticket).then(result => {
           const { completed } = result;
           mqttDispather.pubDownloadProgress(result)

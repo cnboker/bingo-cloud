@@ -1,9 +1,9 @@
 {
   "name": "ioliz",
   "description": "IronSingage",
-  "version": "4.0.0-rc.0",
+  "version": "1.0.0.0",
   "config": {
-    "ironCloud": "4.0"
+    "ironCloud": "1.0"
   },
   "author": {
     "name": "IronCloud",
@@ -17,7 +17,7 @@
     }
   ],
   "homepage": ".",
-  "copyright": "Copyright 2017-2021 IronCloud",
+  "copyright": "Copyright 2021-2022 IronCloud",
   "license": "MIT",
   "private": true,
   "repository": {

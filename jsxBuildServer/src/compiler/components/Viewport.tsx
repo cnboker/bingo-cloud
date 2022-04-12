@@ -1,5 +1,5 @@
 import React from "react";
-import { SeamlessPlayer, SeamlessDataProps } from "./SeamlessPlayer";
+import { Playlist } from "./Playlist";
 import util from "../../util";
 import { IPlayProps } from "../Meta";
 
@@ -17,18 +17,15 @@ export const peek = (source: Array<IPlayProps>) => {
 };
 
 export const Viewport: React.FC<Array<IPlayProps>> = (source) => {
-  console.log("source", source);
   const data = Object.values(source);
   for (const item of data) {
     item.label = util.makeid(6);
   }
 
-  const dataProps: SeamlessDataProps = fetchNext(data)
-
   return (
     <div className="container">
       {" "}
-      <SeamlessPlayer {...dataProps} source={data} />
+      <Playlist source={data} />
     </div>
   );
 };
