@@ -52,7 +52,7 @@ namespace Ioliz.Service.Models
         public DeviceLog[] DeviceLogs {get;set;}
     }
 
-    public enum ErrorType {
+    public enum LogType {
         Information,
         Warnning,
         Error

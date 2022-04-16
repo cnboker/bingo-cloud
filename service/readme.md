@@ -44,3 +44,10 @@ https://dotnet.microsoft.com/en-us/download/dotnet/2.0
 ```bash
 git config --global credential.helper "/mnt/c/Program\ Files/Git/mingw64/libexec/git-core/git-credential-manager.exe"
 ```
+
+mysql update timezone
+
+``` mysql
+SET  time_zone = 'Asia/Shanghai';
+
+```

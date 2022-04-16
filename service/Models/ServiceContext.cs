@@ -35,6 +35,7 @@ namespace Ioliz.Service.Models
     //终端播放记录
     public class PlayRecord {
         public int Id {get;set;}
+        public string Tenant {get;set;}
         public string DeviceId {get;set;}
         public DateTime StartPlayTime {get;set;}
         public DateTime EndPlayTIme {get;set;}
@@ -46,16 +47,12 @@ namespace Ioliz.Service.Models
 
     public class DeviceLog {
         public int Id {get;set;}
+        public string Tenant { get; set; }
         public string DeviceName {get;set;}
         public string DeviceId {get;set;}
-        public ErrorType ErrorType {get;set;}
-        public string Detail {get;set;}
-        public string userName {get;set;}
+        public LogType LogType {get;set;}
+        public string Remark {get;set;}
         public DateTime? CreateDate {get;set;}
-        public bool Fixed {get;set;}
-        public DateTime? FixedDateTime {get;set;}
-        public string FixedUserName {get;set;}
-        public string FixedRemark {get;set;}
     }
 
     public class NetTrafficInfo
