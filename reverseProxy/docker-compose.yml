@@ -7,6 +7,7 @@ services:
         #[host:container]
             - "80:80"
         volumes:
+        #[host:docker container]
             - /home/ioliz/_www:/www
             - /home/ubuntu/dist/app:/www/app
         networks:
