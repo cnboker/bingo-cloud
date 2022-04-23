@@ -4,7 +4,7 @@ services:
     reverseproxy:
         build: .
         ports:
-        #[host:container]
+            #[host:container]
             - "80:80"
         volumes:
         #[host:docker container]
@@ -13,6 +13,10 @@ services:
         networks:
             - "myNetwork"
         restart: always
+    jsxbuild:
+        depends_on:
+            - reverseproxy
+        image: jsxBuild
 
     authapi:
         depends_on:
@@ -45,5 +49,5 @@ services:
         ports:
             - "5000:5000"
 networks:
-  myNetwork:
-    external: true
+    myNetwork:
+        external: true

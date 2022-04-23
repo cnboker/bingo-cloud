@@ -1,0 +1,10 @@
+version: "3.3"
+services:
+  target:
+    container_name: jsxbuild
+    restart: always
+    build: .
+    ports:
+      - "8888:8888"
+    networks:
+      - "myNetwork"
