@@ -1,11 +1,11 @@
-FROM node:16
+FROM node:alpine
 RUN mkdir -p /usr/jsxbuild
 WORKDIR /usr/jsxbuild
 
-COPY  package.json /usr/jsxbuild/
+COPY  package.json .
 RUN npm install
 
-COPY . /usr/jsxbuild/
+COPY . .
 
 EXPOSE 8888
 
