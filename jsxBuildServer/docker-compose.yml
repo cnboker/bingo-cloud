@@ -8,3 +8,6 @@ services:
       - "8888:8888"
     networks:
       - "myNetwork"
+networks:
+  myNetwork:
+    external: true
