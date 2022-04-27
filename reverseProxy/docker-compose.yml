@@ -16,7 +16,7 @@ services:
     jsxbuild:
         depends_on:
             - reverseproxy
-        image: jsxBuild
+        image: jsxbuild
 
     authapi:
         depends_on:

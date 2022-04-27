@@ -1,0 +1,7 @@
+[Unit]
+Decription=Webhooks
+[Service]
+Type=simple
+ExecStart=/usr/bin/webhook -verbose -hotreload -hooks /home/webhook-setup/hooks.json
+[Install]
+WantedBy=multi-user.target
