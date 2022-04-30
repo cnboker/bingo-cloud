@@ -1,8 +1,0 @@
-{
-  "name": "com.ioliz.dc.app.bootservice",
-  "version": "1.0.0",
-  "description": "boot script create and run",
-  "main": "index.js",
-  "author": "",
-  "license": "BSD"
-}

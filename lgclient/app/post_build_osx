@@ -1,9 +1,0 @@
-#!/bin/bash
-
-echo start post build
-ares-package /Users/songscott/code/ioliz/lgclient/app/build /Users/songscott/code/ioliz/lgclient/service/fileService/dist  /Users/songscott/code/ioliz/lgclient/service/bootservice -o /Users/songscott/code/ioliz/lgclient/app/build 
-# cp ./build/com.lg.app.signage_0.0.1_all.ipk /Volumes/ESD-USB/application/com.lg.app.signage.ipk
-ares-install --device target ./build/com.ioliz.dc.app_1.0.0_all.ipk -v
-ares-launch --device target com.ioliz.dc.app
-ares-inspect --device target com.ioliz.dc.app
-# rm ./build/com.lg.app.signage_0.0.1_all.ipk

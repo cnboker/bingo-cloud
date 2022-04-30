@@ -1,9 +1,0 @@
-{
-  "id": "com.ioliz.dc.app.bootservice",
-  "description": "boot Service",
-  "services": [
-    {
-      "name": "com.ioliz.dc.app.bootservice"
-    }
-  ]
-}

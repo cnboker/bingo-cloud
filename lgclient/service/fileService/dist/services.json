@@ -1,9 +1,0 @@
-{
-  "id": "com.ioliz.dc.app.fileservice",
-  "description": "fileservice Service",
-  "services": [
-    {
-      "name": "com.ioliz.dc.app.fileservice"
-    }
-  ]
-}
