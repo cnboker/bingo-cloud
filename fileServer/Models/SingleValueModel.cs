@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace FileServer
+namespace FileServer.Models
 {
   public class ValueModel<T>
   {

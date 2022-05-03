@@ -28,7 +28,9 @@ namespace FileServer
                     .AllowAnyHeader()
                     .AllowAnyMethod();
              }));
-            services.AddControllers();
+             //增加AddNewtonsoftJson使得可以序列化子类
+            services.AddControllers()
+            .AddNewtonsoftJson();
             services.Configure<FormOptions>(options =>
             {
                 options.MultipartBodyLengthLimit = 1024 * 1024 * 2000;

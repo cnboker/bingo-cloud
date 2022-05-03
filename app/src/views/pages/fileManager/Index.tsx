@@ -23,7 +23,6 @@ import { requestDeviceList } from '../device/actions'
 import { mqttPub } from './mqttPub'
 import { getLang } from 'src/lib/localize'
 import cn18n from './cn18n'
-import { useAsyncMemo } from 'use-async-memo'
 
 setChonkyDefaults({ iconComponent: ChonkyIconFA })
 
@@ -39,56 +38,27 @@ const useFetchCustomFileMap = () => {
   }, [])
 }
 
+//每次切换目录都会执行该函数,在该函数需要补充完整thumbnailUrl完整目录
 export const useFiles = (
-  bashPath: string,
   fileMap: CustomFileMap,
   currentFolderId: string,
+  getPath: any,
+  bashPath: string,
 ): FileArray => {
-  const appendBashPath = (path: string, thumbnailUrl: string) => {
-    return new Promise((resolve, reject) => {
-      let _path: string = path
-      let _thumbnailUrl: string = thumbnailUrl
-      if (path[0] === '/') {
-        _path = bashPath + path
-        if (thumbnailUrl) {
-          _thumbnailUrl = bashPath + thumbnailUrl
-          //如果是视频文件，需要做2次请求，第一次请求创建视频图片， 第二次请求视频图片的缩微图片
-          if (_thumbnailUrl.indexOf('.mp4') !== -1) {
-            fetch(_thumbnailUrl).then((res) => {
-              res.text().then((url) => {
-                resolve({ path: _path, thumbnailUrl: url })
-              })
-            })
-          } else {
-            resolve({ path: _path, thumbnailUrl: _thumbnailUrl })
-          }
-        } else {
-          resolve({ path: _path, thumbnailUrl: _thumbnailUrl })
-        }
-      } else {
-        resolve({ path: _path, thumbnailUrl: _thumbnailUrl })
+  const currentFolder = fileMap[currentFolderId]
+  const childrenIds = [...currentFolder.childrenIds!]
+  return childrenIds.map((fileId: string) => {
+    const fo = fileMap[fileId]
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    //@ts-ignore
+    let prop = {}
+    if (!fo.isDir) {
+      prop = {
+        thumbnailUrl: fo.thumbnailUrl ? bashPath + getPath(fo.id) + fo.thumbnailUrl : '',
       }
-    })
-  }
-
-  return useAsyncMemo(async () => {
-    const currentFolder = fileMap[currentFolderId]
-    if (currentFolder.path[0] === '/') {
-      fileMap[currentFolderId] = { ...currentFolder, path: bashPath + currentFolder.path }
     }
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    const childrenIds = [...currentFolder.childrenIds!]
-    //childrenIds.push(currentFolderId)
-    const promises = childrenIds.map((fileId: string) => {
-      const fo = fileMap[fileId]
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      //@ts-ignore
-      return appendBashPath(fo.path, fo.thumbnailUrl).then((result: any) => {
-        return { ...fo, ...result } as FileData
-      })
-    })
-    return await Promise.all(promises)
-  }, [currentFolderId, fileMap])
+    return { ...fo, ...prop }
+  })
 }
 
 export const useFolderChain = (fileMap: CustomFileMap, currentFolderId: string): FileArray => {
@@ -115,10 +85,13 @@ export const useFolderChain = (fileMap: CustomFileMap, currentFolderId: string):
 export type VFSProps = Partial<FileBrowserProps>
 type DataVFSProps = VFSProps & { data: FsMap }
 
+//远程获取目录
 export const ServerVFSBrowser: React.FC<VFSProps> = (props) => {
   const [data, setData] = useState(null)
+  //异步加载目录数据声明
   const [run, state] = useFetchCustomFileMap()
   useEffect(() => {
+    //加载目录
     run()
   }, [])
   useEffect(() => {
@@ -142,15 +115,16 @@ export const VFSBrowser: React.FC<DataVFSProps> = (props) => {
   const {
     fileMap,
     currentFolderId, //RootId
-    bashPath,
     setCurrentFolderId,
     deleteFiles,
     moveFiles,
     createFolder,
     uploadFiles,
+    getPath,
   } = useCustomFileMap(props.data)
   const { selectedFiles, fileSelectAction, removeAction, onMovedown } = useFilePicker([])
-  const files = useFiles(bashPath, fileMap, currentFolderId)
+
+  const filesAction = useFiles(fileMap, currentFolderId, getPath, props.data.bashPath)
   //const folderChain = useFolderChain(fileMap, currentFolderId)
   const handleFileAction = useFileActionHandler(
     setCurrentFolderId,
@@ -158,6 +132,7 @@ export const VFSBrowser: React.FC<DataVFSProps> = (props) => {
     moveFiles,
     createFolder,
     uploadFiles,
+    getPath,
   )
 
   const actionCombiner = React.useCallback<FileActionHandler>((data) => {
@@ -237,7 +212,7 @@ export const VFSBrowser: React.FC<DataVFSProps> = (props) => {
       <div style={{ height: 640 }}>
         <FullFileBrowser
           disableDefaultFileActions={true}
-          files={files}
+          files={filesAction}
           i18n={i18n}
           fileActions={fileActions}
           onFileAction={actionCombiner}

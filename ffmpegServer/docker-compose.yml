@@ -1,10 +1,12 @@
 version: "3.3"
 services:
-  target:
-    container_name: ffmpegDocker
+  server:
     restart: always
     build: .
     ports:
       - "9000:9000"
     networks:
       - "myNetwork"
+networks:
+  myNetwork:
+    external: true

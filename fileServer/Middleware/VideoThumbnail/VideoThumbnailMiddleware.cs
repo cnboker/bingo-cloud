@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace ImageThumbnail.AspNetCore.Middleware
 {
     /// <summary>
-    /// Middleware to serve image thumbnails
+    /// test url:http://localhost:5000/admin/sample-30s.mp4?type=video&size=512x512&user=admin
     /// </summary>
     public class VideoThumbnailMiddleware
     {
@@ -26,25 +26,15 @@ namespace ImageThumbnail.AspNetCore.Middleware
 
         public async Task InvokeAsync(HttpContext context)
         {
-            var isVideoValid = !string.IsNullOrEmpty(context.Request.Query["size"]) &&
-            context.Request.Query["type"] == "video";
-            //Console.WriteLine("isValid=" + isValid.ToString());
+            var isVideoValid = context.Request.Query["type"] == "video";
+            
+            
             if (isVideoValid)
             {
                 var thumbnailRequest = ParseRequest(context.Request);
 
                 if (IsSourceImageExists(thumbnailRequest))
                 {
-                    // if (!thumbnailRequest.ThumbnailSize.HasValue)
-                    // {
-                    //     //Original image requested
-                    //     await WriteFromSource(thumbnailRequest, context.Response.Body);
-                    // }
-                    // else if (IsThumbnailExists(thumbnailRequest) && thumbnailRequest.ThumbnailSize.HasValue)
-                    // {
-                    //     //Thumbnail already exists. Send it from cache.
-                    //     await WriteFromCache(thumbnailRequest.ThumbnailImagePath, context.Response.Body);
-                    // }
                     if (!IsThumbnailExists(thumbnailRequest))
                     {
                         await GenerateThumbnail(thumbnailRequest, context.Response.Body);
@@ -56,8 +46,9 @@ namespace ImageThumbnail.AspNetCore.Middleware
                     context.Response.Headers.Add("Access-Control-Allow-Credentials", "true");
                     context.Response.Headers.Add("Access-Control-Allow-Headers", "Content-Type, X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Date, X-Api-Version, X-File-Name");
                     context.Response.Headers.Add("Access-Control-Allow-Methods", "POST,GET,PUT,PATCH,DELETE,OPTIONS");
-
-                    await context.Response.WriteAsync(thumbnailRequest.ThumbnailImageUrl, CancellationToken.None);
+                    //重新请求获取缩微图片
+                    context.Response.Redirect(thumbnailRequest.ThumbnailImageUrl);
+                   // await context.Response.WriteAsync(thumbnailRequest.ThumbnailImageUrl, CancellationToken.None);
                 }
                 else
                 {
@@ -81,12 +72,12 @@ namespace ImageThumbnail.AspNetCore.Middleware
         {
             var req = new ThumbnailRequest();
             req.RequestedPath = request.Path;
-            req.ThumbnailSize = ParseSize(request.Query["size"]);
+           // req.ThumbnailSize = ParseSize(request.Query["size"]);
             req.SourceImagePath = GetPhysicalPath(request.Path);
-            string fileName = GetThumbnailFileName(request.Path, req.ThumbnailSize, request.Query["user"]);
+            string fileName = GetThumbnailFileName(request.Path);
             req.ThumbnailImagePath = GenerateThumbnailFilePath(fileName);
-             string hostUrl = request.Scheme + "://" + request.Host;
-            req.ThumbnailImageUrl = hostUrl + "/" + _options.CacheDirectoryName + "/" + fileName + "?size=256x256&type=image&user=" + request.Query["user"];;
+            string hostUrl = request.Scheme + "://" + request.Host;
+            req.ThumbnailImageUrl = hostUrl + "/" + _options.CacheDirectoryName + "/" + fileName + "?size=" + request.Query["size"] + "&type=image&user=" + request.Query["user"];
             //req.UserName = request.Query["user"];
             Console.WriteLine("SourcevidoPath=" + req.SourceImagePath);
             Console.WriteLine("RequestedPath=" + req.RequestedPath);
@@ -107,7 +98,7 @@ namespace ImageThumbnail.AspNetCore.Middleware
             {
                 var inputFile = new InputFile(request.SourceImagePath);
                 var outputFile = new OutputFile(request.ThumbnailImagePath);
-                var ffmpeg = new Engine("ffmpeg");
+                var ffmpeg = new Engine("C:/ffmpeg/bin/ffmpeg.exe");
                 // Saves the frame located on the 15th second of the video.
                 var size = request.ThumbnailSize;
                 var options = new ConversionOptions
@@ -188,14 +179,12 @@ namespace ImageThumbnail.AspNetCore.Middleware
             return fileInfo.PhysicalPath;
         }
 
-        private string GetThumbnailFileName(string path, Size? size, string userName){
-            if (!size.HasValue)
-                return path;
+        private string GetThumbnailFileName(string path){
             var fileName = Path.GetFileNameWithoutExtension(path);
             var ext = Path.GetExtension(path);
 
             //ex : sample.jpg -> sample_256x256_mp4.jpeg
-            fileName = string.Format("{0}_{1}x{2}_{3}_mp4.jpeg", fileName, size.Value.Width, size.Value.Height, userName);
+            fileName = string.Format("{0}.jpeg", fileName);
             return fileName;
         }
         private string GenerateThumbnailFilePath(string fileName)

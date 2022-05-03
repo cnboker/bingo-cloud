@@ -6,9 +6,9 @@ using Ioliz.Shared;
 
 public class WebDirectory
 {
-    public static Dictionary<string, Node> FileMap(string dir, string userName)
+    public static Dictionary<string, NodeBase> FileMap(string dir)
     {
-        DirectoryJsonGenerator generator = new DirectoryJsonGenerator(dir, userName);
+        DirectoryJsonGenerator generator = new DirectoryJsonGenerator(dir);
         generator.CreateFolderHierarchy();
         return generator.fileMap;
     }
@@ -18,32 +18,29 @@ public class DirectoryJsonGenerator
 {
     public string RootFolderId { get; set; }
     private DirectoryInfo rootInfo;
-    public Dictionary<string, Node> fileMap = new Dictionary<string, Node>();
+    public Dictionary<string, NodeBase> fileMap = new Dictionary<string, NodeBase>();
     int rootDirLength = 0;
     string userName = "";
-    public DirectoryJsonGenerator(string dir, string userName)
+    public DirectoryJsonGenerator(string dir)
     {
         rootInfo = new DirectoryInfo(dir);
         rootDirLength = rootInfo.FullName.Length;
         RootFolderId = StringHelper.IdGenerate();
-        this.userName = userName;
     }
 
     public void CreateFolderHierarchy()
     {
-        var node = new Node()
+        var node = new DirNode()
         {
             Id = RootFolderId,
-            Name = rootInfo.Name,
-            ModDate = rootInfo.LastWriteTime.ToLongDateString(),
+            //根目录显示空不显示用户名称
+            Name = "",
             ParentId = "",
-            Path = "/",
-            IsDir = true
         };
         var dirNodes = GetDirNodes(RootFolderId, this.rootInfo);
         var filesNodes = GetFileNodes(RootFolderId, this.rootInfo);
         node.ChildrenCount = dirNodes.Count() + filesNodes.Count();
-        node.ChildrenIds = dirNodes.Union(filesNodes).Select(x => x.Id).ToArray();
+        node.ChildrenIds = dirNodes.Select(c=>c.Id).Union(filesNodes.Select(c=>c.Id)).ToArray();
         fileMap.Add(RootFolderId, node);
         foreach (var item in filesNodes)
         {
@@ -52,17 +49,16 @@ public class DirectoryJsonGenerator
     }
 
 
-    private Node[] GetFileNodes(string parentId, DirectoryInfo dir)
+    private FileNode[] GetFileNodes(string parentId, DirectoryInfo dir)
     {
         return dir.GetFiles().Select(c =>
         {
             var path = c.DirectoryName.Substring(rootDirLength) + "/" + c.Name;
-            return new Node()
+            return new FileNode()
             {
                 Id = StringHelper.IdGenerate(),
                 Name = c.Name,
                 Size = c.Length,
-                Path = path,
                 ModDate = c.LastWriteTime.ToLongDateString(),
                 ParentId = parentId,
                 ThumbnailUrl = GetThumbnailUrl(c.Name, this.userName)
@@ -73,36 +69,35 @@ public class DirectoryJsonGenerator
     public static string GetThumbnailUrl(string fileName, string userName)
     {
         var mimeType = MimeTypes.GetMimeType(fileName);
+        var type = "image";
         if (mimeType.StartsWith("image/"))
         {
-            return "/" + fileName + "?size=512x512&type=image&user=" + userName;
+            type = "image";
         }
         else if (mimeType.StartsWith("video/"))
         {
-            return "/" + fileName + "?size=512x512&type=video&user=" + userName;
+            type = "video";
         }
-        return "";
+
+        return string.Format("/{0}?size=512x512&type={1}&user={2}", fileName, type, userName);
     }
 
-    public Node[] GetDirNodes(string parentId, DirectoryInfo dir)
+    public DirNode[] GetDirNodes(string parentId, DirectoryInfo dir)
     {
         var children = dir.GetDirectories();
-        List<Node> dirNodesList = new List<Node>();
+        List<DirNode> dirNodesList = new List<DirNode>();
         foreach (var child in children)
         {
-            var node = new Node()
+            var node = new DirNode()
             {
                 Id = StringHelper.IdGenerate(),
                 Name = child.Name,
-                ModDate = child.LastWriteTime.ToLongDateString(),
                 ParentId = parentId,
-                Path = child.FullName.Substring(rootDirLength),
-                IsDir = true
             };
             var childDirNodes = GetDirNodes(node.Id, child);
             var childFileNodes = GetFileNodes(node.Id, child);
 
-            node.ChildrenIds = childDirNodes.Union(childFileNodes).Select(x => x.Id).ToArray();
+            node.ChildrenIds = childDirNodes.Select(c=>c.Id).Union(childFileNodes.Select(c=>c.Id)).ToArray();
             node.ChildrenCount = node.ChildrenIds.Length;
             dirNodesList.Add(node);
             foreach (var item in childFileNodes)
@@ -115,17 +110,40 @@ public class DirectoryJsonGenerator
     }
 }
 
-public class Node
+public class FileNode : NodeBase
 {
-    public string Id { get; set; }
-    public string Name { get; set; }
     public string ModDate { get; set; }
-    public string ParentId { get; set; }
+
     public long Size { get; set; }
-    public string Path { get; set; }
-    public bool IsDir { get; set; }
-    public string[] ChildrenIds { get; set; }
-    public int ChildrenCount { get; set; }
+    public bool IsDir
+    {
+        get
+        {
+            return false;
+        }
+    }
     public string ThumbnailUrl { get; set; }
 }
 
+public class DirNode : NodeBase
+{
+    public int ChildrenCount {get;set;}
+    public string[] ChildrenIds { get; set; }
+    public bool IsDir
+    {
+        get
+        {
+            return true;
+        }
+    }
+}
+
+
+public class NodeBase
+{
+    public string Id { get; set; }
+    public string Name { get; set; }
+
+    public string ParentId { get; set; }
+
+}

@@ -28,7 +28,6 @@
     "react": "path.resolve('./node_modules/react')"
   },
   "resolutions": {
-    "//": "See https://github.com/facebook/create-react-app/issues/11773",
     "react-error-overlay": "6.0.9"
   },
   "dependencies": {
@@ -56,8 +55,8 @@
     "js-cookie": "^3.0.1",
     "jwt-decode": "^3.1.2",
     "moment": "^2.29.1",
-    "momentjs": "^2.0.0",
     "mqtt": "^4.3.2",
+    "node-sass": "^7.0.1",
     "prop-types": "^15.7.2",
     "qrcode.react": "^1.0.1",
     "react": "^17.0.2",
@@ -78,13 +77,12 @@
     "redux-thunk": "^2.3.0",
     "shortid": "^2.2.16",
     "simplebar-react": "^2.3.5",
-    "styled-components": "^5.3.3",
-    "use-async-memo": "^1.2.3"
+    "styled-components": "^5.3.3"
   },
   "devDependencies": {
     "@types/jest": "^27.0.2",
     "@types/node": "^16.10.1",
-    "@types/react": "^17.0.24",
+    "@types/react": "^18.0.8",
     "@types/react-dom": "^17.0.9",
     "@types/react-swipeable-views": "^0.13.1",
     "@types/shortid": "^0.0.29",

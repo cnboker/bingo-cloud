@@ -56,7 +56,14 @@ const ImagePicker = ({ basePath, onProcessFiles }: PickerProps) => {
       server={{
         url: `${process.env.REACT_APP_FILE_URL}/api/server/upload`,
         headers: { Authorization: 'Bearer ' + access_token, basePath },
-        load: (source, load, _error, _progress, _abort, _headers) => {
+        load: (
+          source: RequestInfo,
+          load: (arg0: Blob) => void,
+          _error: any,
+          _progress: any,
+          _abort: any,
+          _headers: any,
+        ) => {
           const myRequest = new Request(source)
           fetch(myRequest)
             .then(function (response) {

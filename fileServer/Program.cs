@@ -24,7 +24,7 @@ namespace FileServer
                     .UseKestrel(options=>{
                         options.Limits.MaxRequestBodySize = 1024 * 1024 * 2000;
                     })
-                    .UseUrls("http://0.0.0.0:5000")
+                    .UseUrls("http://*:5000")
                     .UseStartup<Startup>();
                 });
     }

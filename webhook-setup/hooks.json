@@ -1,52 +1,45 @@
 [
-    {
-     "id": "deply",
-      "execute-command": "/home/ioliz/webhook-setup/deply.sh",
-      "command-working-directory":"/tmp",
-      "pass-arguments-to-command":
-      [
-        {
-          "source": "payload",
-          "name": "head_commit.id"
-        },
-        {
-          "source": "payload",
-          "name": "pusher.name"
-        },
-        {
-          "source": "payload",
-          "name": "pusher.email"
-        }
-      ],
-      "trigger-rule":
+  {
+    "id": "deply",
+    "execute-command": "/home/ioliz/webhook-setup/deply.sh",
+    "command-working-directory": "/tmp",
+    "pass-arguments-to-command": [
       {
-        "and":
-        [
-          {
-            "match":
-            {
-              "type": "payload-hmac-sha1",
-              "secret": "7e3adcfab1fd41cdffa39ed5026f9ae68448f5c9",
-              "parameter":
-              {
-                "source": "header",
-                "name": "X-Hub-Signature"
-              }
-            }
-          },
-          {
-            "match":
-            {
-              "type": "value",
-              "value": "refs/heads/master",
-              "parameter":
-              {
-                "source": "payload",
-                "name": "ref"
-              }
+        "source": "payload",
+        "name": "head_commit.id"
+      },
+      {
+        "source": "payload",
+        "name": "pusher.name"
+      },
+      {
+        "source": "payload",
+        "name": "pusher.email"
+      }
+    ],
+    "trigger-rule": {
+      "and": [
+        {
+          "match": {
+            "type": "payload-hmac-sha1",
+            "secret": "7e3adcfab1fd41cdffa39ed5026f9ae68448f5c9",
+            "parameter": {
+              "source": "header",
+              "name": "X-Hub-Signature"
             }
           }
-        ]
-      }
+        },
+        {
+          "match": {
+            "type": "value",
+            "value": "refs/heads/master",
+            "parameter": {
+              "source": "payload",
+              "name": "ref"
+            }
+          }
+        }
+      ]
     }
-  ]
+  }
+]

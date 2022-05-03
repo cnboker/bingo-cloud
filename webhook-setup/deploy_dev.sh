@@ -1,5 +1,5 @@
 #!bin/bash
-cd /home/ioliz
+cd ..
 git reset --hard
 git pull
 #删除未被使用的资源
@@ -11,16 +11,16 @@ docker stop reverseproxy-serviceapi-1
 docker stop reverseproxy-ffmepapi-1
 docker stop reverseproxy-jsxbuild-1
 #rebuild
-cd /home/ioliz/member
+cd ../member
 docker-compose build
-cd /home/ioliz//fileServer
+cd ../fileServer
 docker-compose build
-cd /home/ioliz//service
+cd ../service
 docker-compose build
-cd /home/ioliz//jsxBuildServer
+cd ../jsxBuildServer
 docker-compose build
-cd /home/ioliz//ffmpegServer
+cd ../ffmpegServer
 docker-compose build
-cd /home/ioliz//reverseProxy
+cd ../reverseProxy
 docker stop reverseproxy-reverseproxy-1
 docker-compose up

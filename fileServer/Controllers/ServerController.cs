@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using FileServer.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -15,45 +16,60 @@ namespace FileServer.Controllers
     public class ServerController : Controller
     {
         private IWebHostEnvironment _hostingEnvironment;
-
+        private string UserBaseDir;
+        private string videoTmpDir;
         public ServerController(IWebHostEnvironment hostingEnvironment)
         {
             this._hostingEnvironment = hostingEnvironment;
+
+        }
+
+        private void RequireDirIsCreate()
+        {
+            this.UserBaseDir = Path.Combine(_hostingEnvironment.WebRootPath, User.Identity.Name);
+            if (!System.IO.Directory.Exists(this.UserBaseDir))
+            {
+                System.IO.Directory.CreateDirectory(this.UserBaseDir);
+            }
+            //临时目录用于存储上传的视频文件
+            this.videoTmpDir = this.UserBaseDir + "/tmp/";
+            if (!Directory.Exists(this.videoTmpDir))
+            {
+                Directory.CreateDirectory(this.videoTmpDir);
+            }
         }
 
         [HttpGet("/api/server")]
         public IActionResult Index()
         {
-            //Console.WriteLine("_hostingEnvironment.WebRootPath=" + _hostingEnvironment.WebRootPath);
-            string dir = Path.Combine(_hostingEnvironment.WebRootPath, User.Identity.Name);
-            if (!System.IO.Directory.Exists(dir))
-            {
-                System.IO.Directory.CreateDirectory(dir);
-            }
-            DirectoryJsonGenerator generator = new DirectoryJsonGenerator(dir,User.Identity.Name);
+            RequireDirIsCreate();
+            DirectoryJsonGenerator generator = new DirectoryJsonGenerator(this.UserBaseDir);
             generator.CreateFolderHierarchy();
             string hostUrl = Request.Scheme + "://" + Request.Host;
             // foreach (var node in generator.fileMap.Values)
             // {
-            //     node.ThumbnailUrl = !string.IsNullOrEmpty(node.ThumbnailUrl) ? hostUrl + User.Identity.Name + node.ThumbnailUrl : null;
-            //     node.Path = !string.IsNullOrEmpty(node.Path) ? hostUrl + User.Identity.Name + node.Path : "";
+            //     if (node is FileNode)
+            //     {
+            //         var fileNode = node as FileNode;
+            //         fileNode.ThumbnailUrl = !string.IsNullOrEmpty(fileNode.ThumbnailUrl) ? hostUrl + fileNode.ThumbnailUrl : null;
+            //     }
+
             // }
             var outputJson = new
             {
                 rootFolderId = generator.RootFolderId,
+                fileMap = generator.fileMap,
                 bashPath = hostUrl + "/" + User.Identity.Name,
-                fileMap = generator.fileMap
             };
-            return Json(outputJson);
+            return Ok(outputJson);
         }
 
         [HttpPost("/api/server/mkdir")]
         public IActionResult Mkdir([FromBody] ValueModel<string> model)
         {
-            string rootDir = Path.Combine(_hostingEnvironment.WebRootPath, User.Identity.Name);
             try
             {
-                var pyDir = rootDir + model.Value;
+                var pyDir = this.UserBaseDir + model.Value;
                 Console.WriteLine("path" + pyDir);
                 if (!Directory.Exists(pyDir))
                 {
@@ -73,18 +89,13 @@ namespace FileServer.Controllers
         }
 
         [HttpDelete("/api/server/rm")]
-        public IActionResult Remove([FromBody] FileInfo[] files)
+        public IActionResult Remove([FromBody] Models.FileInfo[] files)
         {
             foreach (var file in files)
             {
                 try
                 {
-                    if (file.Path.IndexOf("/" + User.Identity.Name + "/") == -1)
-                    {
-                        return BadRequest("Illegal operation");
-                    }
-                    var filePath = _hostingEnvironment.WebRootPath + file.Path;
-                    Console.WriteLine("filePath=" + filePath);
+                    var filePath = _hostingEnvironment.WebRootPath + "/" + User.Identity.Name + file.Path;
                     if (file.IsDir)
                     {
                         if (Directory.Exists(filePath))
@@ -94,7 +105,6 @@ namespace FileServer.Controllers
                     }
                     else
                     {
-                        //Console.WriteLine("file path=" + _hostingEnvironment.WebRootPath + User.Identity.Name +  file);
                         if (System.IO.File.Exists(filePath))
                         {
                             System.IO.File.Delete(filePath);
@@ -109,38 +119,76 @@ namespace FileServer.Controllers
 
         //[RequestSizeLimit(1024 * 1024 * 2000)]
         [DisableRequestSizeLimit]
+        [FFMepgFilter]
         [HttpPost("/api/server/upload")]
         public async Task<IActionResult> File([FromForm] IFormFile files)
         {
+            RequireDirIsCreate();
+            //前缀不包含用户名称(/scott/tmp/test/a.txt,basePath为/tmp/test)
             var prefixPath = Request.Headers["basePath"];
-
-            //Console.WriteLine("prefixPath=" + JsonConvert.SerializeObject(prefixPath));
-            var path = this._hostingEnvironment.WebRootPath;
-            var savePath = path + prefixPath[0];
-            //Console.WriteLine("save path=" + savePath);
-            if (!Directory.Exists(savePath))
+            //浏览器选择的当前目录
+            var fileUploadDir = this.UserBaseDir + prefixPath[0];
+            var isVideo = IsMediaFile(files.FileName);
+            FileResultModel result = new FileResultModel() { };
+            if (isVideo)
             {
-                Directory.CreateDirectory(savePath);
+                result = await VideoFileHandle(fileUploadDir, files);
             }
+            else
+            {
+                result = await ImageFileHandle(fileUploadDir, files);
+            }
+            return Json(result);
+        }
+
+        //fileUploadDir:用户指定上传目录
+        private async Task<FileResultModel> VideoFileHandle(string fileUploadDir, IFormFile files)
+        {
             if (files.Length > 0)
             {
-
-                using (var stream = new FileStream(Path.Combine(savePath, files.FileName), FileMode.Create))
+                using (var stream = new FileStream(this.videoTmpDir + files.FileName, FileMode.Create))
                 {
                     await files.CopyToAsync(stream);
                 }
             }
             string hostUrl = Request.Scheme + "://" + Request.Host;
-            // process uploaded files
-            // Don't rely on or trust the FileName property without validation.
-            //path = files.FileName;
-            var result = new
+            string fileName = files.FileName.Substring(0, files.FileName.IndexOf(".")) + ".mp4";
+            return new FileResultModel()
             {
-                path = "/" + files.FileName,
-                fileName = files.FileName,
-                ThumbnailUrl =  DirectoryJsonGenerator.GetThumbnailUrl(files.FileName, User.Identity.Name)
+                FileName = fileName,
+                //只有上传的是视频文件的时候才会用
+                FullUrl = hostUrl + "/" + User.Identity.Name + "/tmp/" + files.FileName,
+                SavePath = fileUploadDir + "/" + fileName,
+                ThumbnailUrl = DirectoryJsonGenerator.GetThumbnailUrl(files.FileName, User.Identity.Name)
             };
-            return Json(result);
+        }
+
+        private async Task<FileResultModel> ImageFileHandle(string fileUploadDir, IFormFile files)
+        {
+            string hostUrl = Request.Scheme + "://" + Request.Host;
+            if (files.Length > 0)
+            {
+                using (var stream = new FileStream(fileUploadDir + "/" + files.FileName, FileMode.Create))
+                {
+                    await files.CopyToAsync(stream);
+                }
+            }
+            return new FileResultModel()
+            {
+                FileName = files.FileName,
+                ThumbnailUrl = DirectoryJsonGenerator.GetThumbnailUrl(files.FileName, User.Identity.Name)
+            };
+        }
+
+        static string[] mediaExtensions = {
+        ".WEBM", ".MPG", ".MP2", ".MPEG",  ".OGG", ".MPE", //etc
+        ".AVI", ".MP4", ".DIVX", ".WMV", ".MPV", "M4V", ".MOV", ".FLV" //etc
+        };
+
+        static public bool IsMediaFile(string path)
+        {
+            Console.WriteLine("Path.GetExtension(path).ToUpperInvariant()=" + Path.GetExtension(path).ToUpperInvariant());
+            return -1 != Array.IndexOf(mediaExtensions, Path.GetExtension(path).ToUpperInvariant());
         }
     }
 }

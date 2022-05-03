@@ -3,12 +3,15 @@ import FilePicker from 'src/views/components/widgets/FilePicker'
 import { CustomFileData, FsMap } from './FsMap'
 import * as Dialog from 'src/views/components/dialog/Index'
 import { uniqueID } from 'src/lib/string'
-import { asyncPost } from 'src/lib/api'
+import { asyncPost, asyncGet } from 'src/lib/api'
 import { DirCreateUrl } from './constants'
+
 // Hook that sets up our file map and defines functions used to mutate - `deleteFiles`,
 // `moveFiles`, and so on.
 export const useCustomFileMap = (data: FsMap) => {
-  const { fileMap: baseFileMap, rootFolderId, bashPath } = data as FsMap
+  //rootFolderId: 目录root's id
+  //fileMap:目录数据{key:value},value结构参考https://chonky.io/docs/2.x/basics/files 中的FileData数据结构
+  const { fileMap: baseFileMap, rootFolderId } = data as FsMap
   // Setup the React state for our file map and the current folder.
   const [fileMap, setFileMap] = useState(baseFileMap)
   const [currentFolderId, setCurrentFolderId] = useState(rootFolderId)
@@ -105,11 +108,11 @@ export const useCustomFileMap = (data: FsMap) => {
   const uploadFiles = useCallback(() => {
     //必须在setFileMap函数里面，才能获取到新建文件夹关联数据
     setFileMap((map) => {
-      const { path } = map[currentFolderIdRef.current]
-      const _path = path[0] === '/' ? path : new URL(path).pathname
+      const path = getPath(currentFolderIdRef.current)
+      console.log('upload bashpath', path)
       Dialog.confirm(
         <FilePicker
-          basePath={_path}
+          basePath={path}
           onProcessFiles={(files) => {
             console.log('response data', files)
             appendFileNode(files)
@@ -120,18 +123,65 @@ export const useCustomFileMap = (data: FsMap) => {
     })
   }, [])
 
+  const getPath = (curNodeId: string) => {
+    const curNode = fileMap[curNodeId]
+    const paths = []
+    if (curNode.isDir) {
+      paths.push(curNode.name)
+    }
+    let lastNode = curNode
+    while (lastNode.parentId) {
+      lastNode = fileMap[lastNode.parentId]
+      paths.push(lastNode.name)
+    }
+    return paths.reverse().join('/')
+  }
+  //视频文件显示编码进度
+  // progress {
+  //   frames: 899,
+  //   currentFps: 32,
+  //   currentKbps: 2642.9,
+  //   targetSize: 9087,
+  //   timemark: '00:00:28.16',
+  //   percent: 92.48251174094388
+  // }
+  const checkLongTask = (requestUrl: string, fileName: string, newFileId: string) => {
+    if (!requestUrl) return
+    asyncGet({ url: requestUrl }).then((res) => {
+      console.log('checklongtask', res.data)
+      const { percent } = res.data.progress
+      let name = `[${percent}]${fileName}`
+      let timer
+      if (percent < 100) {
+        timer = setTimeout(() => {
+          checkLongTask(requestUrl, fileName, newFileId)
+        }, 1000)
+      } else {
+        timer && clearTimeout(timer)
+        name = fileName
+      }
+
+      setFileMap((map) => {
+        const newMap = { ...map }
+        newMap[newFileId] = { ...newMap[newFileId], name }
+        return newMap
+      })
+    })
+  }
+
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   const appendFileNode = (fileInfo: any) => {
-    const { fileName, path, thumbnailUrl } = fileInfo
+    //taskPercentRequestUrl:视频文件上传包含该属性,浏览器可以调用该地址获取编码进度
+    const { fileName, taskPercentRequestUrl, thumbnailUrl } = fileInfo
+    const newFileId = uniqueID()
+    checkLongTask(taskPercentRequestUrl, fileName, newFileId)
     setFileMap((fileMap) => {
-      const newFileId = uniqueID()
       const newFileMap = { ...fileMap }
       const currentFolder = newFileMap[currentFolderIdRef.current]
       newFileMap[newFileId] = {
         id: newFileId,
         name: fileName,
         isDir: false,
-        path,
         thumbnailUrl,
         modDate: new Date(),
         parentId: currentFolderIdRef.current,
@@ -190,12 +240,12 @@ export const useCustomFileMap = (data: FsMap) => {
   return {
     fileMap,
     currentFolderId,
-    bashPath,
     setCurrentFolderId,
     resetFileMap,
     deleteFiles,
     moveFiles,
     createFolder,
     uploadFiles,
+    getPath,
   }
 }

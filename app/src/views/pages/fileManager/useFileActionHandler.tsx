@@ -10,6 +10,7 @@ export const useFileActionHandler = (
   moveFiles: (files: FileData[], source: FileData, destination: FileData) => void,
   createFolder: (folderName: string) => void,
   uploadFiles: () => void,
+  getPath: (id: string) => string,
 ) => {
   return useCallback(
     (data: ChonkyFileActionData) => {
@@ -26,9 +27,10 @@ export const useFileActionHandler = (
         asyncDelete({
           url: FileDeleteUrl,
           data: files.map((x) => {
+            console.log('delete', getPath(x.id))
             return {
               isDir: x.isDir,
-              path: x.path.indexOf('http') === 0 ? new URL(x.path).pathname : x.path,
+              path: getPath(x.id) + '/' + (x.isDir ? '' : x.name),
             }
           }),
         }).then(() => {

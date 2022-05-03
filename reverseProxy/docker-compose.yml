@@ -16,38 +16,25 @@ services:
     jsxbuild:
         depends_on:
             - reverseproxy
-        image: jsxbuildserver_target:latest
-
+        restart: always
+        image: jsxbuildserver_server:latest
+    ffmpegapi:
+        restart: always
+        depends_on:
+            - reverseproxy
+        image: ffmpegserver_server:latest
     authapi:
         depends_on:
             - reverseproxy
         image: member_server:latest
-        restart: always
-        networks:
-            - "myNetwork"
-        ports:
-            - "7800:7800"
     serviceapi:
         depends_on:
             - reverseproxy
         image: service_server:latest
-        restart: always
-        networks:
-            - "myNetwork"
-        ports:
-            - "6001:6001"
     fileapi:
         depends_on:
             - reverseproxy
         image: fileserver_server:latest
-        restart: always
-        networks:
-            - "myNetwork"
-        volumes:
-            #host:container
-            - /home/data/files:/release/wwwroot
-        ports:
-            - "5000:5000"
 networks:
     myNetwork:
         external: true

@@ -14,7 +14,7 @@ namespace FileServer
 
     public const string PlatformId = "Ioliz";
 
-    public string Domain { get; set; }
+    public string FFMpegServer { get; set; }
 
     public AppConfig(IServiceProvider provider)
     {
@@ -31,7 +31,7 @@ namespace FileServer
     public void LoadConfig(IConfiguration configRoot)
     {
       //AuthServer = configRoot.GetSection("AppSettings:authServer").Value;
-      Domain = configRoot.GetSection("AppSettings:domain").Value;
+      FFMpegServer = configRoot.GetSection("AppSettings:ffmepgSever").Value;
     }
   }
 }

@@ -9,7 +9,7 @@ import {
 
 type CProps = {
   placement: 'start' | 'end' | 'top' | 'bottom'
-  children: React.ReactChildren
+  children: React.ReactNode
   visible: boolean
   title: string
   onHide: () => void
