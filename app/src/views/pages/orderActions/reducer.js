@@ -9,8 +9,6 @@ import {
 const initialState = {
   //能否允许创建试用,通过该属性可以判断用户有无开通试用或下单
   isCreateTrial: false,
-  trialCreateSuccess: false,
-  instance: null,
   //单价/天
   price: 0.5,
   //试用设备数量

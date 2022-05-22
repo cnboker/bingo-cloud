@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useLocation, useHistory } from 'react-router-dom'
 import Login from './components/Login'
-import { login } from '../../../accountAction'
+import { login, errorReset } from '../../../accountAction'
+import Logo from 'src/Logo'
 export default () => {
   // grab what we need from props.  The handleSubmit from ReduxForm and the pieces
   // of state from the global state.
@@ -37,7 +38,9 @@ export default () => {
     }
     return '/'
   }
-
+  useEffect(() => {
+    dispatch(errorReset())
+  }, [])
   useEffect(() => {
     if (!securityReducer.authenticated) {
       return
@@ -59,6 +62,7 @@ export default () => {
   }, [securityReducer.error])
   return (
     <React.Fragment>
+      <Logo />
       <Login submit={submit} error={error} />
     </React.Fragment>
   )

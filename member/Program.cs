@@ -46,7 +46,7 @@ namespace Ioliz
     public static IWebHost BuildWebHost(string[] args) =>
     WebHost.CreateDefaultBuilder(args)
     .ConfigureLogging(builder => builder.AddFile())
-    .UseUrls("http://0.0.0.0:7800")
+    .UseUrls("http://*:7800")
     .UseIISIntegration()
     .UseStartup<Startup>()
     .Build();

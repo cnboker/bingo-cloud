@@ -76,3 +76,12 @@ export const jsonToUrlQuery = (json) => {
 export const uniqueID = () => {
   return Math.random().toString(36).slice(2)
 }
+
+if (!String.prototype.format) {
+  String.prototype.format = function () {
+    var args = arguments
+    return this.replace(/{(\d+)}/g, function (match, number) {
+      return typeof args[number] != 'undefined' ? args[number] : match
+    })
+  }
+}

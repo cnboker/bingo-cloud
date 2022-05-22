@@ -22,13 +22,18 @@ namespace Ioliz.Service.Controllers
     {
       var userName = User.Identity.Name;
       var instance = ctx.Instances.FirstOrDefault(x => x.UserName == userName);
-      var isCreateTrial = instance == null;
+      //试用实例是否已经创建
+      var isCreateTrial = false;
+      if(instance != null){
+        isCreateTrial = instance.IsTrial;
+      }
       return new
       {
         isCreateTrial,
+        deviceCount = ctx.Devices.Count(c=>c.UserName == userName),
         trialDeviceCount = AppInstance.Instance.Config.TrialMaxDeviceCount,
         price = AppInstance.Instance.Config.PricePerDay,
-        discount = AppInstance.Instance.Config.Discount
+        discount = AppInstance.Instance.Config.Discount,
       };
 
     }

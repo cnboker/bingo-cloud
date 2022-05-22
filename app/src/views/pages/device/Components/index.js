@@ -89,17 +89,17 @@ export default () => {
 
   return (
     <PageContainer>
-      <div className="row mb-2">
-        <div className="col-md-6">
-          <DeviceGroup groupSelect={groupSelect} />
+      <nav className="navbar navbar-light bg-light mb-1">
+        <div className="container-fluid">
+          <div className="col">
+            <DeviceGroup groupSelect={groupSelect} />
+          </div>
+          <div className="d-flex">
+            <Search onSearch={keywordFilter} />
+            <RowFliter statusChange={statusChange} defaultValue={filter.networkStatus} />
+          </div>
         </div>
-        <div className="col-md-3">
-          <Search onSearch={keywordFilter} />
-        </div>
-        <div className="col-md-3">
-          <RowFliter statusChange={statusChange} defaultValue={filter.networkStatus} />
-        </div>
-      </div>
+      </nav>
       <div className="table-responsive">
         <Table tableData={tableData.data} />
         <div className="float-right">

@@ -1,4 +1,10 @@
-import { SIGNUP_RESPONSE, LOGIN_RESPONSE, LOGOUT, UPDATE_TOKEN } from './accountConstants'
+import {
+  SIGNUP_RESPONSE,
+  LOGIN_RESPONSE,
+  LOGOUT,
+  UPDATE_TOKEN,
+  ERROR_RESETS,
+} from './accountConstants'
 import { API_RESPONSE_ERROR } from './constants'
 import Cookies from 'js-cookie'
 import jwtDecode from 'jwt-decode'
@@ -11,6 +17,8 @@ const initialState = {
 const cookieDomain = `${process.env.REACT_APP_COOKIE_DOMAIN}`
 const securityReducer = (state = initialState, action) => {
   switch (action.type) {
+    case ERROR_RESETS:
+      return { ...initialState, error: '' }
     case UPDATE_TOKEN:
       return action.payload
     case SIGNUP_RESPONSE:

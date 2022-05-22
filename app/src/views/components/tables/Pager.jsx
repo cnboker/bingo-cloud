@@ -1,6 +1,7 @@
 import React from 'react'
 import ReactPaginate from 'react-paginate'
 import GR from '~/locale'
+import './pager.css'
 export default ({ pageCount, onPageChange }) => {
   return (
     <ReactPaginate
@@ -10,10 +11,12 @@ export default ({ pageCount, onPageChange }) => {
       breakClassName={'break-me'}
       pageCount={pageCount}
       marginPagesDisplayed={2}
-      pageRangeDisplayed={5}
+      pageRangeDisplayed={3}
       onPageChange={(e) => onPageChange(e)}
       containerClassName={'pagination'}
       subContainerClassName={'pages pagination'}
+      nextClassName={'page-next'}
+      previousClassName={'page-previous'}
       activeClassName={'active'}
     />
   )

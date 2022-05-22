@@ -12,6 +12,8 @@ import IndexSagas from './index-sagas'
 import thunk from 'redux-thunk'
 import * as serviceWorker from './serviceWorker'
 
+require('~/lib/string')
+
 const sagaMiddleware = createSegaMiddleware()
 const composeSetup =
   process.env.NODE_ENV !== 'production' &&

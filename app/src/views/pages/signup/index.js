@@ -3,10 +3,11 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 import Register from './components/Register'
-import { signup } from '../../../accountAction'
+import { signup, errorReset } from '../../../accountAction'
+import R from './locale'
+import Logo from 'src/Logo'
 export default () => {
   const dispatch = useDispatch()
-  const [error, setError] = useState('')
   const history = useHistory()
   const securityReducer = useSelector((state) => state.securityReducer)
   // grab what we need from props.  The handleSubmit from ReduxForm and the pieces
@@ -15,15 +16,24 @@ export default () => {
     const { userName, password, email } = values
     dispatch(signup(userName, password, email))
   }
-
+  useEffect(() => {
+    dispatch(errorReset())
+  }, [])
   useEffect(() => {
     if (securityReducer.signupSuccess) {
       history.push('/login')
     }
-    if (securityReducer.error) {
-      setError(securityReducer.error)
-    }
   }, [securityReducer])
 
-  return <Register onsubmit={submit} error={error} />
+  return (
+    <>
+      <Logo />
+      <Register
+        onsubmit={submit}
+        error={
+          securityReducer.error && securityReducer.error.split(',').map((x) => (R[x] ? R[x] : x))
+        }
+      />
+    </>
+  )
 }

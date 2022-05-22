@@ -51,13 +51,11 @@ export const useFiles = (
     const fo = fileMap[fileId]
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     //@ts-ignore
-    let prop = {}
-    if (!fo.isDir) {
-      prop = {
-        thumbnailUrl: fo.thumbnailUrl ? bashPath + getPath(fo.id) + fo.thumbnailUrl : '',
-      }
+    let thumbnailUrl = ''
+    if (!fo.isDir && fo.thumbnailUrl && fo.thumbnailUrl.indexOf('data:') !== 0) {
+      thumbnailUrl = bashPath + getPath(fo.id) + fo.thumbnailUrl
     }
-    return { ...fo, ...prop }
+    return { ...fo, thumbnailUrl }
   })
 }
 

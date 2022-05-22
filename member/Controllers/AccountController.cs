@@ -68,7 +68,7 @@ namespace Member.Controllers
                 }
                 else
                 {
-                    return BadRequest(string.Join(",", result.Errors.Select(c => c.Description).ToArray()));
+                    return BadRequest(string.Join(",", result.Errors.Select(c => c.Code).ToArray()));
                 }
             }
             catch (Exception ex)

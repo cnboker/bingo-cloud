@@ -6,10 +6,10 @@ using Ioliz.Shared;
 
 public class WebDirectory
 {
-    public static Dictionary<string, NodeBase> FileMap(string dir)
+    public static Dictionary<string, NodeBase> FileMap(string dir,string userName)
     {
         DirectoryJsonGenerator generator = new DirectoryJsonGenerator(dir);
-        generator.CreateFolderHierarchy();
+        generator.CreateFolderHierarchy(userName);
         return generator.fileMap;
     }
 }
@@ -20,7 +20,7 @@ public class DirectoryJsonGenerator
     private DirectoryInfo rootInfo;
     public Dictionary<string, NodeBase> fileMap = new Dictionary<string, NodeBase>();
     int rootDirLength = 0;
-    string userName = "";
+  
     public DirectoryJsonGenerator(string dir)
     {
         rootInfo = new DirectoryInfo(dir);
@@ -28,7 +28,7 @@ public class DirectoryJsonGenerator
         RootFolderId = StringHelper.IdGenerate();
     }
 
-    public void CreateFolderHierarchy()
+    public void CreateFolderHierarchy(string userName)
     {
         var node = new DirNode()
         {
@@ -37,8 +37,8 @@ public class DirectoryJsonGenerator
             Name = "",
             ParentId = "",
         };
-        var dirNodes = GetDirNodes(RootFolderId, this.rootInfo);
-        var filesNodes = GetFileNodes(RootFolderId, this.rootInfo);
+        var dirNodes = GetDirNodes(RootFolderId, this.rootInfo,userName);
+        var filesNodes = GetFileNodes(RootFolderId, this.rootInfo,userName);
         node.ChildrenCount = dirNodes.Count() + filesNodes.Count();
         node.ChildrenIds = dirNodes.Select(c=>c.Id).Union(filesNodes.Select(c=>c.Id)).ToArray();
         fileMap.Add(RootFolderId, node);
@@ -49,7 +49,7 @@ public class DirectoryJsonGenerator
     }
 
 
-    private FileNode[] GetFileNodes(string parentId, DirectoryInfo dir)
+    private FileNode[] GetFileNodes(string parentId, DirectoryInfo dir, string userName)
     {
         return dir.GetFiles().Select(c =>
         {
@@ -61,7 +61,7 @@ public class DirectoryJsonGenerator
                 Size = c.Length,
                 ModDate = c.LastWriteTime.ToLongDateString(),
                 ParentId = parentId,
-                ThumbnailUrl = GetThumbnailUrl(c.Name, this.userName)
+                ThumbnailUrl = GetThumbnailUrl(c.Name, userName)
             };
         }).ToArray();
     }
@@ -82,7 +82,7 @@ public class DirectoryJsonGenerator
         return string.Format("/{0}?size=512x512&type={1}&user={2}", fileName, type, userName);
     }
 
-    public DirNode[] GetDirNodes(string parentId, DirectoryInfo dir)
+    public DirNode[] GetDirNodes(string parentId, DirectoryInfo dir,string userName)
     {
         var children = dir.GetDirectories();
         List<DirNode> dirNodesList = new List<DirNode>();
@@ -94,8 +94,8 @@ public class DirectoryJsonGenerator
                 Name = child.Name,
                 ParentId = parentId,
             };
-            var childDirNodes = GetDirNodes(node.Id, child);
-            var childFileNodes = GetFileNodes(node.Id, child);
+            var childDirNodes = GetDirNodes(node.Id, child,userName);
+            var childFileNodes = GetFileNodes(node.Id, child,userName);
 
             node.ChildrenIds = childDirNodes.Select(c=>c.Id).Union(childFileNodes.Select(c=>c.Id)).ToArray();
             node.ChildrenCount = node.ChildrenIds.Length;

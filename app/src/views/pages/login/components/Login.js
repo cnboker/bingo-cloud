@@ -77,7 +77,7 @@ const Login = ({ submit, error }) => {
                       </CCol>
                     </CRow>
                     <CRow>
-                      <ValidatorSpan message={error} />
+                      <ValidatorSpan message={R[error]} />
                     </CRow>
                   </CForm>
                 </CCardBody>

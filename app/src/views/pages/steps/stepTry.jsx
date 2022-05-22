@@ -1,12 +1,14 @@
 import React, { useState } from 'react'
-import { CCard, CCardBody, CCardText, CButton, CCardTitle } from '@coreui/react'
+import { CCard, CCardBody, CCardText, CLink } from '@coreui/react'
 import Offcanvas from '~/views/components/dialog/Offcanvas'
 import Trial from '../orderActions/Trial'
 import { useSelector } from 'react-redux'
 import G from '~/locale'
+import R from './locale'
+
 export default () => {
   const [visible, setVisible] = useState(false)
-  const context = useSelector((state) => state.orderContextReducer)
+  const orderContext = useSelector((state) => state.orderContextReducer)
 
   return (
     <CCard>
@@ -25,15 +27,17 @@ export default () => {
             />
           </Offcanvas>
         )}
-        <CCardTitle>欢迎使用立方数字标牌内容发布系统</CCardTitle>
         <CCardText>
-          {context.isCreateTrial && (
+          {orderContext.isCreateTrial && (
             <React.Fragment>
-              新注册用户,可以免费试用1个月,允许5台设备激活,试用期后不续费不影响设备播放，只影响新内容发布，
-              <CButton onClick={() => setVisible(true)}>开始试用</CButton> <br />
+              {R.newUserMessage.format(orderContext.trialDeviceCount)},
+              <CLink onClick={() => setVisible(true)}>{R.activate}</CLink> {R.rightNow}.
             </React.Fragment>
           )}
-          老用户如果需要续费，点击<CButton href="#orderActions/create">续费</CButton> <br />
+          {'  '}
+          {R.renewMessage} {R.click.toLowerCase()}
+          {'  '}
+          <CLink href="/#orderActions/create">{R.renew}</CLink>.
         </CCardText>
       </CCardBody>
     </CCard>

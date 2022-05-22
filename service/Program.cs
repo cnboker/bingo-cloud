@@ -44,7 +44,7 @@ namespace Ioliz.Service
                  Host.CreateDefaultBuilder(args)
                      .ConfigureWebHostDefaults(webBuilder =>
                      {
-                       webBuilder.UseUrls("http://0.0.0.0:6001")
+                       webBuilder.UseUrls("http://*:6001")
                          .UseStartup<Startup>();
                      });
 

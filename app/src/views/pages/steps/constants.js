@@ -6,30 +6,30 @@ import {
   StepPageDesign,
   StepPublish,
 } from './steps'
-
+import R from './locale'
 export const steps = [
   {
-    title: '试用/下单',
+    title: R.try,
     stepIndex: 0,
     component: <StepTry />,
   },
   {
-    title: '激活设备',
+    title: R.activate,
     stepIndex: 0,
     component: <StepActivateDevice />,
   },
   {
-    title: '上传素材',
+    title: R.uploadFile,
     stepIndex: 0,
     component: <StepUploadResource />,
   },
   {
-    title: '内容设计',
+    title: R.design,
     stepIndex: 0,
     component: <StepPageDesign />,
   },
   {
-    title: '发布内容',
+    title: R.publish,
     stepIndex: 0,
     component: <StepPublish />,
   },

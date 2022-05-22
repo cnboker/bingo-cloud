@@ -10,6 +10,7 @@ import {
   CInputGroup,
   CInputGroupText,
   CRow,
+  CLink,
 } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
 import { cilLockLocked, cilUser } from '@coreui/icons'
@@ -94,9 +95,10 @@ const Register = ({ onsubmit, error }) => {
                     )}
                   </CInputGroup>
                   <div className="d-grid">
-                    <CButton color="success" type="submit">
+                    <CButton color="primary" type="submit">
                       {R.create_account}
                     </CButton>
+                    <CLink href="/login">{R.login}</CLink>
                   </div>
                   <ValidatorSpan message={error} />
                 </CForm>

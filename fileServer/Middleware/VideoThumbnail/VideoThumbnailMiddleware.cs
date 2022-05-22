@@ -82,7 +82,7 @@ namespace ImageThumbnail.AspNetCore.Middleware
             Console.WriteLine("SourcevidoPath=" + req.SourceImagePath);
             Console.WriteLine("RequestedPath=" + req.RequestedPath);
             Console.WriteLine("ThumbnailVideoPath=" + req.ThumbnailImagePath);
-
+            Console.WriteLine("ThumbnailImageUrl=" + req.ThumbnailImageUrl);
             return req;
         }
 

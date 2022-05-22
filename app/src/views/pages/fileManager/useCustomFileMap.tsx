@@ -5,7 +5,7 @@ import * as Dialog from 'src/views/components/dialog/Index'
 import { uniqueID } from 'src/lib/string'
 import { asyncPost, asyncGet } from 'src/lib/api'
 import { DirCreateUrl } from './constants'
-
+import { textToBitmap } from './TextToBitmap'
 // Hook that sets up our file map and defines functions used to mutate - `deleteFiles`,
 // `moveFiles`, and so on.
 export const useCustomFileMap = (data: FsMap) => {
@@ -149,23 +149,30 @@ export const useCustomFileMap = (data: FsMap) => {
     if (!requestUrl) return
     asyncGet({ url: requestUrl }).then((res) => {
       console.log('checklongtask', res.data)
-      const { percent } = res.data.progress
-      let name = `[${percent}]${fileName}`
+      const { percent, error } = res.data
+      const imageText = `wait-${percent.toFixed(0)}%`
+      const imageData = textToBitmap(imageText)
+      setFileMap((map: any) => {
+        const newMap = { ...map }
+        newMap[newFileId] = { ...newMap[newFileId], thumbnailUrl: imageData }
+        return newMap
+      })
       let timer
-      if (percent < 100) {
+      if (percent < 100 && !error) {
         timer = setTimeout(() => {
           checkLongTask(requestUrl, fileName, newFileId)
         }, 1000)
       } else {
         timer && clearTimeout(timer)
-        name = fileName
+        setFileMap((map: any) => {
+          const newMap = { ...map }
+          newMap[newFileId] = {
+            ...newMap[newFileId],
+            thumbnailUrl: getPath(newFileId) + '/' + fileName,
+          }
+          return newMap
+        })
       }
-
-      setFileMap((map) => {
-        const newMap = { ...map }
-        newMap[newFileId] = { ...newMap[newFileId], name }
-        return newMap
-      })
     })
   }
 
@@ -174,7 +181,6 @@ export const useCustomFileMap = (data: FsMap) => {
     //taskPercentRequestUrl:视频文件上传包含该属性,浏览器可以调用该地址获取编码进度
     const { fileName, taskPercentRequestUrl, thumbnailUrl } = fileInfo
     const newFileId = uniqueID()
-    checkLongTask(taskPercentRequestUrl, fileName, newFileId)
     setFileMap((fileMap) => {
       const newFileMap = { ...fileMap }
       const currentFolder = newFileMap[currentFolderIdRef.current]
@@ -192,6 +198,7 @@ export const useCustomFileMap = (data: FsMap) => {
         childrenIds: childrenIds,
         childrenCount: childrenIds.length,
       }
+      checkLongTask(taskPercentRequestUrl, fileName, newFileId)
       return newFileMap
     })
   }

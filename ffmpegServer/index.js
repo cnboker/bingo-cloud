@@ -13,7 +13,7 @@ const progressSet = {};
 //dataprogress?key={url->hash}
 app.get("/dataProgress", (req, res) => {
   const hashCode = req.query.url.hashCode();
-  res.status(200).jsonp(progressSet[hashCode]);
+  res.status(200).jsonp(progressSet[hashCode]||{percent:0});
 });
 
 app.get("/");
@@ -24,12 +24,13 @@ app.get("/", (req, res) => {
   filename = filename.split(".").shift() + ".mp4";
   console.log("filename", filename);
   const urlHash = req.query.url.hashCode();
-  progressSet[urlHash] = {};
+
   res.set("progressKey", urlHash);
   res.attachment(filename);
   ffmpeg(req.query.url)
     .on("start", function (ffmpegCommand) {
       /// log something maybe
+      progressSet[urlHash] = {percent:0};
     })
     .on("progress", function (data) {
       /// do stuff with progress data if you want
@@ -38,9 +39,14 @@ app.get("/", (req, res) => {
     })
     .on("end", function () {
       /// encoding is complete, so callback or move on at this point
+      progressSet[urlHash] = {
+        percent:100
+      }
     })
     .on("error", function (error) {
       /// error handling
+      console.log('error',error)
+      progressSet[urlHash] = {percent:0};
     })
     .videoCodec("libx264")
     .size("1920x1080")

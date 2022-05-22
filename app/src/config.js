@@ -1,1 +1,1 @@
-export const language = 'zh-cn'
+export const language = 'en-us'

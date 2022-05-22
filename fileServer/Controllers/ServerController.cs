@@ -44,17 +44,8 @@ namespace FileServer.Controllers
         {
             RequireDirIsCreate();
             DirectoryJsonGenerator generator = new DirectoryJsonGenerator(this.UserBaseDir);
-            generator.CreateFolderHierarchy();
+            generator.CreateFolderHierarchy(User.Identity.Name);
             string hostUrl = Request.Scheme + "://" + Request.Host;
-            // foreach (var node in generator.fileMap.Values)
-            // {
-            //     if (node is FileNode)
-            //     {
-            //         var fileNode = node as FileNode;
-            //         fileNode.ThumbnailUrl = !string.IsNullOrEmpty(fileNode.ThumbnailUrl) ? hostUrl + fileNode.ThumbnailUrl : null;
-            //     }
-
-            // }
             var outputJson = new
             {
                 rootFolderId = generator.RootFolderId,

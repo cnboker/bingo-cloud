@@ -13,10 +13,8 @@ export default ({ onCreate }) => {
   return (
     <CCard>
       <CCardBody>
-        <CAlert color="info">{R.trial_tips}</CAlert>
         <TextRow size="sm" label={R.trial_days} text={orderContextReducer.trialDays} />
         <TextRow size="sm" label={R.trial_max_device} text={orderContextReducer.trialDeviceCount} />
-
         <CButton
           type="button"
           color="primary"

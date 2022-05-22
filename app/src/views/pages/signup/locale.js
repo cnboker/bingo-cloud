@@ -12,6 +12,10 @@ const data = {
     login: 'Login',
     register: 'Register',
     registerTitle: 'Create your account',
+    PasswordTooShort: 'Passwords must be at least 6 characters',
+    DuplicateUserName: 'Account is already taken.',
+    DuplicateEmail: 'Email is already taken.',
+    login: 'Login',
   },
   zh: {
     password_mismatch: '密码不匹配',
@@ -25,6 +29,10 @@ const data = {
     login: '登录',
     register: '注册',
     registerTitle: '为您创建账号',
+    PasswordTooShort: '至少6位密码',
+    DuplicateUserName: '账户已经被占用',
+    DuplicateEmail: '邮箱已经被占用',
+    login: '登录',
   },
 }
 export default langLoader(data)
