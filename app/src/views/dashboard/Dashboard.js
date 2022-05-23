@@ -21,7 +21,7 @@ import { CChartLine } from '@coreui/react-chartjs'
 import { getStyle, hexToRgba } from '@coreui/utils'
 import CIcon from '@coreui/icons-react'
 import { cilCloudDownload, cilDevices } from '@coreui/icons'
-
+import R from './locale'
 import avatar1 from './../../assets/images/avatars/user.png'
 
 const WidgetsDropdown = lazy(() => import('../components/widgets/WidgetsDropdown.js'))
@@ -39,7 +39,7 @@ const Dashboard = () => {
           <CRow>
             <CCol sm={5}>
               <h4 id="traffic" className="card-title mb-0">
-                设备播放时长统计
+                {R.playStats}
               </h4>
               <div className="small text-medium-emphasis">January - July 2021</div>
             </CCol>
@@ -152,20 +152,20 @@ const Dashboard = () => {
       <CRow>
         <CCol xs>
           <CCard className="mb-4">
-            <CCardHeader>设备日志</CCardHeader>
+            <CCardHeader>{R.deviceLogs}</CCardHeader>
             <CCardBody>
               <CRow>
                 <CCol xs={12} md={6} xl={6}>
                   <CRow>
                     <CCol sm={6}>
                       <div className="border-start border-start-4 border-start-info py-1 px-3">
-                        <div className="text-medium-emphasis small">日志总数</div>
+                        <div className="text-medium-emphasis small">{R.logCount}</div>
                         <div className="fs-5 fw-semibold">9,123</div>
                       </div>
                     </CCol>
                     <CCol sm={6}>
                       <div className="border-start border-start-4 border-start-danger py-1 px-3 mb-3">
-                        <div className="text-medium-emphasis small">今日总数</div>
+                        <div className="text-medium-emphasis small">{R.todayCount}</div>
                         <div className="fs-5 fw-semibold">22,643</div>
                       </div>
                     </CCol>
@@ -178,13 +178,13 @@ const Dashboard = () => {
                   <CRow>
                     <CCol sm={6}>
                       <div className="border-start border-start-4 border-start-warning py-1 px-3 mb-3">
-                        <div className="text-medium-emphasis small">报告异常</div>
+                        <div className="text-medium-emphasis small">{R.errorCount}</div>
                         <div className="fs-5 fw-semibold">50</div>
                       </div>
                     </CCol>
                     <CCol sm={6}>
                       <div className="border-start border-start-4 border-start-success py-1 px-3 mb-3">
-                        <div className="text-medium-emphasis small">已处理异常</div>
+                        <div className="text-medium-emphasis small">{R.fixedCount}</div>
                         <div className="fs-5 fw-semibold">30</div>
                       </div>
                     </CCol>
@@ -202,10 +202,10 @@ const Dashboard = () => {
                     <CTableHeaderCell className="text-center">
                       <CIcon icon={cilDevices} />
                     </CTableHeaderCell>
-                    <CTableHeaderCell>设备名称</CTableHeaderCell>
-                    <CTableHeaderCell>日志类型</CTableHeaderCell>
-                    <CTableHeaderCell className="text-center">详情</CTableHeaderCell>
-                    <CTableHeaderCell>创建日期</CTableHeaderCell>
+                    <CTableHeaderCell>{R.deviceName}</CTableHeaderCell>
+                    <CTableHeaderCell>{R.deviceType}</CTableHeaderCell>
+                    <CTableHeaderCell className="text-center">{R.detail}</CTableHeaderCell>
+                    <CTableHeaderCell>{R.createDate}</CTableHeaderCell>
                   </CTableRow>
                 </CTableHead>
                 <CTableBody>

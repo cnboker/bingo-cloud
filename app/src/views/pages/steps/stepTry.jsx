@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { CCard, CCardBody, CCardText, CLink } from '@coreui/react'
 import Offcanvas from '~/views/components/dialog/Offcanvas'
-import Trial from '../orderActions/Trial'
+import Trial from '../orders/orderActions/Trial'
 import { useSelector } from 'react-redux'
 import G from '~/locale'
 import R from './locale'
@@ -37,7 +37,7 @@ export default () => {
           {'  '}
           {R.renewMessage} {R.click.toLowerCase()}
           {'  '}
-          <CLink href="/#orderActions/create">{R.renew}</CLink>.
+          <CLink href="/#orders/create">{R.renew}</CLink>.
         </CCardText>
       </CCardBody>
     </CCard>

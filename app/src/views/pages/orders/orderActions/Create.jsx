@@ -33,7 +33,7 @@ export default () => {
 
   useEffect(() => {
     if (orderContextReducer.order && orderContextReducer.order.id > 0) {
-      history.push('/orderActions/checkout')
+      history.push('/orders/checkout')
     }
   }, [orderContextReducer.order])
 

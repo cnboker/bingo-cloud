@@ -12,7 +12,7 @@ import { getStyle } from '@coreui/utils'
 import { CChartBar, CChartLine } from '@coreui/react-chartjs'
 import CIcon from '@coreui/icons-react'
 import { cilArrowBottom, cilOptions } from '@coreui/icons'
-
+import R from './locale'
 const WidgetsDropdown = () => {
   return (
     <CRow>
@@ -21,7 +21,7 @@ const WidgetsDropdown = () => {
           className="mb-4"
           color="primary"
           value={<>10</>}
-          title="设备数量"
+          title={R.deviceQty}
           chart={
             <CChartLine
               className="mt-3 mx-3"
@@ -92,7 +92,7 @@ const WidgetsDropdown = () => {
               10 <span className="fs-6 fw-normal">(5% )</span>
             </>
           }
-          title="设备状态"
+          title={R.deviceState}
           chart={
             <CChartLine
               className="mt-3 mx-3"
@@ -158,7 +158,7 @@ const WidgetsDropdown = () => {
           className="mb-4"
           color="warning"
           value={<>30 </>}
-          title="设备许可"
+          title={R.deviceLicense}
           chart={
             <CChartLine
               className="mt-3"
@@ -214,12 +214,12 @@ const WidgetsDropdown = () => {
             <>
               5000M{' '}
               <span className="fs-6 fw-normal">
-                可用(80%)
+                {R.availiable} (80%)
                 <CIcon icon={cilArrowBottom} />
               </span>
             </>
           }
-          title="磁盘统计"
+          title={R.diskStats}
           action={
             <CDropdown alignment="end">
               <CDropdownToggle color="transparent" caret={false} className="p-0">

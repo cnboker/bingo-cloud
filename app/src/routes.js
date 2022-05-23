@@ -5,9 +5,9 @@ const Users = React.lazy(() => import('./views/pages/admin/users/indexContainer'
 const Orders = React.lazy(() => import('./views/pages/orders/indexContainer'))
 const OrderDetails = React.lazy(() => import('./views/pages/admin/orderDetails/indexContainer'))
 const Wizard = React.lazy(() => import('./views/pages/steps/Index'))
-const Trial = React.lazy(() => import('./views/pages/orderActions/Trial'))
-const CreateOrder = React.lazy(() => import('./views/pages/orderActions/Create'))
-const Checkout = React.lazy(() => import('./views/pages/orderActions/Checkout'))
+const Trial = React.lazy(() => import('./views/pages/orders/orderActions/Trial'))
+const CreateOrder = React.lazy(() => import('./views/pages/orders/orderActions/Create'))
+const Checkout = React.lazy(() => import('./views/pages/orders/orderActions/Checkout'))
 const FileManager = React.lazy(() =>
   import('./views/pages/fileManager/Index').then((module) => ({
     default: module.ServerVFSBrowser,
@@ -25,9 +25,8 @@ const routes = [
   { path: '/trial', name: G.trial, component: Trial },
   { path: '/orders', exact: true, name: G.orders, component: Orders },
   //二级链接必须增加一级route
-  { path: '/orderActions', exact: true, name: G.orderProcess, component: Start },
-  { path: '/orderActions/create', name: G.createOrder, component: CreateOrder },
-  { path: '/orderActions/checkout', name: G.checkout, component: Checkout },
+  { path: '/orders/create', name: G.createOrder, component: CreateOrder },
+  { path: '/orders/checkout', name: G.checkout, component: Checkout },
   { path: '/fileManager', exact: true, name: G.fileMange, component: FileManager },
   { path: '/device', exact: true, name: G.deviceManage, component: DeviceManager },
   { path: '/start', exact: true, name: 'start', component: Start },

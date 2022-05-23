@@ -50,7 +50,7 @@ const _nav = [
   },
   {
     component: CNavItem,
-    name: G.deviceManager,
+    name: G.deviceManage,
     to: '/device',
     icon: <CIcon icon={cilDevices} customClassName="nav-icon" />,
   },

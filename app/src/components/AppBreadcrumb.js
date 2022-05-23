@@ -10,6 +10,7 @@ const AppBreadcrumb = () => {
 
   const getRouteName = (pathname, routes) => {
     const currentRoute = routes.find((route) => route.path === pathname)
+    console.log('currentRoute', pathname, currentRoute)
     return currentRoute.name
   }
 
@@ -18,7 +19,7 @@ const AppBreadcrumb = () => {
     location.split('/').reduce((prev, curr, index, array) => {
       const currentPathname = `${prev}/${curr}`
       breadcrumbs.push({
-        pathname: currentPathname,
+        pathname: '#' + currentPathname,
         name: getRouteName(currentPathname, routes),
         active: index + 1 === array.length ? true : false,
       })
@@ -31,7 +32,7 @@ const AppBreadcrumb = () => {
 
   return (
     <CBreadcrumb className="m-0 ms-2">
-      <CBreadcrumbItem href="/">{G.home}</CBreadcrumbItem>
+      <CBreadcrumbItem href="/#">{G.home}</CBreadcrumbItem>
       {breadcrumbs.map((breadcrumb, index) => {
         return (
           <CBreadcrumbItem
