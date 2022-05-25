@@ -5,6 +5,7 @@ import {
   UPDATE_TOKEN,
   LOGOUT,
   ERROR_RESETS,
+  REQUEST_USER_TOKEN,
 } from './accountConstants'
 import { apiResponseError } from './actions'
 
@@ -25,7 +26,12 @@ export const signupResponse = (payload) => {
 export const updateToken = (payload) => {
   return { type: UPDATE_TOKEN, payload }
 }
-
+export const receiveToken = (payload) => {
+  return {
+    type: REQUEST_USER_TOKEN,
+    payload,
+  }
+}
 export const logout = () => {
   return { type: LOGOUT }
 }
@@ -63,5 +69,25 @@ export const signup = (userName, password, email) => (dispatch) => {
     })
     .catch((e) => {
       dispatch(apiResponseError(e.response.data))
+    })
+}
+
+export const requestToken = (userName, token) => (dispatch) => {
+  var formData = new FormData()
+  formData.append('userName', userName)
+  formData.append('token', token)
+
+  axios({
+    method: 'post',
+    url: `${process.env.REACT_APP_AUTH_URL}/api/customerToken`,
+    data: formData,
+    headers: { 'Content-Type': 'multipart/form-data' },
+  })
+    .then((res) => {
+      dispatch(receiveToken(res.data))
+    })
+    .catch((e) => {
+      console.log('requesttoken', e)
+      // toast.error(e.message, { position: toast.POSITION.BOTTOM_CENTER });
     })
 }

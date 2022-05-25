@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using MySql.Data.MySqlClient;
 using Microsoft.Extensions.Localization;
+using System;
 
 namespace Ioliz.Service.Repositories
 {
@@ -12,7 +13,7 @@ namespace Ioliz.Service.Repositories
     {
 
 
-        private IStringLocalizer localizer;
+        protected IStringLocalizer localizer;
         public RepositoryBase()
         {
         }
@@ -64,14 +65,14 @@ namespace Ioliz.Service.Repositories
             List<BarItemObject> list = new List<BarItemObject>();
             for (var i = startIndex; i <= paddingRowCount; i++)
             {
-                var existData = data.FirstOrDefault(c => c.K == i);
+                var existData = data.FirstOrDefault(c => c.Key == i.ToString());
                 if (existData != null)
                 {
                     list.Add(existData);
                 }
                 else
                 {
-                    list.Add(new BarItemObject() { K = i, Value = "0", Key = i + unit });
+                    list.Add(new BarItemObject() {Value = "0", Key = i.ToString() });
                 }
             }
             return list.ToArray();
@@ -79,22 +80,12 @@ namespace Ioliz.Service.Repositories
 
         protected BarItemObject[] PaddingDays(BarItemObject[] data)
         {
-            return PaddingItems(data, 1, 31);
+            return PaddingItems(data, 1, DateTime.Now.Day);
         }
 
         protected BarItemObject[] PaddingMonths(BarItemObject[] data)
         {
-            return PaddingItems(data, 1, 12);
-        }
-
-        protected BarItemObject[] ExecuteSQL(string tsql, object param = null)
-        {
-            using (IDbConnection db = MQTTConnection)
-            {
-                var result = db.Query<BarItemObject>(tsql, param);
-
-                return result.ToArray();
-            }
+            return PaddingItems(data, 1, DateTime.Now.Month);
         }
 
 

@@ -10,6 +10,7 @@ import {
 import Pager from 'src/views/components/tables/Pager'
 import PageContainer from 'src/views/components/pageContainer'
 import { useSelector } from 'react-redux'
+import G from '~/locale'
 export default (props) => {
   const { dataset, onSearch } = props
   const [query, setQuery] = useState({})
@@ -35,46 +36,46 @@ export default (props) => {
 const TableProps = (client) => {
   const columnDefinition = [
     {
-      title: '用户名',
+      title: G.userName,
       columnName: 'userName',
       visiable: client.userName === 'admin',
     },
     {
-      title: '订单编号',
+      title: G.orderNo,
       columnName: 'orderNo',
     },
     {
-      title: '单价/天',
+      title: G.price,
       columnName: 'price',
       formatter: PriceFormater,
     },
     {
-      title: '应收',
+      title: G.subtotal,
       columnName: 'subTotal',
       formatter: PriceFormater,
       visiable: client.userName === 'admin',
     },
     {
-      title: '实收',
+      title: G.amount,
       columnName: 'amount',
       formatter: PriceFormater,
     },
     {
-      title: '备注',
+      title: G.remark,
       columnName: 'remark',
     },
     {
-      title: '付款状态',
+      title: G.status,
       columnName: 'isPaid',
       formatter: BooleanFormater,
     },
     {
-      title: '创建日期',
+      title: G.createDate,
       columnName: 'createDate',
       formatter: DateFormater,
     },
     {
-      title: '操作',
+      title: G.operation,
       // eslint-disable-next-line @typescript-eslint/no-use-before-define
       formatter: OperationButtons,
       width: 200,

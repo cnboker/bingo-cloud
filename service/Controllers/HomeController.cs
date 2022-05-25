@@ -16,11 +16,11 @@ namespace Ioliz.Service.Controllers
     private HomeRepository homeRep = null;
     public HomeController(ServiceContext ctx, ILogger<HomeController> logger, IStringLocalizer<HomeController> localizer):base(ctx,logger,localizer)
     {
-      homeRep = new HomeRepository(localizer,User.Identity.Name);
+      homeRep = new HomeRepository(localizer);
     }
 
     public IActionResult Index(){
-        return Json(homeRep.GetIndexModel());
+        return Json(homeRep.GetIndexModel(User.Identity.Name));
     }
   }
 }

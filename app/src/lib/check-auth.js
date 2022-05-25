@@ -1,17 +1,10 @@
 import React from 'react'
 import { Route, Redirect } from 'react-router-dom'
 import { updateToken } from '../accountAction'
-
+import jwtDecode from 'jwt-decode'
 export function authHeader() {
-  // return authorization header with jwt token
-  let user = JSON.parse(localStorage.getItem('token'))
-
-  if (user && user) {
-    return {
-      Authorization: 'Bearer ' + user.access_token,
-    }
-  } else {
-    return {}
+  return {
+    Authorization: 'Bearer ' + localStorage.getItem('token'),
   }
 }
 
@@ -21,22 +14,24 @@ export function checkAuthorization(dispatch) {
   if (isAuth !== undefined) return isAuth
 
   // attempt to grab the token from localstorage
-  const storedToken = localStorage.getItem('token')
+  const access_token = localStorage.getItem('token')
 
   // if it exists
-  if (storedToken) {
+  if (access_token) {
     // parse it down into an object
-    const token = JSON.parse(storedToken)
-    var jsTicks = new Date().getTime() * 10000 + 621355968000000000
+    var { exp } = jwtDecode(access_token)
+    var expDate = new Date(exp * 1000)
+    //var jsTicks = new Date().getTime() * 10000 + 621355968000000000
+    var now = new Date()
     // if the token has expired return false
-    console.log('span time', (token.expired - jsTicks) / 10000)
-    if (token.expired < jsTicks) {
-      dispatch(updateToken({}))
+    console.log('span time', expDate, now)
+    if (expDate < now) {
+      dispatch(updateToken())
       isAuth = false
       return false
     }
 
-    dispatch(updateToken(token))
+    dispatch(updateToken(access_token))
     isAuth = true
     return true
   }

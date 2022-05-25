@@ -30,14 +30,13 @@ const _nav = [
   },
   {
     component: CNavItem,
-    name: G.orders,
+    name: G.myorders,
     to: '/orders',
-    icon: <CIcon icon={cilSpreadsheet} customClassName="nav-icon" />,
-    roles: 'admin',
+    icon: <CIcon icon={cilYen} customClassName="nav-icon" />,
   },
   {
     component: CNavItem,
-    name: G.balance,
+    name: G.orders,
     to: '/admin/orderDetails',
     icon: <CIcon icon={cilYen} customClassName="nav-icon" />,
     roles: 'admin',

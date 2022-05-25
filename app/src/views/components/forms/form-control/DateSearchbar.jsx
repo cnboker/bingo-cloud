@@ -3,7 +3,7 @@ import { CInputGroup, CInputGroupText, CFormInput, CButton, CRow, CCol } from '@
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 import moment from 'moment'
-
+import G from '~/locale'
 export default ({ onSearch }) => {
   const [startDate, setStartDate] = useState(moment().subtract(30, 'days').toDate())
   const [endDate, setEndDate] = useState(moment().toDate())
@@ -59,7 +59,7 @@ export default ({ onSearch }) => {
                 })
               }}
             >
-              搜索
+              {G.search}
             </CButton>
           </CInputGroup>
         </CCol>

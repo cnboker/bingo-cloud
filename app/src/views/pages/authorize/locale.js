@@ -5,7 +5,7 @@ const data = {
     authorizeRequest: 'Requesting authentication...',
     authenticationSuccessMessage: 'Authentication success, open PC to view device management',
     deviceAuthentication: 'Device authentication',
-    nodevice: 'No availiable devices',
+    nodevice: 'No available devices',
   },
   zh: {
     authorizeRequest: '正在请求认证信息...',

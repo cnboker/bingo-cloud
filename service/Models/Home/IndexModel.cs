@@ -16,12 +16,17 @@ namespace Ioliz.Service.Models
         public int OfflineCount { get; set; }
         //在线设备总数
         public int OnlineCount { get; set; }
+        public BarItemObject[] DeviceDataByM { get; set; }
+
         public int LicenseCount {get;set;}
         public int AvailiableLicenceCount {get;set;}
+        public BarItemObject[] LicenseDataByM { get; set; }
+
         //磁盘配额
         public int DiskQuota { get; set; }
         //可利用磁盘数
         public int AvailiableDisk { get; set; }
+       
     }
 
     public class PlayStats
@@ -30,7 +35,7 @@ namespace Ioliz.Service.Models
         public string YearTitle {get;set;}
         //当月播放时长
         public BarItemObject[] MonthData { get; set; }
-        public BarItemObject[] LastMonthData { get; set; }
+
         //年播放时长
         public BarItemObject[] YearData { get; set; }
     }
@@ -46,9 +51,7 @@ namespace Ioliz.Service.Models
        
         //今日错误总数
         public int TodayErrorTotal { get; set; }
-        //已修复总数
-        public int FixedCount { get; set; }
-       
+
         public DeviceLog[] DeviceLogs {get;set;}
     }
 
@@ -61,10 +64,9 @@ namespace Ioliz.Service.Models
     public class BarItemObject
     {
         public string Key { get; set; }
-        public int K { get; set; }
+     
         public string Value { get; set; }
-        //第二值
-        public string Value1 { get; set; }
+      
 
     }
 

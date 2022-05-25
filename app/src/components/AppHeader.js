@@ -19,10 +19,12 @@ import { AppBreadcrumb } from './index'
 import { AppHeaderDropdown } from './header/index'
 import logo from 'src/assets/images/logo.png'
 import R from './locale'
+import AccountSwitcher from './AccountSwitcher'
+
 const AppHeader = () => {
   const dispatch = useDispatch()
   const { sidebarShow } = useSelector((state) => state.siderBarReducer)
-
+  const client = useSelector((state) => state.securityReducer)
   return (
     <CHeader position="sticky" className="mb-4">
       <CContainer fluid>
@@ -56,9 +58,14 @@ const AppHeader = () => {
               <CIcon icon={cilDevices} size="lg" title={R.deviceMange} />
             </CNavLink>
           </CNavItem>
+          {client.agentToken && (
+            <CNavItem>
+              <AccountSwitcher />
+            </CNavItem>
+          )}
         </CHeaderNav>
         <CHeaderNav className="ms-3">
-          <AppHeaderDropdown />
+          <AppHeaderDropdown userName={client.userName} />
         </CHeaderNav>
       </CContainer>
       <CHeaderDivider />

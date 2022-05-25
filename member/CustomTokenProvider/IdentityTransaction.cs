@@ -155,7 +155,7 @@ namespace Member.CustomTokenProvider
             var factoryUser = identity.Name;
             var customer = await _userManager.FindByNameAsync(username);
             if (customer == null) return false;
-            return (customer.AgentUser == factoryUser);
+            return (customer.AgentUser == factoryUser || identity.Name == "admin");
         }
 
         private IIdentity GetIdentity(string token)

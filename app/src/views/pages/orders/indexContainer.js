@@ -3,6 +3,8 @@ import { useSelector, useDispatch } from 'react-redux'
 import Index from './index'
 import { free, orderList, cancel } from './actions'
 import * as Dialog from '../../components/dialog/Index'
+import G from '~/locale'
+
 export default () => {
   const orderReducer = useSelector((state) => state.orderReducer)
   const dispatch = useDispatch()
@@ -13,13 +15,13 @@ export default () => {
   }
 
   const onFreeOrder = (id) => {
-    Dialog.confirm('确定要此操作吗', () => {
+    Dialog.confirm(G.confirmInfo, () => {
       dispatch(free(id))
     })
   }
 
   const onDelete = (id) => {
-    Dialog.confirm('确定要此操作吗', () => {
+    Dialog.confirm(G.confirmInfo, () => {
       dispatch(cancel(id))
     })
   }

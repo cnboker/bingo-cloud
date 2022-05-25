@@ -85,3 +85,63 @@ if (!String.prototype.format) {
     })
   }
 }
+
+/**
+ * 补全数组长度的功能 如果某个数组不够指定长度，会在头部补全
+ * @param { Number } length
+ * @param { * } element
+ * @return 补全后的数组
+ * 示例: [].padStart(Number, element = '')
+ */
+if (!Array.prototype.padStart) {
+  Object.defineProperty(Array.prototype, 'padStart', {
+    value: function (length, element) {
+      // length is Number
+      if (!Number(length) && Number(length) != 0) throw new Error(`${length} is not Number`)
+      // init
+      let self = this
+      let len = length - this.length
+      // add elements
+      for (let i = 0; i < len; i++) {
+        if (element instanceof Array) {
+          self.unshift([...element])
+        } else if (element instanceof Object) {
+          self.unshift({ ...element })
+        } else {
+          self.unshift(element || '')
+        }
+      }
+      return self
+    },
+  })
+}
+
+/**
+ * 补全数组长度的功能 如果某个数组不够指定长度，会在尾部补全
+ * @param { Number } length
+ * @param { * } element
+ * @return 补全后的数组
+ * 示例: [].padEnd(Number, element = '')
+ */
+if (!Array.prototype.padEnd) {
+  Object.defineProperty(Array.prototype, 'padEnd', {
+    value: function (length, element) {
+      // length is Number
+      if (!Number(length) && Number(length) != 0) throw new Error(`${length} is not Number`)
+      // init
+      let self = this
+      let len = length - this.length
+      // add elements
+      for (let i = 0; i < len; i++) {
+        if (element instanceof Array) {
+          self.push([...element])
+        } else if (element instanceof Object) {
+          self.push({ ...element })
+        } else {
+          self.push(element || '')
+        }
+      }
+      return self
+    },
+  })
+}

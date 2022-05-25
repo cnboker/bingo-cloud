@@ -4,6 +4,7 @@ import {
   LOGOUT,
   UPDATE_TOKEN,
   ERROR_RESETS,
+  REQUEST_USER_TOKEN,
 } from './accountConstants'
 import { API_RESPONSE_ERROR } from './constants'
 import Cookies from 'js-cookie'
@@ -15,19 +16,44 @@ const initialState = {
   authenticated: false,
 }
 const cookieDomain = `${process.env.REACT_APP_COOKIE_DOMAIN}`
+
+const createSecurityToken = (access_token) => {
+  if (!access_token) return {}
+  var { userName, email, userSetting, isAgent, agentUser } = jwtDecode(access_token)
+  userSetting = userSetting ? JSON.parse(userSetting) : {}
+  const token = {
+    access_token,
+    email,
+    userSetting,
+    isAgent: isAgent === 'true',
+    agentUser,
+    userName,
+    authenticated: true,
+    isAdmin: userName === 'admin',
+  }
+  //agent
+  if (token.isAgent || token.isAdmin) {
+    token.agentToken = access_token
+  }
+
+  var tokenString = JSON.stringify(token)
+  localStorage.setItem('token', access_token)
+  Cookies.set('token', access_token, { expires: 7, path: '', domain: cookieDomain })
+  return token
+}
+
 const securityReducer = (state = initialState, action) => {
   switch (action.type) {
     case ERROR_RESETS:
-      return { ...initialState, error: '' }
+      return { ...state, error: '' }
     case UPDATE_TOKEN:
-      return action.payload
+      return { ...state, ...createSecurityToken(action.payload) }
     case SIGNUP_RESPONSE:
       return {
         signupSuccess: true,
       }
     case LOGIN_RESPONSE:
-      // eslint-disable-next-line @typescript-eslint/no-use-before-define
-      return tokenParse(action.payload)
+      return createSecurityToken(action.payload.access_token)
     case API_RESPONSE_ERROR:
       return {
         error: action.payload,
@@ -35,8 +61,10 @@ const securityReducer = (state = initialState, action) => {
     case LOGOUT:
       // eslint-disable-next-line @typescript-eslint/no-use-before-define
       logout()
-      console.log('logout...')
       return initialState
+    case REQUEST_USER_TOKEN:
+      return { ...state, ...createSecurityToken(action.payload.access_token) }
+
     default:
       return state
   }
@@ -50,27 +78,4 @@ const logout = () => {
   Cookies.remove('token', { path: '', domain: cookieDomain })
 }
 
-const tokenParse = (token) => {
-  var { userName, email, userSetting, isAgent, agentUser } = jwtDecode(token.access_token)
-  userSetting = userSetting ? JSON.parse(userSetting) : {}
-  token = {
-    ...token,
-    email,
-    userSetting,
-    isAgent: isAgent === 'true',
-    agentUser,
-    userName,
-    authenticated: true,
-  }
-  //agent
-  if (token.isAgent) {
-    token.agentToken = token.access_token
-  }
-
-  var tokenString = JSON.stringify(token)
-  localStorage.setItem('token', tokenString)
-
-  Cookies.set('token', tokenString, { expires: 7, path: '', domain: cookieDomain })
-  return token
-}
 export default securityReducer
