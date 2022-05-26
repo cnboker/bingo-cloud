@@ -1,0 +1,1 @@
+export const HOME_DATA_REQUEST = 'HOME_DATA_REQUEST'

@@ -108,6 +108,7 @@ const data = {
     required: 'Required',
     userName: 'Username',
     myorders: 'My orders',
+    month: 'Month',
   },
   zh: {
     confirm: '确认',
@@ -215,6 +216,7 @@ const data = {
     required: '不能为空',
     userName: '用户名',
     myorders: '我的订单',
+    month: '月',
   },
 }
 

@@ -35,7 +35,7 @@ const WidgetsDropdown = ({ data }) => {
           colorClassName={'primary'}
           h1={offlineCount + onlineCount}
           title={R.deviceQty}
-          datasetLabel={R.deviceQty}
+          datasetLabel={R.qty}
           data={deviceDataByM.map((x) => +x.value)}
           color={ChartColor.blue}
         />

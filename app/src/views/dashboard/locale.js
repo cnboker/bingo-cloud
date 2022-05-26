@@ -16,6 +16,8 @@ const data = {
     warning: 'Warning',
     error: 'Error',
     deviceType: 'Device Type',
+    playLabel: 'Duration(Hours)',
+    qty: 'QTY',
   },
   zh: {
     playStats: '播放统计',
@@ -33,6 +35,8 @@ const data = {
     error: '错误',
     deviceType: '设备类型',
     todayErrorTotal: '今日错误数量',
+    playLabel: '播放时长(小时)',
+    qty: '数量',
   },
 }
 

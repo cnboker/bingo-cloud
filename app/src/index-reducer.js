@@ -8,6 +8,7 @@ import { deviceListReducer } from './views/pages/device/reducer'
 import tagReducer from './views/pages/tags/reducer'
 import siderBarReducer from './store'
 import { authorizeReducer } from './views/pages/authorize/reducer'
+import homeReducer from './views/dashboard/reducer'
 const appReducer = combineReducers({
   securityReducer,
   userReducer,
@@ -18,6 +19,7 @@ const appReducer = combineReducers({
   tagReducer,
   siderBarReducer,
   authorizeReducer,
+  homeReducer,
 })
 
 const IndexReducer = (state, action) => {

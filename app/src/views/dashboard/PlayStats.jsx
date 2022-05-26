@@ -46,7 +46,7 @@ export default ({ data }) => {
             labels: showState === 'Day' ? monthLabels : yearLabels,
             datasets: [
               {
-                label: 'dataset',
+                label: R.playLabel,
                 backgroundColor: hexToRgba(getStyle('--cui-info'), 10),
                 borderColor: getStyle('--cui-info'),
                 pointHoverBackgroundColor: getStyle('--cui-info'),

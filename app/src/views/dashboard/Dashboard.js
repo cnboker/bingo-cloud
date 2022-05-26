@@ -1,25 +1,23 @@
 import React, { lazy, useEffect, useState } from 'react'
 import DeviceLogs from './DeviceLogs'
 import PlayStats from './PlayStats'
-import { asyncGet } from '~/lib/api'
+import { homeRequest } from './action'
+import { useDispatch, useSelector } from 'react-redux'
 const WidgetsDropdown = lazy(() => import('../components/widgets/WidgetsDropdown.js'))
 
 const Dashboard = () => {
-  const homeUrl = `${process.env.REACT_APP_SERVICE_URL}/api/home/index`
-  const [data, setData] = useState(null)
+  const { basicInfo, playStats, deviceLogsStats } = useSelector((state) => state.homeReducer)
+  const dispatch = useDispatch()
+
   useEffect(() => {
-    asyncGet({
-      url: homeUrl,
-    }).then((res) => {
-      setData(res.data)
-    })
+    dispatch(homeRequest())
   }, [])
-  if (!data) return null
+
   return (
     <>
-      <WidgetsDropdown data={data.basicInfo} />
-      <PlayStats data={data.playStats} />
-      <DeviceLogs data={data.deviceLogsStats} />
+      <WidgetsDropdown data={basicInfo} />
+      <PlayStats data={playStats} />
+      <DeviceLogs data={deviceLogsStats} />
     </>
   )
 }
