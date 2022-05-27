@@ -4,7 +4,7 @@ import { userReducer } from './views/pages/admin/users/reducer'
 import { orderDetailReducer } from './views/pages/admin/orderDetails/reducer'
 import { orderReducer } from './views/pages/orders/reducer'
 import { orderContextReducer } from './views/pages/orders/orderActions/reducer'
-import { deviceListReducer } from './views/pages/device/reducer'
+import { deviceListReducer, deviceLogReducer } from './views/pages/device/reducer'
 import tagReducer from './views/pages/tags/reducer'
 import siderBarReducer from './store'
 import { authorizeReducer } from './views/pages/authorize/reducer'
@@ -20,6 +20,7 @@ const appReducer = combineReducers({
   siderBarReducer,
   authorizeReducer,
   homeReducer,
+  deviceLogReducer,
 })
 
 const IndexReducer = (state, action) => {

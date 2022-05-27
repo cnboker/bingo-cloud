@@ -93,7 +93,6 @@ const data = {
     createOrder: 'Create Order',
     checkout: 'Checkout',
     fileManage: 'File Manage',
-    deviceMange: 'Device Manage',
     logout: 'Logout',
     settings: 'Settings',
     last: 'Last',
@@ -109,6 +108,8 @@ const data = {
     userName: 'Username',
     myorders: 'My orders',
     month: 'Month',
+    deviceAddGroupTips: 'In the input box to enter name and press enter.',
+    deviceDetail: 'Device Detail',
   },
   zh: {
     confirm: '确认',
@@ -217,6 +218,8 @@ const data = {
     userName: '用户名',
     myorders: '我的订单',
     month: '月',
+    deviceAddGroupTips: '在输入框输入组名称,按回车',
+    deviceDetail: '设备详情',
   },
 }
 

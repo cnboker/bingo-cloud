@@ -1,42 +1,39 @@
-import React from "react";
-import resources from "../../locale";
-import { connect } from "react-redux";
+import React from 'react'
+import resources from '../../locale'
+import { connect } from 'react-redux'
 import GR from '~/locale'
 class DownLoadProgress extends React.Component {
   constructor() {
-    super();
+    super()
     this.state = {
-      deviceDownloadProgressInfo: {}
-    };
+      deviceDownloadProgressInfo: {},
+    }
   }
 
   componentDidUpdate(nextProps, nextState) {
     if (nextProps.downloadProgress !== this.props.downloadProgress) {
-      const { deviceInfo } = this.props;
-      var deviceDownloadProgressInfo =
-        nextProps.downloadProgress[deviceInfo.deviceId];
+      const { deviceInfo } = this.props
+      var deviceDownloadProgressInfo = nextProps.downloadProgress[deviceInfo.deviceId]
       console.log(
-        "MqttMonitor-componentDidUpdate",
+        'MqttMonitor-componentDidUpdate',
         nextProps.downloadProgress,
-        deviceDownloadProgressInfo
-      );
+        deviceDownloadProgressInfo,
+      )
       if (deviceDownloadProgressInfo) {
         this.setState({
-          deviceDownloadProgressInfo
-        });
+          deviceDownloadProgressInfo,
+        })
       }
     }
   }
 
   downloadProgressDataFormat() {
-    const downloadProgressData = this.state.deviceDownloadProgressInfo;
+    const downloadProgressData = this.state.deviceDownloadProgressInfo
 
     if (!downloadProgressData.fileName) {
       return (
         <div className="row">
-          <label className="col-sm-4 col-form-label">
-            {resources.downloadProgress}
-          </label>
+          <label className="col-sm-4 col-form-label">{resources.downloadProgress}</label>
           <div className="col-sm-8">
             <input
               type="text"
@@ -46,13 +43,11 @@ class DownLoadProgress extends React.Component {
             ></input>
           </div>
         </div>
-      );
+      )
     } else {
       return (
         <div className="row">
-          <label className="col-sm-4 col-form-label">
-            {resources.downloadProgress}
-          </label>
+          <label className="col-sm-4 col-form-label">{resources.downloadProgress}</label>
           <div className="col-sm-8">
             <input
               type="text"
@@ -69,18 +64,16 @@ class DownLoadProgress extends React.Component {
             </small>
           </div>
         </div>
-      );
+      )
     }
   }
 
   render() {
-    const { deviceInfo } = this.props;
+    const { deviceInfo } = this.props
     return (
       <div>
         <div className="row">
-          <label className="col-sm-4 col-form-label">
-            {resources.device_name}
-          </label>
+          <label className="col-sm-4 col-form-label">{resources.device_name}</label>
           <div className="col-sm-8">
             <input
               type="text"
@@ -91,7 +84,7 @@ class DownLoadProgress extends React.Component {
           </div>
         </div>
         <div className="row">
-          <label className="col-sm-4 col-form-label">{"MAC"}</label>
+          <label className="col-sm-4 col-form-label">{'MAC'}</label>
           <div className="col-sm-8">
             <input
               type="text"
@@ -102,9 +95,7 @@ class DownLoadProgress extends React.Component {
           </div>
         </div>
         <div className="row">
-          <label className="col-sm-4 col-form-label">
-            {resources.device_status}
-          </label>
+          <label className="col-sm-4 col-form-label">{resources.device_status}</label>
           <div className="col-sm-8">
             <input
               type="text"
@@ -116,14 +107,14 @@ class DownLoadProgress extends React.Component {
         </div>
         {this.downloadProgressDataFormat()}
       </div>
-    );
+    )
   }
 }
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    downloadProgress: state.downloadProgressReducer
-  };
-};
+    downloadProgress: state.downloadProgressReducer,
+  }
+}
 
-export default connect(mapStateToProps)(DownLoadProgress);
+export default connect(mapStateToProps)(DownLoadProgress)

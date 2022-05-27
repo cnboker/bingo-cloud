@@ -4,7 +4,7 @@ import * as Dialog from '~/views/components/dialog/Index'
 import InputDialog from '~/views/components/dialog/InputDialog'
 import { TagCatelog } from '~/views/pages/tags/contants'
 import TableRow from './tableRow'
-import resources from '../locale'
+import R from '../locale'
 import { GroupSelector } from './groupSelector'
 import { renewLicense, deviceGroupUpdate, deviceUpdateName } from '../actions'
 
@@ -15,7 +15,7 @@ export default ({ tableData }) => {
     var selectGroup = ''
     Dialog.show(
       {
-        title: resources.groupSetting,
+        title: R.groupSelect,
         body: (
           <GroupSelector
             groupName={oldName}
@@ -33,8 +33,8 @@ export default ({ tableData }) => {
   const updateLicense = (id) => {
     Dialog.show(
       {
-        title: resources.info,
-        body: resources.confirmInfo,
+        title: R.info,
+        body: R.confirmInfo,
       },
       () => {
         dispatch(renewLicense(id))
@@ -48,10 +48,10 @@ export default ({ tableData }) => {
 
     Dialog.show(
       {
-        title: resources.info,
+        title: R.info,
         body: (
           <InputDialog
-            label={resources.device_name}
+            label={R.device_name}
             value={oldName}
             inputchange={(val) => {
               newName = val
@@ -82,13 +82,11 @@ export default ({ tableData }) => {
     <table className="table table-bordered table-striped table-sm">
       <thead>
         <tr>
-          <th>{resources.group}</th>
-          <th>{resources.device_name}</th>
+          <th>{R.group}</th>
+          <th>{R.device_name}</th>
           <th>MAC</th>
-          <th>IP</th>
-          <th>{resources.device_status}</th>
-          <th>{resources.license_info}</th>
-          <th>{resources.remark}</th>
+          <th>{R.device_status}</th>
+          <th>{R.license_info}</th>
           <th></th>
         </tr>
       </thead>

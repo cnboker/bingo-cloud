@@ -2,7 +2,8 @@ import { Tags } from '../../components/tagify/Tagify.react.js'
 import React, { useEffect, useRef } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { fetchTags, tagUpdate } from './actions'
-
+import G from '~/locale'
+import { CAlert } from '@coreui/react'
 // setup some basic Tagify settings object
 var tagifySettings = {
   blacklist: [],
@@ -50,6 +51,7 @@ export default ({ catelog }) => {
 
   return (
     <React.Fragment>
+      <CAlert color="secondary">{G.deviceAddGroupTips}</CAlert>
       <Tags
         // eslint-disable-next-line react/no-string-refs
         ref={tager}
@@ -71,7 +73,7 @@ export default ({ catelog }) => {
             )
           }
         >
-          保存
+          {G.save}
         </button>
       </div>
     </React.Fragment>

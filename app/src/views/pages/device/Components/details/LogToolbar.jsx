@@ -1,39 +1,39 @@
-import Select from "react-select";
-import GR from "~/locale";
-import DatePicker from "react-datepicker";
-import React, { useState } from "react";
-import moment from "moment";
+import Select from 'react-select'
+import GR from '~/locale'
+import DatePicker from 'react-datepicker'
+import React, { useState } from 'react'
+import moment from 'moment'
 
 export default (props) => {
-  const logTypeList = ["message", "warning", "fatal"];
+  const logTypeList = ['message', 'warning', 'fatal']
 
-  const { onSearch, deviceOptions } = props;
+  const { onSearch, deviceOptions } = props
   const [logType, setLogType] = useState({
-    label: "message",
+    label: 'message',
     value: 1,
-  });
-  const [deviceId, setDeviceId] = useState({ label: "", value: "" });
-  const [startDate, setStartDate] = useState(moment().subtract(30, "days"));
-  const [endDate, setEndDate] = useState(moment());
-  
+  })
+  const [deviceId, setDeviceId] = useState({ label: '', value: '' })
+  const [startDate, setStartDate] = useState(moment().subtract(30, 'days').toDate())
+  const [endDate, setEndDate] = useState(moment().toDate())
+
   return (
     <React.Fragment>
       <div className="row">
         <div className="col ddl">
           <Select
             onChange={(o) => {
-              setLogType(o);
+              setLogType(o)
             }}
             isClearable={true}
             options={logTypeList.map((x, index) => {
-              return { label: GR[x], value: index + 1 };
+              return { label: GR[x], value: index }
             })}
           />
         </div>
-        <div className="col ddl">
+        <div className="col">
           <Select
             onChange={(o) => {
-              setDeviceId(o);
+              setDeviceId(o)
             }}
             isClearable={true}
             options={deviceOptions}
@@ -45,17 +45,16 @@ export default (props) => {
             className="form-control"
             selected={startDate}
             onChange={(date) => {
-              setStartDate(date);
+              setStartDate(date)
             }}
           />
         </div>
         <div className="col">
-        
           <DatePicker
             className="form-control"
             selected={endDate}
             onChange={(date) => {
-              setEndDate(date);
+              setEndDate(date)
             }}
           />
         </div>
@@ -64,11 +63,11 @@ export default (props) => {
             onClick={() => {
               if (onSearch) {
                 onSearch({
-                  logType: logType?logType.value:'',
-                  key: deviceId?deviceId.value:'',
-                  startDate:startDate.format('YYYY-MM-DD'),
-                  endDate:endDate.format('YYYY-MM-DD'),
-                });
+                  logType: logType ? logType.value : '',
+                  key: deviceId ? deviceId.value : '',
+                  startDate: moment(startDate).format('YYYY-MM-DD'),
+                  endDate: moment(endDate).format('YYYY-MM-DD'),
+                })
               }
             }}
             className="btn btn-info"
@@ -78,5 +77,5 @@ export default (props) => {
         </div>
       </div>
     </React.Fragment>
-  );
-};
+  )
+}

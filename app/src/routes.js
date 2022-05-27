@@ -15,6 +15,7 @@ const FileManager = React.lazy(() =>
 )
 const DeviceManager = React.lazy(() => import('./views/pages/device/Components/index'))
 const Start = React.lazy(() => import('./views/start'))
+const DeviceDetail = React.lazy(() => import('./views/pages/device/Components/details/Index'))
 const routes = [
   { path: '/', exact: true, name: G.home },
   { path: '/admin', exact: true, name: G.administrator, component: Users },
@@ -29,6 +30,8 @@ const routes = [
   { path: '/orders/checkout', name: G.checkout, component: Checkout },
   { path: '/fileManager', exact: true, name: G.fileMange, component: FileManager },
   { path: '/device', exact: true, name: G.deviceManage, component: DeviceManager },
+  { path: '/device/detail', exact: true, name: G.deviceManage, component: DeviceManager },
+  { path: '/device/detail/:id', name: G.deviceManage, component: DeviceDetail },
   { path: '/start', exact: true, name: 'start', component: Start },
 ]
 

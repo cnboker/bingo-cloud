@@ -60,7 +60,7 @@ export const deviceListReducer = (state = initialState, action) => {
   }
 }
 
-export const deviceLogReducer = (state = { pageCount: 1, data: [] }, action) => {
+export const deviceLogReducer = (state = { pageCount: 1, records: [] }, action) => {
   switch (action.type) {
     case RECEIVE_DEVICE_LOGS:
       return action.payload

@@ -5,13 +5,15 @@ const data = {
     quickStart: 'Quick start',
     dashboard: 'Dashboard',
     fileManage: 'File Manage',
-    deviceMange: 'Device Manage',
+    deviceManage: 'Device Manage',
+    cart: 'Cart',
   },
   zh: {
     quickStart: '快速入门',
     dashboard: '仪表盘',
     fileManage: '素材管理',
-    deviceMange: '设备管理',
+    deviceManage: '设备管理',
+    cart: '购物车',
   },
 }
 

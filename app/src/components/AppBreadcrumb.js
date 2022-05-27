@@ -1,16 +1,15 @@
 import React from 'react'
 import { useLocation } from 'react-router-dom'
-
 import routes from '../routes'
 import G from '~/locale'
 import { CBreadcrumb, CBreadcrumbItem } from '@coreui/react'
 
 const AppBreadcrumb = () => {
   const currentLocation = useLocation().pathname
-
   const getRouteName = (pathname, routes) => {
     const currentRoute = routes.find((route) => route.path === pathname)
-    console.log('currentRoute', pathname, currentRoute)
+    //console.log('currentRoute', pathname, currentRoute, id)
+    if (!currentRoute) return null
     return currentRoute.name
   }
 
@@ -18,11 +17,14 @@ const AppBreadcrumb = () => {
     const breadcrumbs = []
     location.split('/').reduce((prev, curr, index, array) => {
       const currentPathname = `${prev}/${curr}`
-      breadcrumbs.push({
-        pathname: '#' + currentPathname,
-        name: getRouteName(currentPathname, routes),
-        active: index + 1 === array.length ? true : false,
-      })
+      const name = getRouteName(currentPathname, routes)
+      if (!name) {
+        breadcrumbs.push({
+          pathname: '#' + currentPathname,
+          name,
+          active: index + 1 === array.length ? true : false,
+        })
+      }
       return currentPathname
     })
     return breadcrumbs

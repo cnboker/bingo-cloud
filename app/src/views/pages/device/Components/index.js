@@ -9,7 +9,7 @@ import { requestDeviceList } from '../actions'
 import { TagCatelog } from '../../tags/contants'
 import { fetchTags } from '../../tags/actions'
 import PageContainer from 'src/views/components/pageContainer'
-
+import { CContainer } from '@coreui/react'
 export default () => {
   const dispatch = useDispatch()
   const deviceList = useSelector((state) => state.deviceListReducer)
@@ -90,7 +90,7 @@ export default () => {
   return (
     <PageContainer>
       <nav className="navbar navbar-light bg-light mb-1">
-        <div className="container-fluid">
+        <CContainer fluid>
           <div className="col">
             <DeviceGroup groupSelect={groupSelect} />
           </div>
@@ -98,7 +98,7 @@ export default () => {
             <Search onSearch={keywordFilter} />
             <RowFliter statusChange={statusChange} defaultValue={filter.networkStatus} />
           </div>
-        </div>
+        </CContainer>
       </nav>
       <div className="table-responsive">
         <Table tableData={tableData.data} />

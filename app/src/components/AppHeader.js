@@ -13,8 +13,7 @@ import {
   CImage,
 } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
-import { cilLibrary, cilDevices, cilMenu } from '@coreui/icons'
-
+import { cilLibrary, cilDevices, cilMenu, cilCart } from '@coreui/icons'
 import { AppBreadcrumb } from './index'
 import { AppHeaderDropdown } from './header/index'
 import logo from 'src/assets/images/logo.png'
@@ -48,6 +47,11 @@ const AppHeader = () => {
           </CNavItem>
         </CHeaderNav>
         <CHeaderNav>
+          <CNavItem>
+            <CNavLink href="#/orders/create">
+              <CIcon icon={cilCart} size="lg" title={R.cart} />
+            </CNavLink>
+          </CNavItem>
           <CNavItem>
             <CNavLink href="/#fileManager">
               <CIcon icon={cilLibrary} size="lg" title={R.fileManage} />

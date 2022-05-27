@@ -221,6 +221,7 @@ namespace Ioliz.Service.Models
        
         public DateTime? UpdateDate { get; set; }
         public String LatLng { get; set; }
+        public int CurrentLicenseId {get;set;}
     }
 
     //用户数据字典

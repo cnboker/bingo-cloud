@@ -129,6 +129,7 @@ namespace Ioliz.Service.Controllers
 
       device.AuthorizeDate = DateTime.Now;
       device.AuthorizeStatus = AuthorizeStatus.Allow;
+      device.CurrentLicenseId = license.Id;
       ctx.SaveChanges();
       return Ok(CreateDeviceModel(license));
     }

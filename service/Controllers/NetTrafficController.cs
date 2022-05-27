@@ -37,7 +37,7 @@ public class NetTrafficController : BaseController
     }
 
     [HttpPost]
-    public ResultSet<T> StatByTenant<T>([FromBody] TrafficQuery query) where T:ITSQLPaginationResult
+    public ResultSet<T> StatByTenant<T>([FromBody] UserNameQuery query) where T:ITSQLPaginationResult
     {
         string sqlText = @"
         select *, RowNum = count(*) over() from 
@@ -116,7 +116,7 @@ public class NetTrafficController : BaseController
     }
 
     [HttpPost]
-    public ResultSet<T> Query<T>([FromBody]TrafficQuery query) where T :ITSQLPaginationResult
+    public ResultSet<T> Query<T>([FromBody]UserNameQuery query) where T :ITSQLPaginationResult
     {
         string sqlText = @"
         select *,RowNum = COUNT(*) OVER() from 
