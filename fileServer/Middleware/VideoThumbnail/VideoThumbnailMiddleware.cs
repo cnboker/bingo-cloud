@@ -98,7 +98,7 @@ namespace ImageThumbnail.AspNetCore.Middleware
             {
                 var inputFile = new InputFile(request.SourceImagePath);
                 var outputFile = new OutputFile(request.ThumbnailImagePath);
-                var ffmpeg = new Engine("C:/ffmpeg/bin/ffmpeg.exe");
+                var ffmpeg = new Engine("ffmpeg.exe");
                 // Saves the frame located on the 15th second of the video.
                 var size = request.ThumbnailSize;
                 var options = new ConversionOptions
