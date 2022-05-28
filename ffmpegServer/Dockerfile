@@ -1,8 +1,9 @@
 FROM node:16
-VOLUME [ "/root" ]
-ADD setup-ffmpeg.sh /root
-RUN ["chmod", "+x", "/root/setup-ffmpeg.sh"]
-RUN /root/setup-ffmpeg.sh
+# VOLUME [ "/root" ]
+RUN apt update -y && apt install -y ffmpeg 
+# ADD setup-ffmpeg.sh /root
+# RUN ["chmod", "+x", "/root/setup-ffmpeg.sh"]
+# RUN /root/setup-ffmpeg.sh
 # create app dir
 WORKDIR /usr/app
 
