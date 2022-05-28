@@ -8,7 +8,9 @@ services:
             - "80:80"
         volumes:
         #[host:docker container]
+            # 首页文档映射
             - /home/ioliz/_www:/www
+            # app应用映射
             - /home/ubuntu/dist/app:/www/app
         networks:
             - "myNetwork"
@@ -17,24 +19,44 @@ services:
         depends_on:
             - reverseproxy
         restart: always
+        ports:
+            - "8888:8888"
         image: jsxbuildserver_server:latest
+        networks:
+            - "myNetwork"
     ffmpegapi:
         restart: always
+        ports:
+            - "9000:9000"
         depends_on:
             - reverseproxy
         image: ffmpegserver_server:latest
+        networks:
+            - "myNetwork"
     authapi:
         depends_on:
             - reverseproxy
+        ports:
+            - "7800:7800"    
         image: member_server:latest
+        networks:
+            - "myNetwork"
     serviceapi:
+        ports:
+            - "6001:6001"
         depends_on:
             - reverseproxy
         image: service_server:latest
+        networks:
+            - "myNetwork"
     fileapi:
         depends_on:
             - reverseproxy
+        ports:
+            - "5000:5000"    
         image: fileserver_server:latest
+        networks:
+            - "myNetwork"
 networks:
     myNetwork:
         external: true
