@@ -7,7 +7,7 @@ services:
             #[host:container]
             - "80:80"
         volumes:
-        #[host:docker container]
+            #[host:docker container]
             # 首页文档映射
             - /home/ioliz/_www:/www
             # app应用映射
@@ -37,7 +37,7 @@ services:
         depends_on:
             - reverseproxy
         ports:
-            - "7800:7800"    
+            - "7800:7800"
         image: member_server:latest
         networks:
             - "myNetwork"
@@ -53,7 +53,7 @@ services:
         depends_on:
             - reverseproxy
         ports:
-            - "5000:5000"    
+            - "5000:5000"
         image: fileserver_server:latest
         networks:
             - "myNetwork"
