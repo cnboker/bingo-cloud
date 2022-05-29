@@ -1,6 +1,7 @@
 import React from 'react'
 import { DialogTitle, Dialog, DialogActions, DialogContent, Button } from '@material-ui/core'
 import { Box } from '@material-ui/core'
+import R from './locale'
 
 type SelectFileInfo = {
   selectFileCount: number
@@ -30,13 +31,13 @@ export const SelectFileList: React.FC<SelectFileInfo> = ({
       }}
     >
       <Button variant="contained" onClick={handleClickOpen}>
-        待发布项{selectFileCount}
+        {R.pendingItems}({selectFileCount})
       </Button>
       <Dialog open={open} onClose={handleClose} maxWidth="lg" fullWidth={true} disableEnforceFocus>
-        <DialogTitle>待发布素材列表</DialogTitle>
+        <DialogTitle>{R.pendingList}</DialogTitle>
         <DialogContent>{children}</DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>取消</Button>
+          <Button onClick={handleClose}>{R.cancel}</Button>
           <Button
             onClick={() => {
               onSubmit().then((result) => {
@@ -46,7 +47,7 @@ export const SelectFileList: React.FC<SelectFileInfo> = ({
               })
             }}
           >
-            发布
+            {R.pub}
           </Button>
         </DialogActions>
       </Dialog>

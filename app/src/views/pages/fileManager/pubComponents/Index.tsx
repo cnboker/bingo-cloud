@@ -5,7 +5,7 @@ import React, { useRef, useImperativeHandle, Dispatch, SetStateAction } from 're
 import { CheckBoxList, ListItemData } from './CheckBoxList'
 import ImageList from './ImageList'
 import { Settings } from './Settings'
-
+import R from '../locale'
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
     backgroundColor: theme.palette.background.paper,
@@ -32,9 +32,9 @@ const Header = (props: HeaderProps) => {
         onChange={handleChange}
         aria-label="pub information"
       >
-        <Tab label="选中项目" />
-        <Tab label="参数设置" />
-        <Tab label="设备列表" />
+        <Tab label={R.selectedItems} />
+        <Tab label={R.parameterSetting} />
+        <Tab label={R.deviceList} />
       </Tabs>
     </Paper>
   )

@@ -9,6 +9,7 @@ RUN dotnet build -c Release -o output
 # 使用aspnet执行程序，这样可以减少容器文件的大小,未优化前1G，采用aspnet后200M
 FROM mcr.microsoft.com/dotnet/core/aspnet:3.1 AS runtime
 COPY --from=build /service/output ./release
+RUN mkdir -p ./release/wwwroot
 WORKDIR /release
 #EXPOSE 80/tcp
 # RUN chmod +x ./entrypoint.sh

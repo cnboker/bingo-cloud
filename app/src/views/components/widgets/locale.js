@@ -7,6 +7,7 @@ const data = {
     deviceLicense: 'Available License',
     diskStats: 'Disk Stats',
     available: 'Available',
+    fileBrowser: 'File browser',
   },
   zh: {
     deviceQty: '设备数量',
@@ -14,6 +15,7 @@ const data = {
     deviceLicense: '可利用许可',
     diskStats: '磁盘统计',
     available: '可用',
+    fileBrowser: '文件浏览',
   },
 }
 

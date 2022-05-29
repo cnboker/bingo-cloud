@@ -9,13 +9,11 @@ services:
       #指定Dockerfile文件位置
       dockerfile: ./fileServer/Dockerfile
     ports:
-    #HOST:CONTAINER
+      #HOST:CONTAINER
       - "5000:5000"
     networks:
       - "myNetwork"
-    
     volumes:
-    #host:container
       - /home/data/files:/release/wwwroot
 
 networks:

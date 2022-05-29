@@ -2,7 +2,7 @@ import React, { useState, forwardRef, useImperativeHandle, useRef, memo } from '
 import { FormControl, InputLabel, Select, TextField } from '@material-ui/core'
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles'
 import { MenuItem } from '@material-ui/core'
-
+import R from '../locale'
 const effects = [
   {
     label: 'random',
@@ -83,7 +83,7 @@ export const Settings = memo(
         <FormControl className={classes.formControl}>
           <TextField
             inputRef={durationRef}
-            label="单图片播放时长(秒)"
+            label={R.duration}
             type="number"
             value={duration}
             onChange={durationChange}
@@ -91,7 +91,7 @@ export const Settings = memo(
           ></TextField>
         </FormControl>
         <FormControl className={classes.formControl}>
-          <InputLabel>播放效果</InputLabel>
+          <InputLabel>{R.playEffect}</InputLabel>
           <Select id="effect" value={effect} onChange={handleChange}>
             {effects.map((option) => (
               <MenuItem key={option.value} value={option.value}>
