@@ -16,10 +16,6 @@ const schema = {
       type: 'string',
       title: resources.cmsMobile,
     },
-    mobile2: {
-      type: 'string',
-      title: resources.emsMobile,
-    },
   },
 }
 

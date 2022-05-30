@@ -3,13 +3,14 @@ import Form from 'react-jsonschema-form'
 import resources from '../locale'
 import { resetPassword } from '../action'
 import { useDispatch } from 'react-redux'
-
+import queryString from 'query-string'
+import Center from './CenterContainer'
 const schema = {
   title: resources.resetPassword,
   type: 'object',
-  required: ['newPassword', 'repeatPassword'],
+  required: ['password', 'repeatPassword'],
   properties: {
-    newPassword: {
+    password: {
       type: 'string',
       title: resources.newPassword,
       minLength: 6,
@@ -23,7 +24,7 @@ const schema = {
 }
 
 const uiSchema = {
-  newPassword: {
+  password: {
     'ui:widget': 'password',
   },
   repeatPassword: {
@@ -34,13 +35,12 @@ const uiSchema = {
 const log = (type) => console.log.bind(console, type)
 
 export default (props) => {
-  const queryString = require('query-string')
   const { token, email } = queryString.parse(props.location.search)
 
   const dispatch = useDispatch()
 
   const validate = (formData, errors) => {
-    if (formData.newPassword !== formData.repeatPassword) {
+    if (formData.password !== formData.repeatPassword) {
       errors.repeatPassword.addError(resources.passwordNotMatch)
     }
     return errors
@@ -52,7 +52,7 @@ export default (props) => {
   }
 
   return (
-    <div className="container">
+    <Center>
       <Form
         schema={schema}
         uiSchema={uiSchema}
@@ -63,6 +63,6 @@ export default (props) => {
         formData={{}}
         validate={validate}
       />
-    </div>
+    </Center>
   )
 }

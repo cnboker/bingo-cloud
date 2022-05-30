@@ -1,34 +1,26 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-    <title>Ioliz</title>
+    <title>payment</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-    <meta name="description" content="Ioliz">
+    <link rel="stylesheet" href="/jquery-weui/lib/weui.min.css">
+    <link rel="stylesheet" href="/jquery-weui/css/jquery-weui.min.css">
 
-
-    <link rel="stylesheet" href="/css/weui.min.css">
- <link rel="stylesheet" href="/css/jquery-weui.css">
-    <link rel="stylesheet" href="/css/common.css">
-  <script src="/jquery-weui/dist/lib/jquery-2.1.4.js"></script>
 </head>
 
 <body ontouchstart style="background:#f5f6f6;">
-  
+
     <div class="bd">
         @RenderBody()
     </div>
-  
-    <script src="/jquery-weui/dist/js/jquery-weui.js"></script>
 
-    <script src="~/js/fastclick.js"></script>
-    <script>
-        $(function () {
-            FastClick.attach(document.body);
-        });
-    </script>
+    <script src="/jquery-weui/lib/jquery-2.1.4.js"></script>
+    <script src="/jquery-weui/js/jquery-weui.min.js"></script>
 
     @RenderSection("scripts", required: false)
 </body>
+
 </html>

@@ -106,12 +106,12 @@ namespace Member.Controllers
             }
             var token = await userManager.GeneratePasswordResetTokenAsync(user);
 
-            var resetLink = string.Format("{0}/account/resetpassword?token={1}&email={2}", Request.Headers["Origin"], HttpUtility.UrlEncode(token), model.Email);
+            var resetLink = string.Format("{0}/#passwordreset?token={1}&email={2}", Request.Headers["Origin"], HttpUtility.UrlEncode(token), model.Email);
             //send email
             MailRepository mailRep = new MailRepository(this.configuration);
             //mailRep.Send(user.Email, "Reset password", string.Format("Click the link below to reset your password <br/><a href=\"{0}\">Reset password</a>", resetLink));
             mailRep.Send(user.Email, "Reset password", MailTemplate.ResetPassword.ToString(), resetLink);
-            return Ok("Mail for reset password has been sent to you mailbox,please click the mail link to reset your password.");
+            return Ok("Mail for reset password has been sent to your mailbox,please click the mail link to reset your password.");
         }
 
         [HttpPost]

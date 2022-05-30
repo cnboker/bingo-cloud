@@ -3,20 +3,21 @@ import { CRow, CFormLabel, CCol, CCard, CCardBody } from '@coreui/react'
 import { useSelector } from 'react-redux'
 import QRCode from 'qrcode.react'
 import TextRow from 'src/views/components/forms/TextRow'
+import G from 'src/locale'
 export default () => {
   const { order } = useSelector((state) => state.orderContextReducer)
   return (
     <CCard>
       <CCardBody>
-        <TextRow label="订单编号" text={order.orderNo} />
-        <TextRow label="付款方式" text={'微信支付'} />
-        <TextRow label="优惠券" text={order.benifitCode ? order.benifitCode : '无'} />
-        <TextRow label="费用合计" text={order.subTotal} />
-        <TextRow label="实付金额" text={order.amount} />
-        <TextRow label="设备数量" text={order.licenseCount} />
-        <TextRow label="可用天数" text={order.validDays} />
+        <TextRow label={G.orderNo} text={order.orderNo} />
+        <TextRow label={G.payMethod} text={G.weixinPay} />
+        <TextRow label={G.promotion_code} text={order.benifitCode ? order.benifitCode : G.none} />
+        <TextRow label={G.subtotal} text={order.subTotal.toFixed(2)} />
+        <TextRow label={G.amount} text={order.amount.toFixed(2)} />
+        <TextRow label={G.device_count} text={order.licenseCount} />
+        <TextRow label={G.availableDays} text={order.validDays} />
         <CRow className="mb-3">
-          <CFormLabel className="col-sm-2 col-form-label">扫描二维码付款</CFormLabel>
+          <CFormLabel className="col-sm-2 col-form-label">{G.qrPay}</CFormLabel>
           <CCol sm={10}>
             <QRCode
               value={`http://www.ioliz.com/tenpayV3/?orderno=${order.orderNo}`}

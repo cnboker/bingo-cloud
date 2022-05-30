@@ -47,7 +47,7 @@ namespace Ioliz.Service.Controllers
             get
             {
                 Console.WriteLine("AppInstance.Instance.Config.MemberConnectionString," + AppInstance.Instance.Config.MemberConnectionString);
-                return new SqlConnection(AppInstance.Instance.Config.MemberConnectionString);
+                return new MySql.Data.MySqlClient.MySqlConnection(AppInstance.Instance.Config.MemberConnectionString);
             }
         }
 
@@ -56,7 +56,7 @@ namespace Ioliz.Service.Controllers
             get
             {
                 //Console.WriteLine ("AppInstance.Instance.Config.MemberConnectionString," + AppInstance.Instance.Config.MemberConnectionString);
-                return new SqlConnection(AppInstance.Instance.Config.MQTTConnectionString);
+                return new MySql.Data.MySqlClient.MySqlConnection(AppInstance.Instance.Config.MQTTConnectionString);
             }
         }
 
@@ -64,7 +64,7 @@ namespace Ioliz.Service.Controllers
         {
             get
             {
-                return new SqlConnection(AppInstance.Instance.Config.ServiceConnectionString);
+                return new MySql.Data.MySqlClient.MySqlConnection(AppInstance.Instance.Config.ServiceConnectionString);
             }
         }
 

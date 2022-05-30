@@ -1,0 +1,13 @@
+version: "3.3"
+services:
+  mailserver:
+    restart: always
+    build: .
+    ports:
+      - "8025:8025"
+    networks:
+      - "myNetwork"
+
+networks:
+  myNetwork:
+    external: true

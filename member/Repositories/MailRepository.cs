@@ -22,8 +22,8 @@ namespace Member.Repositories
             using (IDbConnection db = MemberConnection)
             {
                 string sqlText = @"insert into MailMessage
-          (EmailAddress,title, Status,tryCount,TemplateId,Parameter1,Parameter2,Parameter3,Parameter4)
-          values (@EmailAddress,@title,0,0,@TemplateId,@Parameter1,@Parameter2,@Parameter3,@Parameter4)
+          (EmailAddress,title, Status,TemplateId,Parameter1,Parameter2,Parameter3,Parameter4)
+          values (@EmailAddress,@title,0,@TemplateId,@Parameter1,@Parameter2,@Parameter3,@Parameter4)
           ";
                 db.Execute(sqlText, new
                 {

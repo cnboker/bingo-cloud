@@ -25,7 +25,7 @@ export const orderContextReducer = (state = initialState, action) => {
       return { ...state, ...action.payload, orderSessionRequestSuccess: true }
     case ORDER_TRIAL_CREATE_RESPONSE:
     case ORDER_CREATE_RESPONSE:
-      newState.instance = action.payload
+      newState.order = action.payload
       return newState
     case ORDER_CHECKOUT_RESPONSE:
       return action.payload

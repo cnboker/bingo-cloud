@@ -110,8 +110,15 @@ const data = {
     month: 'Month',
     deviceAddGroupTips: 'In the input box to enter name and press enter.',
     deviceDetail: 'Device Detail',
+    payMethod: 'Pay Method',
+    weixinPay: 'weixin pay',
+    availableDays: 'Available days',
+    qrPay: 'Scan QR code to payments',
   },
   zh: {
+    availableDays: '有效天数',
+    qrPay: '扫描二维码付款',
+    weixinPay: '微信支付',
     confirm: '确认',
     home: '首页',
     administrator: '管理',
@@ -220,6 +227,7 @@ const data = {
     month: '月',
     deviceAddGroupTips: '在输入框输入组名称,按回车',
     deviceDetail: '设备详情',
+    payMethod: '付款方式',
   },
 }
 

@@ -17,8 +17,8 @@ public class MailController : BaseController
     }
 
 
-    [HttpPost]
-     [AllowAnonymous]
+    [HttpPost("/api/mail/update")]
+    [AllowAnonymous]
     public int Update([FromBody] MailStatusModel model)
     {
         string mailQueueIDs = model.MailQueueIDs;
@@ -26,18 +26,11 @@ public class MailController : BaseController
         if (string.IsNullOrEmpty(mailQueueIDs)) return 0;
 
         string sqlText = @"
-                declare @sql  varchar(8000)
-				declare @status int
-				declare @MailQueueIDs varchar(8000)
-                set @status={0}
-                set @MailQueueIDs = '{1}'
-                if @MailQueueIDs = ''
-                       select @MailQueueIDs = null                           
-                BEGIN
-				    select @SQL = 'UPDATE MailMessage SET TryCount = TryCount+1,status =  '+ CAST(@status as varchar(10)) +', sendDateTime=getdate() WHERE ID IN (' + @MailQueueIDs + ')'
-				    exec  (@SQL)
-                END
-            
+            set @status={0};
+            set @MailQueueIDs = '{1}';
+            set @SQL = 'UPDATE MailMessage SET status =  ? WHERE id IN (?);';
+            PREPARE myquery FROM @SQL;
+            EXECUTE myquery using @status,@MailQueueIDs
             ";
         using (IDbConnection db = MemberConnection)
         {
@@ -46,10 +39,10 @@ public class MailController : BaseController
         }
     }
     [AllowAnonymous]
-    [HttpGet]
+    [HttpGet("/api/mail/Query")]
     public dynamic Query()
     {
-        var sqlText = "select top 100 * from MailMessage where status=0 and datediff(ss, createDateTime, getdate())<=3600";
+        var sqlText = "select * from MailMessage where status=0 and TIME_TO_SEC(TIMEDIFF(createDateTime, now()))<=3600 limit 100";
 
 
         using (IDbConnection db = MemberConnection)

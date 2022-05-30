@@ -1,7 +1,7 @@
 import { CLIENT_SET, CLIENT_UNSET, RECEIVE_USER_EXTENDER, RECEIVE_CMS_USER } from './constants'
 import axios from 'axios'
 import * as auth from '~/lib/check-auth'
-import { toast } from 'src/views/components/dialog/Index'
+import { toast, confirm } from 'src/views/components/dialog/Index'
 export function setClient(token) {
   return { type: CLIENT_SET, token }
 }
@@ -41,12 +41,12 @@ export const updateUserExtender = (data) => (dispatch) => {
   var headers = auth.authHeader()
   axios({ url, method: 'post', data, headers })
     .then((x) => {
-      toast('操作成功')
+      toast('success')
       dispatch(receiveUserExtender(data))
     })
     .catch((e) => {
       console.log('getUserExtender', e)
-      toast(e.response.data)
+      toast(e.message)
     })
 }
 
@@ -61,10 +61,10 @@ export const getEmailToken = (email) => (dispatch) => {
   })
     .then((x) => {
       console.log('x', x)
-      toast.success(x.data, { position: toast.POSITION.BOTTOM_CENTER })
+      confirm(x.data)
     })
     .catch((e) => {
-      toast.error(e.response.data, { position: toast.POSITION.BOTTOM_CENTER })
+      toast(e.message)
     })
 }
 
@@ -78,10 +78,10 @@ export const resetPassword = (data) => (dispatch) => {
     headers,
   })
     .then((x) => {
-      toast('reset password finished!')
+      confirm('reset password finished!')
     })
     .catch((e) => {
-      toast(e.response.data)
+      toast(e.message)
     })
 }
 
@@ -96,7 +96,7 @@ export const resetPassword1 = (data) => (dispatch) => {
     headers,
   })
     .then((x) => {
-      toast('操作成功')
+      toast('success')
     })
     .catch((e) => {
       toast(e.response.data, { position: toast.POSITION.BOTTOM_CENTER })

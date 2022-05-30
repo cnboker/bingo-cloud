@@ -15,7 +15,7 @@ import {
   CCol,
   CFormInput,
 } from '@coreui/react'
-
+import G from 'src/locale'
 //bodydata: 收集dialog‘body的数据，比如form数据
 const Dialog = ({ title, body, bodydata, size = 'lg', callback }) => {
   const [visible, setVisible] = useState(true)
@@ -64,7 +64,7 @@ export const show = (options, callback) => {
 }
 
 export const confirm = (message, cb) => {
-  show({ title: '提示信息', body: message }, cb)
+  show({ title: G.info, body: message }, cb)
 }
 
 export const prompt = (title, cb) => {

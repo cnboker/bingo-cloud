@@ -20,7 +20,8 @@ const Register = React.lazy(() => import('./views/pages/signup/index'))
 const Page404 = React.lazy(() => import('./views/pages/page404/Page404'))
 const Page500 = React.lazy(() => import('./views/pages/page500/Page500'))
 const Authorize = React.lazy(() => import('./views/pages/authorize/index'))
-
+const ForgetPassword = React.lazy(() => import('./views/pages/client/components/forgetPassword'))
+const PasswordReset = React.lazy(() => import('./views/pages/client/components/passwordReset'))
 export default () => {
   const dispatch = useDispatch()
 
@@ -30,6 +31,17 @@ export default () => {
         <Switch>
           <Route exact path="/login" name="Login Page" render={(props) => <Login {...props} />} />
           <Route exact path="/logout" name="Logout" render={(props) => <Logout {...props} />} />
+          <Route
+            exact
+            path="/forgetPassword"
+            name="forgetPassword"
+            render={(props) => <ForgetPassword {...props} />}
+          />
+          <Route
+            path="/passwordReset"
+            name="passwordreset"
+            render={(props) => <PasswordReset {...props} />}
+          />
           <Route
             exact
             path="/register"

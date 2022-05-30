@@ -3,7 +3,7 @@ import Form from 'react-jsonschema-form'
 import resources from '../locale'
 import { getEmailToken } from '../action'
 import { useDispatch } from 'react-redux'
-
+import Center from './CenterContainer'
 const schema = {
   title: resources.inputEmail,
   type: 'object',
@@ -20,6 +20,10 @@ const uiSchema = {
   email: {
     'ui:widget': 'email',
   },
+  'ui:submitButtonProps': {
+    showButton: true,
+    buttonText: 'send',
+  },
 }
 
 export default (props) => {
@@ -33,7 +37,7 @@ export default (props) => {
   }
 
   return (
-    <div className="container">
+    <Center>
       <Form
         schema={schema}
         uiSchema={uiSchema}
@@ -41,7 +45,11 @@ export default (props) => {
         onSubmit={onSubmit}
         onChange={log('change')}
         onError={log('errors')}
-      />
-    </div>
+      >
+        <button type="submit" className="btn btn-primary">
+          Send
+        </button>
+      </Form>
+    </Center>
   )
 }

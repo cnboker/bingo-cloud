@@ -71,9 +71,9 @@ const Login = ({ submit, error }) => {
                         </CButton>
                       </CCol>
                       <CCol xs={6} className="text-right">
-                        <CButton color="link" className="px-0">
+                        <Link color="link" className="px-0" to={'/forgetPassword'}>
                           {R.forgetPassword}?
-                        </CButton>
+                        </Link>
                       </CCol>
                     </CRow>
                     <CRow>

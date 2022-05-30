@@ -71,7 +71,6 @@ namespace Member.Models
         public string Title { get; set; }
         public DateTime? CreateDateTime { get; set; }
         public int Status { get; set; }
-        public int TryCount { get; set; }
         public string TemplateId { get; set; }
         public string Parameter1 { get; set; }
         public string Parameter2 { get; set; }
