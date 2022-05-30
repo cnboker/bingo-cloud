@@ -20,7 +20,7 @@ export default () => {
           <CFormLabel className="col-sm-2 col-form-label">{G.qrPay}</CFormLabel>
           <CCol sm={10}>
             <QRCode
-              value={`http://www.ioliz.com/tenpayV3/?orderno=${order.orderNo}`}
+              value={`${process.env.REACT_APP_SERVICE_URL}/tenpayV3/?orderno=${order.orderNo}`}
               size={290}
               level={'H'}
               includeMargin={true}

@@ -20,4 +20,4 @@ docker-compose build
 cd /home/ioliz/reverseProxy
 docker-compose down
 docker-compose build
-docker-compose up
+docker-compose up -d

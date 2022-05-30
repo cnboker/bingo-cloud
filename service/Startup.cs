@@ -42,17 +42,19 @@ namespace Ioliz.Service
                     .AllowAnyHeader()
                     .AllowAnyMethod();
               }));
-              //api json return lowercase object
+            //api json return lowercase object
             services.AddControllers().AddNewtonsoftJson(options =>
             {
                 options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
             }); ;
             services.AddMvcCore().AddNewtonsoftJson();
             //fix "Self referencing loop detected for property Newtonsoft.Json.JsonSerializationException"
-             services.AddDbContext<ServiceContext>(
-                     options => {
-                         var connetionString = Configuration.GetConnectionString("ServiceConnection");
-                         options.UseMySql(connetionString, ServerVersion.AutoDetect(connetionString));});
+            services.AddDbContext<ServiceContext>(
+                    options =>
+                    {
+                        var connetionString = Configuration.GetConnectionString("ServiceConnection");
+                        options.UseMySql(connetionString, ServerVersion.AutoDetect(connetionString));
+                    });
 
             services.AddMemoryCache();
             services.AddLocalization();
@@ -121,6 +123,10 @@ namespace Ioliz.Service
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapRazorPages();
+                endpoints.MapControllerRoute(
+                name: "default",
+                pattern: "{controller=Home}/{action=Index}/{id?}");
             });
             // app.UseMvc(routes =>
             //     {
