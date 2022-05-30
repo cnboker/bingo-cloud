@@ -5,7 +5,7 @@ appsettings.json
 appsettings.Development.json
 /Logs
 /Migrations
-/wwwroot
+/wwwroot/uploadfiles
 .DS_Store
 ./global.json
 ## Ignore Visual Studio temporary files, build results, and
