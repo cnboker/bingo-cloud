@@ -15,8 +15,8 @@ cd /home/ioliz/service
 docker-compose build
 cd /home/ioliz/jsxBuildServer
 docker-compose build
-#cd /home/ioliz//ffmpegServer
-#docker-compose build
+cd /home/ioliz//ffmpegServer
+docker-compose build
 cd /home/ioliz/reverseProxy
 docker network create myNetwork
 docker-compose down
