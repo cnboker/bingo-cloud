@@ -12,7 +12,7 @@ COPY ./shared /shared
 RUN dotnet build -c Release -o output
 # 使用aspnet执行程序，这样可以减少容器文件的大小,未优化前1G，采用aspnet后200M
 FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS runtime
-
+ADD sources.list /etc/apt/
 RUN apt update -y && apt install -y ffmpeg 
 
 COPY --from=build /fileServer/output ./release

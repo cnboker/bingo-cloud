@@ -18,6 +18,7 @@ docker-compose build
 #cd /home/ioliz//ffmpegServer
 #docker-compose build
 cd /home/ioliz/reverseProxy
+docker network create myNetwork
 docker-compose down
 docker-compose build
 docker-compose up -d

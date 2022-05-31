@@ -1,14 +1,22 @@
-FROM node:16
-RUN mkdir -p /usr/jsxbuild
-WORKDIR /usr/jsxbuild
+FROM node:16 as BUILD_IMAGE
+RUN mkdir -p /usr/dist
+WORKDIR /usr/dist
 
-COPY  package.json .
+COPY  . .
 RUN npm install
 
-COPY . .
+# Here we will use alpine; alpine is a lean docker iamge with
+# minimum packages but enough to run node applications.
+# By using alpine the image size dropped to 200M from 1G
+FROM node:16-alpine
+RUN mkdir -p /usr/dist
+WORKDIR /usr/dist
+
+COPY --from=BUILD_IMAGE /usr/dist ./
+COPY --from=BUILD_IMAGE /usr/dist/node_modules ./node_modules
 
 EXPOSE 8888
 
 # RUN the app
 
-CMD ["npm", "start"]
+CMD ["node", "./index.js"]

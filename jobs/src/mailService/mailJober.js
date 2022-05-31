@@ -22,7 +22,7 @@ export const sendFromRemoteAPI = () => {
           });
       }
     })
-    .catch((e) => console.log(e));
+    .catch((e) => console.log(e.message));
 };
 
 export const templateHtml = async (msg) => {

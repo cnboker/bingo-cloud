@@ -13,7 +13,8 @@ cd ../jsxBuildServer
 docker-compose build
 #cd ../ffmpegServer
 #docker-compose build
+docker network create myNetwork
 cd ../reverseProxy
 docker-compose down
 docker-compose build
-docker-compose up
+docker-compose up -d

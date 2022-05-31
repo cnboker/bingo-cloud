@@ -22,7 +22,7 @@ export default class SMTPClient {
   }
 
   send(mailOptions) {
-    console.log("mailOptions", mailOptions);
+    //console.log("mailOptions", mailOptions);
     // send mail with defined transport object
     this.transporter.sendMail(mailOptions, (e, info) => {
       if (e) {

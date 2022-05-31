@@ -17,8 +17,8 @@ public class MailController : BaseController
     }
 
 
-    [HttpPost("/api/mail/update")]
     [AllowAnonymous]
+    [HttpPost("/api/mail/update")]
     public int Update([FromBody] MailStatusModel model)
     {
         string mailQueueIDs = model.MailQueueIDs;
