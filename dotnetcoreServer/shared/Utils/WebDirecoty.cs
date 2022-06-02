@@ -36,7 +36,7 @@ namespace Ioliz.Shared.Utils
                 type = "video";
             }
 
-            return string.Format("{0}/{1}?size=512x512&type={2}&user={3}", this.domain, fileName, type, this.userName);
+            return string.Format("{0}/{1}?size=512x512&type={2}&user={3}", this.domain + "/" + this.userName, fileName, type, this.userName);
         }
     }
 
