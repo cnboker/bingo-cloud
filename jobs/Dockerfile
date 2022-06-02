@@ -15,7 +15,7 @@ WORKDIR /usr/mail
 
 COPY --from=BUILD_IMAGE /usr/mail/dist ./dist
 COPY --from=BUILD_IMAGE /usr/mail/node_modules ./node_modules
-
+COPY ./emails ./emails
 EXPOSE 8025
 
 CMD ["node", "./dist/index.js"]
