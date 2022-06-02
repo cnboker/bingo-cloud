@@ -51,7 +51,7 @@ namespace FileServer.Controllers
             {
                 rootFolderId = generator.RootFolderId,
                 fileMap = generator.fileMap,
-                bashPath = hostUrl + "/" + User.Identity.Name,
+                //bashPath = hostUrl + "/" + User.Identity.Name,
             };
             return Ok(outputJson);
         }

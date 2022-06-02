@@ -21,4 +21,6 @@ cd /home/ioliz/reverseProxy
 docker network create myNetwork
 docker-compose down
 docker-compose build
-docker-compose up -d
+docker-compose up -d 
+
+#fileServer 经常出现数据目录无法挂载的情况，出现这种问题，直接使用命令docker-compose up --force-recreate

@@ -20,7 +20,7 @@ namespace Ioliz.Shared.Utils
         //return path include domain 
         public override string GetPath(string fileFullName)
         {
-            return domain + base.GetPath(fileFullName);
+            return string.Format("{0}/{1}{2}", domain, this.userName, base.GetPath(fileFullName));
         }
 
         public override string GetThumbnailUrl(string fileName)
