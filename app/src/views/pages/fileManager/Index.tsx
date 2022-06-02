@@ -39,23 +39,11 @@ const useFetchCustomFileMap = () => {
 }
 
 //每次切换目录都会执行该函数,在该函数需要补充完整thumbnailUrl完整目录
-export const useFiles = (
-  fileMap: CustomFileMap,
-  currentFolderId: string,
-  getPath: any,
-  bashPath: string,
-): FileArray => {
+export const useFiles = (fileMap: CustomFileMap, currentFolderId: string): FileArray => {
   const currentFolder = fileMap[currentFolderId]
   const childrenIds = [...currentFolder.childrenIds!]
   return childrenIds.map((fileId: string) => {
-    const fo = fileMap[fileId]
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    //@ts-ignore
-    let thumbnailUrl = ''
-    if (!fo.isDir && fo.thumbnailUrl && fo.thumbnailUrl.indexOf('data:') !== 0) {
-      thumbnailUrl = bashPath + getPath(fo.id) + fo.thumbnailUrl
-    }
-    return { ...fo, thumbnailUrl }
+    return fileMap[fileId]
   })
 }
 
@@ -122,7 +110,7 @@ export const VFSBrowser: React.FC<DataVFSProps> = (props) => {
   } = useCustomFileMap(props.data)
   const { selectedFiles, fileSelectAction, removeAction, onMovedown } = useFilePicker([])
 
-  const filesAction = useFiles(fileMap, currentFolderId, getPath, props.data.bashPath)
+  const filesAction = useFiles(fileMap, currentFolderId)
   //const folderChain = useFolderChain(fileMap, currentFolderId)
   const handleFileAction = useFileActionHandler(
     setCurrentFolderId,
