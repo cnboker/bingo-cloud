@@ -7,15 +7,15 @@ docker system prune -f
 #delete old container
 
 #rebuild
-cd /home/ioliz/member
+cd /home/ioliz/dotnetcoreServer/member
 docker-compose build
-cd /home/ioliz/fileServer
+cd /home/ioliz/dotnetcoreServer/fileServer
 docker-compose build
-cd /home/ioliz/service
+cd /home/ioliz/dotnetcoreServer/service
 docker-compose build
 cd /home/ioliz/jsxBuildServer
 docker-compose build
-cd /home/ioliz//ffmpegServer
+cd /home/ioliz/ffmpegServer
 docker-compose build
 cd /home/ioliz/reverseProxy
 docker network create myNetwork

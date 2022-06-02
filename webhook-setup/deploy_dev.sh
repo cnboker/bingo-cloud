@@ -3,11 +3,11 @@
 docker system prune -f
 
 #rebuild
-cd ../member
+cd ../dotnetcoreServer/member
 docker-compose build
-cd ../fileServer
+cd ../dotnetcoreServer/fileServer
 docker-compose build
-cd ../service
+cd ../dotnetcoreServer/service
 docker-compose build
 cd ../jsxBuildServer
 docker-compose build

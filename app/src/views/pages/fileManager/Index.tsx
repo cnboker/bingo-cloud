@@ -164,6 +164,7 @@ export const VFSBrowser: React.FC<DataVFSProps> = (props) => {
     const validated = pubRef.validate()
     if (!validated) return validated
     const { settings, deviceList, selectedFiles } = pubRef.formData()
+    console.log('selectFiles', selectedFiles)
     const fileUrls = selectedFiles.map((x: FileData) => x.path)
     const entity = {
       sources: fileUrls.map((url: string) => {

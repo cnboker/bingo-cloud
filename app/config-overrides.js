@@ -21,18 +21,17 @@ module.exports = override(
   // resolve:add below code
   addWebpackAlias({
     react: path.resolve('./node_modules/react'),
-  })
+  }),
 )
 
+// module.exports = function override(config, env) {
+//   //do stuff with the webpack config...
 
-module.exports = function override(config, env) {
-  //do stuff with the webpack config...
-
-  // config.resolve = {
-  //   alias: {
-  //     react: path.resolve('./node_modules/react'),
-  //   },
-  // }
-  console.log('config', env)
-  return config
-}
+//   // config.resolve = {
+//   //   alias: {
+//   //     react: path.resolve('./node_modules/react'),
+//   //   },
+//   // }
+//   console.log('config', env)
+//   return config
+// }

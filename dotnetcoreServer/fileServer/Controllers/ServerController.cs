@@ -3,6 +3,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using FileServer.Models;
+using Ioliz.Shared.Utils;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -43,8 +44,9 @@ namespace FileServer.Controllers
         public IActionResult Index()
         {
             RequireDirIsCreate();
-            DirectoryJsonGenerator generator = new DirectoryJsonGenerator(this.UserBaseDir);
-            generator.CreateFolderHierarchy(User.Identity.Name);
+            var userRootDir = Path.Combine(this.UserBaseDir, User.Identity.Name);
+            WebDirectory generator = new WebDirectory(userRootDir,User.Identity.Name);
+            generator.CreateFileMap(userRootDir);
             string hostUrl = Request.Scheme + "://" + Request.Host;
             var outputJson = new
             {
@@ -144,13 +146,14 @@ namespace FileServer.Controllers
             }
             string hostUrl = Request.Scheme + "://" + Request.Host;
             string fileName = files.FileName.Substring(0, files.FileName.IndexOf(".")) + ".mp4";
+            WebDirectory webDir = new WebDirectory(hostUrl,User.Identity.Name);
             return new FileResultModel()
             {
                 FileName = fileName,
                 //只有上传的是视频文件的时候才会用
                 FullUrl = hostUrl + "/" + User.Identity.Name + "/tmp/" + files.FileName,
                 SavePath = fileUploadDir + "/" + fileName,
-                ThumbnailUrl = DirectoryJsonGenerator.GetThumbnailUrl(files.FileName, User.Identity.Name)
+                ThumbnailUrl = webDir.GetThumbnailUrl(files.FileName)
             };
         }
 
@@ -164,10 +167,11 @@ namespace FileServer.Controllers
                     await files.CopyToAsync(stream);
                 }
             }
+            WebDirectory webDir = new WebDirectory(hostUrl,User.Identity.Name);
             return new FileResultModel()
             {
                 FileName = files.FileName,
-                ThumbnailUrl = DirectoryJsonGenerator.GetThumbnailUrl(files.FileName, User.Identity.Name)
+                ThumbnailUrl = webDir.GetThumbnailUrl(files.FileName)
             };
         }
 

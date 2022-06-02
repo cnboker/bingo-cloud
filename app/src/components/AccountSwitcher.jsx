@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import Select from 'react-select'
 import { useSelector, useDispatch } from 'react-redux'
 import { userList } from '~/views/pages/admin/users/actions'
