@@ -44,8 +44,7 @@ namespace FileServer.Controllers
         public IActionResult Index()
         {
             RequireDirIsCreate();
-            var userRootDir = Path.Combine(this.UserBaseDir, User.Identity.Name);
-            WebDirectory generator = new WebDirectory(userRootDir,User.Identity.Name);
+            WebDirectory generator = new WebDirectory(this.UserBaseDir,User.Identity.Name);
             generator.CreateFileMap(userRootDir);
             string hostUrl = Request.Scheme + "://" + Request.Host;
             var outputJson = new

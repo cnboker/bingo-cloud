@@ -20,7 +20,7 @@ COPY --from=build /fileServer/output ./release
 
 #COPY /fileServer/entrypoint.sh .
 WORKDIR /release
-EXPOSE 5000/tcp
+EXPOSE 5000
 ENTRYPOINT ["dotnet", "fileServer.dll"]
 #RUN chmod +x ./entrypoint.sh
 #CMD /bin/bash ./entrypoint.sh
