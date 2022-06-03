@@ -1,6 +1,6 @@
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1 AS build
 WORKDIR /service
-COPY ["./service/Iolize.service.csproj","/service"]
+COPY ["./service/Ioliz.service.csproj","/service"]
 RUN ["dotnet","restore"]
 COPY ./service /service
 COPY ./shared /shared
@@ -16,4 +16,4 @@ WORKDIR /release
 #EXPOSE 80/tcp
 # RUN chmod +x ./entrypoint.sh
 # CMD /bin/bash ./entrypoint.sh
-ENTRYPOINT ["dotnet", "Iolize.service.dll"]
+ENTRYPOINT ["dotnet", "Ioliz.service.dll"]
