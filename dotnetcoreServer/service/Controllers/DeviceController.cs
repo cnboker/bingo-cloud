@@ -29,6 +29,15 @@ namespace Ioliz.Service.Controllers
             return List(User.Identity.Name);
         }
 
+        [HttpGet("/api/device/status")]
+        public IActionResult MyDevicesStatus()
+        {
+            var deviceIds = ctx.Devices.AsQueryable()
+            .Where(c => c.UserName == User.Identity.Name)
+            .Select(c => c.DeviceId).ToArray();
+            return Json(DeviceStateMemoryCache.Get(deviceIds));
+        }
+
         [HttpPost("/api/device/groupUpdate")]
         public IActionResult GroupUpdate([FromBody] UpdateDeviceNameModel model)
         {
@@ -83,6 +92,7 @@ namespace Ioliz.Service.Controllers
         [HttpGet("/api/heartbeat/{id}")]
         public IActionResult HeartBeat(string id)
         {
+            DeviceStateMemoryCache.Update(id);
             return Ok();
         }
 
@@ -129,23 +139,6 @@ namespace Ioliz.Service.Controllers
         {
             if (item == null) return 0;
             return Convert.ToInt32(item.ActivationdDate.Value.AddDays(item.ValidDays).Subtract(DateTime.Now).TotalDays);
-        }
-
-        private string GetDeviceStatus(NetworkStatus status)
-        {
-            if (status == NetworkStatus.Offline)
-            {
-                return localizer["Offline"];
-            }
-            else if (status == NetworkStatus.Running)
-            {
-                return localizer["Online"];
-            }
-            else
-            {
-                return localizer["Unkonwn"];
-            }
-
         }
 
         private void GetLicenseRemark(License license, out bool licenseExpired, out string remark)

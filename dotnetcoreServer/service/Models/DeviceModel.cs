@@ -18,6 +18,6 @@ namespace Ioliz.Service.Models{
     public string Resolution {get;set;}
     public string OS {get;set;}
     public string LatLng {get;set;}
-    public int NetworkStatus {get;set;}
+    
   }
 }

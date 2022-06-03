@@ -6,8 +6,10 @@ import {
   RECEIVE_DEVICE_SELECT,
   RECEIVE_DEVICE_SNAPSHOT_IMAGE,
   RECEIVE_DEVICE_LOGS,
+  RECEIVE_DEVICE_STATUS,
 } from './constants'
 import merge from 'lodash/merge'
+import { MergeType } from '@material-ui/icons'
 
 const initialState = []
 
@@ -16,6 +18,16 @@ export const deviceListReducer = (state = initialState, action) => {
   let newState = merge([], state)
   let deviceInfo = null
   switch (action.type) {
+    case RECEIVE_DEVICE_STATUS:
+      //merge status data to state
+      let merged = []
+      for (let i = 0; i < state.length; i++) {
+        merge.push({
+          ...state[i],
+          ...action.payload.find((x) => x.deviceId === state[0].deviceId),
+        })
+      }
+      return merged
     case RECEIVE_DEVICE_LIST:
       console.log('devicelist', action.payload)
       return action.payload

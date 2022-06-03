@@ -206,7 +206,7 @@ namespace Ioliz.Service.Models
         public string Resolution { get; set; }
         public string MAC { get; set; }
         public string IP { get; set; }
-        public NetworkStatus Status { get; set; }
+        
         public DateTime? LastUpdateTime { get; set; }
         // public string ServerName { get; set; }
         public string UserName { get; set; }

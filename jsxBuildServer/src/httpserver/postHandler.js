@@ -1,5 +1,6 @@
 const esbuild = require("./esbuild");
 const { writeFile, rm } = require("fs").promises;
+const fs = require("fs");
 const { makeid } = require("../util");
 const path = require("path");
 
@@ -8,9 +9,15 @@ exports.make = async (username, entity) => {
   //build file
   //return
   const dataContent = JSON.stringify(entity);
-  
-  const tmpfile = makeid(10);
-  const entryFile = `${process.cwd()}/entry/builder.js`;
+
+  //const tmpfile = makeid(10);
+
+  const entryDir = `${process.cwd()}/entry/${username}`;
+  const entryFile = `${entryDir}/builder.js`;
+
+  if (!fs.existsSync(entryDir)) {
+    fs.mkdirSync(entryDir, { recursive: true });
+  }
   try {
     //console.log("entryFile", entryFile);
     // const jsx = `
@@ -26,15 +33,13 @@ exports.make = async (username, entity) => {
       const data = transformData(${dataContent})
       App(data)
     
-    `
-    console.log('jsx', jsx)
+    `;
+    console.log("jsx", jsx);
     await writeFile(entryFile, jsx);
     return await esbuild.build(username, entryFile);
-  } 
-  catch (e) {
+  } catch (e) {
     console.log(e);
-  }
-  finally{
-    rm(entryFile)
+  } finally {
+    rm(entryFile);
   }
 };

@@ -152,7 +152,7 @@ namespace Ioliz.Service.Controllers
         OS = c.OS,
         LatLng = c.LatLng,
         LicenseRemark = string.Format("valid days:{0}", leftDays),
-        NetworkStatus = (int)c.Status
+       
       };
       return model;
     }

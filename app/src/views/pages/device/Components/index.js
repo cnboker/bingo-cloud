@@ -5,7 +5,7 @@ import Search from '~/views/components/forms/Search'
 import Table from './Table'
 import RowFliter from './rowFliter'
 import DeviceGroup from './groupLink'
-import { requestDeviceList } from '../actions'
+import { requestDeviceList, requestDeviceStatus } from '../actions'
 import { TagCatelog } from '../../tags/contants'
 import { fetchTags } from '../../tags/actions'
 import PageContainer from 'src/views/components/pageContainer'
@@ -35,7 +35,7 @@ export default () => {
 
   useEffect(() => {
     const timerId = setInterval(() => {
-      dispatch(requestDeviceList(userName))
+      dispatch(requestDeviceStatus(userName))
     }, interval)
     return () => clearInterval(timerId)
   }, [])

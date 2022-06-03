@@ -9,6 +9,7 @@ import {
   RECEIVE_DEVICE_SELECT,
   RECEIVE_DEVICE_SNAPSHOT_IMAGE,
   RECEIVE_DEVICE_LOGS,
+  RECEIVE_DEVICE_STATUS,
 } from './constants'
 import * as Dialog from '~/views/components/dialog/Index'
 import { authHeader } from '~/lib/check-auth'
@@ -49,6 +50,24 @@ export const receiveDeviceSelected = (payload) => {
   return { type: RECEIVE_DEVICE_SELECT, payload }
 }
 
+export const receiveDeviceStatus = (payload) => {
+  return {
+    type: RECEIVE_DEVICE_STATUS,
+    payload,
+  }
+}
+
+export const requestDeviceStatus = () => (dispatch) => {
+  var url = `${process.env.REACT_APP_SERVICE_URL}/api/device/status`
+  var headers = authHeader()
+  axios({
+    url,
+    method: 'post',
+    headers,
+  }).then((resp) => {
+    dispatch(receiveDeviceStatus(resp.data))
+  })
+}
 export const requestDeviceList = (username) => (dispatch) => {
   var headers = authHeader()
   var url = `${process.env.REACT_APP_SERVICE_URL}/api/device/list/${username}`
