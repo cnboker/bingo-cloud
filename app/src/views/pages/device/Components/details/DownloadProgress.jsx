@@ -1,120 +1,40 @@
-import React from 'react'
-import resources from '../../locale'
-import { connect } from 'react-redux'
-import GR from '~/locale'
-class DownLoadProgress extends React.Component {
-  constructor() {
-    super()
-    this.state = {
-      deviceDownloadProgressInfo: {},
-    }
+import React, { useEffect } from 'react'
+import R from '../../locale'
+import { usedownloadProgressEvent } from 'src/views/pages/mqtt/mqttApi'
+import { useSelector } from 'react-redux'
+
+export const DownloadProgress = ({ deviceId }) => {
+  const downloadEvent = usedownloadProgressEvent()
+  const mqttDownloadProgressReducer = useSelector((state) => state.mqttDownloadProgressReducer)
+  const data = mqttDownloadProgressReducer[deviceId]
+  useEffect(() => {
+    downloadEvent()
+  }, [])
+  if (!data) {
+    return <>no data</>
   }
-
-  componentDidUpdate(nextProps, nextState) {
-    if (nextProps.downloadProgress !== this.props.downloadProgress) {
-      const { deviceInfo } = this.props
-      var deviceDownloadProgressInfo = nextProps.downloadProgress[deviceInfo.deviceId]
-      console.log(
-        'MqttMonitor-componentDidUpdate',
-        nextProps.downloadProgress,
-        deviceDownloadProgressInfo,
-      )
-      if (deviceDownloadProgressInfo) {
-        this.setState({
-          deviceDownloadProgressInfo,
-        })
-      }
-    }
-  }
-
-  downloadProgressDataFormat() {
-    const downloadProgressData = this.state.deviceDownloadProgressInfo
-
-    if (!downloadProgressData.fileName) {
-      return (
-        <div className="row">
-          <label className="col-sm-4 col-form-label">{resources.downloadProgress}</label>
-          <div className="col-sm-8">
-            <input
-              type="text"
-              readOnly
-              className="form-control-plaintext"
-              value={resources.noData}
-            ></input>
-          </div>
+  const { fileName, amountReceived, amountTotal, completed } = data
+  return (
+    <>
+      <div className="row">
+        <label className="col-sm-4 col-form-label">{'MAC'}</label>
+        <div className="col-sm-8">
+          <input type="text" readOnly className="form-control-plaintext" value={deviceId}></input>
         </div>
-      )
-    } else {
-      return (
-        <div className="row">
-          <label className="col-sm-4 col-form-label">{resources.downloadProgress}</label>
-          <div className="col-sm-8">
-            <input
-              type="text"
-              readOnly
-              className="form-control-plaintext"
-              value={downloadProgressData.fileName}
-            ></input>
-            <small className="form-text">
-              {`${resources.downloaded} : ${downloadProgressData.downloaded}`}
-              <br />
-              {`${resources.downloadSpeed} : ${downloadProgressData.downloadSpeed}`}
-              <br />
-              {`${resources.remainingTime} : ${downloadProgressData.remainingTime}`}
-            </small>
-          </div>
-        </div>
-      )
-    }
-  }
-
-  render() {
-    const { deviceInfo } = this.props
-    return (
-      <div>
-        <div className="row">
-          <label className="col-sm-4 col-form-label">{resources.device_name}</label>
-          <div className="col-sm-8">
-            <input
-              type="text"
-              readOnly
-              className="form-control-plaintext"
-              value={deviceInfo.name}
-            ></input>
-          </div>
-        </div>
-        <div className="row">
-          <label className="col-sm-4 col-form-label">{'MAC'}</label>
-          <div className="col-sm-8">
-            <input
-              type="text"
-              readOnly
-              className="form-control-plaintext"
-              value={deviceInfo.mac}
-            ></input>
-          </div>
-        </div>
-        <div className="row">
-          <label className="col-sm-4 col-form-label">{resources.device_status}</label>
-          <div className="col-sm-8">
-            <input
-              type="text"
-              readOnly
-              className="form-control-plaintext"
-              value={deviceInfo.value === 1 ? GR.online : GR.offline}
-            ></input>
-          </div>
-        </div>
-        {this.downloadProgressDataFormat()}
       </div>
-    )
-  }
+      <div className="row">
+        <label className="col-sm-4 col-form-label">{R.downloadProgress}</label>
+        <div className="col-sm-8">
+          <input type="text" readOnly className="form-control-plaintext" value={fileName}></input>
+          <small className="form-text">
+            {`${R.amountReceived} : ${amountReceived}`}
+            <br />
+            {`${R.amountTotal} : ${amountTotal}`}
+            <br />
+            {`${R.completed} : ${completed ? R.completed : R.unComplete}`}
+          </small>
+        </div>
+      </div>
+    </>
+  )
 }
-
-const mapStateToProps = (state, ownProps) => {
-  return {
-    downloadProgress: state.downloadProgressReducer,
-  }
-}
-
-export default connect(mapStateToProps)(DownLoadProgress)

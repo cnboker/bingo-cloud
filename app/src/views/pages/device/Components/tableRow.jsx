@@ -35,10 +35,12 @@ export default ({ rowData, updateGroup, updateName, updateLicense, release }) =>
         </CButton>
       </td>
       <td>{getMac(rowData.mac)}</td>
-      <td style={rowData.networkStatus === 1 ? { color: 'Geen' } : { color: 'red' }}>
-        {rowData.networkStatus === 1 ? G.online : G.offline}
+      <td>
+        <span className={rowData.networkStatus === 1 ? 'text-success' : 'text-danger'}>
+          {rowData.networkStatus === 1 ? G.online : G.offline}
+        </span>
       </td>
-      <td style={!rowData.licenseExpired ? { color: 'Geen' } : { color: 'red' }}>
+      <td style={!rowData.licenseExpired ? { color: 'geen' } : { color: 'red' }}>
         {rowData.licenseExpired ? R.invalid : `${R.valid}(${rowData.licenseRemark})`}
       </td>
       <td>

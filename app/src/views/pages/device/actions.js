@@ -62,7 +62,7 @@ export const requestDeviceStatus = () => (dispatch) => {
   var headers = authHeader()
   axios({
     url,
-    method: 'post',
+    method: 'get',
     headers,
   }).then((resp) => {
     dispatch(receiveDeviceStatus(resp.data))

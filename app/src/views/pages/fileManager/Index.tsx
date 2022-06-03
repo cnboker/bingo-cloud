@@ -20,7 +20,7 @@ import { useCustomFileMap } from './useCustomFileMap'
 import { useFileActionHandler } from './useFileActionHandler'
 import { PubForms } from './pubComponents/Index'
 import { requestDeviceList } from '../device/actions'
-import { mqttPub } from './mqttPub'
+import { contentPublish } from '../mqtt/mqttApi'
 import { getLang } from 'src/lib/localize'
 import cn18n from './cn18n'
 
@@ -174,7 +174,7 @@ export const VFSBrowser: React.FC<DataVFSProps> = (props) => {
       },
     }).then((resp) => {
       console.log('return result', resp.data, deviceList, fileUrls)
-      mqttPub(deviceList, [...fileUrls, ...resp.data])
+      contentPublish(deviceList, [...fileUrls, ...resp.data])
     })
     return true
   }

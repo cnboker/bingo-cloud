@@ -22,9 +22,9 @@ export const deviceListReducer = (state = initialState, action) => {
       //merge status data to state
       let merged = []
       for (let i = 0; i < state.length; i++) {
-        merge.push({
+        merged.push({
           ...state[i],
-          ...action.payload.find((x) => x.deviceId === state[0].deviceId),
+          ...action.payload.find((x) => x.deviceId === state[i].deviceId),
         })
       }
       return merged
@@ -64,8 +64,7 @@ export const deviceListReducer = (state = initialState, action) => {
     case RECEIVE_DEVICE_SNAPSHOT_IMAGE:
       if (!action.payload.key) return state
       deviceInfo = newState.find((x) => x.deviceId === action.payload.key)
-
-      deviceInfo.SpanshotImageUrlObject = action.payload
+      deviceInfo.spanshotImageObject = action.payload.content
       return newState
     default:
       return state

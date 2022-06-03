@@ -10,6 +10,7 @@ import { TagCatelog } from '../../tags/contants'
 import { fetchTags } from '../../tags/actions'
 import PageContainer from 'src/views/components/pageContainer'
 import { CContainer } from '@coreui/react'
+
 export default () => {
   const dispatch = useDispatch()
   const deviceList = useSelector((state) => state.deviceListReducer)
@@ -31,11 +32,12 @@ export default () => {
   useEffect(() => {
     dispatch(fetchTags(TagCatelog.deviceGroup))
     dispatch(requestDeviceList(userName))
+    dispatch(requestDeviceStatus())
   }, [])
 
   useEffect(() => {
     const timerId = setInterval(() => {
-      dispatch(requestDeviceStatus(userName))
+      dispatch(requestDeviceStatus())
     }, interval)
     return () => clearInterval(timerId)
   }, [])

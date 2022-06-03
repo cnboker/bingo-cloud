@@ -1,42 +1,33 @@
 import React, { useEffect } from 'react'
-import { useParams } from 'react-router-dom'
-//redux hook
-import { useDispatch, useSelector } from 'react-redux'
-import { getDeviceSnapshot } from '../../actions'
 import { Card } from '~/views/components/widgets/Card'
-import GR from '~/locale'
+import G from '~/locale'
+import { spanshotPub } from 'src/views/pages/mqtt/mqttApi'
+import { getDeviceSnapshot } from '../../actions'
+import { useSelector } from 'react-redux'
 
-export default (props) => {
-  const { deviceInfo } = props
-  const { client } = useSelector((state) => state)
-
-  //same as mapDispatchToProps
-  const dispatch = useDispatch()
-  let { id } = useParams()
+export default ({ deviceId }) => {
+  const devicelist = useSelector((state) => state.deviceListReducer)
+  const curDevice = devicelist[deviceId]
 
   useEffect(() => {
     const interval = setInterval(() => {
-      dispatch(getDeviceSnapshot(id))
-    }, 5000)
+      //mqtt 请求截屏
+      spanshotPub(deviceId)
+      getDeviceSnapshot()
+    }, 10000)
     return () => clearInterval(interval)
   }, [])
 
-  if (!deviceInfo.SpanshotImageUrlObject) {
-    return <div>{GR.waitLoading}</div>
-  }
-  if ((deviceInfo.value || 2) !== 1) {
-    return <div>{GR.offline}</div>
-  }
-  if (!deviceInfo.SpanshotImageUrlObject) {
+  if (!curDevice || !curDevice.spanshotImageObject) {
     return <>no data</>
   }
   return (
     <>
-      <Card headerTitle={deviceInfo.SpanshotImageUrlObject.title}>
+      <Card>
         <img
-          style={{ width: '780px' }}
+          style={{ width: '800px' }}
           alt="screen scrap"
-          src={`${deviceInfo.SpanshotImageUrlObject.imageUrl}`}
+          src={`${curDevice.spanshotImageObject}`}
         />
       </Card>
     </>

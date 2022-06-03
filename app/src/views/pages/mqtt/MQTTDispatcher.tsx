@@ -1,32 +1,30 @@
 import { connect, MqttClient } from 'mqtt'
+import {
+  DownloadResult,
+  MQTT_CONTENT_NOTIFY,
+  MQTT_DOWNLOAD_PROGRESS,
+  MQTT_SNAPSHOT_NOTIFY,
+} from './contants'
 const mqttServer = process.env.REACT_APP_MQTT_URL
-
-//
-//文件下载进度
-export const MQTT_DOWNLOAD_PROGRESS = 'mqttDownloadProgress'
-//新内容通知
-export const MQTT_CONTENT_NOTIFY = 'mqttContentNotify'
-//服务器抓取照片通知
-export const MQTT_SNAPSHOT_NOTIFY = 'mqttSnapshotNotify'
 
 export class MQTTDispatcher {
   private client: MqttClient
-
+  DownloadProgress: (message: DownloadResult) => void
+  onConnect: (() => void) | undefined
   connect(): void {
     if (this.client && this.client.connected) {
-      if (this.onConnect) {
-        this.onConnect()
-      }
+      this.onConnect && this.onConnect()
     } else if (this.client === undefined || !this.client.connected) {
       this.client = connect(mqttServer)
       this.client.on('connect', () => {
-        if (this.onConnect) {
-          this.onConnect()
-        }
+        this.onConnect && this.onConnect()
       })
       this.client.on('message', (title: string, message: string) => {
         const jsonObj = JSON.parse(message)
         console.log('receive message', jsonObj)
+        if (title === MQTT_DOWNLOAD_PROGRESS) {
+          this.DownloadProgress && this.DownloadProgress(jsonObj)
+        }
       })
     }
   }
@@ -39,6 +37,7 @@ export class MQTTDispatcher {
     })
   }
 
+  //发布内容消息到设备
   contentPub(deviceId: string, data: any) {
     const jsonString = JSON.stringify({
       deviceId: deviceId,
@@ -48,5 +47,8 @@ export class MQTTDispatcher {
     this.client.publish(`${MQTT_CONTENT_NOTIFY}/${deviceId}`, jsonString)
   }
 
-  onConnect: (() => void) | undefined
+  //发布截图消息到设备
+  spanshotPub(deviceId: string) {
+    this.client.publish(`${MQTT_SNAPSHOT_NOTIFY}/${deviceId}`, '')
+  }
 }

@@ -2,7 +2,7 @@ import React from 'react'
 import R from '../../locale'
 import { HashRouter, Switch, useRouteMatch, useParams } from 'react-router-dom'
 import DeviceLogs from './Logs'
-import DeviceScreenCap from './ScreenCap'
+import ScreenCap from './ScreenCap'
 import DownloadProgress from './DownloadProgress'
 import DeviceInfo from './Intro'
 import { PrivateRoute } from '~/lib/check-auth'
@@ -10,7 +10,8 @@ import { useSelector } from 'react-redux'
 import { CNav, CNavItem } from '@coreui/react'
 import PageContainer from 'src/views/components/pageContainer'
 import { Link } from 'react-router-dom'
-export default (props) => {
+
+export default () => {
   let match = useRouteMatch()
   let { id } = useParams()
   console.log('match.url', match.url)
@@ -67,19 +68,19 @@ export default (props) => {
           <PrivateRoute
             path={`${match.path}/screen`}
             component={() => {
-              return <DeviceScreenCap deviceInfo={curDeviceInfo} />
+              return <ScreenCap deviceId={id} />
             }}
           />
           <PrivateRoute
             path={`${match.path}/logs`}
             component={() => {
-              return <DeviceLogs deviceInfo={curDeviceInfo} />
+              return <DeviceLogs deviceId={id} />
             }}
           />
           <PrivateRoute
             path={`${match.path}/downloadProgress`}
             component={() => {
-              return <DownloadProgress deviceInfo={curDeviceInfo} />
+              return <DownloadProgress id={id} />
             }}
           />
           <PrivateRoute
