@@ -1,8 +1,7 @@
 import React, { useEffect } from 'react'
 import { Card } from '~/views/components/widgets/Card'
-import G from '~/locale'
 import { spanshotPub } from 'src/views/pages/mqtt/mqttApi'
-import { getDeviceSnapshot } from '../../actions'
+import { requestSnapshot } from '../../actions'
 import { useSelector } from 'react-redux'
 
 export default ({ deviceId }) => {
@@ -13,9 +12,12 @@ export default ({ deviceId }) => {
     const interval = setInterval(() => {
       //mqtt 请求截屏
       spanshotPub(deviceId)
-      getDeviceSnapshot()
+      requestSnapshot()
     }, 10000)
-    return () => clearInterval(interval)
+    return () => {
+      requestSnapshot()
+      clearInterval(interval)
+    }
   }, [])
 
   if (!curDevice || !curDevice.spanshotImageObject) {

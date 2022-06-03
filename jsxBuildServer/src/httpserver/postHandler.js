@@ -28,8 +28,8 @@ exports.make = async (username, entity) => {
     //   App(metamap)
     // `;
     const jsx = `
-    import { App } from '../src/compiler/app'
-      import { transformData } from  '../src/httpserver/postDataTransformer'
+    import { App } from '../../src/compiler/app'
+      import { transformData } from  '../../src/httpserver/postDataTransformer'
       const data = transformData(${dataContent})
       App(data)
     

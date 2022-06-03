@@ -91,7 +91,7 @@ export const getDeviceLogs = (parameters) => (dispatch) => {
   })
 }
 
-export const getDeviceSnapshot = (deviceId) => (dispatch) => {
+export const requestSnapshot = (deviceId) => (dispatch) => {
   var headers = authHeader()
   var url = `${process.env.REACT_APP_SERVICE_URL}/api/screenshot/${deviceId}`
   axios({ url, method: 'get', headers }).then((resp) => {
