@@ -3,7 +3,6 @@ using Ioliz.Service.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Dapper;
 using System.Data;
 
 using System.Linq;
@@ -20,15 +19,18 @@ public class LogController : BaseController
     }
 
     //推送流量数据
-    [HttpPost]
+    [HttpPost("/api/log")]
     public ApiResult Post([FromForm] DeviceLog model)
     {
         //var device = ctx.NetTrafficInfos.FirstOrDefault(x => x.DeviceId == model.MAC);
         var device = ctx.Devices.FirstOrDefault(x => x.DeviceId == model.DeviceId);
         if (device == null)
         {
-            throw new ApplicationException(string.Format("{0}未找到", model.DeviceId));
+           return new ApiResult() {Result=1 ,Message = "device not found" };
         }
+        model.Tenant = device.UserName;
+        model.DeviceName = device.Name;
+        model.CreateDate = DateTime.Now;
         ctx.DeviceLogs.Add(model);
         ctx.SaveChanges();
         return new ApiResult() { Message = "ok" };

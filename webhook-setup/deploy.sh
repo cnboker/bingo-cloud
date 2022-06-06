@@ -3,7 +3,6 @@
 # Although Compose works in all environments, it's more focused
 # development and testing. Using Compose on a production environment is not recommended at all.
 
-cd /home/ioliz
 git reset --hard
 git pull
 
@@ -40,7 +39,7 @@ docker container rm serviceapi
 docker image build --tag serviceapi:latest --file ./service/Dockerfile .
 docker run --detach --restart always --name serviceapi --publish 6001:6001 --network myNetwork serviceapi:latest
 
-cd ../../jsxBuildServer
+cd ../jsxBuildServer
 #docker-compose build
 docker container stop jsxbuild
 docker container rm jsxbuild
@@ -61,7 +60,7 @@ cd ../reverseProxy
 docker container stop nginxserver
 docker container rm nginxserver
 docker image build --tag nginxserver:latest .
-docker run --detach --restart always --name nginxserver --publish 80:80 --network myNetwork --volume /home/ubuntu/dist/app: /www/app --volumne /home/ubuntu/dist/app: /www/app nginxserver:latest
+docker run --detach --restart always --name nginxserver --publish 80:80 --network myNetwork --volume /home/ubuntu/dist/app:/www/app --volume /home/ioliz/_www:/www nginxserver:latest
 
 #docker-compose down
 #docker-compose build

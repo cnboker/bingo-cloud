@@ -22,7 +22,7 @@ export class MQTTDispatcher {
       this.client.on('message', (title: string, message: string) => {
         const jsonObj = JSON.parse(message)
         console.log('receive message', jsonObj)
-        if (title === MQTT_DOWNLOAD_PROGRESS) {
+        if (title.indexOf(MQTT_DOWNLOAD_PROGRESS) >= 0) {
           this.DownloadProgress && this.DownloadProgress(jsonObj)
         }
       })
@@ -49,6 +49,6 @@ export class MQTTDispatcher {
 
   //发布截图消息到设备
   spanshotPub(deviceId: string) {
-    this.client.publish(`${MQTT_SNAPSHOT_NOTIFY}/${deviceId}`, '')
+    this.client.publish(`${MQTT_SNAPSHOT_NOTIFY}/${deviceId}`, `{}`)
   }
 }
