@@ -33,24 +33,15 @@ namespace ImageThumbnail.AspNetCore.Middleware
 
             if (isVideoValid)
             {
-                var thumbnailRequest = ParseRequest(context.Request);
+                var VideoThumbnailRequest = ParseRequest(context.Request);
 
-                if (IsSourceImageExists(thumbnailRequest))
+                if (IsSourceVideoExists(VideoThumbnailRequest))
                 {
-                    if (!IsThumbnailExists(thumbnailRequest))
+                    if (!IsThumbnailExists(VideoThumbnailRequest))
                     {
-                        await GenerateThumbnail(thumbnailRequest, context.Response.Body);
+                        await GenerateThumbnail(VideoThumbnailRequest, context.Response.Body);
                     }
-
-                    context.Response.ContentType = "text/plain";
-                    context.Response.StatusCode = 200;
-                    context.Response.Headers.Add("Access-Control-Allow-Origin", "*");
-                    context.Response.Headers.Add("Access-Control-Allow-Credentials", "true");
-                    context.Response.Headers.Add("Access-Control-Allow-Headers", "Content-Type, X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Date, X-Api-Version, X-File-Name");
-                    context.Response.Headers.Add("Access-Control-Allow-Methods", "POST,GET,PUT,PATCH,DELETE,OPTIONS");
-                    //重新请求获取缩微图片
-                    context.Response.Redirect(thumbnailRequest.ThumbnailImageUrl);
-                    // await context.Response.WriteAsync(thumbnailRequest.ThumbnailImageUrl, CancellationToken.None);
+                    await WriteFromCache(VideoThumbnailRequest.ThumbnailSavePath, context.Response.Body);
                 }
                 else
                 {
@@ -70,21 +61,15 @@ namespace ImageThumbnail.AspNetCore.Middleware
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        private ThumbnailRequest ParseRequest(HttpRequest request)
+        private VideoThumbnailRequest ParseRequest(HttpRequest request)
         {
-            var req = new ThumbnailRequest();
-            req.RequestedPath = request.Path;
-            // req.ThumbnailSize = ParseSize(request.Query["size"]);
-            req.SourceImagePath = GetPhysicalPath(request.Path);
-            string fileName = GetThumbnailFileName(request.Path);
-            req.ThumbnailImagePath = GenerateThumbnailFilePath(fileName);
+            var req = new VideoThumbnailRequest();
+            req.VideoSavePath = GetPhysicalPath(request.Path);
             string hostUrl = request.Scheme + "://" + request.Host;
-            req.ThumbnailImageUrl = hostUrl + "/" + _options.CacheDirectoryName + "/" + fileName + "?size=" + request.Query["size"] + "&type=image&user=" + request.Query["user"];
-            //req.UserName = request.Query["user"];
-            Console.WriteLine("SourcevidoPath=" + req.SourceImagePath);
-            Console.WriteLine("RequestedPath=" + req.RequestedPath);
-            Console.WriteLine("ThumbnailVideoPath=" + req.ThumbnailImagePath);
-            Console.WriteLine("ThumbnailImageUrl=" + req.ThumbnailImageUrl);
+            req.SourcePath = hostUrl + request.Path + "?size=" + request.Query["size"];
+            string fileName = GetThumbnailFileName(request.Path, request.Query["user"]);
+            req.ThumbnailSavePath = GenerateThumbnailFilePath(fileName);
+
             return req;
         }
 
@@ -94,16 +79,17 @@ namespace ImageThumbnail.AspNetCore.Middleware
         /// <param name="request"></param>
         /// <param name="stream"></param>
         /// <returns></returns>
-        private async Task GenerateThumbnail(ThumbnailRequest request, Stream stream)
+        private async Task GenerateThumbnail(VideoThumbnailRequest request, Stream stream)
         {
             //create thumb
-            var url = AppInstance.Instance.Config.FFMpegServer + "/image?url=" + request.SourceImagePath;
-            Console.WriteLine("GenerateThumbnail source url=" + url);
-            Console.WriteLine("GenerateThumbnail ThumbnailImagePath url=" + request.ThumbnailImagePath);
+            var url = AppInstance.Instance.Config.FFMpegServer + "/image?url=" + request.SourcePath;
+            Console.WriteLine("VideoThumbnailRequest source url=" + url);
+            Console.WriteLine("VideoThumbnailRequest videosavepath =" + request.VideoSavePath);
+            Console.WriteLine("VideoThumbnailRequest ThumbnailImagePath save path =" + request.ThumbnailSavePath);
             using (HttpClient client = new HttpClient())
             {
                 var response = await client.GetAsync(url);
-                using (var fs = new FileStream(request.ThumbnailImagePath, FileMode.CreateNew))
+                using (var fs = new FileStream(request.ThumbnailSavePath, FileMode.CreateNew))
                 {
                     await response.Content.CopyToAsync(fs);
                 };
@@ -111,58 +97,19 @@ namespace ImageThumbnail.AspNetCore.Middleware
 
         }
 
-        /// <summary>
-        /// Parse input size string. Ex. sizes : 128x128, 120, 1, 512x512
-        /// </summary>
-        /// <param name="size"></param>
-        /// <returns></returns>
-        private Size? ParseSize(string size)
+
+        private bool IsSourceVideoExists(VideoThumbnailRequest request)
         {
-            var _size = _options.DefaultSize.Value;
-
-            try
-            {
-                if (!string.IsNullOrEmpty(size))
-                {
-                    size = size.ToLower();
-                    if (size.Contains("x"))
-                    {
-                        var parts = size.Split('x');
-                        _size.Width = int.Parse(parts[0]);
-                        _size.Height = int.Parse(parts[1]);
-                    }
-                    else if (size == "full")
-                    {
-                        return new Nullable<Size>();
-                    }
-                    else
-                    {
-                        _size.Width = int.Parse(size);
-                        _size.Height = int.Parse(size);
-                    }
-                }
-            }
-            catch (ArgumentException ex)
-            {
-                throw ex;
-            }
-
-
-            return _size;
-        }
-
-        private bool IsSourceImageExists(ThumbnailRequest request)
-        {
-            if (File.Exists(request.SourceImagePath))
+            if (File.Exists(request.VideoSavePath))
             {
                 return true;
             }
 
             return false;
         }
-        private bool IsThumbnailExists(ThumbnailRequest request)
+        private bool IsThumbnailExists(VideoThumbnailRequest request)
         {
-            if (File.Exists(request.ThumbnailImagePath))
+            if (File.Exists(request.ThumbnailSavePath))
             {
                 return true;
             }
@@ -178,21 +125,18 @@ namespace ImageThumbnail.AspNetCore.Middleware
             return fileInfo.PhysicalPath;
         }
 
-        private string GetThumbnailFileName(string path)
+        private string GetThumbnailFileName(string path, string userName)
         {
             var fileName = Path.GetFileNameWithoutExtension(path);
-            var ext = Path.GetExtension(path);
-
-            //ex : sample.jpg -> sample_256x256_mp4.jpeg
-            fileName = string.Format("{0}.jpeg", fileName);
+            fileName = string.Format("{0}_{1}.jpeg", fileName, userName);
             return fileName;
         }
         private string GenerateThumbnailFilePath(string fileName)
         {
-            //string fileName = GetThumbnailFileName(path,size,userName);
+            // var fileName = Path.GetFileNameWithoutExtension(path);
+            // var ext = Path.GetExtension(path);
             var provider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), _options.ImagesDirectory, _options.CacheDirectoryName));
             var fileInfo = provider.GetFileInfo(fileName);
-
             return fileInfo.PhysicalPath;
         }
         private void CreateThumbnailCacheDir()
@@ -212,9 +156,9 @@ namespace ImageThumbnail.AspNetCore.Middleware
         }
 
 
-        private async Task WriteFromSource(ThumbnailRequest request, Stream stream)
+        private async Task WriteFromSource(VideoThumbnailRequest request, Stream stream)
         {
-            using (var fs = new FileStream(request.SourceImagePath, FileMode.Open))
+            using (var fs = new FileStream(request.ThumbnailSavePath, FileMode.Open))
             {
                 await fs.CopyToAsync(stream);
             }

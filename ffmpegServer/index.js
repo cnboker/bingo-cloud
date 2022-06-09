@@ -101,7 +101,7 @@ app.get("/", (req, res) => {
       "-maxrate 4350k",
       "-r 30",
     ])
-    //.noAudio()
+    .noAudio()
     .toFormat("mp4")
     .pipe(res, { end: true });
 });

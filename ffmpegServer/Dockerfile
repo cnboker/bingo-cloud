@@ -22,7 +22,7 @@ COPY . .
 FROM node:16-alpine
 RUN mkdir -p /usr/app
 WORKDIR /usr/app
-RUN apt update -y && apt install -y ffmpeg 
+RUN apk add --no-cache ffmpeg 
 COPY --from=BUILD_IMAGE /usr/app ./
 COPY --from=BUILD_IMAGE /usr/app/node_modules ./node_modules
 
