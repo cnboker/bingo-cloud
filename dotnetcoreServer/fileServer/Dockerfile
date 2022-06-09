@@ -14,7 +14,7 @@ RUN dotnet build -c Release -o output
 FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS runtime
 #根目录是ioliz,因为context是../
 #ADD ./fileServer/sources.list /etc/apt/
-RUN apt update -y && apt install -y ffmpeg 
+#RUN apt update -y && apt install -y ffmpeg 
 
 COPY --from=build /fileServer/output ./release
 

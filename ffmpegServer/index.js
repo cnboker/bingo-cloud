@@ -3,6 +3,9 @@
 var express = require("express");
 var cors = require("cors");
 var ffmpeg = require("fluent-ffmpeg");
+const fs = require("fs");
+const path = require("path");
+const { response } = require("express");
 var port = 9000;
 var host = "0.0.0.0";
 
@@ -13,10 +16,46 @@ const progressSet = {};
 //dataprogress?key={url->hash}
 app.get("/dataProgress", (req, res) => {
   const hashCode = req.query.url.hashCode();
-  res.status(200).jsonp(progressSet[hashCode]||{percent:0});
+  res.status(200).jsonp(progressSet[hashCode] || { percent: 0 });
 });
 
-app.get("/");
+//scrapshot
+app.get("/image", (req, res) => {
+  let filename = req.query.url.split("/").pop();
+  filename = Date.now() + ".png";
+  ffmpeg(req.query.url)
+    // .inputFPS(30)
+    //.format("webm")
+    .size(req.query.size || "500x?")
+    .duration(5)
+    .screenshots({
+      timemarks: ["50%"],
+      filename,
+      folder: "tmp",
+      size: "500x?",
+    })
+    .on("error", function (err) {
+      console.log("error", err.message);
+      res.sendStatus(500);
+    })
+    .on("end", function () {
+      console.log("screensnap end...");
+      var filePath = path.join(__dirname, "/tmp/" + filename);
+      console.log("filePath", filePath);
+      var stat = fs.statSync(filePath);
+      res.writeHead(200, {
+        "Content-Type": "image/png",
+        "Content-Length": stat.size,
+      });
+      console.log("filePath", filePath, stat.size);
+      fs.createReadStream(filePath)
+        .pipe(res)
+        .on("finish", function () {
+          fs.rmSync(filePath);
+        });
+    });
+});
+
 //http://address?url=
 app.get("/", (req, res) => {
   res.contentType("video/mp4");
@@ -30,23 +69,25 @@ app.get("/", (req, res) => {
   ffmpeg(req.query.url)
     .on("start", function (ffmpegCommand) {
       /// log something maybe
-      progressSet[urlHash] = {percent:0};
+      progressSet[urlHash] = { percent: 0 };
     })
     .on("progress", function (data) {
       /// do stuff with progress data if you want
       console.log("progress", data);
-      progressSet[urlHash] = data;
+      progressSet[urlHash] = { ...data, filename };
     })
     .on("end", function () {
       /// encoding is complete, so callback or move on at this point
       progressSet[urlHash] = {
-        percent:100
-      }
+        percent: 100,
+        filename
+      };
     })
-    .on("error", function (error) {
+    .on("error", function (err) {
       /// error handling
-      console.log('error',error)
-      progressSet[urlHash] = {percent:0};
+      console.log("error", err);
+      progressSet[urlHash] = { error: err.message };
+      //res.sendStatus(500);
     })
     .videoCodec("libx264")
     .size("1920x1080")
@@ -60,7 +101,7 @@ app.get("/", (req, res) => {
       "-maxrate 4350k",
       "-r 30",
     ])
-    .noAudio()
+    //.noAudio()
     .toFormat("mp4")
     .pipe(res, { end: true });
 });

@@ -5,7 +5,9 @@ import * as Dialog from 'src/views/components/dialog/Index'
 import { uniqueID } from 'src/lib/string'
 import { asyncPost, asyncGet } from 'src/lib/api'
 import { DirCreateUrl } from './constants'
-import { textToBitmap } from './TextToBitmap'
+import { useDispatch } from 'react-redux'
+import { StatusBarType, statusBarUpdate } from 'src/statusBarReducer'
+import R from './locale'
 // Hook that sets up our file map and defines functions used to mutate - `deleteFiles`,
 // `moveFiles`, and so on.
 export const useCustomFileMap = (data: FsMap) => {
@@ -15,6 +17,8 @@ export const useCustomFileMap = (data: FsMap) => {
   // Setup the React state for our file map and the current folder.
   const [fileMap, setFileMap] = useState(baseFileMap)
   const [currentFolderId, setCurrentFolderId] = useState(rootFolderId)
+  const dispatch = useDispatch()
+
   // Setup the function used to reset our file map to its initial value. Note that
   // here and below we will always use `useCallback` hook for our functions - this is
   // a crucial React performance optimization, read more about it here:
@@ -107,32 +111,35 @@ export const useCustomFileMap = (data: FsMap) => {
 
   const uploadFiles = useCallback(() => {
     //必须在setFileMap函数里面，才能获取到新建文件夹关联数据
-    setFileMap((map) => {
-      const path = getPath(currentFolderIdRef.current)
-      console.log('upload bashpath', path)
-      Dialog.confirm(
-        <FilePicker
-          basePath={path}
-          onProcessFiles={(files) => {
-            console.log('response data', files)
-            appendFileNode(files)
-          }}
-        />,
-      )
-      return map
-    })
+    //setFileMap((map) => {
+    const path = getPath(currentFolderIdRef.current)
+    console.log('upload bashpath', path)
+    Dialog.confirm(
+      <FilePicker
+        basePath={path}
+        onProcessFiles={(files) => {
+          console.log('response data', files)
+          appendFileNode(files)
+        }}
+      />,
+    )
+    //return map
+    //})
   }, [])
 
   const getPath = (curNodeId: string) => {
     const curNode = fileMap[curNodeId]
     const paths = []
-    if (curNode.isDir) {
+    if (curNode.isDir && curNode.parentId !== '') {
       paths.push(curNode.name)
     }
     let lastNode = curNode
     while (lastNode.parentId) {
       lastNode = fileMap[lastNode.parentId]
-      paths.push(lastNode.name)
+      //不包含root
+      if (lastNode.parentId !== '') {
+        paths.push(lastNode.name)
+      }
     }
     return paths.reverse().join('/')
   }
@@ -147,32 +154,70 @@ export const useCustomFileMap = (data: FsMap) => {
   // }
   const checkLongTask = (requestUrl: string, fileName: string, newFileId: string) => {
     if (!requestUrl) return
-    asyncGet({ url: requestUrl }).then((res) => {
-      console.log('checklongtask', res.data)
-      const { percent, error } = res.data
-      const imageText = `wait-${percent.toFixed(0)}%`
-      const imageData = textToBitmap(imageText)
-      setFileMap((map: any) => {
-        const newMap = { ...map }
-        newMap[newFileId] = { ...newMap[newFileId], thumbnailUrl: imageData }
-        return newMap
-      })
-      let timer
-      if (percent < 100 && !error) {
-        timer = setTimeout(() => {
-          checkLongTask(requestUrl, fileName, newFileId)
-        }, 1000)
-      } else {
-        timer && clearTimeout(timer)
-        setFileMap((map: any) => {
-          const newMap = { ...map }
-          newMap[newFileId] = {
-            ...newMap[newFileId],
-            thumbnailUrl: getPath(newFileId) + '/' + fileName,
+    asyncGet({ url: requestUrl })
+      .then((res) => {
+        //console.log('checklongtask', res.data)
+        const { percent, error, filename } = res.data
+        if (percent > 0) {
+          dispatch(
+            statusBarUpdate({
+              message: R.videoEncodeTip.format(filename, percent.toFixed(2)),
+              visible: true,
+              type: StatusBarType.progressBar,
+            }),
+          )
+        }
+        let timer
+        if (percent < 100 && !error && !timer) {
+          timer = setTimeout(() => {
+            checkLongTask(requestUrl, fileName, newFileId)
+          }, 3000)
+        } else {
+          timer && clearTimeout(timer)
+          if (!error) {
+            dispatch(
+              statusBarUpdate({
+                message: R.videoEncodeDone.format(filename),
+                visible: true,
+                type: StatusBarType.message,
+              }),
+            )
+          } else {
+            dispatch(
+              statusBarUpdate({
+                message: R.videoEncodeError.format(error),
+                visible: true,
+                type: StatusBarType.alert,
+              }),
+            )
+            removeFileNode(newFileId)
           }
-          return newMap
+        }
+      })
+      .catch((e) => {
+        statusBarUpdate({
+          message: R.videoEncodeError.format(fileName),
+          visible: true,
+          type: StatusBarType.alert,
         })
+      })
+  }
+
+  const removeFileNode = (id: any) => {
+    setFileMap((currentFileMap) => {
+      const newFileMap = { ...currentFileMap }
+      const curNode = newFileMap[id]
+      delete newFileMap[id]
+      if (curNode.parentId) {
+        const parent = newFileMap[curNode.parentId]!
+        const newChildrenIds = parent.childrenIds?.filter((id: string) => id !== curNode.id)
+        newFileMap[curNode.parentId] = {
+          ...parent,
+          childrenIds: newChildrenIds,
+          childrenCount: newChildrenIds.length,
+        }
       }
+      return newFileMap
     })
   }
 
@@ -181,6 +226,7 @@ export const useCustomFileMap = (data: FsMap) => {
     //taskPercentRequestUrl:视频文件上传包含该属性,浏览器可以调用该地址获取编码进度
     const { fileName, taskPercentRequestUrl, thumbnailUrl } = fileInfo
     const newFileId = uniqueID()
+    checkLongTask(taskPercentRequestUrl, fileName, newFileId)
     setFileMap((fileMap) => {
       const newFileMap = { ...fileMap }
       const currentFolder = newFileMap[currentFolderIdRef.current]
@@ -198,7 +244,6 @@ export const useCustomFileMap = (data: FsMap) => {
         childrenIds: childrenIds,
         childrenCount: childrenIds.length,
       }
-      checkLongTask(taskPercentRequestUrl, fileName, newFileId)
       return newFileMap
     })
   }

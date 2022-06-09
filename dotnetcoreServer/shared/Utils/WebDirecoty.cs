@@ -4,6 +4,7 @@ using System.IO;
 using Ioliz.Shared.Utils;
 using Ioliz.Shared;
 using System;
+using System.Collections;
 
 namespace Ioliz.Shared.Utils
 {
@@ -23,7 +24,7 @@ namespace Ioliz.Shared.Utils
             return string.Format("{0}/{1}{2}", domain, this.userName, base.GetPath(fileFullName));
         }
 
-        public override string GetThumbnailUrl(string fileName)
+        public override string GetThumbnailUrl(string prefixPath, string fileName)
         {
             var mimeType = MimeTypes.GetMimeType(fileName);
             var type = "image";
@@ -36,7 +37,7 @@ namespace Ioliz.Shared.Utils
                 type = "video";
             }
 
-            return string.Format("{0}/{1}?size=512x512&type={2}&user={3}", this.domain + "/" + this.userName, fileName, type, this.userName);
+            return string.Format("{0}/{1}?size=512x512&type={2}&user={3}", this.domain + "/" + this.userName + "/" + prefixPath, fileName, type, this.userName);
         }
     }
 
@@ -60,7 +61,7 @@ namespace Ioliz.Shared.Utils
             this.CreateFolderHierarchy();
         }
 
-        public virtual string GetThumbnailUrl(string fileName)
+        public virtual string GetThumbnailUrl(string prefixPath, string fileName)
         {
             throw new NotImplementedException();
         }
@@ -76,23 +77,38 @@ namespace Ioliz.Shared.Utils
             {
                 Id = RootFolderId,
                 //根目录显示空不显示用户名称
-                Name = "",
+                Name = "root",
                 ParentId = "",
             };
+            fileMap.Add(RootFolderId, node);
             var dirNodes = GetDirNodes(RootFolderId, this.rootInfo);
             var filesNodes = GetFileNodes(RootFolderId, this.rootInfo);
             node.ChildrenCount = dirNodes.Count() + filesNodes.Count();
             node.ChildrenIds = dirNodes.Select(c => c.Id).Union(filesNodes.Select(c => c.Id)).ToArray();
-            fileMap.Add(RootFolderId, node);
+
             foreach (var item in filesNodes)
             {
                 fileMap.Add(item.Id, item);
             }
         }
 
-
+        private string GetDirPath(string parentId)
+        {
+            if (parentId == "") return "";
+            ArrayList dirs = new ArrayList();
+            var node = fileMap[parentId];
+            if (node == null) return "";
+            while (node != null && node.ParentId != "")
+            {
+                dirs.Add(node.Name);
+                node = fileMap[node.ParentId];
+            }
+            return string.Join("/", dirs.ToArray());
+        }
         private FileNode[] GetFileNodes(string parentId, DirectoryInfo dir)
         {
+            string prefixPath = GetDirPath(parentId);
+            Console.WriteLine("prefixPath=" + prefixPath);
             return dir.GetFiles().Select(c =>
             {
                 return new FileNode()
@@ -103,14 +119,14 @@ namespace Ioliz.Shared.Utils
                     Path = GetPath(c.FullName),
                     ModDate = c.LastWriteTime.ToLongDateString(),
                     ParentId = parentId,
-                    ThumbnailUrl = GetThumbnailUrl(c.Name),
+                    ThumbnailUrl = GetThumbnailUrl(prefixPath, c.Name),
                 };
             }).ToArray();
         }
 
         private DirNode[] GetDirNodes(string parentId, DirectoryInfo dir)
         {
-            var children = dir.GetDirectories();
+            var children = dir.GetDirectories().Where(c => c.Name != ".tmp");
             List<DirNode> dirNodesList = new List<DirNode>();
             foreach (var child in children)
             {
@@ -120,6 +136,7 @@ namespace Ioliz.Shared.Utils
                     Name = child.Name,
                     ParentId = parentId,
                 };
+                fileMap.Add(node.Id, node);
                 var childDirNodes = GetDirNodes(node.Id, child);
                 var childFileNodes = GetFileNodes(node.Id, child);
 
@@ -130,7 +147,7 @@ namespace Ioliz.Shared.Utils
                 {
                     fileMap.Add(item.Id, item);
                 }
-                fileMap.Add(node.Id, node);
+
             }
             return dirNodesList.ToArray();
         }
@@ -169,8 +186,9 @@ namespace Ioliz.Shared.Utils
     public class NodeBase
     {
         public string Id { get; set; }
+        //目录
         public string Name { get; set; }
-
+       
         public string ParentId { get; set; }
 
     }

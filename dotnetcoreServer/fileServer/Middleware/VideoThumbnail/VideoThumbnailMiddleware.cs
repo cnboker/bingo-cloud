@@ -1,9 +1,11 @@
 using FFmpeg.NET;
+using FileServer;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.FileProviders;
 using System;
 using System.Drawing;
 using System.IO;
+using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -27,8 +29,8 @@ namespace ImageThumbnail.AspNetCore.Middleware
         public async Task InvokeAsync(HttpContext context)
         {
             var isVideoValid = context.Request.Query["type"] == "video";
-            
-            
+
+
             if (isVideoValid)
             {
                 var thumbnailRequest = ParseRequest(context.Request);
@@ -48,7 +50,7 @@ namespace ImageThumbnail.AspNetCore.Middleware
                     context.Response.Headers.Add("Access-Control-Allow-Methods", "POST,GET,PUT,PATCH,DELETE,OPTIONS");
                     //重新请求获取缩微图片
                     context.Response.Redirect(thumbnailRequest.ThumbnailImageUrl);
-                   // await context.Response.WriteAsync(thumbnailRequest.ThumbnailImageUrl, CancellationToken.None);
+                    // await context.Response.WriteAsync(thumbnailRequest.ThumbnailImageUrl, CancellationToken.None);
                 }
                 else
                 {
@@ -72,7 +74,7 @@ namespace ImageThumbnail.AspNetCore.Middleware
         {
             var req = new ThumbnailRequest();
             req.RequestedPath = request.Path;
-           // req.ThumbnailSize = ParseSize(request.Query["size"]);
+            // req.ThumbnailSize = ParseSize(request.Query["size"]);
             req.SourceImagePath = GetPhysicalPath(request.Path);
             string fileName = GetThumbnailFileName(request.Path);
             req.ThumbnailImagePath = GenerateThumbnailFilePath(fileName);
@@ -94,22 +96,19 @@ namespace ImageThumbnail.AspNetCore.Middleware
         /// <returns></returns>
         private async Task GenerateThumbnail(ThumbnailRequest request, Stream stream)
         {
-            if (File.Exists(request.SourceImagePath))
+            //create thumb
+            var url = AppInstance.Instance.Config.FFMpegServer + "/image?url=" + request.SourceImagePath;
+            Console.WriteLine("GenerateThumbnail source url=" + url);
+            Console.WriteLine("GenerateThumbnail ThumbnailImagePath url=" + request.ThumbnailImagePath);
+            using (HttpClient client = new HttpClient())
             {
-                var inputFile = new InputFile(request.SourceImagePath);
-                var outputFile = new OutputFile(request.ThumbnailImagePath);
-                var ffmpeg = new Engine("ffmpeg.exe");
-                // Saves the frame located on the 15th second of the video.
-                var size = request.ThumbnailSize;
-                var options = new ConversionOptions
+                var response = await client.GetAsync(url);
+                using (var fs = new FileStream(request.ThumbnailImagePath, FileMode.CreateNew))
                 {
-                    Seek = TimeSpan.FromSeconds(5),
-                    CustomHeight = size.HasValue? size.Value.Height : 512,
-                    CustomWidth = size.HasValue? size.Value.Width : 512
+                    await response.Content.CopyToAsync(fs);
                 };
-                CancellationToken source1 = new CancellationToken();
-                await ffmpeg.GetThumbnailAsync(inputFile, outputFile, options, source1);
-            }
+            };
+
         }
 
         /// <summary>
@@ -179,7 +178,8 @@ namespace ImageThumbnail.AspNetCore.Middleware
             return fileInfo.PhysicalPath;
         }
 
-        private string GetThumbnailFileName(string path){
+        private string GetThumbnailFileName(string path)
+        {
             var fileName = Path.GetFileNameWithoutExtension(path);
             var ext = Path.GetExtension(path);
 

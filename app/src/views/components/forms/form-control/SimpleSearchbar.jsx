@@ -1,4 +1,3 @@
-import React from 'react'
 import { CInputGroup, CInputGroupText, CFormInput } from '@coreui/react'
 export default ({ onSearch }) => {
   return (

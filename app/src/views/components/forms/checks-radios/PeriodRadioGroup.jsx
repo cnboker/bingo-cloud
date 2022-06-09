@@ -1,4 +1,3 @@
-import React from 'react'
 import CheckGroup from '../CheckGroup'
 import { langLoader } from '~/lib/localize'
 

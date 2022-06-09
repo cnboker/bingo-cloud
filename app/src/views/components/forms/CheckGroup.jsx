@@ -1,4 +1,3 @@
-import React from 'react'
 import { CButtonGroup, CFormCheck } from '@coreui/react'
 
 export default ({ name, data, onChecked, defaultChecked }) => {

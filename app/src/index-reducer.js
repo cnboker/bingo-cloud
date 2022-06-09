@@ -10,6 +10,7 @@ import siderBarReducer from './store'
 import { authorizeReducer } from './views/pages/authorize/reducer'
 import homeReducer from './views/dashboard/reducer'
 import { mqttDownloadProgressReducer } from './views/pages/mqtt/reducer'
+import { statusBarReducer } from './statusBarReducer'
 const appReducer = combineReducers({
   securityReducer,
   userReducer,
@@ -23,6 +24,7 @@ const appReducer = combineReducers({
   homeReducer,
   deviceLogReducer,
   mqttDownloadProgressReducer,
+  statusBarReducer,
 })
 
 const IndexReducer = (state, action) => {

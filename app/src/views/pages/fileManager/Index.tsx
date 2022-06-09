@@ -23,6 +23,7 @@ import { requestDeviceList } from '../device/actions'
 import { contentPublish } from '../mqtt/mqttApi'
 import { getLang } from 'src/lib/localize'
 import cn18n from './cn18n'
+import StatusBar from '../../../StatusBar'
 
 setChonkyDefaults({ iconComponent: ChonkyIconFA })
 
@@ -38,7 +39,6 @@ const useFetchCustomFileMap = () => {
   }, [])
 }
 
-//每次切换目录都会执行该函数,在该函数需要补充完整thumbnailUrl完整目录
 export const useFiles = (fileMap: CustomFileMap, currentFolderId: string): FileArray => {
   const currentFolder = fileMap[currentFolderId]
   const childrenIds = [...currentFolder.childrenIds!]
@@ -111,7 +111,7 @@ export const VFSBrowser: React.FC<DataVFSProps> = (props) => {
   const { selectedFiles, fileSelectAction, removeAction, onMovedown } = useFilePicker([])
 
   const filesAction = useFiles(fileMap, currentFolderId)
-  //const folderChain = useFolderChain(fileMap, currentFolderId)
+  const folderChain = useFolderChain(fileMap, currentFolderId)
   const handleFileAction = useFileActionHandler(
     setCurrentFolderId,
     deleteFiles,
@@ -184,6 +184,7 @@ export const VFSBrowser: React.FC<DataVFSProps> = (props) => {
 
   return (
     <>
+      <StatusBar />
       <SelectFileList onSubmit={onPub} selectFileCount={selectedFiles.length}>
         <PubForms
           ref={pubFormsRef}
@@ -202,9 +203,10 @@ export const VFSBrowser: React.FC<DataVFSProps> = (props) => {
           files={filesAction}
           i18n={i18n}
           fileActions={fileActions}
+          folderChain={folderChain}
           onFileAction={actionCombiner}
           {...props}
-        />
+        ></FullFileBrowser>
       </div>
     </>
   )

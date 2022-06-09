@@ -19,6 +19,8 @@ namespace FileServer.Controllers
         private IWebHostEnvironment _hostingEnvironment;
         private string UserBaseDir;
         private string videoTmpDir;
+        //上传文件虚拟路径， 比如上传目录是/root/images, 那么虚拟路径就是 images
+        private string prefixPath;
         public ServerController(IWebHostEnvironment hostingEnvironment)
         {
             this._hostingEnvironment = hostingEnvironment;
@@ -27,16 +29,26 @@ namespace FileServer.Controllers
 
         private void RequireDirIsCreate()
         {
+            Console.WriteLine("_hostingEnvironment.WebRootPath=" + _hostingEnvironment.WebRootPath);
             this.UserBaseDir = Path.Combine(_hostingEnvironment.WebRootPath, User.Identity.Name);
             if (!System.IO.Directory.Exists(this.UserBaseDir))
             {
                 System.IO.Directory.CreateDirectory(this.UserBaseDir);
             }
             //临时目录用于存储上传的视频文件
-            this.videoTmpDir = this.UserBaseDir + "/tmp/";
-            if (!Directory.Exists(this.videoTmpDir))
+            this.videoTmpDir = this.UserBaseDir + Contants.TmpDir;
+            CreateDir(this.videoTmpDir);
+            CreateDir(this.UserBaseDir + Contants.DocDir);
+            CreateDir(this.UserBaseDir + Contants.VideoDir);
+            CreateDir(this.UserBaseDir + Contants.ImageDir);
+            CreateDir(this.UserBaseDir + Contants.IPADir);
+        }
+
+        private void CreateDir(string dir)
+        {
+            if (!Directory.Exists(dir))
             {
-                Directory.CreateDirectory(this.videoTmpDir);
+                Directory.CreateDirectory(dir);
             }
         }
 
@@ -45,7 +57,7 @@ namespace FileServer.Controllers
         {
             RequireDirIsCreate();
             string hostUrl = Request.Scheme + "://" + Request.Host;
-            WebDirectory generator = new WebDirectory(hostUrl,User.Identity.Name);
+            WebDirectory generator = new WebDirectory(hostUrl, User.Identity.Name);
             generator.CreateFileMap(this.UserBaseDir);
             var outputJson = new
             {
@@ -87,7 +99,7 @@ namespace FileServer.Controllers
             {
                 try
                 {
-                    var filePath = _hostingEnvironment.WebRootPath + "/" + User.Identity.Name + file.Path;
+                    var filePath = _hostingEnvironment.WebRootPath + "/" + User.Identity.Name + "/" + file.Path;
                     if (file.IsDir)
                     {
                         if (Directory.Exists(filePath))
@@ -117,9 +129,11 @@ namespace FileServer.Controllers
         {
             RequireDirIsCreate();
             //前缀不包含用户名称(/scott/tmp/test/a.txt,basePath为/tmp/test)
-            var prefixPath = Request.Headers["basePath"];
+            this.prefixPath = Request.Headers["basePath"].ToString();
+            Console.WriteLine("prefixPath=" + prefixPath);
+            //ObjectDumper.Dump(files);
             //浏览器选择的当前目录
-            var fileUploadDir = this.UserBaseDir + prefixPath[0];
+            var fileUploadDir = this.UserBaseDir + "/" + prefixPath + "/";
             var isVideo = IsMediaFile(files.FileName);
             FileResultModel result = new FileResultModel() { };
             if (isVideo)
@@ -145,14 +159,15 @@ namespace FileServer.Controllers
             }
             string hostUrl = Request.Scheme + "://" + Request.Host;
             string fileName = files.FileName.Substring(0, files.FileName.IndexOf(".")) + ".mp4";
-            WebDirectory webDir = new WebDirectory(hostUrl,User.Identity.Name);
+            WebDirectory webDir = new WebDirectory(hostUrl, User.Identity.Name);
             return new FileResultModel()
             {
                 FileName = fileName,
                 //只有上传的是视频文件的时候才会用
-                FullUrl = hostUrl + "/" + User.Identity.Name + "/tmp/" + files.FileName,
+                FullUrl = hostUrl + "/" + User.Identity.Name + Contants.TmpDir + files.FileName,
                 SavePath = fileUploadDir + "/" + fileName,
-                ThumbnailUrl = webDir.GetThumbnailUrl(files.FileName)
+                //视频文件放到.tmp文件夹，所有这里临时从.tmp文件截图
+                ThumbnailUrl = webDir.GetThumbnailUrl(Contants.TmpDir, files.FileName)
             };
         }
 
@@ -166,11 +181,11 @@ namespace FileServer.Controllers
                     await files.CopyToAsync(stream);
                 }
             }
-            WebDirectory webDir = new WebDirectory(hostUrl,User.Identity.Name);
+            WebDirectory webDir = new WebDirectory(hostUrl, User.Identity.Name);
             return new FileResultModel()
             {
                 FileName = files.FileName,
-                ThumbnailUrl = webDir.GetThumbnailUrl(files.FileName)
+                ThumbnailUrl = webDir.GetThumbnailUrl(this.prefixPath, files.FileName)
             };
         }
 

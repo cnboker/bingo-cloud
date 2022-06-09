@@ -1,6 +1,5 @@
 import 'react-app-polyfill/stable'
 import 'core-js'
-import React from 'react'
 import ReactDOM from 'react-dom'
 import App from './App'
 import { Provider } from 'react-redux'

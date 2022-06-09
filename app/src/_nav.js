@@ -1,4 +1,3 @@
-import React from 'react'
 import CIcon from '@coreui/icons-react'
 import { cilSpeedometer, cilCart, cilUser, cilYen, cilFolder, cilDevices } from '@coreui/icons'
 import { CNavItem } from '@coreui/react'

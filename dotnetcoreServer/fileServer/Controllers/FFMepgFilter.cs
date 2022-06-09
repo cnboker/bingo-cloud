@@ -22,18 +22,25 @@ namespace FileServer.Controllers
             {
                 return;
             }
-
+            //encode video
             var url = AppInstance.Instance.Config.FFMpegServer + "?url=" + result.FullUrl;
-            Console.WriteLine("fullUrl=" + result.FullUrl);
-            Console.WriteLine("savePath=" + result.SavePath);
+
             if (File.Exists(result.SavePath)) return;
             using (HttpClient client = new HttpClient())
             {
-                var response = await client.GetAsync(url);
-                using (var fs = new FileStream(result.SavePath, FileMode.CreateNew))
+                try
                 {
-                    await response.Content.CopyToAsync(fs);
-                };
+                    var response = await client.GetAsync(url);
+                    using (var fs = new FileStream(result.SavePath, FileMode.CreateNew))
+                    {
+                        await response.Content.CopyToAsync(fs);
+                    };
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("FFMepgFilter ERROR" + ex.Message);
+                }
+
             };
 
         }

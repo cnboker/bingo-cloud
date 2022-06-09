@@ -1,4 +1,3 @@
-import React from 'react'
 import ReactPaginate from 'react-paginate'
 import GR from '~/locale'
 import './pager.css'

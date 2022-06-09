@@ -1,4 +1,3 @@
-import React from 'react'
 import * as classNames from 'classnames'
 import PropTypes from 'prop-types'
 import If from 'src/lib/If'

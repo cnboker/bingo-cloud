@@ -20,18 +20,22 @@ module.exports = {
   ],
   plugins: ['react', 'react-hooks'],
   rules: {
+    // suppress errors for missing 'import React' in files
+    'react/react-in-jsx-scope': 'off',
+    // allow jsx syntax in js files (for next.js project)
+    'react/jsx-filename-extension': [1, { extensions: ['.js', '.jsx'] }], //should add ".ts" if typescript project
     'prettier/prettier': [
       'error',
       {
         endOfLine: 'auto',
       },
     ],
-    "@typescript-eslint/no-this-alias": [
-      "error",
+    '@typescript-eslint/no-this-alias': [
+      'error',
       {
-        "allowDestructuring": false, // Disallow `const { props, state } = this`; true by default
-        "allowedNames": ["self"] // Allow `const self = this`; `[]` by default
-      }
+        allowDestructuring: false, // Disallow `const { props, state } = this`; true by default
+        allowedNames: ['self'], // Allow `const self = this`; `[]` by default
+      },
     ],
     // Place to specify ESLint rules. Can be used to overwrite rules specified from
     // the extended configs e.g. "@typescript-eslint/explicit-function-return-type":

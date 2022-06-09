@@ -1,4 +1,3 @@
-import React from 'react'
 import { CRow, CFormLabel, CFormInput, CCol } from '@coreui/react'
 
 export default ({ label, text, size = 'lg' }) => {

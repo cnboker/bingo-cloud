@@ -1,4 +1,3 @@
-import React from 'react'
 import PropTyps from 'prop-types'
 
 export const RowContainer = (props) => {
