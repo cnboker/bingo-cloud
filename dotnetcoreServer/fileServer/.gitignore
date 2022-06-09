@@ -1,8 +1,9 @@
+appsettings.json
 _build/
 _site/
 Properties/
 wwwroot/
-appsettings.json
+
 # Use git add -f to force override .sln when required. Not needed in most cases.
 # git add -f myProj.sln
 *.sln
