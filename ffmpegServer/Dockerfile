@@ -2,7 +2,7 @@ FROM node:16 as BUILD_IMAGE
 # VOLUME [ "/root" ]
 # update sources.list
 ADD sources.list /etc/apt/
-RUN apt update -y && apt install -y ffmpeg 
+
 # ADD setup-ffmpeg.sh /root
 # RUN ["chmod", "+x", "/root/setup-ffmpeg.sh"]
 # RUN /root/setup-ffmpeg.sh
@@ -22,7 +22,7 @@ COPY . .
 FROM node:16-alpine
 RUN mkdir -p /usr/app
 WORKDIR /usr/app
-
+RUN apt update -y && apt install -y ffmpeg 
 COPY --from=BUILD_IMAGE /usr/app ./
 COPY --from=BUILD_IMAGE /usr/app/node_modules ./node_modules
 
