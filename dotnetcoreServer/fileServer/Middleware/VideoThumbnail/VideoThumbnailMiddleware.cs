@@ -41,7 +41,20 @@ namespace ImageThumbnail.AspNetCore.Middleware
                     {
                         await GenerateThumbnail(VideoThumbnailRequest, context.Response.Body);
                     }
-                    await WriteFromCache(VideoThumbnailRequest.ThumbnailSavePath, context.Response.Body);
+                    if (File.Exists(VideoThumbnailRequest.ThumbnailSavePath))
+                    {
+                        await WriteFromCache(VideoThumbnailRequest.ThumbnailSavePath, context.Response.Body);
+                    }else{
+                        //显示默认图片
+                        string defaultImage = GenerateThumbnailFilePath("video.jpeg");
+                        Console.WriteLine("defaultImagePath=" + defaultImage);
+                        await WriteFromCache(defaultImage, context.Response.Body);
+                    }
+                    // else
+                    // {
+                    //     await _next(context);
+                    // }
+
                 }
                 else
                 {
@@ -88,11 +101,21 @@ namespace ImageThumbnail.AspNetCore.Middleware
             Console.WriteLine("VideoThumbnailRequest ThumbnailImagePath save path =" + request.ThumbnailSavePath);
             using (HttpClient client = new HttpClient())
             {
-                var response = await client.GetAsync(url);
-                using (var fs = new FileStream(request.ThumbnailSavePath, FileMode.CreateNew))
+                try
                 {
-                    await response.Content.CopyToAsync(fs);
-                };
+                    var response = await client.GetAsync(url);
+                    //// Throw if not a success code.
+                    response.EnsureSuccessStatusCode();
+                    using (var fs = new FileStream(request.ThumbnailSavePath, FileMode.CreateNew))
+                    {
+                        await response.Content.CopyToAsync(fs);
+                    };
+                }
+                catch (Exception e)
+                {
+
+                }
+
             };
 
         }
@@ -128,7 +151,7 @@ namespace ImageThumbnail.AspNetCore.Middleware
         private string GetThumbnailFileName(string path, string userName)
         {
             var fileName = Path.GetFileNameWithoutExtension(path);
-            fileName = string.Format("{0}_{1}.jpeg", fileName, userName);
+            fileName = string.Format("{0}_{1}_v.jpeg", fileName, userName);
             return fileName;
         }
         private string GenerateThumbnailFilePath(string fileName)

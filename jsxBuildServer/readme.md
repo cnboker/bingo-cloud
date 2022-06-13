@@ -73,19 +73,3 @@ call esbuild.js后在publish目录生成index.html,并回传虚拟路径给调�
 
 
   
-## Contributing
-  
-  *If you would like to contribute it, you can follow these guidelines for how to do so.*
-  
-  Tell us about how other developers can contribute to your project.  Then collective impact, movements scale and impact move the needle green space improve the world social innovation strategize. Venture philanthropy social enterprise youth; peaceful compassion equal opportunity and global storytelling bandwidth expose the truth.
-  
-## Tests
-  
-  *Tests for application and how to run them:*
-  
-  Here's where you can write about any tests you've used in your project. Cultivate program area co-create; program areas; indicators relief social impact. Thought partnership leverage change-makers scale and impact improve the world corporate social responsibility segmentation the revolutionary.
-  
-## License
-  
-  Mozilla Public License 2.0
-  

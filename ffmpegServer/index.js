@@ -23,16 +23,17 @@ app.get("/dataProgress", (req, res) => {
 app.get("/image", (req, res) => {
   let filename = req.query.url.split("/").pop();
   filename = Date.now() + ".png";
+  console.log('req.query.size',req.query.size)
   ffmpeg(req.query.url)
     // .inputFPS(30)
     //.format("webm")
-    .size(req.query.size || "500x?")
+    //.size(req.query.size || "200x?")
     .duration(5)
     .screenshots({
-      timemarks: ["50%"],
+      timemarks: ["00:00:05.000"],
       filename,
       folder: "tmp",
-      size: "500x?",
+      size: req.query.size || "200x?",
     })
     .on("error", function (err) {
       console.log("error", err.message);
@@ -92,7 +93,8 @@ app.get("/", (req, res) => {
     .videoCodec("libx264")
     .size("1920x1080")
     .outputOptions([
-      //  '-vcodec libx264',
+      "-map 0:0",
+     // "-map 0:1?",
       "-pix_fmt yuv420p",
       "-movflags empty_moov+default_base_moof+frag_keyframe",
       "-profile:v baseline",
