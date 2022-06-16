@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { IPlayProps } from "../Meta";
 import { ImagePlayer } from "./ImagePlayer";
 import { PagePlayer } from "./PagePlayer";
-import VideoPlayer from "./mediaPlayer";
+import VideoPlayer from "./mediaPlayer/Index";
 import { TransitionGroup, CSSTransition } from "react-transition-group";
 import { fetchNext } from "./Viewport";
 

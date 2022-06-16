@@ -39,7 +39,7 @@ export class PlayerViewer implements IPlayerViewer {
   }
   async play() {
     this.videoElment.style.visibility = "visible";
-    this.fullscreen();
+    //this.fullscreen();
     const player = this.videoElment;
     player.addEventListener(
       "ended",
