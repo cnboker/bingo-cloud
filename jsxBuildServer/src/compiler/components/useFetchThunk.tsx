@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 export type Segment = {
   //总共多少个数据块
@@ -12,7 +12,6 @@ export type Segment = {
 };
 
 export const useFetchThunk = (
-  url: string
 ): [Segment, (url: string) => void, (url: string) => void] => {
   const [segment, setSegment] = useState<Segment>({
     index: 0,
@@ -42,6 +41,7 @@ export const useFetchThunk = (
       var xhr = new XMLHttpRequest();
       xhr.open("GET", url, true);
       xhr.onreadystatechange = () => {
+        //@ts-ignore
         resolve(+xhr.getResponseHeader("Content-Length"));
         xhr.abort();
       };
@@ -83,6 +83,7 @@ export const useFetchThunk = (
         }
         
         setSegment((seg) => {
+          //@ts-ignore
           seg.chunks.push(data);
           return { ...seg, index: index + 1, duration};
         });

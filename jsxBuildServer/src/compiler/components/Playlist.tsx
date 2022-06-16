@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { IPlayProps } from "../Meta";
 import { ImagePlayer } from "./ImagePlayer";
 import { PagePlayer } from "./PagePlayer";
-import VideoPlayer from "./myPlayer";
+import VideoPlayer from "./mediaPlayer";
 import { TransitionGroup, CSSTransition } from "react-transition-group";
 import { fetchNext } from "./Viewport";
 
@@ -13,8 +13,7 @@ export type IDataSource = {
 export const Playlist: React.FC<IDataSource> = (props) => {
   const [currentPlayProps, setCurrentPlayProps] = useState<IPlayProps>();
   const { source } = props;
-  const exit = (label) => {
-    console.log("exit event tirger", label);
+  const exit = () => {
     setCurrentPlayProps((cur) => {
       const next = fetchNext(source);
       next.exit = exit;

@@ -12,11 +12,12 @@ export interface IMeta<T> {
 
 export type IPlayProps = {
   type?: 'image' | 'video' | 'page'
-  exit?: (label:string) => void
+  exit?: () => void
   animation?: string
   children?: React.ReactNode
   //标示方便调试
-  label?: string
+  label?: string,
+  visible:boolean
 }
 
 export type IImageProps = IPlayProps & {

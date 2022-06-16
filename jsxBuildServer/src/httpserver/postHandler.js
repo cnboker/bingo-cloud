@@ -34,7 +34,7 @@ exports.make = async (username, entity) => {
       App(data)
     
     `;
-    console.log("jsx", jsx);
+    //console.log("jsx", jsx);
     await writeFile(entryFile, jsx);
     return await esbuild.build(username, entryFile);
   } catch (e) {

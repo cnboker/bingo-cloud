@@ -6,14 +6,15 @@ import useVideoMine from "./useVideoMine";
 import { useFetchThunk } from "./useFetchThunk";
 import { useInterval } from "./useInterval";
 
-export default ({ url, exit, source, label }: IVideoProps & IDataSource) => {
+export default ({ url, exit, source }: IVideoProps & IDataSource) => {
   const playerRef = useRef(null);
+  const playerRef2 = useRef(null);
   const mediaSourceRef = useRef(null);
   const sourceBufferRef = useRef(null);
   const playUrlRef = useRef(url);
   const bufferLoading = useRef(false);
   const [mimeFetch] = useVideoMine();
-  const [segment, beginFetch, segmentFetchNext] = useFetchThunk(url);
+  const [segment, beginFetch, segmentFetchNext] = useFetchThunk();
   const cacheTime = 2;
 
   const datafetch = () => {
@@ -26,7 +27,6 @@ export default ({ url, exit, source, label }: IVideoProps & IDataSource) => {
     console.log(`seektime=${playSeekDuration}, duration=${player.currentTime}`);
     //当前视频播放结束
     if (playSeekDuration - player.currentTime < cacheTime) {
-      console.log("ddddd", segment.index);
       //播放过的内容释放掉，否则会引起内存泄漏
       if (
         !sourceBufferRef.current.updating &&
@@ -53,7 +53,7 @@ export default ({ url, exit, source, label }: IVideoProps & IDataSource) => {
       //播放完成
       const hasNextVideo = nextIsVideo();
       if (!hasNextVideo && exit) {
-        exit(label);
+        exit();
       } else {
         createAndUpdateSourceBuffer();
       }
@@ -67,7 +67,7 @@ export default ({ url, exit, source, label }: IVideoProps & IDataSource) => {
     const buffer = sourceBufferRef.current;
     if (bufferLoading.current || segment.chunks.length === 0) return;
     const chunk = segment.chunks[0];
-    
+
     try {
       bufferLoading.current = true;
       buffer.addEventListener(
@@ -76,7 +76,7 @@ export default ({ url, exit, source, label }: IVideoProps & IDataSource) => {
           bufferLoading.current = false;
           if (segment.duration > 0) {
             console.log('databuffer updating', buffer.updating)
-           // buffer.timestampOffset += buffer.buffered.end(0);;
+            // buffer.timestampOffset += buffer.buffered.end(0);;
             console.log("buffer.timestampOffset", buffer.timestampOffset);
           }
         },
@@ -191,11 +191,19 @@ export default ({ url, exit, source, label }: IVideoProps & IDataSource) => {
   };
 
   return (
-    <video
-      ref={playerRef}
-      autoPlay={true}
-      controls={true}
-      className="video"
-    ></video>
+    <>
+      <video
+        ref={playerRef}
+        autoPlay={true}
+        controls={true}
+        className="video"
+      ></video>
+      <video
+        ref={playerRef2}
+        controls={true}
+        className="video"
+      ></video>
+    </>
+
   );
 };
