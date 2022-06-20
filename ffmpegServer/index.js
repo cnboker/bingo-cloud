@@ -58,6 +58,7 @@ app.get("/image", (req, res) => {
 });
 
 //http://address?url=
+//ffmpeg.exe -i input_file -movflags empty_moov+omit_tfhd_offset+frag_keyframe+default_base_moof+isml -c:a aac output_file
 app.get("/", (req, res) => {
   res.contentType("video/mp4");
   let filename = req.query.url.split("/").pop();
@@ -91,20 +92,21 @@ app.get("/", (req, res) => {
       //res.sendStatus(500);
     })
     .videoCodec("libx264")
-    .audioCodec('aac')
+    //.audioCodec('aac')
     .size("1920x1080")
     .outputOptions([
-      //"-map 0:0",  //取消音频
-     // "-map 0:1?",
-      //"-pix_fmt yuv420p",
-      "-movflags empty_moov+default_base_moof+frag_keyframe",
-      //"-profile:v baseline",
+      "-map 0:0",  
+      "-map -0:a",//取消音频
+      "-pix_fmt yuv420p",
+     // "-movflags empty_moov+default_base_moof+frag_keyframe",
+     "-movflags empty_moov+omit_tfhd_offset+frag_keyframe+default_base_moof+isml",
+      "-profile:v baseline",
       "-b:v 3000k",
       "-minrate 1500k",
       "-maxrate 4350k",
       //"-r 30",
     ])
-    //.noAudio()
+   // .noAudio()
     .toFormat("mp4")
     .pipe(res, { end: true });
 });

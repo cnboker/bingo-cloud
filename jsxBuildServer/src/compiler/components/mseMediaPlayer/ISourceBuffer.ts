@@ -4,7 +4,7 @@ export interface ISouceBuffer2 {
   appendBuffer(chunk: ArrayBuffer);
   //添加数据完成，如果继续添加等待该事件触发
   //updateEnd: () => void;
-  clear(end:number);
+  clear(end: number);
 }
 
 export class SourceBuffer2 implements ISouceBuffer2 {
@@ -16,11 +16,12 @@ export class SourceBuffer2 implements ISouceBuffer2 {
   constructor(mediaSource: MediaSource) {
     this.mediaSource = mediaSource;
   }
-  clear(end:number) {
-    if(!this.sourceBuffer.updating){
-      this.sourceBuffer.remove(0,end)
-    }else{
-      this.sourceBuffer.abort();
+  clear(end: number) {
+    if (!this.sourceBuffer.updating) {
+      this.sourceBuffer.remove(0, end);
+      console.log("video end, remove sourcebuffer", end);
+    } else {
+      //this.sourceBuffer.abort();
     }
   }
 
@@ -31,7 +32,7 @@ export class SourceBuffer2 implements ISouceBuffer2 {
     return new Promise((resolve, reject) => {
       if (window.MediaSource && window.MediaSource.isTypeSupported(mimeCodec)) {
         if (this.sourceBuffer && !this.sourceBuffer.updating) {
-          this.sourceBuffer.changeType(mimeCodec);
+          //this.sourceBuffer.changeType(mimeCodec);
           resolve();
           return;
           //this.mediaSource.removeSourceBuffer(this.sourceBuffer)
@@ -68,21 +69,23 @@ export class SourceBuffer2 implements ISouceBuffer2 {
     });
   }
 
-  async appendBuffer(chunk: ArrayBuffer) {
-    if (!this.sourceBuffer) {
-      throw "appendBuffer is not null, please call addSourceBuffer before run it";
-    }
-    this.sourceBuffer.addEventListener(
-      "updateend",
-      () => {
-        if (!this.sourceBuffer.updating) {
-         // this.updateEnd && this.updateEnd();
-        }
-      },
-      { once: true }
-    );
-    this.sourceBuffer.appendBuffer(chunk);
-  }
+  appendBuffer(chunk: ArrayBuffer) {
+    return new Promise<void>((resolve, reject) => {
+      if (!this.sourceBuffer) {
+        reject(
+          "appendBuffer is not null, please call addSourceBuffer before run it"
+        );
+        return;
+      }
+      this.sourceBuffer.addEventListener(
+        "updateend",
+        () => {
+          resolve();
+        },
+        { once: true }
+      );
 
- // updateEnd: () => void;
+      this.sourceBuffer.appendBuffer(chunk);
+    });
+  }
 }

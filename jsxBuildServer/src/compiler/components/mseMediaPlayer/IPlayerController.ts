@@ -10,56 +10,32 @@ export interface IPlayerController {
 export class PlayerControler implements IPlayerController {
   source: Array<IPlayProps>;
   player1: IPlayerViewer;
-  player2: IPlayerViewer;
 
-  constructor(videoElment1: HTMLVideoElement, videoElment2: HTMLVideoElement) {
+  constructor(videoElment1: HTMLVideoElement) {
     this.player1 = new PlayerViewer(videoElment1);
-    this.player2 = new PlayerViewer(videoElment2);
-    videoElment1.style.visibility = "hidden";
-    videoElment2.style.visibility = "hidden";
   }
 
   async run(url: string, source: Array<IPlayProps>, exit: () => void) {
     let nextVideo;
     this.source = source;
-    await this.player1.prepare(url);
+    await this.player1.begin(url);
+    console.log('begin play...')
     this.player1.play();
-    //console.log('player1 play')
-    this.player1.endEvent = async () => {
-      // console.log('player1 stop')
-      if (this.player2.canPlay()) {
-        //  console.log('player2 play')
-        this.player2.play();
-      } else {
-        exit && exit();
-      }
+    this.player1.dataFetchEndEvent = ()=>{
       nextVideo = this.queryNextVideo();
-      this.player1.release();
       if (nextVideo) {
         console.log("player1 prepare", nextVideo.url);
-        this.player1.prepare(nextVideo.url);
+        this.player1.begin(nextVideo.url);
       }
-    };
-
-    nextVideo = this.queryNextVideo();
-    if (nextVideo) {
-      // console.log('player2 prepare')
-      await this.player2.prepare(nextVideo.url);
-      this.player2.endEvent = async () => {
-        if (this.player1.canPlay()) {
-          console.log("player1 play");
-          this.player1.play();
-        } else {
-          exit && exit();
-        }
-        nextVideo = this.queryNextVideo();
-        this.player2.release();
-        if (nextVideo) {
-          //  console.log('player2 prepare')
-          this.player2.prepare(nextVideo.url);
-        }
-      };
     }
+
+    this.player1.playend = ()=>{
+      exit && exit();
+    }
+
+    this.player1.bufferEvent = async () => {
+      
+    };
   }
 
   private queryNextVideo(): IVideoProps {

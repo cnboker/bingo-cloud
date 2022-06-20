@@ -8,7 +8,6 @@ import { useInterval } from "./useInterval";
 
 export default ({ url, exit, source }: IVideoProps & IDataSource) => {
   const playerRef = useRef(null);
-  const playerRef2 = useRef(null);
   const mediaSourceRef = useRef(null);
   const sourceBufferRef = useRef(null);
   const playUrlRef = useRef(url);
@@ -191,19 +190,11 @@ export default ({ url, exit, source }: IVideoProps & IDataSource) => {
   };
 
   return (
-    <>
-      <video
-        ref={playerRef}
-        autoPlay={true}
-        controls={true}
-        className="video"
-      ></video>
-      <video
-        ref={playerRef2}
-        controls={true}
-        className="video"
-      ></video>
-    </>
-
+    <video
+      ref={playerRef}
+      autoPlay={true}
+      controls={true}
+      className="video"
+    ></video>
   );
 };

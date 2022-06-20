@@ -29,7 +29,7 @@ export class VideoThunkReq implements IVideoThunkReq {
       chunks: null,
       chunkCount: Math.ceil(fileSize / chunkSize),
     };
-    console.log('begin fetch data',this.url, this.segment)
+    
     return this.next();
   }
 
@@ -46,10 +46,11 @@ export class VideoThunkReq implements IVideoThunkReq {
       })
         .then((response) => response.arrayBuffer())
         .then(async (data) => {
-          console.log('fetch data',this.url, this.segment)
+         
           this.segment.chunks = data;
           this.segment.index += 1;
           resolve(data);
+          console.log('fetch data',this.url, this.segment)
         })
         .catch((e) => {
           reject(e);
