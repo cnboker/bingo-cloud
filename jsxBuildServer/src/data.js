@@ -105,6 +105,7 @@ exports.postData = {
     { type: "video", url: "http://file.ioliz.com/video/1.mp4", poster: "/" },
     { type: "video", url: "http://file.ioliz.com/video/video.mp4", poster: "/" },
     { type: "video", url: "http://file.ioliz.com/video/5.mp4", poster: "/" },
+    { type: "zip", url: "http://file.ioliz.com/test.zip", poster: "/" },
    // { type: "video", url: "http://file.ioliz.com/video/2.mp4", poster: "/" },
    // { type: "video", url: "http://file.ioliz.com/video/3.mp4", poster: "/" },
     // { type: "video", url: "http://file.ioliz.com/admin/videos/video.mp4", poster: "/" },

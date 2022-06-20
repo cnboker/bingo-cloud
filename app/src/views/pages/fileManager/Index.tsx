@@ -141,6 +141,8 @@ export const VFSBrowser: React.FC<DataVFSProps> = (props) => {
       return 'image'
     } else if (url.endsWith('.pge')) {
       return 'page'
+    } else if (url.endsWith('.zip')) {
+      return 'zip'
     } else {
       // eslint-disable-next-line no-throw-literal
       throw 'not konw ext'
@@ -166,16 +168,22 @@ export const VFSBrowser: React.FC<DataVFSProps> = (props) => {
       animation: settings.effect,
     }
 
-    asyncPost({
-      url: PubUrl,
-      data: {
-        username: securityReducer.userName,
-        entity,
-      },
-    }).then((resp) => {
-      console.log('return result', resp.data, deviceList, fileUrls)
-      contentPublish(deviceList, [...fileUrls, ...resp.data])
-    })
+    //check is zip file
+    const zipFileUrl = fileUrls.find((x: string) => x.lastIndexOf('.zip') > 0)
+    if (zipFileUrl) {
+      contentPublish(deviceList, [zipFileUrl])
+    } else {
+      asyncPost({
+        url: PubUrl,
+        data: {
+          username: securityReducer.userName,
+          entity,
+        },
+      }).then((resp) => {
+        console.log('return result', resp.data, deviceList, fileUrls)
+        contentPublish(deviceList, [...fileUrls, ...resp.data])
+      })
+    }
     return true
   }
 

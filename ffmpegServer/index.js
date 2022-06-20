@@ -91,19 +91,20 @@ app.get("/", (req, res) => {
       //res.sendStatus(500);
     })
     .videoCodec("libx264")
+    .audioCodec('aac')
     .size("1920x1080")
     .outputOptions([
-      "-map 0:0",
+      //"-map 0:0",  //取消音频
      // "-map 0:1?",
-      "-pix_fmt yuv420p",
+      //"-pix_fmt yuv420p",
       "-movflags empty_moov+default_base_moof+frag_keyframe",
-      "-profile:v baseline",
+      //"-profile:v baseline",
       "-b:v 3000k",
       "-minrate 1500k",
       "-maxrate 4350k",
-      "-r 30",
+      //"-r 30",
     ])
-    .noAudio()
+    //.noAudio()
     .toFormat("mp4")
     .pipe(res, { end: true });
 });

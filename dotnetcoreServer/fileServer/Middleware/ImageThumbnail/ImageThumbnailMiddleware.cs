@@ -74,6 +74,7 @@ namespace ImageThumbnail.AspNetCore.Middleware
         {
             var req = new ThumbnailRequest();
             req.RequestedPath = request.Path;
+            Console.WriteLine("equest.Query[size]=" + request.Query["size"]);
             req.ThumbnailSize = ParseSize(request.Query["size"]);
             req.SourceImagePath = GetPhysicalPath(request.Path);
             req.ThumbnailImagePath = GenerateThumbnailFilePath(request.Path, req.ThumbnailSize, request.Query["user"]);
@@ -187,7 +188,7 @@ namespace ImageThumbnail.AspNetCore.Middleware
                     {
                         var parts = size.Split('x');
                         _size.Width = int.Parse(parts[0]);
-                        _size.Height = int.Parse(parts[1]);
+                        _size.Height = int.Parse(parts[1] == "?" ? parts[0] : parts[1]);
                     }
                     else if (size == "full")
                     {

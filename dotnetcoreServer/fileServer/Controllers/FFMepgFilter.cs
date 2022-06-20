@@ -30,10 +30,10 @@ namespace FileServer.Controllers
             {
                 try
                 {
-                    var response = await client.GetAsync(url);
+                    var response =  client.GetAsync(url);
                     using (var fs = new FileStream(result.SavePath, FileMode.CreateNew))
                     {
-                        await response.Content.CopyToAsync(fs);
+                         await response.Result.Content.CopyToAsync(fs);
                     };
                 }
                 catch (Exception ex)
