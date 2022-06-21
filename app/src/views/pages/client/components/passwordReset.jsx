@@ -5,6 +5,7 @@ import { resetPassword } from '../action'
 import { useDispatch } from 'react-redux'
 import queryString from 'query-string'
 import Center from './CenterContainer'
+import { Link } from 'react-router-dom'
 const schema = {
   title: resources.resetPassword,
   type: 'object',
@@ -62,7 +63,13 @@ export default (props) => {
         onError={log('errors')}
         formData={{}}
         validate={validate}
-      />
+      >
+        <button type="submit" className="btn btn-primary">
+          Submit
+        </button>
+        {'  '}
+        <Link to="/#login">Return to Login</Link>
+      </Form>
     </Center>
   )
 }

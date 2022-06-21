@@ -94,10 +94,11 @@ namespace Ioliz.Service.Controllers
         return BadRequest("授权用户和设备绑定账号不匹配");
       }
 
-      license = ctx.Licenses.FirstOrDefault(x => x.Status == LicenseStatus.Active);
+      license = ctx.Licenses.FirstOrDefault(x => x.Status == LicenseStatus.Active && x.DeviceId == model.DeviceId);
 
       if (license != null)
       {
+        
         var days = Convert.ToInt32(license.ActivationdDate.Value.AddDays(license.ValidDays).Subtract(DateTime.Now).TotalDays);
         //if (license.ActivationdDate.Value.AddDays(license.ValidDays) > DateTime.Now)
         if (days > 0)

@@ -15,12 +15,11 @@ export default () => {
 
   const authorizeReducer = useSelector((state) => state.authorizeReducer)
   const [message, setMessage] = useState(R.authorizeRequest)
+  useInterval(() => {
+    dispatch(unAuthorizeListRequest())
+  }, 2000)
 
   useEffect(() => {
-    useInterval(() => {
-      dispatch(unAuthorizeListRequest())
-    }, 1000)
-
     if (urlAuthorizeCode.length > 1) {
       //上传token到服务器
       dispatch(tokenPost(urlAuthorizeCode))
