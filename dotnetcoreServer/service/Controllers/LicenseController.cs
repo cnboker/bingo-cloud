@@ -37,13 +37,13 @@ namespace Ioliz.Service.Controllers
         logger.LogInformation("update data" + User.Identity.Name);
         device.AuthorizeCode = model.AuthorizeCode;
         device.LastUpdateTime = DateTime.Now;
-        device.AuthorizeStatus = AuthorizeStatus.Initail;
+        //device.AuthorizeStatus = AuthorizeStatus.Initail;
         device.UserName = User.Identity.Name;
       }
       else
       {
         model.UserName = User.Identity.Name;
-        model.AuthorizeStatus = AuthorizeStatus.Initail;
+        //model.AuthorizeStatus = AuthorizeStatus.Initail;
         model.UpdateDate = DateTime.Now;
         ctx.Devices.Add(model);
       }
@@ -103,6 +103,7 @@ namespace Ioliz.Service.Controllers
         //if (license.ActivationdDate.Value.AddDays(license.ValidDays) > DateTime.Now)
         if (days > 0)
         {
+          device.AuthorizeStatus = AuthorizeStatus.Allow;
           return Ok(CreateDeviceModel(license));
         }
         else

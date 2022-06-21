@@ -111,7 +111,7 @@
   "scripts": {
     "start": "react-app-rewired start .env.development",
     "build": "cross-env NODE_ENV=production react-app-rewired build",
-    "pub": "build && scp -r  ./build/*  ubuntu@www.ioliz.com:~/dist/app",
+    "pub": "cross-env NODE_ENV=production react-app-rewired build && scp -r  ./build/*  ubuntu@www.ioliz.com:~/dist/app",
     "lint": "eslint \"src/**/*.js\"",
     "test": "react-scripts test",
     "test:cov": "npm test -- --coverage --watchAll=false",
