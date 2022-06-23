@@ -29,7 +29,7 @@ exports.httpserver = () => {
     postHandler
       .make(username, entity)
       .then(p => {
-        //console.log('make filelist:',res)
+        console.log('make filelist:',p)
         p = p.map(x=>`http://${req.get('host')}${x}`)
         res.send(p)
       })

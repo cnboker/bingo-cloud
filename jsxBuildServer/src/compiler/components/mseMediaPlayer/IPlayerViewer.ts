@@ -84,9 +84,9 @@ export class PlayerViewer implements IPlayerViewer {
 
   async play() {
     const player = this.videoElment;
-    player.addEventListener("error", (e) => {
-      console.error("player err!", e);
-    });
+    // player.addEventListener("error", (e) => {
+    //   //console.error("player err!", e);
+    // });
     player.addEventListener(
       "play",
       () => {
