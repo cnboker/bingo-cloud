@@ -21,11 +21,11 @@ export class PlayerControler implements IPlayerController {
     await this.player1.begin(url);
     console.log('begin play...')
     this.player1.play();
-    this.player1.dataFetchEndEvent = ()=>{
+    this.player1.dataFetchEndEvent = async ()=>{
       nextVideo = this.queryNextVideo();
       if (nextVideo) {
         console.log("player1 prepare", nextVideo.url);
-        this.player1.begin(nextVideo.url);
+        await this.player1.begin(nextVideo.url);
       }
     }
 

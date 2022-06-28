@@ -11,6 +11,7 @@ export class SourceBuffer2 implements ISouceBuffer2 {
   mediaSource: MediaSource;
   sourceBuffer: SourceBuffer;
   bufferCache: ArrayBuffer[];
+  lastTirmEnd:number;
   //是否已经启动定时添加缓存
   timerBufferCacheEnabled: boolean;
   get updating(): boolean {
@@ -19,10 +20,13 @@ export class SourceBuffer2 implements ISouceBuffer2 {
   constructor(mediaSource: MediaSource) {
     this.mediaSource = mediaSource;
     this.bufferCache = [];
+    this.lastTirmEnd = 0;
   }
   clear(end: number) {
     if (!this.sourceBuffer.updating) {
-      this.sourceBuffer.remove(0, end);
+      
+      this.sourceBuffer.remove(this.lastTirmEnd, end);
+      this.lastTirmEnd = end;
       console.log("video end, remove sourcebuffer", end);
     } else {
       //this.sourceBuffer.abort();
@@ -39,7 +43,6 @@ export class SourceBuffer2 implements ISouceBuffer2 {
           //this.sourceBuffer.changeType(mimeCodec);
           resolve();
           return;
-          //this.mediaSource.removeSourceBuffer(this.sourceBuffer)
         }
 
         const getSourceBuffer = () => {
@@ -98,6 +101,7 @@ export class SourceBuffer2 implements ISouceBuffer2 {
         "updateend",
         () => {
           resolve();
+          console.log('addsourcebuffer append success!-----')
         },
         { once: true }
       );
@@ -107,7 +111,7 @@ export class SourceBuffer2 implements ISouceBuffer2 {
         }
         this.sourceBuffer.appendBuffer(this.bufferCache[0]);
         this.bufferCache.shift();
-        console.log('addsourcebuffer append success!')
+        
       } catch (e) {
         reject(e);
       }

@@ -21,10 +21,11 @@ namespace FileServer.Controllers
         private string videoTmpDir;
         //上传文件虚拟路径， 比如上传目录是/root/images, 那么虚拟路径就是 images
         private string prefixPath;
-        public ServerController(IWebHostEnvironment hostingEnvironment)
+        public BackgroundWorkQuenue backgroundWorkQuenue;
+        public ServerController(IWebHostEnvironment hostingEnvironment, BackgroundWorkQuenue backgroundWorkQuenue)
         {
             this._hostingEnvironment = hostingEnvironment;
-
+            this.backgroundWorkQuenue = backgroundWorkQuenue;
         }
 
         private void RequireDirIsCreate()
