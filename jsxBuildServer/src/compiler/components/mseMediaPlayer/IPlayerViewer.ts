@@ -65,8 +65,9 @@ export class PlayerViewer implements IPlayerViewer {
   }
 
   async begin(url: string) {
-    const mime = await mimeFetch(url);
-    await this.sourceBuffer2.addSourceBuffer(mime, "sequence");
+   // const mime = await mimeFetch(url);
+    var mimeCodec = 'video/mp4; codecs="avc1.64001F"';
+    await this.sourceBuffer2.addSourceBuffer(mimeCodec, "sequence");
     const data = await this.videoThunk.begin(url);
     await this.sourceBuffer2.appendBuffer(data);
   }
@@ -115,7 +116,7 @@ export class PlayerViewer implements IPlayerViewer {
         this.sourceBuffer2.clear(player.currentTime - MIN_BUFFER_TIME /* end*/);
       }
       this.task();
-    }, 2000);
+    }, 500);
 
   }
 

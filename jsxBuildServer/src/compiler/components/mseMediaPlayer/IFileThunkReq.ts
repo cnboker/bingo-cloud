@@ -14,7 +14,7 @@ export interface IVideoThunkReq {
   begin(url: string): Promise<ArrayBuffer>;
   next(): Promise<ArrayBuffer>;
 }
-const chunkSize = 1024 * 2000;
+const chunkSize = 1024 * 1000;
 export class VideoThunkReq implements IVideoThunkReq {
   segment: Segment;
   url: string;
