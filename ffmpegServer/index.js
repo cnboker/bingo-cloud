@@ -8,8 +8,10 @@ const path = require("path");
 const { response } = require("express");
 var port = 9000;
 var host = "0.0.0.0";
-
+//var timeout = express.timeout;
+//var timeout = require('connect-timeout')
 const app = express();
+//app.use(timeout(120000))
 app.use(cors());
 
 const progressSet = {};
@@ -60,6 +62,7 @@ app.get("/image", (req, res) => {
 //http://address?url=
 //ffmpeg.exe -i input_file -movflags empty_moov+omit_tfhd_offset+frag_keyframe+default_base_moof+isml -c:a aac output_file
 app.get("/", (req, res) => {
+  res.setTimeout(30 * 60 * 1000);
   res.contentType("video/mp4");
   let filename = req.query.url.split("/").pop();
   filename = filename.split(".").shift() + ".mp4";
@@ -84,6 +87,7 @@ app.get("/", (req, res) => {
         percent: 100,
         filename
       };
+      res.end();
     })
     .on("error", function (err) {
       /// error handling
@@ -92,7 +96,7 @@ app.get("/", (req, res) => {
       //res.sendStatus(500);
     })
     .videoCodec("libx264")
-    //.audioCodec('aac')
+    .audioCodec('aac')
     .size("1920x1080")
     .outputOptions([
       "-map 0:0",  
@@ -106,8 +110,9 @@ app.get("/", (req, res) => {
       "-maxrate 4350k",
       //"-r 30",
     ])
-   // .noAudio()
+    //.noAudio()
     .toFormat("mp4")
+    //.save('./tmp/test.mp4')
     .pipe(res, { end: true });
 });
 
@@ -124,5 +129,6 @@ String.prototype.hashCode = function () {
   return hash;
 };
 
-app.listen(port, host);
+var server = app.listen(port, host);
+server.setTimeout(30 * 60 * 1000)
 console.log("ffmpeg server start");

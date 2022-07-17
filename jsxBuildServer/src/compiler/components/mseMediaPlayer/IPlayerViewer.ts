@@ -16,7 +16,7 @@ export interface IPlayerViewer {
   playend: () => void;
 }
 
-const MIN_BUFFER_TIME = 15; //seconds
+const MIN_BUFFER_TIME = 30; //seconds
 export class PlayerViewer implements IPlayerViewer {
   videoThunk: IVideoThunkReq;
   sourceBuffer2: SourceBuffer2;
@@ -29,33 +29,30 @@ export class PlayerViewer implements IPlayerViewer {
     this.sourceBuffer2 = new SourceBuffer2(mediaSource);
     this.videoElment.src = URL.createObjectURL(mediaSource);
     this.videoThunk = new VideoThunkReq();
+  }
 
+  task() {
     const player = this.videoElment;
+    const playSeekDuration = this.timeRangesToString(player.seekable);
 
-    player.addEventListener("timeupdate", () => {
-     
-      const player = this.videoElment;
-      const playSeekDuration = this.timeRangesToString(player.seekable);
+    if (
+      player.currentTime > 0 &&
+      playSeekDuration - player.currentTime < MIN_BUFFER_TIME
+    ) {
+      console.log(
+        "timeupdate",
+        playSeekDuration,
+        player.currentTime,
+        playSeekDuration - player.currentTime
+      );
+      this.dataCheck();
+    }
 
-      if (
-        player.currentTime > 0 &&
-        playSeekDuration - player.currentTime < MIN_BUFFER_TIME
-      ) {
-        this.dataCheck();
-        if (player.currentTime > MIN_BUFFER_TIME) {
-          this.sourceBuffer2.clear((player.currentTime * 1) / 2 /* end*/);
-        }
-      }
-
-      //播放结束
-      if (
-        player.currentTime > 0 &&
-        playSeekDuration - player.currentTime < 0.1
-      ) {
-        player.currentTime = 0;
-        this.playend && this.playend();
-      }
-    });
+    //播放结束
+    if (player.currentTime > 0 && playSeekDuration - player.currentTime < 0.1) {
+      player.currentTime = 0;
+      this.playend && this.playend();
+    }
   }
 
   playend: () => void;
@@ -68,8 +65,9 @@ export class PlayerViewer implements IPlayerViewer {
   }
 
   async begin(url: string) {
-    const mime = await mimeFetch(url);
-    await this.sourceBuffer2.addSourceBuffer(mime, "sequence");
+   // const mime = await mimeFetch(url);
+    var mimeCodec = 'video/mp4; codecs="avc1.64001F"';
+    await this.sourceBuffer2.addSourceBuffer(mimeCodec, "sequence");
     const data = await this.videoThunk.begin(url);
     await this.sourceBuffer2.appendBuffer(data);
   }
@@ -84,8 +82,13 @@ export class PlayerViewer implements IPlayerViewer {
 
   async play() {
     const player = this.videoElment;
-    player.addEventListener("error", (e) => {
-      console.error("player err!", e);
+
+  
+
+    player.addEventListener("error", async (e) => {
+      //@type-script ignore
+      console.info("player err!", e.target);
+      //await this.play();
     });
     player.addEventListener(
       "play",
@@ -99,29 +102,40 @@ export class PlayerViewer implements IPlayerViewer {
 
     if (playPromise !== undefined) {
       playPromise
-        .then(async () => {
-       
-        })
+        .then(async () => {})
         .catch((error) => {
           // Auto-play was prevented
           // Show paused UI.
           console.log("play error", error);
         });
     }
+
+    this.task();
+    this.timer = setInterval(() => {
+      if (player.currentTime > MIN_BUFFER_TIME) {
+        this.sourceBuffer2.clear(player.currentTime - MIN_BUFFER_TIME /* end*/);
+      }
+      this.task();
+    }, 500);
+
   }
 
   async dataCheck() {
-    if (!this.sourceBuffer2.updating) {
+    //if (!this.sourceBuffer2.updating) {
       const { index, chunkCount } = this.videoThunk.segment;
       if (index < chunkCount) {
+        this.dataFetchEndEventTriggered = false;
         const chunk = await this.videoThunk.next();
         await this.sourceBuffer2.appendBuffer(chunk);
       } else {
-        this.dataFetchEndEvent && this.dataFetchEndEvent();
+        if (!this.dataFetchEndEventTriggered) {
+          this.dataFetchEndEventTriggered = true;
+          this.dataFetchEndEvent && this.dataFetchEndEvent();
+        }
       }
     }
-  }
-
+ // }
+  dataFetchEndEventTriggered: boolean;
   bufferEvent: () => void;
   dataFetchEndEvent: () => void;
 }

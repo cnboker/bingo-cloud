@@ -10,15 +10,23 @@ export interface ISouceBuffer2 {
 export class SourceBuffer2 implements ISouceBuffer2 {
   mediaSource: MediaSource;
   sourceBuffer: SourceBuffer;
+  bufferCache: ArrayBuffer[];
+  lastTirmEnd:number;
+  //是否已经启动定时添加缓存
+  timerBufferCacheEnabled: boolean;
   get updating(): boolean {
     return this.sourceBuffer.updating;
   }
   constructor(mediaSource: MediaSource) {
     this.mediaSource = mediaSource;
+    this.bufferCache = [];
+    this.lastTirmEnd = 0;
   }
   clear(end: number) {
     if (!this.sourceBuffer.updating) {
-      this.sourceBuffer.remove(0, end);
+      
+      this.sourceBuffer.remove(this.lastTirmEnd, end);
+      this.lastTirmEnd = end;
       console.log("video end, remove sourcebuffer", end);
     } else {
       //this.sourceBuffer.abort();
@@ -31,11 +39,10 @@ export class SourceBuffer2 implements ISouceBuffer2 {
   ): Promise<void> {
     return new Promise((resolve, reject) => {
       if (window.MediaSource && window.MediaSource.isTypeSupported(mimeCodec)) {
-        if (this.sourceBuffer && !this.sourceBuffer.updating) {
+        if (this.sourceBuffer) {
           //this.sourceBuffer.changeType(mimeCodec);
           resolve();
           return;
-          //this.mediaSource.removeSourceBuffer(this.sourceBuffer)
         }
 
         const getSourceBuffer = () => {
@@ -70,6 +77,19 @@ export class SourceBuffer2 implements ISouceBuffer2 {
   }
 
   appendBuffer(chunk: ArrayBuffer) {
+    this.bufferCache.push(chunk);
+    if (!this.timerBufferCacheEnabled) {
+      this.timerBufferCacheEnabled = true;
+      setInterval(async () => {
+        await this.timerAppendBuffer();
+      }, 500);
+    }
+  }
+
+  timerAppendBuffer() {
+    if (!this.bufferCache[0]) {
+      return Promise.resolve();
+    }
     return new Promise<void>((resolve, reject) => {
       if (!this.sourceBuffer) {
         reject(
@@ -81,11 +101,20 @@ export class SourceBuffer2 implements ISouceBuffer2 {
         "updateend",
         () => {
           resolve();
+          console.log('addsourcebuffer append success!-----')
         },
         { once: true }
       );
-
-      this.sourceBuffer.appendBuffer(chunk);
+      try {
+        if(this.sourceBuffer.updating){
+          return Promise.resolve();
+        }
+        this.sourceBuffer.appendBuffer(this.bufferCache[0]);
+        this.bufferCache.shift();
+        
+      } catch (e) {
+        reject(e);
+      }
     });
   }
 }
