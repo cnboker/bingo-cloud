@@ -18,6 +18,7 @@ namespace Ioliz.Service.Repositories
         public IndexModel GetIndexModel(string userName)
         {
             IndexModel model = new IndexModel();
+            
             model.BasicInfo = GetBasicInfomation(userName);
             model.BasicInfo.DeviceDataByM = PaddingMonths(GetDeviceDataByM(userName));
             model.BasicInfo.LicenseDataByM = PaddingMonths(GetLicenseDataByM(userName));
@@ -31,11 +32,12 @@ namespace Ioliz.Service.Repositories
         {
             var tsql = @"
             select 
-            (select count(0) from Devices where userName=@userName and status=0) as offlineCount,
-            (select count(0) from Devices where userName=@userName and status=1) as onlineCount,
+            --(select count(0) from Devices where userName=@userName and status=0) as offlineCount,
+            --(select count(0) from Devices where userName=@userName and status=1) as onlineCount,
             (select count(0) from Licenses where userName=@userName ) as licenseCount,
             (select count(0) from Licenses where userName=@userName and status=0) as availiableLicenceCount
             ";
+           
             using (IDbConnection db = ServiceConnection)
             {
                 return db.QuerySingle<BasicInfomation>(tsql, new { userName = userName });

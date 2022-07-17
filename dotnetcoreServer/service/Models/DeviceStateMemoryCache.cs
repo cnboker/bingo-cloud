@@ -24,6 +24,7 @@ namespace Ioliz.Service.Models
                 entity.UpdateDate = DateTime.Now;
             }
         }
+    
         static public DeviceStateResult[] Get(string[] deviceIds)
         {
             return list.Values.Where(c => deviceIds.Contains(c.DeviceId)).Select(x => new DeviceStateResult
