@@ -1,9 +1,10 @@
 appsettings.json
+appsettings.Production.json
+appsettings.Development.json
+
 global.json
 /obj
 /bin
-appsettings.json
-appsettings.Development.json
 /Logs
 /Migrations
 /wwwroot/uploadfiles
