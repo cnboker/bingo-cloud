@@ -29,16 +29,14 @@ docker ps -a
 
 update user set host='%' where user='root';
 ALTER USER 'root'@'%' IDENTIFIED WITH mysql_native_password BY '$ioliz.com%2022';
---alter user 'root' identified with mysql_native_password by '1';
 flush privileges;
 ```
 
 ### docker报Access denied for user 'root'@'localhost' (using password: YES)
 
-
 ```mysql
 #执行以下脚本，远程客户端及可直接连接
-mysql -uroot -p123456 -h127.0.0.1 -P 3306 -D mysql
+mysql -uroot -p$ioliz.com%2022 -h127.0.0.1 -P 3306 -D mysql
 ALTER USER 'root'@'%' IDENTIFIED WITH mysql_native_password BY '$ioliz.com%2022';
 flush privileges;
 ```

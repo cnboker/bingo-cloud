@@ -122,8 +122,8 @@ namespace FileServer.Controllers
             return Ok();
         }
 
-        //[RequestSizeLimit(1024 * 1024 * 2000)]
-        [DisableRequestSizeLimit]
+        [RequestSizeLimit(1024 * 1024 * 500)]
+        //[DisableRequestSizeLimit]
         [FFMepgFilter]
         [HttpPost("/api/server/upload")]
         public async Task<IActionResult> File([FromForm] IFormFile files)
