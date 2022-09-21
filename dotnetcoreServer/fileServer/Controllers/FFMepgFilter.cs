@@ -6,7 +6,7 @@ using System.Net.Http;
 using System.IO;
 using System.Text.Json;
 using System.Threading.Tasks;
-
+using Microsoft.Extensions.Logging;
 namespace FileServer.Controllers
 {
     //检查是否是视频文件
@@ -20,15 +20,18 @@ namespace FileServer.Controllers
             base.OnActionExecuted(context);
             var fileController = context.Controller as ServerController;
             var backgroundWorkQuenue = fileController.backgroundWorkQuenue;
+            var logger = fileController.logger;
             var jsonResult = context.Result as JsonResult;
             var result = (FileResultModel)jsonResult.Value;
+            logger.LogInformation("ffmepgfilter->fullurl->" + result.FullUrl);
             if (string.IsNullOrEmpty(result.FullUrl))
             {
                 return;
             }
             //encode video
             var url = AppInstance.Instance.Config.FFMpegServer + "?url=" + result.FullUrl;
-
+            logger.LogInformation("ffmepgfilter->savepath->" + result.SavePath);
+            logger.LogInformation("ffmepgfilter->download url->" + url);
             if (File.Exists(result.SavePath)) return;
             backgroundWorkQuenue.QueueBackgroundWorkItem(async token =>
             {
@@ -42,26 +45,6 @@ namespace FileServer.Controllers
                         {
                             await response.Content.CopyToAsync(fs);
                         };
-
-                        // var requestToken = await GetPercent<MpegRequestToken>(client, url);
-                        // url = AppInstance.Instance.Config.FFMpegServer + "?key=" + requestToken.Key;
-                        // while (true)
-                        // {
-                        //     await Task.Delay(5000);
-                        //     var percentInfo = await GetPercent<MpegPercentInfo>(client, url);
-                        //     //下载完成
-                        //     if (percentInfo.Percent == 100)
-                        //     {
-                        //         Console.WriteLine("percentInfo.DownloadUrl", percentInfo.DownloadUrl);
-                        //         var response = await client.GetAsync(percentInfo.DownloadUrl);
-                        //         using (var fs = new FileStream(result.SavePath, FileMode.CreateNew))
-                        //         {
-                        //             await response.Content.CopyToAsync(fs);
-                        //         };
-
-                        //     }
-                        // }
-
                     }
                     catch (Exception ex)
                     {

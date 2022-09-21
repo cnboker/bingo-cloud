@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using Microsoft.Extensions.Logging;
 
 namespace FileServer.Controllers
 {
@@ -16,16 +17,22 @@ namespace FileServer.Controllers
     [Authorize()]
     public class ServerController : Controller
     {
+        
         private IWebHostEnvironment _hostingEnvironment;
         private string UserBaseDir;
         private string videoTmpDir;
         //上传文件虚拟路径， 比如上传目录是/root/images, 那么虚拟路径就是 images
         private string prefixPath;
         public BackgroundWorkQuenue backgroundWorkQuenue;
-        public ServerController(IWebHostEnvironment hostingEnvironment, BackgroundWorkQuenue backgroundWorkQuenue)
+        public ILogger<ServerController> logger;
+        public ServerController(IWebHostEnvironment hostingEnvironment, 
+        BackgroundWorkQuenue backgroundWorkQuenue,
+        ILogger<ServerController> logger
+        )
         {
             this._hostingEnvironment = hostingEnvironment;
             this.backgroundWorkQuenue = backgroundWorkQuenue;
+            this.logger = logger;
         }
 
         private void RequireDirIsCreate()
