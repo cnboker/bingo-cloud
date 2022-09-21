@@ -17,7 +17,7 @@ FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS runtime
 #RUN apt update -y && apt install -y ffmpeg 
 
 COPY --from=build /fileServer/output ./release
-
+RUN apt-get update && apt-get install -y iputils-ping
 #COPY /fileServer/entrypoint.sh .
 WORKDIR /release
 EXPOSE 5000

@@ -48,7 +48,7 @@ namespace FileServer.Controllers
                     }
                     catch (Exception ex)
                     {
-                        Console.WriteLine("FFMepgFilter ERROR" + ex.Message);
+                        Console.WriteLine("FFMepgFilter ERROR->" + ex.Message);
                     }
 
                 };
