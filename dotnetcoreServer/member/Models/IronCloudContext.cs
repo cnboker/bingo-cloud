@@ -24,6 +24,7 @@ namespace Member.Models
         protected override void OnConfiguring(DbContextOptionsBuilder builder)
         {
             //builder.UseSqlServer(@"");
+            
         }
     }
 

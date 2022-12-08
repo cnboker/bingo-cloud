@@ -6,6 +6,7 @@ using System.Linq;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Localization;
+using Ioliz.Shared.Utils;
 
 namespace Ioliz.Service.Controllers
 {
@@ -27,6 +28,11 @@ namespace Ioliz.Service.Controllers
         public IEnumerable<DeviceModel> MyList()
         {
             return List(User.Identity.Name);
+        }
+
+        [HttpGet("/api/device/activateCode")]
+        public string ActivateCode(){
+            return StringHelper.GetRandom(6);
         }
 
         [HttpGet("/api/device/status")]

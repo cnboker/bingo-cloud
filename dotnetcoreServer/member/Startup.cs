@@ -49,7 +49,17 @@ namespace Ioliz
             services.AddDbContext<IolizContext>(
                      options => {
                          var connetionString = Configuration.GetConnectionString("MemberConnection");
-                         options.UseMySql(connetionString, ServerVersion.AutoDetect(connetionString));});
+                         options.UseMySql(connetionString, ServerVersion.AutoDetect(connetionString),
+                         mySqlOptionsAction:options=>{
+                            //mysql docker启动比较慢， 为了连接正常工作，增加连接失败重新连接策略
+                            options.EnableRetryOnFailure(
+                                maxRetryCount: 10,
+                                maxRetryDelay:TimeSpan
+                                .FromSeconds(10),
+                                errorNumbersToAdd:null
+                            );
+                         }
+                         );});
 
            
             services.AddIdentity<ApplicationUser, IdentityRole>(config =>

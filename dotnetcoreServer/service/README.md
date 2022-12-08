@@ -18,7 +18,7 @@ docker ps -a
 - 获取mysql docker ip
 
 ``` bash
- docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' mysql
+sudo docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' mysql
 ```
 手动更新appsettings.json连接字符串
 
@@ -28,13 +28,15 @@ docker ps -a
 ```sql
 
 update user set host='%' where user='root';
-ALTER USER 'root'@'%' IDENTIFIED WITH mysql_native_password BY '$ioliz.com%2022';
+
+GRANT ALL ON *.* TO 'root'@'%';
+ALTER USER 'root'@'%' IDENTIFIED WITH mysql_native_password BY 'ROO#2022';
 flush privileges;
 ```
 
 ### docker报Access denied for user 'root'@'localhost' (using password: YES)
 
-```mysql
+```sql
 #执行以下脚本，远程客户端及可直接连接
 mysql -uroot -p$ioliz.com%2022 -h127.0.0.1 -P 3306 -D mysql
 ALTER USER 'root'@'%' IDENTIFIED WITH mysql_native_password BY '$ioliz.com%2022';
