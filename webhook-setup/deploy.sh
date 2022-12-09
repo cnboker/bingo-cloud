@@ -12,9 +12,9 @@ docker network create myNetwork
 #rebuild
 cd ../dotnetcoreServer
 #docker-compose build
-docker container stop authapi
-docker container rm authapi
-docker image build --tag authapi:latest --file ./member/Dockerfile . # ../:docker context
+sudo docker container stop authapi
+sudo docker container rm authapi
+sudo docker image build --tag authapi:latest --file ./member/Dockerfile . # ../:docker context
 # docker container run \
 #     --rm \ #自动删除旧的container
 #     --detach \ #后台执行
@@ -34,10 +34,10 @@ docker run --detach --restart always --name fileapi --publish 5000:5000 --networ
 
 #cd ../dotnetcoreServer/service
 #docker-compose build
-docker container stop serviceapi
-docker container rm serviceapi
-docker image build --tag serviceapi:latest --file ./service/Dockerfile .
-docker run --detach --restart always --name serviceapi --publish 6001:6001 --network myNetwork serviceapi:latest
+sudo docker container stop serviceapi
+sudo docker container rm serviceapi
+sudo docker image build --tag serviceapi:latest --file ./service/Dockerfile .
+sudo docker run --detach --restart always --name serviceapi --publish 6001:6001 --network myNetwork serviceapi:latest
 
 cd ../jsxBuildServer
 #docker-compose build

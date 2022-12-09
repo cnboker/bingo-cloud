@@ -9,39 +9,57 @@
 
 ```bash
 #-v volume d:/data是本地目录, /var/lib/mysql 是容器默认目录
-docker run --name=mysql -p 3306:3306 --network=myNetwork --restart=always -v /home/data/mysql:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=1 -d mysql/mysql-server 
+docker run --name=mysql -p 3306:3306 --network=myNetwork --restart=always -v /home/data/mysql:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=password -d mysql/mysql-server 
 docker exec -it mysql bash
 docker ps
 # list all container
 docker ps -a
 ```
+
 - 获取mysql docker ip
 
 ``` bash
 sudo docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' mysql
 ```
-手动更新appsettings.json连接字符串
 
+- 清除docker container 日志
 
-更新账号客户端才可以正常连接
+```bash
+#clear docker container logs
+ sudo truncate -s 0 $(docker inspect --format='{{.LogPath}}' containerid)
+```
+
+注明：appsettings.json连接字符串中数据库IP不需要设置mysql内部IP,因为该IP在重新启动服务器后会改变，数据库IP设置服务器host的IP就可以了
+
+- mysql docker远程访问报Access denied for user 'root'@'localhost' (using password: YES)的解决办法
+
+```bash
+#从mysql容器获取my.cnf到host当期目录
+sudo docker cp mysql:/etc/my.cnf .
+sudo vi ./my.cnf
+#跳过密码验证
+cat <<EOF > ./my.cnf
+skip-grant-tables
+EOF
+sudo docker cp ./my.cnf mysql:/etc
+sudo docker restart mysql
+#无密码登录mysql
+sudo docker exec -it mysql mysql
+
+```
+
+重新授权并更新数据库密码
 
 ```sql
-
+flush privileges;
 update user set host='%' where user='root';
-
 GRANT ALL ON *.* TO 'root'@'%';
-ALTER USER 'root'@'%' IDENTIFIED WITH mysql_native_password BY 'ROO#2022';
+ALTER USER 'root'@'%' IDENTIFIED WITH mysql_native_password BY 'password';
 flush privileges;
 ```
 
-### docker报Access denied for user 'root'@'localhost' (using password: YES)
+还原my.cnf, 打开my.cnf文件,注解"skip-grant-tables",还原my.cnf重新启动mysql容器
 
-```sql
-#执行以下脚本，远程客户端及可直接连接
-mysql -uroot -p$ioliz.com%2022 -h127.0.0.1 -P 3306 -D mysql
-ALTER USER 'root'@'%' IDENTIFIED WITH mysql_native_password BY '$ioliz.com%2022';
-flush privileges;
-```
 ## package dependency
 2.0.9 runtime is required
 https://dotnet.microsoft.com/en-us/download/dotnet/2.0

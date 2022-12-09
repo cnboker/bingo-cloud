@@ -58,6 +58,7 @@ namespace Ioliz.Service
         public string MemberConnectionString;
         public string ServiceConnectionString;
         public string MQTTServer;
+        public string FileServer;
         //4g網絡配額
         public long Quota4G { get; set; }
         public ResourceServerConfig[] ResourceServers {get;set;}
@@ -67,7 +68,6 @@ namespace Ioliz.Service
             this.provider = provider;
             IConfigurationRoot configRoot = provider.GetService(typeof(IConfigurationRoot)) as IConfigurationRoot;
             LoadConfig(configRoot);
-            LoadResourceServers(configRoot);
         }
 
         public AppConfig(IConfigurationRoot configRoot){
@@ -79,7 +79,7 @@ namespace Ioliz.Service
             MQTTServer = configRoot.GetSection("AppSettings:mqttServer").Value;
             AuthServer = configRoot.GetSection("AppSettings:authServer").Value;
             ServieServer = configRoot.GetSection("AppSettings:servieServer").Value;
-            //Authkey = configRoot.GetSection("AppSettings:authkey").Value;
+            FileServer = configRoot.GetSection("AppSettings:fileServer").Value;
 
             MemberConnectionString = Microsoft.Extensions.Configuration
          .ConfigurationExtensions.GetConnectionString(configRoot, "MemberConnection");
@@ -93,10 +93,6 @@ namespace Ioliz.Service
             if(this.provider != null){
                 LoadKeyValues();
             }
-        }
-
-        private void LoadResourceServers(IConfigurationRoot root){
-            ResourceServers = root.GetSection("ResourceServerList").Get<ResourceServerConfig[]>();
         }
 
         public void RegisterWeixinPay()
