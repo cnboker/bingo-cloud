@@ -21,6 +21,7 @@ export default ({ title, children, placement, visible, onHide }: CProps) => {
       <COffcanvas
         placement={placement}
         visible={visible}
+        className="offcanvas-size-md"
         onHide={() => {
           onHide()
         }}

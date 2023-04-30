@@ -82,12 +82,12 @@ export default ({ tableData }) => {
     <table className="table table-bordered table-striped table-sm">
       <thead>
         <tr>
-          <th>{R.group}</th>
-          <th>{R.device_name}</th>
-          <th>MAC</th>
-          <th>{R.device_status}</th>
-          <th>{R.license_info}</th>
-          <th></th>
+          <th valign="middle">{R.group}</th>
+          <th valign="middle">{R.device_name}</th>
+          <th valign="middle">MAC</th>
+          <th valign="middle">{R.device_status}</th>
+          <th valign="middle">{R.license_info}</th>
+          <th valign="middle"></th>
         </tr>
       </thead>
       <tbody>{renderList()}</tbody>

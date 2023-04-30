@@ -43,7 +43,7 @@ export default (props) => {
   // }
 
   return (
-    <CContainer className="px-4 bt-4">
+    <CContainer fluid className="px-4 bt-4">
       <div className="row">
         <div className="col">
           <CFormLabel>{GR.name}: </CFormLabel>

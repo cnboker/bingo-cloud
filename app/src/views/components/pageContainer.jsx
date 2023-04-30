@@ -3,7 +3,7 @@ import { CContainer } from '@coreui/react'
 
 export default ({ children }) => {
   return (
-    <CContainer xxl className="page p-3 border">
+    <CContainer fluid className="page p-3 border">
       {children}
     </CContainer>
   )

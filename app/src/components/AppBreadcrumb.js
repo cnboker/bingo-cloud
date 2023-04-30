@@ -8,7 +8,7 @@ const AppBreadcrumb = () => {
   const currentLocation = useLocation().pathname
   const getRouteName = (pathname, routes) => {
     const currentRoute = routes.find((route) => route.path === pathname)
-    //console.log('currentRoute', pathname, currentRoute, id)
+
     if (!currentRoute) return null
     return currentRoute.name
   }
@@ -16,22 +16,22 @@ const AppBreadcrumb = () => {
   const getBreadcrumbs = (location) => {
     const breadcrumbs = []
     location.split('/').reduce((prev, curr, index, array) => {
-      const currentPathname = `${prev}/${curr}`
-      const name = getRouteName(currentPathname, routes)
-      if (!name) {
+      const path = `${prev}/${curr}`
+      const name = getRouteName(path, routes)
+      if (name) {
         breadcrumbs.push({
-          pathname: '#' + currentPathname,
+          pathname: '#' + path,
           name,
           active: index + 1 === array.length ? true : false,
         })
+        console.log('breadcrumbs', name, breadcrumbs, path)
       }
-      return currentPathname
+      return path
     })
     return breadcrumbs
   }
 
   const breadcrumbs = getBreadcrumbs(currentLocation)
-
   return (
     <CBreadcrumb className="m-0 ms-2">
       <CBreadcrumbItem href="/#">{G.home}</CBreadcrumbItem>

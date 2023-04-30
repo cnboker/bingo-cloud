@@ -10,8 +10,8 @@ export const toShortDateTime = function (text) {
 }
 
 export const toLongDateTime = function (text) {
-  if (!text) return '/'
-  if (text === '0001-01-01T00:00:00') return '/'
+  if (!text) return '-'
+  if (text === '0001-01-01T00:00:00') return '-'
   return moment(text).format('YYYY-MM-DD HH:mm:ss')
 }
 

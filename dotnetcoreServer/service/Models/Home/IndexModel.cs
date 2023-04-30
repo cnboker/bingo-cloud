@@ -8,7 +8,15 @@ namespace Ioliz.Service.Models
         public DeviceLogsStats DeviceLogsStats { get; set; }
         public BasicInfomation BasicInfo { get; set; }
         public PlayStats PlayStats { get; set; }
+        public DevieLiveTimeStats TimeStats {get;set;}
     }
+
+    public class DevieLiveTimeStats
+    {
+        public int TotalMinuts { get; set; }
+        public DeviceLiveRecord[] LiveTimeList { get; set; }
+    }
+    
 
     public class BasicInfomation
     {
@@ -18,21 +26,21 @@ namespace Ioliz.Service.Models
         public int OnlineCount { get; set; }
         public BarItemObject[] DeviceDataByM { get; set; }
 
-        public int LicenseCount {get;set;}
-        public int AvailiableLicenceCount {get;set;}
+        public int LicenseCount { get; set; }
+        public int AvailiableLicenceCount { get; set; }
         public BarItemObject[] LicenseDataByM { get; set; }
 
         //磁盘配额
         public int DiskQuota { get; set; }
         //可利用磁盘数
         public int AvailiableDisk { get; set; }
-       
+
     }
 
     public class PlayStats
     {
-        public string MonthTitle {get;set;}
-        public string YearTitle {get;set;}
+        public string MonthTitle { get; set; }
+        public string YearTitle { get; set; }
         //当月播放时长
         public BarItemObject[] MonthData { get; set; }
 
@@ -44,29 +52,30 @@ namespace Ioliz.Service.Models
     {
         //总日志数
         public int Total { get; set; }
-         //错误总数
+        //错误总数
         public int ErrorTotal { get; set; }
         //今日日志
         public int TodayTotal { get; set; }
-       
+
         //今日错误总数
         public int TodayErrorTotal { get; set; }
 
-        public DeviceLog[] DeviceLogs {get;set;}
+        public DeviceLog[] DeviceLogs { get; set; }
     }
 
-    public enum LogType {
+    public enum LogType
+    {
         Information,
         Warnning,
         Error
     }
-   
+
     public class BarItemObject
     {
         public string Key { get; set; }
-     
+
         public string Value { get; set; }
-      
+
 
     }
 

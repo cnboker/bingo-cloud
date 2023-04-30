@@ -53,7 +53,7 @@ const data = {
     addLicense: '为设备添加许可',
     click: '点击',
     public: '发布',
-    materialManage: '素材管理',
+    materialManage: '媒体',
     materialDefine:
       '视频文件(mov, mp4, wmv, rmvb, mpg,m4v等),图片,自定义页面,静态H5程序都可以叫素材文件',
     materialUploadInfo: '为了使设备能够正常播放，首先需要将素材文件上传的当前系统',

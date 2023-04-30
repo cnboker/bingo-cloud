@@ -14,13 +14,11 @@ const FileManager = React.lazy(() =>
   })),
 )
 const DeviceManager = React.lazy(() => import('./views/pages/device/Components/index'))
+const DeviceLogs = React.lazy(() => import('./views/pages/device/Components/logs/Index'))
 const Start = React.lazy(() => import('./views/start'))
 const DeviceDetail = React.lazy(() => import('./views/pages/device/Components/details/Index'))
 const routes = [
   { path: '/', exact: true, name: G.home },
-  { path: '/admin', exact: true, name: G.administrator, component: Users },
-  { path: '/admin/users', exact: true, name: G.users, component: Users },
-  { path: '/admin/orderDetails', exact: true, name: G.orderDetails, component: OrderDetails },
   { path: '/dashboard', name: G.dashboard, component: Dashboard },
   { path: '/quickStart', exact: true, name: G.quickStart, component: Wizard },
   { path: '/trial', name: G.trial, component: Trial },
@@ -30,9 +28,13 @@ const routes = [
   { path: '/orders/checkout', name: G.checkout, component: Checkout },
   { path: '/fileManager', exact: true, name: G.fileMange, component: FileManager },
   { path: '/device', exact: true, name: G.deviceManage, component: DeviceManager },
-  { path: '/device/detail', exact: true, name: G.deviceManage, component: DeviceManager },
-  { path: '/device/detail/:id', name: G.deviceManage, component: DeviceDetail },
+  { path: '/device/logs', exact: true, name: G.deviceLogs, component: DeviceLogs },
+  { path: '/device/detail', exact: true, name: G.deviceDetail, component: DeviceManager },
+  { path: '/device/detail/:id', name: G.deviceDetail, component: DeviceDetail },
   { path: '/start', exact: true, name: 'start', component: Start },
+  { path: '/admin', exact: true, name: G.admin, component: Users },
+  { path: '/admin/users', exact: true, name: G.users, component: Users },
+  { path: '/admin/orderDetails', exact: true, name: G.orderDetails, component: OrderDetails },
 ]
 
 export default routes

@@ -3,6 +3,9 @@ using Ioliz.Shared.Pagination;
 
 namespace Ioliz.Service.Models
 {
+  public class LogQuery: UserNameQuery{
+    public int? LogType {get;set;}
+  }
   public class UserNameQuery : BaseQuery
   {
     public string Tenant { get; set; }

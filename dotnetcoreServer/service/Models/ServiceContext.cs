@@ -30,8 +30,16 @@ namespace Ioliz.Service.Models
         public DbSet<Topic> Topics { get; set; }
         public DbSet<DeviceLog> DeviceLogs {get;set;}
         public DbSet<PlayRecord> PlayRecords {get;set;}
+        public DbSet<DeviceLiveRecord> DeviceLiveRecords {get;set;}
     }
 
+    public class DeviceLiveRecord{
+        public int Id {get;set;}
+        public DateTime UpdateDate {get;set;}
+        public string DeviceId {get;set;}
+        //记录当日更新在线状态数量 LiveCount 为当然分钟数记录(每60秒记录一次)
+        public int LiveCount {get;set;}
+    }
     //终端播放记录
     public class PlayRecord {
         public int Id {get;set;}

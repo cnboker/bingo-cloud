@@ -38,7 +38,7 @@ public class LogController : BaseController
 
 
     [HttpGet("/api/log")]
-    public ActionResult Query([FromQuery] UserNameQuery query)
+    public ActionResult Query([FromQuery] LogQuery query)
     {
         var queryObjects = ctx.DeviceLogs.AsEnumerable();
         if (!query.StartDate.HasValue)
@@ -53,8 +53,12 @@ public class LogController : BaseController
         {
             query.EndDate = query.EndDate.Value.AddDays(1);
         }
+        
         var page = (query.Page ?? 0) * (query.PageSize ?? 30);
         queryObjects = queryObjects.Where(c => c.CreateDate > query.StartDate && c.CreateDate < query.EndDate);
+        if(query.LogType >= 0){
+            queryObjects = queryObjects.Where(c=>c.LogType == (LogType)Enum.Parse(typeof(LogType),query.LogType.ToString()));
+        }
         var result = queryObjects.Skip(page).Take(query.PageSize.Value).ToArray();
         var count = queryObjects.Count();
         var pageCount = count / query.PageSize.Value + (count % query.PageSize.Value > 0 ? 1 : 0);

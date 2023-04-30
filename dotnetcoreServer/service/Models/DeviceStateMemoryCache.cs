@@ -23,6 +23,9 @@ namespace Ioliz.Service.Models
                 var entity = list[deviceId];
                 entity.UpdateDate = DateTime.Now;
             }
+
+            //update database
+            
         }
     
         static public DeviceStateResult[] Get(string[] deviceIds)

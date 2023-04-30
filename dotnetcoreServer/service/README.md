@@ -26,7 +26,8 @@ sudo docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}'
 
 ```bash
 #clear docker container logs
- sudo truncate -s 0 $(docker inspect --format='{{.LogPath}}' containerid)
+ sudo truncate -s 0 $(sudo docker inspect --format='{{.LogPath}}' containerid)
+ sudo truncate -s 0 $(sudo docker inspect --format='{{.LogPath}}' serviceapi)
 ```
 
 注明：appsettings.json连接字符串中数据库IP不需要设置mysql内部IP,因为该IP在重新启动服务器后会改变，数据库IP设置服务器host的IP就可以了

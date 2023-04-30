@@ -99,6 +99,19 @@ namespace Ioliz.Service.Controllers
         public IActionResult HeartBeat(string id)
         {
             DeviceStateMemoryCache.Update(id);
+            //update database
+            var  now = DateTime.Parse(DateTime.Now.ToShortDateString());
+            var entity = ctx.DeviceLiveRecords.FirstOrDefault(c=>c.UpdateDate == now);
+            if(entity == null){
+                ctx.DeviceLiveRecords.Add(new DeviceLiveRecord(){
+                   DeviceId = id,
+                   UpdateDate = now,
+                   LiveCount = 1
+                });
+            }else{
+                entity.LiveCount += 1;
+            }
+            ctx.SaveChangesAsync();
             return Ok();
         }
 

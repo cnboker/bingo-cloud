@@ -18,26 +18,48 @@ namespace Ioliz.Service.Repositories
         public IndexModel GetIndexModel(string userName)
         {
             IndexModel model = new IndexModel();
-            
+
             model.BasicInfo = GetBasicInfomation(userName);
             model.BasicInfo.DeviceDataByM = PaddingMonths(GetDeviceDataByM(userName));
             model.BasicInfo.LicenseDataByM = PaddingMonths(GetLicenseDataByM(userName));
             model.DeviceLogsStats = GetDeviceLogsStats(userName);
             model.DeviceLogsStats.DeviceLogs = GetDeviceLogTop30(userName);
             model.PlayStats = GetPlayStats(userName);
+            model.TimeStats = GetTimeStats(userName);
             return model;
+        }
+
+        private DevieLiveTimeStats GetTimeStats(string userName)
+        {
+            DevieLiveTimeStats result = new DevieLiveTimeStats();
+            var tsql = @"
+                select sum(LiveCount) from DeviceLiveRecords where deviceId in (select deviceId from Devices where userName=@userName)
+            ";
+            int totalMinutes = 0;
+            using (IDbConnection db = ServiceConnection)
+            {
+                totalMinutes = db.QuerySingle<int>(tsql, new { userName = userName });
+            }
+            result.TotalMinuts = totalMinutes;
+            tsql = @"
+                select * from DeviceLiveRecords where deviceId in (select deviceId from Devices where userName=@userName) order by updateDate desc limit 7
+            ";
+
+            using (IDbConnection db = ServiceConnection)
+            {
+                result.LiveTimeList = db.Query<DeviceLiveRecord>(tsql, new { userName = userName }).ToArray();
+            }
+            return result;
         }
 
         private BasicInfomation GetBasicInfomation(string userName)
         {
             var tsql = @"
             select 
-            --(select count(0) from Devices where userName=@userName and status=0) as offlineCount,
-            --(select count(0) from Devices where userName=@userName and status=1) as onlineCount,
             (select count(0) from Licenses where userName=@userName ) as licenseCount,
-            (select count(0) from Licenses where userName=@userName and status=0) as availiableLicenceCount
+            (select count(0) from Licenses where userName=@userName and Status=0) as availiableLicenceCount
             ";
-           
+
             using (IDbConnection db = ServiceConnection)
             {
                 return db.QuerySingle<BasicInfomation>(tsql, new { userName = userName });
@@ -72,10 +94,10 @@ namespace Ioliz.Service.Repositories
         private DeviceLogsStats GetDeviceLogsStats(string userName)
         {
             var tsql = @"
-           select (select sum(0) as total from DeviceLogs where Tenant=@userName) as a,
-            (select sum(0)  from DeviceLogs where Tenant=@userName and LogType=2) as errorTotal,
-            (select sum(0) from DeviceLogs where Tenant=@userName and createdate between curdate() and now()) as todayTotal ,
-            (select sum(0)  from DeviceLogs where Tenant=@userName and LogType=2 and createdate between curdate() and now()) as todayErrorTotal
+           select (select count(0) as total from DeviceLogs where Tenant=@userName) as total,
+            (select count(0)  from DeviceLogs where Tenant=@userName and LogType=2) as errorTotal,
+            (select count(0) from DeviceLogs where Tenant=@userName and createdate between curdate() and now()) as todayTotal ,
+            (select count(0)  from DeviceLogs where Tenant=@userName and LogType=2 and createdate between curdate() and now()) as todayErrorTotal
             ";
             using (IDbConnection db = ServiceConnection)
             {
@@ -85,7 +107,7 @@ namespace Ioliz.Service.Repositories
 
         private DeviceLog[] GetDeviceLogTop30(string userName)
         {
-            var tsql = @"select * from DeviceLogs where Tenant=@userName order by createDate desc LIMIT 30 OFFSET 0 ";
+            var tsql = @"select * from DeviceLogs where Tenant=@userName order by createDate desc LIMIT 15 OFFSET 0 ";
 
             using (IDbConnection db = ServiceConnection)
             {

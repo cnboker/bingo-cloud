@@ -14,36 +14,36 @@ export default ({ rowData, updateGroup, updateName, updateLicense, release }) =>
 
   return (
     <tr key={rowData.deviceId}>
-      <td>
+      <td valign="middle">
         <CButton
           color="link"
           onClick={() => {
             updateGroup(rowData.deviceId, rowData.GroupName)
           }}
         >
-          {rowData.GroupName || '/'}
+          {rowData.groupName || '-'}
         </CButton>
       </td>
-      <td>
+      <td valign="middle">
         <CButton
           color="link"
           onClick={() => {
             updateName(rowData.deviceId, rowData.name)
           }}
         >
-          {rowData.name || '/'}
+          {rowData.name || '-'}
         </CButton>
       </td>
-      <td>{getMac(rowData.mac)}</td>
-      <td>
+      <td valign="middle">{getMac(rowData.mac)}</td>
+      <td valign="middle">
         <span className={rowData.networkStatus === 1 ? 'text-success' : 'text-danger'}>
           {rowData.networkStatus === 1 ? G.online : G.offline}
         </span>
       </td>
-      <td style={!rowData.licenseExpired ? { color: 'geen' } : { color: 'red' }}>
+      <td valign="middle" style={!rowData.licenseExpired ? { color: 'geen' } : { color: 'red' }}>
         {rowData.licenseExpired ? R.invalid : `${R.valid}(${rowData.licenseRemark})`}
       </td>
-      <td>
+      <td valign="middle">
         <If test={rowData.licenseExpired}>
           <CButton
             onClick={() => {

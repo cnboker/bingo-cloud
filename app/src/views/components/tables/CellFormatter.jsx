@@ -1,7 +1,7 @@
 import { toLongDateTime, toDate } from 'src/lib/string'
 import { getLang } from '~/lib/localize'
 export const NullStringFormater = ({ val }) => {
-  if (!val) return '/'
+  if (!val) return '-'
   return val
 }
 

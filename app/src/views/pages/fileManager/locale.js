@@ -18,7 +18,7 @@ const data = {
   },
   zh: {
     pendingItems: '待发布项',
-    pendingList: '待发布素材列表',
+    pendingList: '待发布内容列表',
     cancel: '取消',
     pub: '发布',
     selectedItems: '选中项目',

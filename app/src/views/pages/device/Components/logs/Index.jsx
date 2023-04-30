@@ -6,7 +6,7 @@ import DeviceLogToolbar from './LogToolbar'
 import Pager from 'src/views/components/tables/Pager'
 import G from '~/locale'
 import { toShortDateTime } from '~/lib/string'
-
+import PageContainer from 'src/views/components/pageContainer'
 export default () => {
   const logTypeList = ['message', 'warning', 'fatal']
 
@@ -23,11 +23,11 @@ export default () => {
     return records.map((item, index) => {
       return (
         <tr key={index}>
-          <td>{item.Name}</td>
-          <td>{G[logTypeList[item.MessageType]]}</td>
-          <td>{item.IP}</td>
-          <td>{toShortDateTime(item.UpdateDate)}</td>
-          <td>{item.Message}</td>
+          <td>{item.deviceName}</td>
+          <td>{G[logTypeList[item.logType]]}</td>
+          <td>{item.deviceId}</td>
+          <td>{toShortDateTime(item.createDate)}</td>
+          <td>{item.remark}</td>
         </tr>
       )
     })
@@ -43,7 +43,7 @@ export default () => {
   }
 
   return (
-    <div>
+    <PageContainer>
       <DeviceLogToolbar onSearch={onSearch} deviceOptions={deviceOptions} />
       <br />
       <div className="table-responsive">
@@ -64,6 +64,6 @@ export default () => {
           <Pager pageCount={deviceLogReducer.pageCount} onPageChange={pagination} />
         </div>
       </div>
-    </div>
+    </PageContainer>
   )
 }
