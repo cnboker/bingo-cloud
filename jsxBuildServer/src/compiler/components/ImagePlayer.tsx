@@ -14,7 +14,7 @@ export const ImagePlayer: React.FC<IImageProps> = ({ label, url, exit, duration 
     const timer: ReturnType<typeof setTimeout> = setTimeout(() => {
 
       if (exit) {
-        exit(label);
+        exit();
       }
     }, duration);
     return () => clearTimeout(timer);
