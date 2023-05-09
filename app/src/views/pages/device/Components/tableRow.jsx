@@ -4,8 +4,8 @@ import G from '~/locale'
 import If from '~/lib/If'
 import { Link } from 'react-router-dom'
 import { CLink, CButton } from '@coreui/react'
-
-export default ({ rowData, updateGroup, updateName, updateLicense, release }) => {
+//recycle:设备回收
+export default ({ rowData, updateGroup, updateName, updateLicense, deviceRecycle }) => {
   const getMac = (val) => {
     if (!val) return ''
     if (val.length < 24) return val
@@ -34,7 +34,6 @@ export default ({ rowData, updateGroup, updateName, updateLicense, release }) =>
           {rowData.name || '-'}
         </CButton>
       </td>
-      <td valign="middle">{getMac(rowData.mac)}</td>
       <td valign="middle">
         <span className={rowData.networkStatus === 1 ? 'text-success' : 'text-danger'}>
           {rowData.networkStatus === 1 ? G.online : G.offline}
@@ -55,7 +54,7 @@ export default ({ rowData, updateGroup, updateName, updateLicense, release }) =>
             {R.authorize}
           </CButton>{' '}
         </If>{' '}
-        <CButton onClick={() => release(rowData.deviceId)} color="danger" variant="ghost">
+        <CButton onClick={() => deviceRecycle(rowData.deviceId)} color="danger" variant="ghost">
           {G.delete}
         </CButton>{' '}
         <Link to={`/device/detail/${rowData.deviceId}`} color="info" variant="ghost">

@@ -103,9 +103,9 @@ exports.postData = {
     // { type: "image", url: "http://file.ioliz.com/admin/2.jpeg" },
     // { type: "image", url: "http://file.ioliz.com/admin/3.jpeg" },
    // { type: "video", url: "http://file.ioliz.com/video/4a.mp4", poster: "/" },
-    { type: "video", url: "http://file.ioliz.com/video/1.mp4", poster: "/" },
-    { type: "video", url: "http://file.ioliz.com/video/2.mp4", poster: "/" },
-    { type: "video", url: "http://file.ioliz.com/video/3.mp4", poster: "/" },
+    { type: "image", url: "http://file.ioliz.com/video/1.jpg", poster: "/" },
+    { type: "image", url: "http://file.ioliz.com/video/2.jpg", poster: "/" },
+    { type: "image", url: "http://file.ioliz.com/video/3.jpg", poster: "/" },
    
    // { type: "video", url: "http://file.ioliz.com/video/3.mp4", poster: "/" },
     // { type: "video", url: "http://file.ioliz.com/admin/videos/video.mp4", poster: "/" },

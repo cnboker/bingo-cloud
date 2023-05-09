@@ -6,7 +6,7 @@ import { TagCatelog } from '~/views/pages/tags/contants'
 import TableRow from './tableRow'
 import R from '../locale'
 import { GroupSelector } from './groupSelector'
-import { renewLicense, deviceGroupUpdate, deviceUpdateName } from '../actions'
+import { renewLicense, deviceGroupUpdate, deviceUpdateName, deviceRecycle } from '../actions'
 
 export default ({ tableData }) => {
   const tagReducer = useSelector((state) => state.tagReducer)
@@ -65,6 +65,19 @@ export default ({ tableData }) => {
     )
   }
 
+  //delete device name
+  const recycle = (id) => {
+    Dialog.show(
+      {
+        title: R.info,
+        body: R.confirmInfo,
+      },
+      () => {
+        dispatch(deviceRecycle(id))
+      },
+    )
+  }
+
   const renderList = () => {
     return tableData.map((item, key) => {
       return (
@@ -74,6 +87,7 @@ export default ({ tableData }) => {
           updateGroup={updateGroupName}
           updateLicense={updateLicense}
           updateName={updateName}
+          deviceRecycle={recycle}
         />
       )
     })
@@ -84,7 +98,6 @@ export default ({ tableData }) => {
         <tr>
           <th valign="middle">{R.group}</th>
           <th valign="middle">{R.device_name}</th>
-          <th valign="middle">MAC</th>
           <th valign="middle">{R.device_status}</th>
           <th valign="middle">{R.license_info}</th>
           <th valign="middle"></th>

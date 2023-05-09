@@ -2,20 +2,6 @@ import React from "react";
 import { MetaComponent } from "./MetaComponent";
 import * as CL from "./components/Index";
 
-type IMetaMap<T> = {
-  rootId: string;
-  map: IMap<T>;
-};
-
-type IMetaData = {
-  tag: string;
-  childrenIds: string[];
-};
-
-type IMap<T> = {
-  [key: string]: IMetaData;
-};
-
 export const Renderer = ({ rootId, map }) => {
   const root = map[rootId];
   const { childrenIds, ...rest } = root;

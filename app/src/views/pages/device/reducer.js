@@ -7,6 +7,7 @@ import {
   RECEIVE_DEVICE_SNAPSHOT_IMAGE,
   RECEIVE_DEVICE_LOGS,
   RECEIVE_DEVICE_STATUS,
+  RECEIVE_DEVICE_RECYCLE,
 } from './constants'
 import merge from 'lodash/merge'
 import { MergeType } from '@material-ui/icons'
@@ -66,6 +67,8 @@ export const deviceListReducer = (state = initialState, action) => {
       deviceInfo = newState.find((x) => x.deviceId === action.payload.key)
       deviceInfo.spanshotImageObject = action.payload.content
       return newState
+    case RECEIVE_DEVICE_RECYCLE:
+      return newState.filter((x) => x.deviceId !== action.payload.deviceId)
     default:
       return state
   }

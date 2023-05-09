@@ -15,7 +15,7 @@ export type PostData = {
 
 export const transformData = (data: PostData): IPlayProps[] => {
     const { duration, animation, sources } = data
-    return sources.map(x => {
+    const result = sources.map(x => {
         if (x.type === 'image') {
             return <IImageProps>{
                 type: 'image',
@@ -37,8 +37,12 @@ export const transformData = (data: PostData): IPlayProps[] => {
                 pageName: '',
 
             }
+        }else{
+            return null;
         }
     })
+    console.log('result',result)
+    return result;
 }
 
 export type ElementType = 'ImageList' | 'Viewport' | 'VideoJS' | 'VideoPlayer'
@@ -78,93 +82,6 @@ export const uniqueID = () => {
     return Math.random().toString(36).slice(2)
 }
 
-
-// export const transformData = (data: PostData): MetaMap => {
-//     //终端需要本地播放，删除域名，默认http://localhost/path
-//     data.urls = data.urls.map(item => {
-//         return (new URL(item)).pathname
-//     })
-
-//     let newId = uniqueID()
-//     const metaMap = createRootEntity();
-//     const root = metaMap.map[metaMap.rootId]
-//     const imageList = createImageListEntity(data)
-//     const videoList = createVideoPlayerEntity(data)
-//     //check first url type
-//     const firstUrl = data.urls[0]
-//     if (firstUrl.substring(firstUrl.lastIndexOf('.') + 1) === 'mp4') {
-//         metaMap.map[newId] = videoList
-//         root.childrenIds.push(newId)
-//         if (imageList.urls.length > 0) {
-//             newId = uniqueID()
-//             metaMap.map[newId] = imageList
-//             root.childrenIds.push(newId)
-//         }
-
-//     } else {
-//         metaMap.map[newId] = imageList
-//         root.childrenIds.push(newId)
-
-//         if (videoList.playlist.length > 0) {
-//             newId = uniqueID()
-//             metaMap.map[newId] = videoList
-//             root.childrenIds.push(newId)
-//         }
-//     }
-//     //如果只包含image或video，则增加重复项目解决循环播放报错问题
-//     if (root.childrenIds.length === 1) {
-//         root.childrenIds.push(root.childrenIds[0])
-//     }
-//     return metaMap
-// }
-
-const createRootEntity = (): MetaMap => {
-    const rootId = uniqueID()
-    const metaMap: MetaMap = {
-        rootId,
-        map: {},
-    }
-    metaMap.map[rootId] = {
-        tag: 'Viewport',
-        childrenIds: [],
-    }
-    return metaMap
-}
-const createPlaylistEntity = (list: PostData): Array<IPlayProps> => {
-    list
-    return null
-}
-
-// const createImageListEntity = (data: PostData): ImageListProps => {
-//     const { urls, duration, animation } = data
-//     const _urls = urls.filter(x => {
-//         const ext = x.substring(x.lastIndexOf('.') + 1)
-//         return ext === 'jpg' || ext === 'jpeg' || ext === 'png'
-//     })
-//     const _animation = animation as Animation
-//     return {
-//         tag: 'ImageList',
-//         urls: _urls,
-//         duration,
-//         animation: _animation,
-//         childrenIds: [],
-//     }
-// }
-
-// const createVideoPlayerEntity = (data: PostData): VideoListProps => {
-//     const { urls, duration, animation } = data
-//     const _urls = urls.filter(x => {
-//         const ext = x.substring(x.lastIndexOf('.') + 1)
-//         return ext === 'mp4' || ext === 'webm'
-//     })
-//     return <VideoListProps>{
-//         tag: 'VideoPlayer',
-//         playlist: createPlaylist(_urls),
-//         urls: _urls,
-//         childrenIds: [],
-//     }
-// }
-
 type PlaySource = {
     sources: PlaySourceItem[],
     poster: string
@@ -175,14 +92,3 @@ type PlaySourceItem = {
     type: string
 }
 
-const createPlaylist = (urls: string[]): PlaySource[] => {
-    return urls.map(src => {
-        return <PlaySource>{
-            sources: [<PlaySourceItem>{
-                src,
-                type: 'video/' + src.substring(src.lastIndexOf('.') + 1)
-            }],
-            poster: ''
-        }
-    })
-}

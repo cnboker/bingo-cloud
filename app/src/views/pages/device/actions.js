@@ -10,6 +10,7 @@ import {
   RECEIVE_DEVICE_SNAPSHOT_IMAGE,
   RECEIVE_DEVICE_LOGS,
   RECEIVE_DEVICE_STATUS,
+  RECEIVE_DEVICE_RECYCLE,
 } from './constants'
 import * as Dialog from '~/views/components/dialog/Index'
 import { authHeader } from '~/lib/check-auth'
@@ -55,6 +56,10 @@ export const receiveDeviceStatus = (payload) => {
     type: RECEIVE_DEVICE_STATUS,
     payload,
   }
+}
+
+export const receiveDeviceRecycle = (payload) => {
+  return { type: RECEIVE_DEVICE_RECYCLE, payload }
 }
 
 export const requestDeviceStatus = () => (dispatch) => {
@@ -157,6 +162,27 @@ export const deviceUpdateName = (deviceId, newName, resolution) => (dispatch) =>
     .then((res) => {
       console.log('deviceUpdateName', res)
       dispatch(receiveDeviceUpdateName({ deviceId, newName, resolution }))
+    })
+    .catch((err) => {
+      console.log(err)
+    })
+}
+
+export const deviceRecycle = (deviceId) => (dispatch) => {
+  var headers = authHeader()
+  var url = `${process.env.REACT_APP_SERVICE_URL}/api/device/recycle`
+  //axio push
+  axios({
+    url,
+    method: 'post',
+    data: {
+      deviceId,
+    },
+    headers,
+  })
+    .then((res) => {
+      console.log('deviceRecycle', res)
+      dispatch(receiveDeviceRecycle({ deviceId }))
     })
     .catch((err) => {
       console.log(err)

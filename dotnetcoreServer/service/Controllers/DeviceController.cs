@@ -56,6 +56,17 @@ namespace Ioliz.Service.Controllers
             return Ok();
         }
 
+        [HttpPost("/api/device/recycle")]
+        public IActionResult Recycle([FromBody]DeviceModel model)
+        {
+            var device = ctx.Devices.FirstOrDefault(c=>c.DeviceId == model.DeviceId);
+            if(device != null){
+                ctx.Devices.Remove(device);
+            }
+            ctx.SaveChanges();
+            return Ok();
+        }
+
         [HttpPost("/api/device/updateName")]
         public IActionResult UpdateName([FromBody] UpdateDeviceNameModel model)
         {

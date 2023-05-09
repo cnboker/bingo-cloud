@@ -1,6 +1,6 @@
 import CSS from 'csstype';
 import React from 'react';
-import { Animations } from './constants';
+
 export interface IProps {
   style: CSS.Properties,
 }
