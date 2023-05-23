@@ -193,7 +193,7 @@ export default ({ url, exit, source }: IVideoProps & IDataSource) => {
     <video
       ref={playerRef}
       autoPlay={true}
-      controls={true}
+      controls={false}
       className="video"
     ></video>
   );

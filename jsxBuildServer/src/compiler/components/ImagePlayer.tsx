@@ -10,7 +10,6 @@ export const ImagePlayer: React.FC<IImageProps> = ({ url, exit, duration }) => {
   }
 
   useEffect(() => {
-    console.log('image play:', url)
     const timer: ReturnType<typeof setTimeout> = setTimeout(() => {
 
       if (exit) {
