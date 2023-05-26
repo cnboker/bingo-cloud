@@ -18,12 +18,7 @@ namespace Ioliz.Shared.Utils
             this.domain = domain;
             this.userName = userName;
         }
-        //return path include domain 
-        public override string GetPath(string fileFullName)
-        {
-            return string.Format("{0}/{1}{2}", domain, this.userName, base.GetPath(fileFullName));
-        }
-
+      
         public override string GetThumbnailUrl(string prefixPath, string fileName)
         {
             var mimeType = MimeTypes.GetMimeType(fileName);
@@ -66,6 +61,8 @@ namespace Ioliz.Shared.Utils
             throw new NotImplementedException();
         }
 
+        //获取目录虚拟路径
+        //fileFullName:文件物理路径
         public virtual string GetPath(string fileFullName)
         {
             return fileFullName.Substring(rootDirLength);

@@ -182,17 +182,21 @@ namespace FileServer.Controllers
         private async Task<FileResultModel> ImageFileHandle(string fileUploadDir, IFormFile files)
         {
             string hostUrl = Request.Scheme + "://" + Request.Host;
+            string filePath = fileUploadDir + "/" + files.FileName;
             if (files.Length > 0)
             {
-                using (var stream = new FileStream(fileUploadDir + "/" + files.FileName, FileMode.Create))
+                using (var stream = new FileStream(filePath, FileMode.Create))
                 {
                     await files.CopyToAsync(stream);
                 }
+                //如果图片尺寸大于2k则缩小到2k
+                ImageUtil.Resize(filePath);
             }
             WebDirectory webDir = new WebDirectory(hostUrl, User.Identity.Name);
             return new FileResultModel()
             {
                 FileName = files.FileName,
+                Path = webDir.GetPath(filePath),
                 ThumbnailUrl = webDir.GetThumbnailUrl(this.prefixPath, files.FileName)
             };
         }
