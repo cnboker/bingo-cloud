@@ -117,9 +117,8 @@ export const useCustomFileMap = (data: FsMap) => {
     Dialog.confirm(
       <FilePicker
         basePath={path}
-        onProcessFiles={(files) => {
-          console.log('response data', files)
-          appendFileNode(files)
+        onProcessFiles={(files: any) => {
+          appendFileNode({ path: `/${path}/${files.fileName}`, ...files })
         }}
       />,
     )
@@ -224,7 +223,8 @@ export const useCustomFileMap = (data: FsMap) => {
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   const appendFileNode = (fileInfo: any) => {
     //taskPercentRequestUrl:视频文件上传包含该属性,浏览器可以调用该地址获取编码进度
-    const { fileName, taskPercentRequestUrl, thumbnailUrl } = fileInfo
+    const { fileName, taskPercentRequestUrl, thumbnailUrl, path } = fileInfo
+    console.log('appendFileNode', fileInfo)
     const newFileId = uniqueID()
     checkLongTask(taskPercentRequestUrl, fileName, newFileId)
     setFileMap((fileMap) => {
@@ -233,6 +233,7 @@ export const useCustomFileMap = (data: FsMap) => {
       newFileMap[newFileId] = {
         id: newFileId,
         name: fileName,
+        path,
         isDir: false,
         thumbnailUrl,
         modDate: new Date(),

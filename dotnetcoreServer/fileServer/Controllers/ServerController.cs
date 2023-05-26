@@ -196,7 +196,6 @@ namespace FileServer.Controllers
             return new FileResultModel()
             {
                 FileName = files.FileName,
-                Path = webDir.GetPath(filePath),
                 ThumbnailUrl = webDir.GetThumbnailUrl(this.prefixPath, files.FileName)
             };
         }

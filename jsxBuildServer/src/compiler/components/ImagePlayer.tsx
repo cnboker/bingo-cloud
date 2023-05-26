@@ -4,9 +4,20 @@ import * as CSS from 'csstype'
 
 export const ImagePlayer: React.FC<IImageProps> = ({ url, exit, duration }) => {
   //下载到设备需要获取本地资源播放
-  const style: CSS.Properties = {
-    height: '100vh',
-    width: '100%'
+  // const style: CSS.Properties = {
+  //   height: '100vh',
+  //   width: '100%',
+  //   objectFit: 'contain'
+  // }
+  const bg: CSS.Properties = {
+    /* The image used */
+    backgroundImage: `url(${url})`,
+    /* Full height */
+    height: '100%',
+    /* Center and scale the image nicely */
+    backgroundPosition: 'center',
+    backgroundRepeat: 'no-repeat',
+    backgroundSize: 'cover'
   }
 
   useEffect(() => {
@@ -17,9 +28,9 @@ export const ImagePlayer: React.FC<IImageProps> = ({ url, exit, duration }) => {
       }
     }, duration);
     return () => clearTimeout(timer);
-  }, [url]); 
+  }, [url]);
 
   return (
-    <img src={url} style={style} />
+    <div style={bg}></div>
   )
 }

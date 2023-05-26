@@ -91,7 +91,7 @@ export const ServerVFSBrowser: React.FC<VFSProps> = (props) => {
 const fileActions = [
   //ChonkyActions.CreateFolder, // Adds a button to the toolbar
   ChonkyActions.UploadFiles, // Adds a button
-  //ChonkyActions.DownloadFiles, // Adds a button
+  ChonkyActions.DownloadFiles, // Adds a button
   //ChonkyActions.CopyFiles, // Adds a button and a shortcut: Ctrl+C
   ChonkyActions.DeleteFiles, // Adds a button and a shortcut: Delete
 ]
