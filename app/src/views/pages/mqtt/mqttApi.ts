@@ -9,6 +9,8 @@ export const contentPublish = (deviceIds: string[], fileList: string[]) => {
     for (const deviceId of deviceIds) {
       disp.contentPub(deviceId, fileList)
     }
+    //Prevent duplicate sending
+    deviceIds = []
   }
   disp.connect()
 }
@@ -17,6 +19,7 @@ export const spanshotPub = (deviceId: string) => {
   disp.onConnect = () => {
     console.log('spanshotPub...', deviceId)
     disp.spanshotPub(deviceId)
+    deviceId = null
   }
   disp.connect()
 }

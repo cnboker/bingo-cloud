@@ -118,7 +118,7 @@ export const useCustomFileMap = (data: FsMap) => {
       <FilePicker
         basePath={path}
         onProcessFiles={(files: any) => {
-          appendFileNode({ path: `/${path}/${files.fileName}`, ...files })
+          appendFileNode(files)
         }}
       />,
     )

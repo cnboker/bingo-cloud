@@ -5,7 +5,7 @@ var cors = require("cors");
 var ffmpeg = require("fluent-ffmpeg");
 const fs = require("fs");
 const path = require("path");
-const { response } = require("express");
+const h264check = require('./videoInfo')
 var port = 9000;
 var host = "0.0.0.0";
 //var timeout = express.timeout;
@@ -59,17 +59,23 @@ app.get("/image", (req, res) => {
     });
 });
 
-app.get("/test",(req,res)=>{
-  videoEncode('./tmp/sample.webm',res);
+app.get("/test", (req, res) => {
+  videoEncode('./tmp/sample.webm', res);
 })
 
 app.get("/", (req, res) => {
-  videoEncode(req.query.url,res);
+  videoEncode(req.query.url, res);
 });
+
+//Check if the video requires encoding, video that meet 1080p and 30 fps do not require encoding
+app.get('/h264', async (req, res) => {
+  const result = await h264check(req.query.url);
+  return res.send(200, { result })
+})
 
 //http://address?url=
 //ffmpeg.exe -i input_file -movflags empty_moov+omit_tfhd_offset+frag_keyframe+default_base_moof+isml -c:a aac output_file
-const videoEncode = (url,res) => {
+const videoEncode = (url, res) => {
   res.setTimeout(30 * 60 * 1000);
   res.contentType("video/mp4");
   let filename = url.split("/").pop();

@@ -33,7 +33,7 @@ namespace Ioliz.Service.Models
             return list.Values.Where(c => deviceIds.Contains(c.DeviceId)).Select(x => new DeviceStateResult
             {
                 DeviceId = x.DeviceId,
-                NetworkStatus = x.UpdateDate.AddSeconds(60) < DateTime.Now ? NetworkStatus.Offline : NetworkStatus.Running
+                NetworkStatus = x.UpdateDate.AddSeconds(120) < DateTime.Now ? NetworkStatus.Offline : NetworkStatus.Running
             }).ToArray();
         }
     }

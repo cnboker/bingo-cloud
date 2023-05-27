@@ -1,14 +1,16 @@
 //npx http-server before run it
+//Execute the current command: 
+//node index.js &
+//node test.js --sample
+//Check is the encodings ervice is running properly
 
 const process = require("process");
 const http = require("http");
 const fs = require("fs");
-const { Z_FIXED } = require("zlib");
 
 const myArgs = process.argv.slice(2);
 console.log("myArgs: ", myArgs);
-// run: node test.js --sample
-// 检查编码服务是否运行正常
+
 if (myArgs.length > 0) {
   if (myArgs[0] === "--sample") {
     const target = "./tmp/sampe_1.mp4";
