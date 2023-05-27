@@ -28,6 +28,8 @@ namespace FileServer.Models
         //如果是视频文件，编码后的文件存储位置
         [JsonIgnore]
         public string SavePath { get; set; }
+        //视频是否需要编码
+        public bool EncodeRequired {get;set;}
       
     }
 }

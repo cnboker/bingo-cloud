@@ -11,7 +11,7 @@ namespace FileServer.Controllers
 {
     //检查是否是视频文件
     //如果是视频文件，则做重新编码操作，将重新编码后的文件返回给浏览器
-    public class FFMepgFilter : ActionFilterAttribute, IActionFilter
+    public class FFMepgFilter : ActionFilterAttribute
     {
         // void IActionFilter.
 
@@ -22,8 +22,11 @@ namespace FileServer.Controllers
             var backgroundWorkQuenue = fileController.backgroundWorkQuenue;
             var logger = fileController.logger;
             var jsonResult = context.Result as JsonResult;
+            
             var result = (FileResultModel)jsonResult.Value;
-            logger.LogInformation("ffmepgfilter->fullurl->" + result.FullUrl);
+            logger.LogInformation("ffmepgfilter->EncodeRequired->" + result.EncodeRequired);
+            if (!result.EncodeRequired) return;
+           
             if (string.IsNullOrEmpty(result.FullUrl))
             {
                 return;

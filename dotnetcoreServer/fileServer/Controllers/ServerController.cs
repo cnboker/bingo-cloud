@@ -129,9 +129,19 @@ namespace FileServer.Controllers
             return Ok();
         }
 
+        [AllowAnonymous]
+        [FFMepgFilter]
+        [H264Filter]
+        public async Task<IActionResult> FilterTest(){
+            Console.WriteLine("FilterTest....");
+            FileResultModel result = new FileResultModel() {  };
+            return Json(result);
+        }
+
         [RequestSizeLimit(1024 * 1024 * 500)]
         //[DisableRequestSizeLimit]
         [FFMepgFilter]
+        [H264Filter]
         [HttpPost("/api/server/upload")]
         public async Task<IActionResult> File([FromForm] IFormFile files)
         {
