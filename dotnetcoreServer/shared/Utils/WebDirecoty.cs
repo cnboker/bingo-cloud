@@ -18,7 +18,13 @@ namespace Ioliz.Shared.Utils
             this.domain = domain;
             this.userName = userName;
         }
-      
+
+       //return path include domain 
+        protected override string GetPath(string fileFullName)
+        {
+            return string.Format("{0}/{1}{2}", domain, this.userName, base.GetPath(fileFullName));
+        }
+        
         public override string GetThumbnailUrl(string prefixPath, string fileName)
         {
             var mimeType = MimeTypes.GetMimeType(fileName);
@@ -36,7 +42,7 @@ namespace Ioliz.Shared.Utils
         }
     }
 
-    public class DirectoryJsonGenerator
+    public abstract class DirectoryJsonGenerator
     {
         public string RootFolderId { get; set; }
         private DirectoryInfo rootInfo;
@@ -56,14 +62,12 @@ namespace Ioliz.Shared.Utils
             this.CreateFolderHierarchy();
         }
 
-        public virtual string GetThumbnailUrl(string prefixPath, string fileName)
-        {
-            throw new NotImplementedException();
-        }
+        public abstract string GetThumbnailUrl(string prefixPath, string fileName);
+        
 
         //获取目录虚拟路径
         //fileFullName:文件物理路径
-        public virtual string GetPath(string fileFullName)
+        protected virtual string GetPath(string fileFullName)
         {
             return fileFullName.Substring(rootDirLength);
         }

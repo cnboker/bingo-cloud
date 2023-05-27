@@ -17,7 +17,7 @@ namespace FileServer.Controllers
     [Authorize()]
     public class ServerController : Controller
     {
-        
+
         private IWebHostEnvironment _hostingEnvironment;
         private string UserBaseDir;
         private string videoTmpDir;
@@ -25,7 +25,7 @@ namespace FileServer.Controllers
         private string prefixPath;
         public BackgroundWorkQuenue backgroundWorkQuenue;
         public ILogger<ServerController> logger;
-        public ServerController(IWebHostEnvironment hostingEnvironment, 
+        public ServerController(IWebHostEnvironment hostingEnvironment,
         BackgroundWorkQuenue backgroundWorkQuenue,
         ILogger<ServerController> logger
         )
@@ -196,6 +196,7 @@ namespace FileServer.Controllers
             return new FileResultModel()
             {
                 FileName = files.FileName,
+                Path = string.Format("{0}/{1}/{2}/{3}", hostUrl, User.Identity.Name, prefixPath, files.FileName),
                 ThumbnailUrl = webDir.GetThumbnailUrl(this.prefixPath, files.FileName)
             };
         }
