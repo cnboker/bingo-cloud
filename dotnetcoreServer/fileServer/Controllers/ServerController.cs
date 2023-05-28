@@ -188,7 +188,8 @@ namespace FileServer.Controllers
                 SavePath = fileUploadDir + "/" + fileName,
                 Path = string.Format("{0}/{1}/{2}/{3}", hostUrl, User.Identity.Name, prefixPath, files.FileName),
                 //视频文件放到.tmp文件夹，所有这里临时从.tmp文件截图
-                ThumbnailUrl = webDir.GetThumbnailUrl(Contants.TmpDir, files.FileName)
+                ThumbnailUrl = webDir.GetThumbnailUrl(Contants.TmpDir, files.FileName),
+                ThumbnailUrl1 = webDir.GetThumbnailUrl(prefixPath, files.FileName),
             };
         }
 

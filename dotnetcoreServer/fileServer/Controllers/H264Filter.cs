@@ -47,6 +47,8 @@ namespace FileServer.Controllers
                 if (result.EncodeRequired)
                 {
                     result.TaskPercentRequestUrl = AppInstance.Instance.Config.FFMpegServer + "/dataProgress?url=" + result.TmpPath;
+                }else{
+                    result.ThumbnailUrl = result.ThumbnailUrl1;
                 }
 
                 logger.LogInformation("H264Filter ... EncodeRequired->" + h264Result.Result);

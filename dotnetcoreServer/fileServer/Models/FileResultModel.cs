@@ -33,5 +33,8 @@ namespace FileServer.Models
         {
            get;set;
         }
+        //需要视频编码的路径ThumbnailUrl, 不需要视频编码的路径是ThumbnailUrl1,如果不需要视频编码的需要在H264Filter用ThumbnailUrl1覆盖ThumbnailUrl
+        public string ThumbnailUrl1 { get; set; }
+        //如果是视频文件，编码后的文件存储位置
     }
 }
