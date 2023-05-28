@@ -165,12 +165,13 @@ namespace FileServer.Controllers
             return Json(result);
         }
 
-        //fileUploadDir:用户指定上传目录
+        //fileUploadDir:浏览器选择的当前目录
         private async Task<FileResultModel> VideoFileHandle(string fileUploadDir, IFormFile files)
         {
+            var tmpSavePath = this.videoTmpDir + files.FileName;
             if (files.Length > 0)
             {
-                using (var stream = new FileStream(this.videoTmpDir + files.FileName, FileMode.Create))
+                using (var stream = new FileStream(tmpSavePath, FileMode.Create))
                 {
                     await files.CopyToAsync(stream);
                 }
@@ -178,12 +179,14 @@ namespace FileServer.Controllers
             string hostUrl = Request.Scheme + "://" + Request.Host;
             string fileName = files.FileName.Substring(0, files.FileName.IndexOf(".")) + ".mp4";
             WebDirectory webDir = new WebDirectory(hostUrl, User.Identity.Name);
-            return new FileResultModel()
+            return new VideoFileResultModel()
             {
                 FileName = fileName,
+                TmpPath = tmpSavePath,
                 //只有上传的是视频文件的时候才会用
-                FullUrl = hostUrl + "/" + User.Identity.Name + Contants.TmpDir + files.FileName,
+                TmpUrl = hostUrl + "/" + User.Identity.Name + Contants.TmpDir + files.FileName,
                 SavePath = fileUploadDir + "/" + fileName,
+                Path = string.Format("{0}/{1}/{2}/{3}", hostUrl, User.Identity.Name, prefixPath, files.FileName),
                 //视频文件放到.tmp文件夹，所有这里临时从.tmp文件截图
                 ThumbnailUrl = webDir.GetThumbnailUrl(Contants.TmpDir, files.FileName)
             };

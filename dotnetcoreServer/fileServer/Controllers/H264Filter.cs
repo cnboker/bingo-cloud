@@ -23,13 +23,18 @@ namespace FileServer.Controllers
             var fileController = context.Controller as ServerController;
             var logger = fileController.logger;
             var jsonResult = context.Result as JsonResult;
-            var result = (FileResultModel)jsonResult.Value;
-            Console.WriteLine("H264Filter->" + result.FullUrl);
-            if (string.IsNullOrEmpty(result.FullUrl))
+
+            if (!(jsonResult.Value is VideoFileResultModel))
             {
                 return;
             }
-            var url = AppInstance.Instance.Config.FFMpegServer + "/h264?url=" + result.FullUrl;
+            var result = jsonResult.Value as VideoFileResultModel;
+            logger.LogInformation("H264Filter->" + result.TmpUrl);
+            if (string.IsNullOrEmpty(result.TmpUrl))
+            {
+                return;
+            }
+            var url = AppInstance.Instance.Config.FFMpegServer + "/h264?url=" + result.TmpUrl;
             var task = Task.Run(async () =>
             {
                 HttpClient client = new HttpClient();
@@ -38,7 +43,13 @@ namespace FileServer.Controllers
                 var h264Result =
                     await JsonSerializer.DeserializeAsync<H264Model>(stream);
                 result.EncodeRequired = h264Result.Result;
-                Console.WriteLine("H264Filter ... EncodeRequired->" + h264Result.Result);
+
+                if (result.EncodeRequired)
+                {
+                    result.TaskPercentRequestUrl = AppInstance.Instance.Config.FFMpegServer + "/dataProgress?url=" + result.TmpPath;
+                }
+
+                logger.LogInformation("H264Filter ... EncodeRequired->" + h264Result.Result);
             });
             task.Wait();
         }
