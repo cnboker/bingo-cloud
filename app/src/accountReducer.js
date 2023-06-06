@@ -1,11 +1,4 @@
-import {
-  SIGNUP_RESPONSE,
-  LOGIN_RESPONSE,
-  LOGOUT,
-  UPDATE_TOKEN,
-  ERROR_RESETS,
-  REQUEST_USER_TOKEN,
-} from './accountConstants'
+import { SIGNUP_RESPONSE, LOGIN_RESPONSE, LOGOUT, UPDATE_TOKEN, ERROR_RESETS, REQUEST_USER_TOKEN } from './accountConstants'
 import { API_RESPONSE_ERROR } from './constants'
 import Cookies from 'js-cookie'
 import jwtDecode from 'jwt-decode'
@@ -36,7 +29,6 @@ const createSecurityToken = (access_token) => {
     token.agentToken = access_token
   }
 
-  var tokenString = JSON.stringify(token)
   localStorage.setItem('token', access_token)
   Cookies.set('token', access_token, { expires: 7, path: '', domain: cookieDomain })
   return token

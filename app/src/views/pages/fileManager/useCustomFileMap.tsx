@@ -71,57 +71,60 @@ export const useCustomFileMap = (data: FsMap) => {
 
   // Function that will be called when files are moved from one folder to another
   // using drag & drop.
-  const moveFiles = useCallback(
-    (files: CustomFileData[], source: CustomFileData, destination: CustomFileData) => {
-      setFileMap((currentFileMap) => {
-        const newFileMap = { ...currentFileMap }
-        const moveFileIds = new Set(files.map((f) => f.id))
+  const moveFiles = useCallback((files: CustomFileData[], source: CustomFileData, destination: CustomFileData) => {
+    setFileMap((currentFileMap) => {
+      const newFileMap = { ...currentFileMap }
+      const moveFileIds = new Set(files.map((f) => f.id))
 
-        // Delete files from their source folder.
-        const newSourceChildrenIds = source.childrenIds?.filter((id) => !moveFileIds.has(id))
-        newFileMap[source.id] = {
-          ...source,
-          childrenIds: newSourceChildrenIds,
-          childrenCount: newSourceChildrenIds.length,
+      // Delete files from their source folder.
+      const newSourceChildrenIds = source.childrenIds?.filter((id) => !moveFileIds.has(id))
+      newFileMap[source.id] = {
+        ...source,
+        childrenIds: newSourceChildrenIds,
+        childrenCount: newSourceChildrenIds.length,
+      }
+
+      // Add the files to their destination folder.
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      const newDestinationChildrenIds = [...destination.childrenIds!, ...files.map((f) => f.id)]
+      newFileMap[destination.id] = {
+        ...destination,
+        childrenIds: newDestinationChildrenIds,
+        childrenCount: newDestinationChildrenIds.length,
+      }
+
+      // Finally, update the parent folder ID on the files from source folder
+      // ID to the destination folder ID.
+      files.forEach((file) => {
+        newFileMap[file.id] = {
+          ...file,
+          parentId: destination.id,
         }
-
-        // Add the files to their destination folder.
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        const newDestinationChildrenIds = [...destination.childrenIds!, ...files.map((f) => f.id)]
-        newFileMap[destination.id] = {
-          ...destination,
-          childrenIds: newDestinationChildrenIds,
-          childrenCount: newDestinationChildrenIds.length,
-        }
-
-        // Finally, update the parent folder ID on the files from source folder
-        // ID to the destination folder ID.
-        files.forEach((file) => {
-          newFileMap[file.id] = {
-            ...file,
-            parentId: destination.id,
-          }
-        })
-
-        return newFileMap
       })
-    },
-    [],
-  )
+
+      return newFileMap
+    })
+  }, [])
 
   const uploadFiles = useCallback(() => {
     //必须在setFileMap函数里面，才能获取到新建文件夹关联数据
     //setFileMap((map) => {
     const path = getPath(currentFolderIdRef.current)
     console.log('upload bashpath', path)
-    Dialog.confirm(
-      <FilePicker
-        basePath={path}
-        onProcessFiles={(files: any) => {
-          appendFileNode(files)
-        }}
-      />,
-    )
+
+    //show({ title: G.info, body: message, fullscreen: true }, cb)
+    Dialog.show({
+      title: R.uploadFile,
+      body: (
+        <FilePicker
+          basePath={path}
+          onProcessFiles={(files: any) => {
+            appendFileNode(files)
+          }}
+        />
+      ),
+      fullscreen: true,
+    })
     //return map
     //})
   }, [])

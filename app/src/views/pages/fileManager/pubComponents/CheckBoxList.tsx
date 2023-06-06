@@ -59,21 +59,19 @@ export const CheckBoxList = memo(
     }
 
     return (
-      <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
+      <List sx={{ width: '100%', bgcolor: 'background.paper' }}>
         {data.map((item) => {
           const labelId = item.value
           return (
             <ListItem key={item.value} dense button onClick={handleToggle(item.value)}>
-              <ListItemIcon>
-                <Checkbox
-                  edge="start"
-                  checked={checked.indexOf(item.value) !== -1}
-                  tabIndex={-1}
-                  disableRipple
-                  inputProps={{ 'aria-labelledby': labelId }}
-                />
-                <ListItemText id={labelId} primary={item.name} />
-              </ListItemIcon>
+              <Checkbox
+                edge="start"
+                checked={checked.indexOf(item.value) !== -1}
+                tabIndex={-1}
+                disableRipple
+                inputProps={{ 'aria-labelledby': labelId }}
+              />
+              <ListItemText id={labelId} primary={item.name} />
             </ListItem>
           )
         })}

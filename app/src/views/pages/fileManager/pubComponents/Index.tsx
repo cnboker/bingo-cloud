@@ -24,19 +24,18 @@ const Header = (props: HeaderProps) => {
     valueChange(newValue)
   }
   return (
-    <Paper>
-      <Tabs
-        value={value}
-        indicatorColor="primary"
-        textColor="primary"
-        onChange={handleChange}
-        aria-label="pub information"
-      >
-        <Tab label={R.selectedItems} />
-        <Tab label={R.parameterSetting} />
-        <Tab label={R.deviceList} />
-      </Tabs>
-    </Paper>
+    <Tabs
+      value={value}
+      indicatorColor="primary"
+      textColor="primary"
+      onChange={handleChange}
+      aria-label="pub information"
+      variant="fullWidth"
+    >
+      <Tab label={R.selectedItems} />
+      <Tab label={R.parameterSetting} />
+      <Tab label={R.deviceList} />
+    </Tabs>
   )
 }
 
@@ -111,7 +110,7 @@ export const PubForms = React.forwardRef<ImperativeHandleProps, PubFormProps>(
     //https://stackoverflow.com/questions/61097440/reactjs-material-ui-prevent-re-render-tabs-on-enter
     return (
       <div className={classes.root}>
-        <AppBar position="static" color="default">
+        <Paper>
           <Header value={value} valueChange={valueChange} />
           <div style={getVisibilityStyle(value !== 0)}>
             <ImageList
@@ -126,7 +125,7 @@ export const PubForms = React.forwardRef<ImperativeHandleProps, PubFormProps>(
           <div style={getVisibilityStyle(value !== 2)}>
             <CheckBoxList data={deviceList} ref={devicelistRef} />
           </div>
-        </AppBar>
+        </Paper>
       </div>
     )
   },

@@ -4,6 +4,7 @@ import { useCallback } from 'react'
 import { asyncDelete } from 'src/lib/api'
 import { FileDeleteUrl } from './constants'
 import * as Dialog from 'src/views/components/dialog/Index'
+
 export const useFileActionHandler = (
   setCurrentFolderId: (folderId: string) => void,
   deleteFiles: (files: CustomFileData[]) => void,
