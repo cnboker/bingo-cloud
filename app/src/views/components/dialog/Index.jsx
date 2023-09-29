@@ -1,28 +1,14 @@
 import React, { useState, useRef } from 'react'
 import ReactDOM from 'react-dom'
-import {
-  CButton,
-  CModal,
-  CModalHeader,
-  CModalFooter,
-  CModalTitle,
-  CModalBody,
-  CToast,
-  CToastBody,
-  CToastClose,
-  CToaster,
-  CRow,
-  CCol,
-  CFormInput,
-} from '@coreui/react'
+import { CButton, CModal, CModalHeader, CModalFooter, CModalTitle, CModalBody, CToast, CToastBody, CToastClose, CToaster, CRow, CCol, CFormInput } from '@coreui/react'
 import G from 'src/locale'
 //bodydata: 收集dialog‘body的数据，比如form数据
-const Dialog = ({ title, body, bodydata, size = 'lg', callback }) => {
+const Dialog = ({ title, body, bodydata, size = 'lg', callback, fullscreen }) => {
   const [visible, setVisible] = useState(true)
 
   return (
     <>
-      <CModal visible={visible} alignment="center" size={size}>
+      <CModal visible={visible} alignment="center" size={size} fullscreen={fullscreen}>
         <CModalHeader>
           <CModalTitle>{title}</CModalTitle>
         </CModalHeader>
@@ -63,8 +49,8 @@ export const show = (options, callback) => {
   ReactDOM.render(jsx, createContainer())
 }
 
-export const confirm = (message, cb) => {
-  show({ title: G.info, body: message }, cb)
+export const confirm = (body, cb) => {
+  show({ title: G.info, body, fullscreen: true }, cb)
 }
 
 export const prompt = (title, cb) => {
@@ -76,11 +62,7 @@ export const prompt = (title, cb) => {
       body: (
         <CRow>
           <CCol xs>
-            <CFormInput
-              placeholder={title}
-              aria-label={title}
-              onChange={(e) => (bodydata.val = e.target.value)}
-            />
+            <CFormInput placeholder={title} aria-label={title} onChange={(e) => (bodydata.val = e.target.value)} />
           </CCol>
         </CRow>
       ),

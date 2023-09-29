@@ -11,7 +11,7 @@ export type ImageListProps = {
 
 export default ({ selectedFiles, removeAction, onMovedown }: ImageListProps) => {
   return (
-    <ImageList cols={6} rowHeight={128}>
+    <ImageList>
       {selectedFiles.map((item: FileData, index: number) => {
         return (
           <ImageListItem key={`key${index}`}>

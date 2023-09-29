@@ -94,6 +94,11 @@ const fileActions = [
   ChonkyActions.DownloadFiles, // Adds a button
   //ChonkyActions.CopyFiles, // Adds a button and a shortcut: Ctrl+C
   ChonkyActions.DeleteFiles, // Adds a button and a shortcut: Delete
+  ChonkyActions.SelectAllFiles,
+  ChonkyActions.ClearSelection,
+  ChonkyActions.SortFilesByName,
+  ChonkyActions.SortFilesBySize,
+  ChonkyActions.OpenFiles,
 ]
 
 export const VFSBrowser: React.FC<DataVFSProps> = (props) => {
