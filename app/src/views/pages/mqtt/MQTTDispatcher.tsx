@@ -39,7 +39,7 @@ export class MQTTDispatcher {
 
   //发布内容消息到设备
   contentPub(deviceId: string, data: any) {
-    if (!deviceId) return;
+    if (!deviceId) return
     const jsonString = JSON.stringify({
       deviceId: deviceId,
       files: data,

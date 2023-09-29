@@ -55,7 +55,7 @@ cd ../reverseProxy
 docker container stop nginxserver
 docker container rm nginxserver
 docker image build --tag nginxserver:latest .
-docker run --detach --restart always --name nginxserver --publish 80:80 --network myNetwork --volume /home/ubuntu/dist/app:/www/app --volume /home/ioliz/_www:/www nginxserver:latest
+docker run --detach --restart always --name nginxserver --publish 80:80 --network myNetwork --volume /home/ubuntu/ioliz/app:/app --volume /home/ubuntu/ioliz/www:/www nginxserver:latest
 
 
 #fileServer 经常出现数据目录无法挂载的情况，出现这种问题，直接使用命令docker-compose up --force-recreate
