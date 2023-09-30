@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 //redux hook
 import { useDispatch, useSelector } from 'react-redux'
-import { getDeviceLogs } from '../../actions'
+import { getDeviceLogs } from '../device/actions'
 import DeviceLogToolbar from './LogToolbar'
 import Pager from 'src/views/components/tables/Pager'
 import G from '~/locale'

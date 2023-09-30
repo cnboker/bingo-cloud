@@ -14,7 +14,7 @@ const FileManager = React.lazy(() =>
   })),
 )
 const DeviceManager = React.lazy(() => import('./views/pages/device/Components/index'))
-const DeviceLogs = React.lazy(() => import('./views/pages/device/Components/logs/Index'))
+const DeviceLogs = React.lazy(() => import('./views/pages/logs/Index'))
 const Start = React.lazy(() => import('./views/start'))
 const DeviceDetail = React.lazy(() => import('./views/pages/device/Components/details/Index'))
 const routes = [

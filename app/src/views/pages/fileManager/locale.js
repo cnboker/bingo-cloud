@@ -11,12 +11,13 @@ const data = {
     deviceList: 'Device list',
     playEffect: 'Play effect',
     duration: 'play long each image(sec)',
-    videoEncodeTip:
-      '  {0} encoding({1}%), video encoding make playback better,be patient to finish.',
+    videoEncodeTip: '  {0} encoding({1}%), video encoding make playback better,be patient to finish.',
     videoEncodeDone: '  {0} encode success.',
     videoEncodeError: ' {0} try again.',
+    uploadFile: 'Upload file',
   },
   zh: {
+    uploadFile: '上传文件',
     pendingItems: '待发布项',
     pendingList: '待发布内容列表',
     cancel: '取消',

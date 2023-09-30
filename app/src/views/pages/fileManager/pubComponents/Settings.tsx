@@ -1,5 +1,5 @@
 import React, { useState, forwardRef, useImperativeHandle, useRef, memo } from 'react'
-import { FormControl, InputLabel, Select, TextField } from '@material-ui/core'
+import { FormControl, Box, InputLabel, Select, TextField } from '@material-ui/core'
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles'
 import { MenuItem } from '@material-ui/core'
 import R from '../locale'
@@ -52,6 +52,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     formControl: {
       margin: theme.spacing(1),
+      padding: theme.spacing(1),
       minWidth: 120,
     },
   }),
@@ -79,7 +80,7 @@ export const Settings = memo(
     }))
 
     return (
-      <div>
+      <Box m={2}>
         <FormControl className={classes.formControl}>
           <TextField
             inputRef={durationRef}
@@ -100,7 +101,7 @@ export const Settings = memo(
             ))}
           </Select>
         </FormControl>
-      </div>
+      </Box>
     )
   }),
 )

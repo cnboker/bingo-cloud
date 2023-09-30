@@ -56,14 +56,14 @@ namespace Ioliz.Service.Controllers
             return Ok();
         }
 
-        [HttpPost("/api/device/recycle")]
-        public IActionResult Recycle([FromBody]DeviceModel model)
+        [HttpPost("/api/device/recycle/{id}")]
+        public IActionResult Recycle(string deviceId)
         {
-            var device = ctx.Devices.FirstOrDefault(c=>c.DeviceId == model.DeviceId);
+            var device = ctx.Devices.FirstOrDefault(c=>c.DeviceId == deviceId);
             if(device != null){
                 ctx.Devices.Remove(device);
+                ctx.SaveChanges();
             }
-            ctx.SaveChanges();
             return Ok();
         }
 

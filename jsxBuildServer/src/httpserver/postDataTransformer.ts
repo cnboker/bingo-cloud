@@ -13,6 +13,17 @@ export type PostData = {
     animation: string
 }
 
+function isValidHttpUrl(string: string) {
+    let url
+    try {
+        url = new URL(string)
+    } catch (_) {
+        return false
+    }
+
+    return url.protocol === "http:" || url.protocol === "https:"
+}
+
 export const transformData = (data: PostData): IPlayProps[] => {
     const { duration, animation, sources } = data
     const result = sources.map(x => {
@@ -21,8 +32,7 @@ export const transformData = (data: PostData): IPlayProps[] => {
                 type: 'image',
                 animation,
                 duration,
-                url: '.' + (new URL(x.url)).pathname,
-
+                url: isValidHttpUrl(x.url) ? '.' + (new URL(x.url)).pathname : x.url
             }
         } else if (x.type === 'video') {
             return <IVideoProps>{
@@ -37,11 +47,11 @@ export const transformData = (data: PostData): IPlayProps[] => {
                 pageName: '',
 
             }
-        }else{
+        } else {
             return null;
         }
     })
-    console.log('result',result)
+    console.log('result', result)
     return result;
 }
 

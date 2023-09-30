@@ -14,7 +14,7 @@ export default () => {
 }
 
 const MessageBar = ({ message, barType }) => {
-  return <CAlert color={barType == StatusBarType.message ? 'info' : 'warning'}>{message}</CAlert>
+  return <CAlert color={barType === StatusBarType.message ? 'info' : 'warning'}>{message}</CAlert>
 }
 
 const ProgressBar = ({ message }) => {

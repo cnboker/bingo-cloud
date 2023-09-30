@@ -11,7 +11,7 @@ namespace FileServer.Controllers
 {
     //检查是否是视频文件
     //如果是视频文件，则做重新编码操作，将重新编码后的文件返回给浏览器
-    public class FFMepgFilter : ActionFilterAttribute, IActionFilter
+    public class FFMepgFilter : ActionFilterAttribute
     {
         // void IActionFilter.
 
@@ -22,17 +22,29 @@ namespace FileServer.Controllers
             var backgroundWorkQuenue = fileController.backgroundWorkQuenue;
             var logger = fileController.logger;
             var jsonResult = context.Result as JsonResult;
-            var result = (FileResultModel)jsonResult.Value;
-            logger.LogInformation("ffmepgfilter->fullurl->" + result.FullUrl);
-            if (string.IsNullOrEmpty(result.FullUrl))
+
+            if (!(jsonResult.Value is VideoFileResultModel))
+            {
+                return;
+            }
+            var result = (VideoFileResultModel)jsonResult.Value;
+            logger.LogInformation("ffmepgfilter->EncodeRequired->" + result.EncodeRequired);
+            if (!result.EncodeRequired)
+            {
+                //不需要编码则将临时文件视频移动到用户选择的当前目录则SavePath
+                File.Move(result.TmpPath, result.SavePath);
+                return;
+            }
+
+            if (string.IsNullOrEmpty(result.TmpUrl))
             {
                 return;
             }
             //encode video
-            var url = AppInstance.Instance.Config.FFMpegServer + "?url=" + result.FullUrl;
+            var url = AppInstance.Instance.Config.FFMpegServer + "?url=" + result.TmpUrl;
             logger.LogInformation("ffmepgfilter->savepath->" + result.SavePath);
             logger.LogInformation("ffmepgfilter->download url->" + url);
-            if (File.Exists(result.SavePath)) return;
+         
             backgroundWorkQuenue.QueueBackgroundWorkItem(async token =>
             {
                 using (HttpClient client = new HttpClient())
@@ -49,6 +61,15 @@ namespace FileServer.Controllers
                     catch (Exception ex)
                     {
                         Console.WriteLine("FFMepgFilter ERROR->" + ex.Message);
+                    }
+                    finally
+                    {
+                        try
+                        {
+                            File.Delete(result.TmpPath);
+                        }
+                        catch { }
+
                     }
 
                 };

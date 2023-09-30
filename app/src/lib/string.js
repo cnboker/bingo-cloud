@@ -22,7 +22,7 @@ export const toTime = function (text) {
 export const toShortTime = function (text) {
   return moment(text).format('HH:MM')
 }
-
+// prettier-ignore
 export const durationToHHMM = function (minutes) {
   //return moment.utc(moment.duration(minutes, "m").asMilliseconds()).format("dd:HH:mm")
   return moment

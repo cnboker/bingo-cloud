@@ -1,17 +1,24 @@
 //npx http-server before run it
+//Execute the current command: 
+//node index.js &
+//node test.js --sample
+//Check is the encodings ervice is running properly
 
 const process = require("process");
 const http = require("http");
 const fs = require("fs");
-const { Z_FIXED } = require("zlib");
 
 const myArgs = process.argv.slice(2);
 console.log("myArgs: ", myArgs);
-// run: node test.js --sample
-// 检查编码服务是否运行正常
+
 if (myArgs.length > 0) {
+  //node test.js a b; example:node test.js --sample /home/scott/Documents/LG1080P.mp4 /home/scott/Documents/LG1080P1.mp4
+  //first run node.index.js
+  //source:a
+  //target:b
   if (myArgs[0] === "--sample") {
-    const target = "./tmp/sampe_1.mp4";
+    const source = myArgs[1]
+    const target = myArgs[2];
     if (fs.existsSync(target)) {
       fs.unlink(target, (err) => {
         if (err) throw err;
@@ -19,17 +26,18 @@ if (myArgs.length > 0) {
       });
     }
     const file = fs.createWriteStream(target);
-    const request = http.get("http://localhost:9000/test", (res) => {
+    const request = http.get(`http://localhost:9000?url=${source}`, (res) => {
       res.pipe(file);
       file
         .on("finish", () => {
           file.close();
           console.log("vide encode success!!!");
-          fs.unlink(target, (err) => {
-            if (err) throw err;
-            //console.log(`${target} has deleted`);
-            process.exit();
-          });
+          process.exit();
+          // fs.unlink(target, (err) => {
+          //   if (err) throw err;
+          //   //console.log(`${target} has deleted`);
+          //   process.exit();
+          // });
         })
         .on("error", (err) => {
           fs.unlink(target, (err) => {

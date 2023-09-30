@@ -170,14 +170,11 @@ export const deviceUpdateName = (deviceId, newName, resolution) => (dispatch) =>
 
 export const deviceRecycle = (deviceId) => (dispatch) => {
   var headers = authHeader()
-  var url = `${process.env.REACT_APP_SERVICE_URL}/api/device/recycle`
+  var url = `${process.env.REACT_APP_SERVICE_URL}/api/device/recycle/${deviceId}`
   //axio push
   axios({
     url,
     method: 'post',
-    data: {
-      deviceId,
-    },
     headers,
   })
     .then((res) => {

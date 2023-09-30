@@ -17,7 +17,7 @@ namespace FileServer.Controllers
     [Authorize()]
     public class ServerController : Controller
     {
-        
+
         private IWebHostEnvironment _hostingEnvironment;
         private string UserBaseDir;
         private string videoTmpDir;
@@ -25,7 +25,7 @@ namespace FileServer.Controllers
         private string prefixPath;
         public BackgroundWorkQuenue backgroundWorkQuenue;
         public ILogger<ServerController> logger;
-        public ServerController(IWebHostEnvironment hostingEnvironment, 
+        public ServerController(IWebHostEnvironment hostingEnvironment,
         BackgroundWorkQuenue backgroundWorkQuenue,
         ILogger<ServerController> logger
         )
@@ -129,9 +129,19 @@ namespace FileServer.Controllers
             return Ok();
         }
 
+        [AllowAnonymous]
+        [FFMepgFilter]
+        [H264Filter]
+        public async Task<IActionResult> FilterTest(){
+            Console.WriteLine("FilterTest....");
+            FileResultModel result = new FileResultModel() {  };
+            return Json(result);
+        }
+
         [RequestSizeLimit(1024 * 1024 * 500)]
         //[DisableRequestSizeLimit]
         [FFMepgFilter]
+        [H264Filter]
         [HttpPost("/api/server/upload")]
         public async Task<IActionResult> File([FromForm] IFormFile files)
         {
@@ -155,12 +165,13 @@ namespace FileServer.Controllers
             return Json(result);
         }
 
-        //fileUploadDir:用户指定上传目录
+        //fileUploadDir:浏览器选择的当前目录
         private async Task<FileResultModel> VideoFileHandle(string fileUploadDir, IFormFile files)
         {
+            var tmpSavePath = this.videoTmpDir + files.FileName;
             if (files.Length > 0)
             {
-                using (var stream = new FileStream(this.videoTmpDir + files.FileName, FileMode.Create))
+                using (var stream = new FileStream(tmpSavePath, FileMode.Create))
                 {
                     await files.CopyToAsync(stream);
                 }
@@ -168,31 +179,38 @@ namespace FileServer.Controllers
             string hostUrl = Request.Scheme + "://" + Request.Host;
             string fileName = files.FileName.Substring(0, files.FileName.IndexOf(".")) + ".mp4";
             WebDirectory webDir = new WebDirectory(hostUrl, User.Identity.Name);
-            return new FileResultModel()
+            return new VideoFileResultModel()
             {
                 FileName = fileName,
+                TmpPath = tmpSavePath,
                 //只有上传的是视频文件的时候才会用
-                FullUrl = hostUrl + "/" + User.Identity.Name + Contants.TmpDir + files.FileName,
+                TmpUrl = hostUrl + "/" + User.Identity.Name + Contants.TmpDir + files.FileName,
                 SavePath = fileUploadDir + "/" + fileName,
+                Path = string.Format("{0}/{1}/{2}/{3}", hostUrl, User.Identity.Name, prefixPath, files.FileName),
                 //视频文件放到.tmp文件夹，所有这里临时从.tmp文件截图
-                ThumbnailUrl = webDir.GetThumbnailUrl(Contants.TmpDir, files.FileName)
+                ThumbnailUrl = webDir.GetThumbnailUrl(Contants.TmpDir, files.FileName),
+                ThumbnailUrl1 = webDir.GetThumbnailUrl(prefixPath, files.FileName),
             };
         }
 
         private async Task<FileResultModel> ImageFileHandle(string fileUploadDir, IFormFile files)
         {
             string hostUrl = Request.Scheme + "://" + Request.Host;
+            string filePath = fileUploadDir + "/" + files.FileName;
             if (files.Length > 0)
             {
-                using (var stream = new FileStream(fileUploadDir + "/" + files.FileName, FileMode.Create))
+                using (var stream = new FileStream(filePath, FileMode.Create))
                 {
                     await files.CopyToAsync(stream);
                 }
+                //如果图片尺寸大于2k则缩小到2k
+                ImageUtil.Resize(filePath);
             }
             WebDirectory webDir = new WebDirectory(hostUrl, User.Identity.Name);
             return new FileResultModel()
             {
                 FileName = files.FileName,
+                Path = string.Format("{0}/{1}/{2}/{3}", hostUrl, User.Identity.Name, prefixPath, files.FileName),
                 ThumbnailUrl = webDir.GetThumbnailUrl(this.prefixPath, files.FileName)
             };
         }

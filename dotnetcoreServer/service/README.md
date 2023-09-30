@@ -9,7 +9,7 @@
 
 ```bash
 #-v volume d:/data是本地目录, /var/lib/mysql 是容器默认目录
-docker run --name=mysql -p 3306:3306 --network=myNetwork --restart=always -v /home/data/mysql:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=password -d mysql/mysql-server 
+docker run  --name=mysql -p 3306:3306 --network=myNetwork --restart=always -v /home/ubuntu/data/mysql:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=ROO#2022 -d mysql/mysql-server 
 docker exec -it mysql bash
 docker ps
 # list all container
@@ -26,7 +26,7 @@ sudo docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}'
 
 ```bash
 #clear docker container logs
- sudo truncate -s 0 $(sudo docker inspect --format='{{.LogPath}}' containerid)
+ sudo truncate -s 0 $(sudo docker inspect --format='{{.LogPath}}' authapi)
  sudo truncate -s 0 $(sudo docker inspect --format='{{.LogPath}}' serviceapi)
 ```
 
