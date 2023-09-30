@@ -2,5 +2,9 @@
 # 以至于把你镜像原有安装的模块给覆盖了
 node_modules/
 npm-debug.log
-.vscode
+.vscode/
 wwwroot/
+dist/
+entry/
+package-lock.json
+readme.md

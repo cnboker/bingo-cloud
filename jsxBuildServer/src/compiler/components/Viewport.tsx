@@ -2,7 +2,9 @@ import React from "react";
 import { Playlist } from "./Playlist";
 import util from "../../util";
 import { IPlayProps } from "../Meta";
-
+import Clock from './analogClock/Index'
+import DigitalClock from './digitalClock/Index'
+import MagicCard from './magicCard/Index'
 export const fetchNext = (
   source: Array<IPlayProps>
 ) => {
@@ -23,8 +25,12 @@ export const Viewport: React.FC<Array<IPlayProps>> = (source) => {
   }
 
   return (
-    <div className="container">
-      {" "}
+    <div >
+      <MagicCard>
+        <Clock />
+        <DigitalClock />
+      </MagicCard>
+
       <Playlist source={data} />
     </div>
   );
