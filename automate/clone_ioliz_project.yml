@@ -6,7 +6,7 @@
       ansible.builtin.git:
         repo: https://github.com/cnboker/ioliz.git
         dest: ~/src/ioliz
-        version: master  # Optionally, specify a branch or tag
-        update: yes     # Update the repository if it already exists (optional)
-    
+        version: HEAD  # Optionally, specify a branch or tag
+        #update: yes     # Optionally, specify a branch or tag
+        force: true  # Reset the destination to match the remote repository
     # Additional tasks can be added here if needed

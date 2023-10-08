@@ -4,6 +4,13 @@
   gather_facts: no
   tasks:
     - name: Build Docker service
-      command: sh '/home/{{ ansible_user }}/src/ioliz/webhook-setup/deploy_dev.sh'
+      command: sh '/home/{{ ansible_user }}/src/ioliz/webhook-setup/deploy_dev.sh' {{ ansible_user }}
+      register: script_output
+      changed_when: false
+      ignore_errors: yes
       become: yes
       become_user: root
+
+    - name: Display script output
+      debug: #we use the debug module to display the script's output, which is stored in the script_output.stdout_lines variable
+        var: script_output.stdout_lines
