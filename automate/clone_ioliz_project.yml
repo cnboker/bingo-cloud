@@ -1,6 +1,6 @@
 ---
 - name: Clone ioliz Repository
-  hosts: your_target_host
+  hosts: dbserver
   tasks:
     - name: Clone Git Repository
       ansible.builtin.git:

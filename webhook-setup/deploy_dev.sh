@@ -3,7 +3,12 @@
 # development and testing. Using Compose on a production environment is not recommended at all.
 #删除未被使用的资源
 docker system prune -f
-docker network create myNetwork
+network_name = "myNetwork"
+if docker network inspect "$network_name" > /dev/null 2>&1; then
+    echo "network '$network_name' exists."
+else
+    docker network create "$network_name"
+
 #rebuild
 #docker-compose build
 docker container stop authapi
@@ -23,7 +28,7 @@ docker run --detach --restart always --name authapi --publish 7800:7800 --networ
 #docker-compose build
 docker container stop fileapi
 docker container rm fileapi
-docker image build --tag fileapi:latest --file ~/src/ioliz/fileServer/Dockerfile .
+docker image build --tag fileapi:latest --file ~/src/ioliz/dotnetcoreServer/fileServer/Dockerfile .
 docker run --detach --restart always --name fileapi --publish 5000:5000 --network myNetwork --volume ~/data/files:/release/wwwroot fileapi:latest
 
 #docker-compose build

@@ -4,6 +4,6 @@
   gather_facts: no
   tasks:
     - name: Build Docker service
-      command: sh ../webhook-setup/deploy_dev.sh
+      command: sh '/home/{{ ansible_user }}/src/ioliz/webhook-setup/deploy_dev.sh'
       become: yes
       become_user: root
