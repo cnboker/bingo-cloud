@@ -1,0 +1,12 @@
+---
+- name: Clone ioliz Repository
+  hosts: your_target_host
+  tasks:
+    - name: Clone Git Repository
+      ansible.builtin.git:
+        repo: https://github.com/cnboker/ioliz.git
+        dest: ~/src/ioliz
+        version: master  # Optionally, specify a branch or tag
+        update: yes     # Update the repository if it already exists (optional)
+    
+    # Additional tasks can be added here if needed

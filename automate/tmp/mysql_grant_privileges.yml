@@ -1,0 +1,11 @@
+---
+- name: Execute SQL script
+  hosts: dbserver
+  tasks:
+    - name: Execute Grant SQL script
+      mysql_query:
+        login_host: "{{ ansible_host }}"  # Replace with the MySQL host
+        login_user: "{{ mysql_remote_user }}"  # Replace with the MySQL username
+        login_password: "{{ mysql_remote_password }}"  # Replace with the MySQL password
+        login_db: mysql  # Replace with the MySQL database name
+        query: "{{ lookup('file', './scripts/grant_priviliege.sql') }}"

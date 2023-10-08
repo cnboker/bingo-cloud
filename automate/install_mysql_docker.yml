@@ -1,0 +1,25 @@
+---
+- name: Install MySQL in Docker on Raspberry Pi
+  hosts: dbserver
+  become: yes
+
+  tasks:
+    - name: Create a Docker volume for MySQL data
+      docker_volume:
+        name: mysql_data
+        state: present
+
+    - name: Run MySQL Docker container
+      docker_container:
+        name: mysql
+        image: mysql:latest
+        env:
+          MYSQL_ROOT_PASSWORD: ROO#2012
+        volumes:
+          - /home/ubuntu/data/mysql:/var/lib/mysql
+        networks:
+          - name: myNetwork
+        ports:
+          - "3306:3306"
+        state: started
+        restart_policy: always

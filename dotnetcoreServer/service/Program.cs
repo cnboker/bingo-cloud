@@ -11,6 +11,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.DependencyInjection;
 using Senparc.Weixin.MP.TenPayLibV3;
 using Microsoft.Extensions.Hosting;
+using Microsoft.EntityFrameworkCore;
 
 namespace Ioliz.Service
 {
@@ -20,6 +21,19 @@ namespace Ioliz.Service
         public static void Main(string[] args)
         {
             var host = CreateHostBuilder(args).Build();
+          
+            //migration database
+            using (var scope = host.Services.CreateScope())
+            {
+                var services = scope.ServiceProvider;
+
+                var context = services.GetRequiredService<ServiceContext>();
+                if (context.Database.GetPendingMigrations().Any())
+                {
+                    context.Database.Migrate();
+                }
+            }
+            
             using (var scope = host.Services.CreateScope())
             {
                 var services = scope.ServiceProvider;
@@ -44,8 +58,8 @@ namespace Ioliz.Service
                  Host.CreateDefaultBuilder(args)
                      .ConfigureWebHostDefaults(webBuilder =>
                      {
-                       webBuilder.UseUrls("http://*:6001")
-                         .UseStartup<Startup>();
+                         webBuilder.UseUrls("http://*:6001")
+                           .UseStartup<Startup>();
                      });
 
         //   public static IWebHost BuildWebHost(string[] args) =>

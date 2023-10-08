@@ -1,0 +1,10 @@
+---
+- name: Create a Docker Network
+  hosts: dbserver
+  become: yes
+
+  tasks:
+    - name: Create a Docker network
+      docker_network:
+        name: myNetwork
+        state: present

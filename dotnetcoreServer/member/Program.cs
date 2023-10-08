@@ -9,23 +9,28 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Configuration;
+using Microsoft.EntityFrameworkCore;
 
 namespace Ioliz
 {
   public class Program
   {
+
     public static void Main(string[] args)
     {
-      //var configuration = new ConfigurationBuilder()
-      //.AddCommandLine(args)
-      /*    var host = new WebHostBuilder()
-             .UseKestrel()
-             .UseContentRoot(Directory.GetCurrentDirectory())
-             .UseIISIntegration()
-             .UseStartup<Startup>()
-             .Build(); 
-         host.Run(); */
       var host = BuildWebHost(args);
+      //migration database
+      using (var scope = host.Services.CreateScope())
+      {
+        var services = scope.ServiceProvider;
+
+        var context = services.GetRequiredService<IolizContext>();
+        if (context.Database.GetPendingMigrations().Any())
+        {
+          context.Database.Migrate();
+        }
+      }
+
       using (var scope = host.Services.CreateScope())
       {
         var services = scope.ServiceProvider;

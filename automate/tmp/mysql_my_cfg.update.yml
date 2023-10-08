@@ -1,0 +1,25 @@
+---
+- name: Copy a file from a Docker container
+  hosts: docker_hosts
+  gather_facts: no
+  tasks:
+    - name: Copy the file from the container to the local system
+      command: docker cp mysql:/etc/my.cnf ./
+      become: yes
+    - name: insert text to my.cnf
+      lineinfile:
+        path: ./my.cnf
+        insertafter: 'user=mysql' 
+        line: "skip-grant-tables"
+        state: present
+    - name: Copy my.cnf to docker container
+      command: docker cp ./my.cnf mysql:/etc
+      become: yes
+      become_user: root
+      notify: Restart MySQL Container
+  handlers:
+    - name: Restart MySQL Container
+      command: docker restart mysql
+      become: yes
+      become_user: root
+    

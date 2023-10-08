@@ -1,4 +1,5 @@
 global.json
+appsettings.json
 /obj
 /bin
 /Logs

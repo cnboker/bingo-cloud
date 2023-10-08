@@ -1,0 +1,18 @@
+---
+- name: Run Build
+  hosts: dbserver  # You can use localhost because this playbook doesn't target remote hosts directly
+  gather_facts: no  # You may not need facts for this playbook
+
+  tasks:
+    - name: Install docker
+      include_tasks: install_docker.yml
+
+    - name: Install mysql docker
+      include_tasks: install_mysql_docker.yml
+
+    - name: Clone ioliz
+      include_tasks: clone_ioliz_project.yml
+
+    - name: Deploy docker service
+      include_tasks: build_docker_service.yml
+    # You can add more playbook executions here if needed
