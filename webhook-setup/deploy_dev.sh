@@ -16,6 +16,7 @@ docker_container_rm(){
 }
 
 code_bash_path="/home/$1/src/ioliz"
+usr_name=$1
 echo "code_bash_path '$code_bash_path'"
 # Define a variable with docker network name
 network_name="myNetwork"
@@ -48,7 +49,7 @@ docker run --detach --restart always --name authapi --publish 7800:7800 --networ
 #docker-compose build
 docker_container_rm "fileapi"
 docker image build --tag fileapi:latest --file "$code_bash_path"/dotnetcoreServer/fileServer/Dockerfile "$code_bash_path"/dotnetcoreServer
-docker run --detach --restart always --name fileapi --publish 5000:5000 --network "$network_name" --volume ~/data/files:/release/wwwroot fileapi:latest
+docker run --detach --restart always --name fileapi --publish 5000:5000 --network "$network_name" --volume /home/$usr_name/data/files:/release/wwwroot fileapi:latest
 
 #docker-compose build
 docker_container_rm "serviceapi"
@@ -64,12 +65,12 @@ docker run --detach --restart always --name  jsxbuild --publish 8888:8888 --netw
 
 #docker-compose build
 docker_container_rm "ffmpegapi"
-docker image build --tag ffmpegapi:latest --file "$code_bash_path"/ffmpegServer/Dockerfile "$code_bash_path"/ffmpegServer/
+docker image build --tag ffmpegapi:latest --file "$code_bash_path"/ffmpegServer/Dockerfile "$code_bash_path"/ffmpegServer
 docker run --detach --restart always --name ffmpegapi --publish 9000:9000 --network "$network_name" ffmpegapi:latest
 
 #docker network create myNetwork
 docker_container_rm "nginxserver"
-docker image build --tag nginxserver:latest --file "$code_bash_path"/reverseProxy/Dockerfile "$code_bash_path"/reverseProxy
-docker run --detach --restart always --name nginxserver --publish 80:80 --network "$network_name" --volume ~/www/app:/app --volume /www/home:/www nginxserver:latest
+docker image build --tag nginxserver:latest --file ./Dockerfile "$code_bash_path"/reverseProxy
+docker run --detach --restart always --name nginxserver --publish 80:80 --network "$network_name" --volume /home/$usr_name/www/app:/app --volume /home/$usr_name/www/home:/www nginxserver:latest
 
 
