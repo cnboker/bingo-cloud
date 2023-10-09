@@ -58,18 +58,18 @@ docker run --detach --restart always --name serviceapi --publish 6001:6001 --net
 
 #docker-compose build
 docker_container_rm "jsxbuild"
-docker image build --tag jsxbuild:latest --file "$code_bash_path"/jsxBuildServer/Dockerfile "$code_bash_path"
+docker image build --tag jsxbuild:latest --file "$code_bash_path"/jsxBuildServer/Dockerfile "$code_bash_path"/jsxBuildServer
 docker run --detach --restart always --name  jsxbuild --publish 8888:8888 --network "$network_name" jsxbuild:latest
 
 
 #docker-compose build
 docker_container_rm "ffmpegapi"
-docker image build --tag ffmpegapi:latest --file "$code_bash_path"/ffmpegServer/Dockerfile "$code_bash_path"
+docker image build --tag ffmpegapi:latest --file "$code_bash_path"/ffmpegServer/Dockerfile "$code_bash_path"/ffmpegServer/
 docker run --detach --restart always --name ffmpegapi --publish 9000:9000 --network "$network_name" ffmpegapi:latest
 
 #docker network create myNetwork
 docker_container_rm "nginxserver"
-docker image build --tag nginxserver:latest --file "$code_bash_path"/reverseProxy/Dockerfile "$code_bash_path"
+docker image build --tag nginxserver:latest --file "$code_bash_path"/reverseProxy/Dockerfile "$code_bash_path"/reverseProxy
 docker run --detach --restart always --name nginxserver --publish 80:80 --network "$network_name" --volume ~/www/app:/app --volume /www/home:/www nginxserver:latest
 
 
