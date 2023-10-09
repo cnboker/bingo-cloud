@@ -2,20 +2,27 @@
 - name: Install Docker on Raspberry Pi
   hosts: dbserver
   become: yes
-
   tasks:
+    - name: Check if Docker is installed
+      command: docker --version
+      register: docker_version
+      ignore_errors: yes
+
     - name: Update apt package cache
       apt:
         update_cache: yes
+      when: docker_version.rc != 0
 
     - name: Install Docker
       apt:
         name:
           - docker.io
         state: present
+      when: docker_version.rc != 0
 
     - name: Ensure Docker service is started and enabled
       service:
         name: docker
         state: started
         enabled: yes
+      when: docker_version.rc != 0

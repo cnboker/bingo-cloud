@@ -4,11 +4,10 @@
   become: yes
 
   tasks:
-    - name: Create a Docker volume for MySQL data
-      docker_volume:
-        name: mysql_data
-        state: present
-
+    - name: Get infos on container
+      docker_container_info:
+        name: mysql
+      register: result
     - name: Run MySQL Docker container
       docker_container:
         name: mysql
@@ -23,3 +22,4 @@
           - "3306:3306"
         state: started
         restart_policy: always
+      when: not result.exists
