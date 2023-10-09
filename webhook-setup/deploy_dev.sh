@@ -70,7 +70,7 @@ docker run --detach --restart always --name ffmpegapi --publish 9000:9000 --netw
 
 #docker network create myNetwork
 docker_container_rm "nginxserver"
-docker image build --tag nginxserver:latest --file ./Dockerfile "$code_bash_path"/reverseProxy
+docker image build --tag nginxserver:latest --file "$code_bash_path"/reverseProxy/Dockerfile "$code_bash_path"/reverseProxy
 docker run --detach --restart always --name nginxserver --publish 80:80 --network "$network_name" --volume /home/$usr_name/www/app:/app --volume /home/$usr_name/www/home:/www nginxserver:latest
 
 
