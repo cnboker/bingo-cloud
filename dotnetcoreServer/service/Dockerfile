@@ -6,6 +6,8 @@ COPY ./service /service
 COPY ./shared /shared
 RUN dotnet build -c Release -o output
 
+ENV ASPNETCORE_ENVIRONMENT=”production”
+
 # 使用aspnet执行程序，这样可以减少容器文件的大小,未优化前1G，采用aspnet后200M
 FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS runtime
 COPY --from=build /service/output ./release

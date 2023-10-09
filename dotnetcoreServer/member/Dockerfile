@@ -1,4 +1,5 @@
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
+ENV ASPNETCORE_ENVIRONMENT=”production”
 WORKDIR /member
 COPY ["./member/Ioliz.member.csproj","/member"]
 RUN ["dotnet","restore"]

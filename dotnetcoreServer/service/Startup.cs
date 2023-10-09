@@ -22,7 +22,7 @@ namespace Ioliz.Service
             //this.env = env;
             var builder = new ConfigurationBuilder()
                 .SetBasePath(env.ContentRootPath)
-                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
                 .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
                 .AddEnvironmentVariables();
             Configuration = builder.Build();
@@ -59,7 +59,7 @@ namespace Ioliz.Service
                             options.EnableRetryOnFailure(
                                 maxRetryCount: 10,
                                 maxRetryDelay:TimeSpan
-                                .FromSeconds(10),
+                                .FromSeconds(30),
                                 errorNumbersToAdd:null
                             );
                          }
