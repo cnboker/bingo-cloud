@@ -1,5 +1,5 @@
-import { Theme as MuiTheme } from '@material-ui/core/styles';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
+import { Theme as MuiTheme } from '@mui/material/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
 import classnames from 'classnames';
 import { createUseStyles } from 'react-jss';
 import { DeepPartial } from 'tsdef';

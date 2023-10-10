@@ -4,7 +4,7 @@
  * @license MIT
  */
 
-import Menu from '@material-ui/core/Menu';
+import Menu from '@mui/material/Menu';
 import React, { useCallback, useMemo } from 'react';
 
 import { FileActionGroup } from '../../types/action-menus.types';

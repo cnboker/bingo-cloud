@@ -5,7 +5,7 @@ const { env } = process;
 const path = require('path');
 const options = {
   mode: env.NODE_ENV,
-  entry: "./index.js",
+  entry: "./src/Index.ts",
   output: {
     filename: 'index.js',
     path: path.resolve(__dirname, 'dist'),

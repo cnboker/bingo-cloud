@@ -4,7 +4,7 @@
  * @license MIT
  */
 
-import Button from '@material-ui/core/Button';
+import Button from '@mui/material/Button';
 import React, { useContext } from 'react';
 import { Nullable } from 'tsdef';
 
