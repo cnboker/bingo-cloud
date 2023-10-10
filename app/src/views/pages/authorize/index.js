@@ -48,14 +48,7 @@ export default () => {
       <CCardHeader component="h5">{R.deviceAuthentication}</CCardHeader>
       <CCardBody>
         {authorizeReducer.map((item, index) => {
-          return (
-            <DeviceComoponent
-              data={item}
-              key={index}
-              authorizeHandle={authorizeHandle}
-              urlAuthorizeCode={urlAuthorizeCode}
-            />
-          )
+          return <DeviceComoponent data={item} key={index} authorizeHandle={authorizeHandle} urlAuthorizeCode={urlAuthorizeCode} />
         })}
         <div>{message}</div>
       </CCardBody>

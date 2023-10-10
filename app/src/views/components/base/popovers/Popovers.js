@@ -15,11 +15,7 @@ const Popovers = () => {
           </CCardHeader>
           <CCardBody>
             <DocsExample href="components/popover">
-              <CPopover
-                title="Popover title"
-                content="And here’s some amazing content. It’s very engaging. Right?"
-                placement="right"
-              >
+              <CPopover title="Popover title" content="And here’s some amazing content. It’s very engaging. Right?" placement="right">
                 <CButton color="danger" size="lg">
                   Click to toggle popover
                 </CButton>
@@ -34,33 +30,18 @@ const Popovers = () => {
             <strong>React Popover</strong> <small>Four directions</small>
           </CCardHeader>
           <CCardBody>
-            <p className="text-medium-emphasis small">
-              Four options are available: top, right, bottom, and left aligned. Directions are
-              mirrored when using CoreUI for React in RTL.
-            </p>
+            <p className="text-medium-emphasis small">Four options are available: top, right, bottom, and left aligned. Directions are mirrored when using CoreUI for React in RTL.</p>
             <DocsExample href="components/popover#four-directions">
-              <CPopover
-                content="Vivamus sagittis lacus vel augue laoreet rutrum faucibus."
-                placement="top"
-              >
+              <CPopover content="Vivamus sagittis lacus vel augue laoreet rutrum faucibus." placement="top">
                 <CButton color="secondary">Popover on top</CButton>
               </CPopover>
-              <CPopover
-                content="Vivamus sagittis lacus vel augue laoreet rutrum faucibus."
-                placement="right"
-              >
+              <CPopover content="Vivamus sagittis lacus vel augue laoreet rutrum faucibus." placement="right">
                 <CButton color="secondary">Popover on right</CButton>
               </CPopover>
-              <CPopover
-                content="Vivamus sagittis lacus vel augue laoreet rutrum faucibus."
-                placement="bottom"
-              >
+              <CPopover content="Vivamus sagittis lacus vel augue laoreet rutrum faucibus." placement="bottom">
                 <CButton color="secondary">Popover on bottom</CButton>
               </CPopover>
-              <CPopover
-                content="Vivamus sagittis lacus vel augue laoreet rutrum faucibus."
-                placement="left"
-              >
+              <CPopover content="Vivamus sagittis lacus vel augue laoreet rutrum faucibus." placement="left">
                 <CButton color="secondary">Popover on left</CButton>
               </CPopover>
             </DocsExample>

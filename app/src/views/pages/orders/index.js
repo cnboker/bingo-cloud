@@ -2,11 +2,7 @@ import React, { useState } from 'react'
 import { CButton } from '@coreui/react'
 import DateSearchbar from 'src/views/components/forms/form-control/DateSearchbar'
 import Table from 'src/views/components/tables/Table'
-import {
-  DateFormater,
-  BooleanFormater,
-  PriceFormater,
-} from 'src/views/components/tables/CellFormatter'
+import { DateFormater, BooleanFormater, PriceFormater } from 'src/views/components/tables/CellFormatter'
 import Pager from 'src/views/components/tables/Pager'
 import PageContainer from 'src/views/components/pageContainer'
 import { useSelector } from 'react-redux'
@@ -25,10 +21,7 @@ export default (props) => {
       />
       {/* eslint-disable-next-line @typescript-eslint/no-use-before-define*/}
       <Table {...props} {...TableProps(client)} data={dataset.data} />
-      <Pager
-        pageCount={dataset.pageCount}
-        onPageChange={(target) => onSearch({ ...query, page: target.selected })}
-      />
+      <Pager pageCount={dataset.pageCount} onPageChange={(target) => onSearch({ ...query, page: target.selected })} />
     </PageContainer>
   )
 }

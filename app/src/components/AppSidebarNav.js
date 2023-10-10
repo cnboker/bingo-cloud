@@ -48,26 +48,13 @@ export const AppSidebarNav = ({ items }) => {
     const { component, name, icon, to, ...rest } = item
     const Component = component
     return (
-      <Component
-        idx={String(index)}
-        key={index}
-        toggler={navLink(name, icon)}
-        visible={location.pathname.startsWith(to)}
-        {...rest}
-      >
-        {item.items?.map((item, index) =>
-          item.items ? navGroup(item, index) : navItem(item, index),
-        )}
+      <Component idx={String(index)} key={index} toggler={navLink(name, icon)} visible={location.pathname.startsWith(to)} {...rest}>
+        {item.items?.map((item, index) => (item.items ? navGroup(item, index) : navItem(item, index)))}
       </Component>
     )
   }
 
-  return (
-    <React.Fragment>
-      {items &&
-        items.map((item, index) => (item.items ? navGroup(item, index) : navItem(item, index)))}
-    </React.Fragment>
-  )
+  return <React.Fragment>{items && items.map((item, index) => (item.items ? navGroup(item, index) : navItem(item, index)))}</React.Fragment>
 }
 
 AppSidebarNav.propTypes = {

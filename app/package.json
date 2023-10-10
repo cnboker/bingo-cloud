@@ -45,6 +45,7 @@
     "axios": "^0.21.4",
     "bs-stepper": "^1.7.0",
     "chart.js": "^3.5.1",
+    "chonky": "file:../fileManger",
     "classnames": "^2.3.1",
     "core-js": "^3.16.2",
     "cross-env": "^7.0.3",
@@ -110,7 +111,7 @@
   },
   "scripts": {
     "start": "react-app-rewired start .env.development",
-    "build": "cross-env NODE_ENV=production react-app-rewired build",
+    "build": "cross-env NODE_ENV=production react-app-rewired  build --openssl-legacy-provider",
     "pub": "cross-env NODE_ENV=production react-app-rewired build && scp -r  ./build/*  ubuntu@192.168.0.106:~/ioliz/app",
     "lint": "eslint \"src/**/*.js\"",
     "test": "react-scripts test",

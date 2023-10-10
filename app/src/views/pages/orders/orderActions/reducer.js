@@ -1,10 +1,5 @@
 import { flagSet } from '@coreui/icons'
-import {
-  ORDER_TRIAL_CREATE_RESPONSE,
-  ORDER_SESSION_LIST_RESPONSE,
-  ORDER_CREATE_RESPONSE,
-  ORDER_CHECKOUT_RESPONSE,
-} from './constants'
+import { ORDER_TRIAL_CREATE_RESPONSE, ORDER_SESSION_LIST_RESPONSE, ORDER_CREATE_RESPONSE, ORDER_CHECKOUT_RESPONSE } from './constants'
 
 const initialState = {
   //能否允许创建试用,通过该属性可以判断用户有无开通试用或下单

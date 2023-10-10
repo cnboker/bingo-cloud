@@ -28,12 +28,7 @@ export default () => {
   return (
     <>
       <Logo />
-      <Register
-        onsubmit={submit}
-        error={
-          securityReducer.error && securityReducer.error.split(',').map((x) => (R[x] ? R[x] : x))
-        }
-      />
+      <Register onsubmit={submit} error={securityReducer.error && securityReducer.error.split(',').map((x) => (R[x] ? R[x] : x))} />
     </>
   )
 }

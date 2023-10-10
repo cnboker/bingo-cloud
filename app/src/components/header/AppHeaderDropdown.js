@@ -1,14 +1,6 @@
 import React from 'react'
 import G from '~/locale'
-import {
-  CAvatar,
-  CDropdown,
-  CDropdownDivider,
-  CDropdownHeader,
-  CDropdownItem,
-  CDropdownMenu,
-  CDropdownToggle,
-} from '@coreui/react'
+import { CAvatar, CDropdown, CDropdownDivider, CDropdownHeader, CDropdownItem, CDropdownMenu, CDropdownToggle } from '@coreui/react'
 import { cilLockLocked, cilSettings } from '@coreui/icons'
 import CIcon from '@coreui/icons-react'
 

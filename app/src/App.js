@@ -31,23 +31,9 @@ export default () => {
         <Switch>
           <Route exact path="/login" name="Login Page" render={(props) => <Login {...props} />} />
           <Route exact path="/logout" name="Logout" render={(props) => <Logout {...props} />} />
-          <Route
-            exact
-            path="/forgetPassword"
-            name="forgetPassword"
-            render={(props) => <ForgetPassword {...props} />}
-          />
-          <Route
-            path="/passwordReset"
-            name="passwordreset"
-            render={(props) => <PasswordReset {...props} />}
-          />
-          <Route
-            exact
-            path="/register"
-            name="Register Page"
-            render={(props) => <Register {...props} />}
-          />
+          <Route exact path="/forgetPassword" name="forgetPassword" render={(props) => <ForgetPassword {...props} />} />
+          <Route path="/passwordReset" name="passwordreset" render={(props) => <PasswordReset {...props} />} />
+          <Route exact path="/register" name="Register Page" render={(props) => <Register {...props} />} />
           <Route exact path="/404" name="Page 404" render={(props) => <Page404 {...props} />} />
           <Route exact path="/500" name="Page 500" render={(props) => <Page500 {...props} />} />
           <PrivateRoute dispatch={dispatch} path="/authorize/:id" component={Authorize} />

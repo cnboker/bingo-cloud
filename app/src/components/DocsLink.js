@@ -9,13 +9,7 @@ const DocsLink = (props) => {
 
   return (
     <div className="float-end">
-      <CLink
-        {...rest}
-        href={_href}
-        rel="noreferrer noopener"
-        target="_blank"
-        className="card-header-action"
-      >
+      <CLink {...rest} href={_href} rel="noreferrer noopener" target="_blank" className="card-header-action">
         <small className="text-medium-emphasis">{text || 'docs'}</small>
       </CLink>
     </div>

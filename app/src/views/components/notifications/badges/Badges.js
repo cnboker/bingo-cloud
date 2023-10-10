@@ -15,8 +15,7 @@ const Badges = () => {
           </CCardHeader>
           <CCardBody>
             <p className="text-medium-emphasis small">
-              Bootstrap badge scale to suit the size of the parent element by using relative font
-              sizing and <code>em</code> units.
+              Bootstrap badge scale to suit the size of the parent element by using relative font sizing and <code>em</code> units.
             </p>
             <DocsExample href="components/badge">
               <h1>
@@ -38,22 +37,14 @@ const Badges = () => {
                 Example heading <CBadge color="secondary">New</CBadge>
               </h6>
             </DocsExample>
-            <p className="text-medium-emphasis small">
-              Badges can be used as part of links or buttons to provide a counter.
-            </p>
+            <p className="text-medium-emphasis small">Badges can be used as part of links or buttons to provide a counter.</p>
             <DocsExample href="components/badge">
               <CButton color="primary">
                 Notifications <CBadge color="secondary">4</CBadge>
               </CButton>
             </DocsExample>
-            <p className="text-medium-emphasis small">
-              Remark that depending on how you use them, badges may be complicated for users of
-              screen readers and related assistive technologies.
-            </p>
-            <p className="text-medium-emphasis small">
-              Unless the context is clear, consider including additional context with a visually
-              hidden piece of additional text.
-            </p>
+            <p className="text-medium-emphasis small">Remark that depending on how you use them, badges may be complicated for users of screen readers and related assistive technologies.</p>
+            <p className="text-medium-emphasis small">Unless the context is clear, consider including additional context with a visually hidden piece of additional text.</p>
             <DocsExample href="components/badge">
               <CButton color="primary">
                 Profile <CBadge color="secondary">9</CBadge>
@@ -70,8 +61,7 @@ const Badges = () => {
           </CCardHeader>
           <CCardBody>
             <p className="text-medium-emphasis small">
-              Add any of the below-mentioned <code>color</code> props to modify the presentation of
-              a badge.
+              Add any of the below-mentioned <code>color</code> props to modify the presentation of a badge.
             </p>
             <DocsExample href="components/badge#contextual-variations">
               <CBadge color="primary">primary</CBadge>

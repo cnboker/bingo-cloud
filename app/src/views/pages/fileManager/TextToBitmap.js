@@ -10,13 +10,7 @@ export const textToBitmap = (text) => {
   ctx.font = `${FONT_SIZE * dpr}px '${font}'`
 
   // IE and Edge only returns width as part of measureText
-  const {
-    actualBoundingBoxLeft,
-    actualBoundingBoxRight,
-    actualBoundingBoxAscent,
-    actualBoundingBoxDescent,
-    width,
-  } = ctx.measureText(text)
+  const { actualBoundingBoxLeft, actualBoundingBoxRight, actualBoundingBoxAscent, actualBoundingBoxDescent, width } = ctx.measureText(text)
   canvas.height = actualBoundingBoxAscent + actualBoundingBoxDescent
 
   canvas.width = Math.max(width, Math.abs(actualBoundingBoxLeft) + actualBoundingBoxRight)

@@ -1,8 +1,4 @@
-import {
-  AUTHORIZE_LIST_RESPONSE,
-  DEVICE_AUTHORIZE_RESPONSE,
-  AUTHORIZE_TOKEN_RESPONSE,
-} from './constants'
+import { AUTHORIZE_LIST_RESPONSE, DEVICE_AUTHORIZE_RESPONSE, AUTHORIZE_TOKEN_RESPONSE } from './constants'
 import { get, post } from 'src/lib/api'
 
 const authorizeUrl = `${process.env.REACT_APP_SERVICE_URL}/api/license/authorize`

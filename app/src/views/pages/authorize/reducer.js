@@ -1,8 +1,4 @@
-import {
-  DEVICE_AUTHORIZE_RESPONSE,
-  AUTHORIZE_LIST_RESPONSE,
-  AUTHORIZE_TOKEN_RESPONSE,
-} from './constants'
+import { DEVICE_AUTHORIZE_RESPONSE, AUTHORIZE_LIST_RESPONSE, AUTHORIZE_TOKEN_RESPONSE } from './constants'
 import merge from 'lodash/merge'
 
 const initialState = []

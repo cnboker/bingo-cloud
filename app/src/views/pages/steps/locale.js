@@ -22,15 +22,12 @@ const data = {
     click: 'Click',
     public: 'Publish',
     materialManage: 'Material Manage',
-    materialDefine:
-      'Vidoe file(mov, mp4, wmv, rmvb, mpg,m4v etc),image,custom page,static H5 page can defined as material',
+    materialDefine: 'Vidoe file(mov, mp4, wmv, rmvb, mpg,m4v etc),image,custom page,static H5 page can defined as material',
     materialUploadInfo: 'In order to device can play, you must upload material to this first.',
     materialUploadTips: 'Any video files, image, H5 page can be uploaded.',
     pubInfo1: 'In material manage page, you can double-click material file.',
-    pubInfo2:
-      'Click "Publish" button, popup dialog, checked target device, click "publish" in this dialog.',
-    customPage1:
-      'In "page designer" page, you can customize page layout, make video, image, text together.',
+    pubInfo2: 'Click "Publish" button, popup dialog, checked target device, click "publish" in this dialog.',
+    customPage1: 'In "page designer" page, you can customize page layout, make video, image, text together.',
     customPage2: "The file which's extention is IPP like video,image file can be defined meterial.",
   },
   zh: {
@@ -54,14 +51,12 @@ const data = {
     click: '点击',
     public: '发布',
     materialManage: '媒体',
-    materialDefine:
-      '视频文件(mov, mp4, wmv, rmvb, mpg,m4v等),图片,自定义页面,静态H5程序都可以叫素材文件',
+    materialDefine: '视频文件(mov, mp4, wmv, rmvb, mpg,m4v等),图片,自定义页面,静态H5程序都可以叫素材文件',
     materialUploadInfo: '为了使设备能够正常播放，首先需要将素材文件上传的当前系统',
     materialUploadTips: '可以将视频文件,图片,静态H5程序上传这里',
     pubInfo1: '双击待发布的视频文件,图片,自定义页面(ipp),或扩展名为.zip的H5程序',
     pubInfo2: '点击发布按钮弹出发布页面,选择待发布的设备,点击发布按钮,等待设备更新资料',
-    customPage1:
-      '在内容设计页面，可以自定义布局，并将图片，视频以及内置的自定义组件组合成一个页面，保存为扩展名为ipp的文件',
+    customPage1: '在内容设计页面，可以自定义布局，并将图片，视频以及内置的自定义组件组合成一个页面，保存为扩展名为ipp的文件',
     customPage2: '扩展名为ipp的文件和其他图片或视频文件一样是可以作为发布素材.',
   },
 }

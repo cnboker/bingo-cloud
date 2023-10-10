@@ -28,13 +28,7 @@ export default () => {
 
   return (
     <>
-      <Index
-        onSearch={onSearch}
-        dataset={userReducer}
-        onDelete={onDelete}
-        pagination={pagination}
-        setAgent={(userName) => dispatch(setAgent(userName))}
-      />
+      <Index onSearch={onSearch} dataset={userReducer} onDelete={onDelete} pagination={pagination} setAgent={(userName) => dispatch(setAgent(userName))} />
     </>
   )
 }

@@ -41,10 +41,6 @@ export class Tags extends React.Component {
       autoFocus: this.props.autofocus,
     }
 
-    return this.props.mode === 'textarea' ? (
-      <textarea {...attrs}>{this.props.initialValue}</textarea>
-    ) : (
-      <input {...attrs} value={this.props.initialValue} />
-    )
+    return this.props.mode === 'textarea' ? <textarea {...attrs}>{this.props.initialValue}</textarea> : <input {...attrs} value={this.props.initialValue} />
   }
 }

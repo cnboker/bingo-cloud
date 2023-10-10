@@ -1,11 +1,5 @@
 import React from 'react'
-import {
-  StepTry,
-  StepActivateDevice,
-  StepUploadResource,
-  StepPageDesign,
-  StepPublish,
-} from './steps'
+import { StepTry, StepActivateDevice, StepUploadResource, StepPageDesign, StepPublish } from './steps'
 import R from './locale'
 export const steps = [
   {

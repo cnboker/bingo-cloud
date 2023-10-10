@@ -15,8 +15,10 @@
         image: mysql:latest
         env:
           MYSQL_ROOT_PASSWORD: ROO#2012
+          MYSQL_ROOT_HOST: "%"
         volumes:
           - /home/ubuntu/data/mysql:/var/lib/mysql
+          - /home/ubuntu/data/mysql/conf.d:/etc/mysql/conf.d
         networks:
           - name: myNetwork
         ports:

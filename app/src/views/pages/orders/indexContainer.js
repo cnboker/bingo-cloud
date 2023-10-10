@@ -28,12 +28,7 @@ export default () => {
 
   return (
     <>
-      <Index
-        onSearch={onSearch}
-        dataset={orderReducer}
-        onFreeOrder={onFreeOrder}
-        onDelete={onDelete}
-      />
+      <Index onSearch={onSearch} dataset={orderReducer} onFreeOrder={onFreeOrder} onDelete={onDelete} />
     </>
   )
 }

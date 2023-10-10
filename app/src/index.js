@@ -14,17 +14,9 @@ import * as serviceWorker from './serviceWorker'
 require('~/lib/string')
 
 const sagaMiddleware = createSegaMiddleware()
-const composeSetup =
-  process.env.NODE_ENV !== 'production' &&
-  typeof window === 'object' &&
-  window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
-    ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
-    : compose
+const composeSetup = process.env.NODE_ENV !== 'production' && typeof window === 'object' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ : compose
 /*eslint-enable */
-const store = createStore(
-  IndexReducer,
-  composeSetup(applyMiddleware(sagaMiddleware, thunk), reduxReset()),
-)
+const store = createStore(IndexReducer, composeSetup(applyMiddleware(sagaMiddleware, thunk), reduxReset()))
 
 sagaMiddleware.run(IndexSagas)
 

@@ -1,9 +1,4 @@
-import {
-  ORDER_TRIAL_CREATE_RESPONSE,
-  ORDER_SESSION_LIST_RESPONSE,
-  ORDER_CREATE_RESPONSE,
-  ORDER_CHECKOUT_RESPONSE,
-} from './constants'
+import { ORDER_TRIAL_CREATE_RESPONSE, ORDER_SESSION_LIST_RESPONSE, ORDER_CREATE_RESPONSE, ORDER_CHECKOUT_RESPONSE } from './constants'
 import { get, post, asyncGet } from 'src/lib/api'
 
 export const trialResponse = (payload) => {

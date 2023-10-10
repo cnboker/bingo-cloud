@@ -30,10 +30,7 @@ const Select = () => {
             <strong>React Select</strong> <small>Sizing</small>
           </CCardHeader>
           <CCardBody>
-            <p className="text-medium-emphasis small">
-              You may also choose from small and large custom selects to match our similarly sized
-              text inputs.
-            </p>
+            <p className="text-medium-emphasis small">You may also choose from small and large custom selects to match our similarly sized text inputs.</p>
             <DocsExample href="forms/select#sizing">
               <CFormSelect size="lg" className="mb-3" aria-label="Large select example">
                 <option>Open this select menu</option>
@@ -80,8 +77,7 @@ const Select = () => {
           </CCardHeader>
           <CCardBody>
             <p className="text-medium-emphasis small">
-              Add the <code>disabled</code> boolean attribute on a select to give it a grayed out
-              appearance and remove pointer events.
+              Add the <code>disabled</code> boolean attribute on a select to give it a grayed out appearance and remove pointer events.
             </p>
             <DocsExample href="forms/select#disabled">
               <CFormSelect aria-label="Disabled select example" disabled>

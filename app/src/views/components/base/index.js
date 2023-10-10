@@ -13,19 +13,4 @@ import ProgressBar from './ProgressBar'
 import Tabs from './Tabs'
 import Tooltips from './Tooltips'
 
-export {
-  Breadcrumbs,
-  Cards,
-  Carousels,
-  Collapses,
-  Dropdowns,
-  Jumbotrons,
-  ListGroups,
-  Navbars,
-  Navs,
-  Popovers,
-  ProgressBar,
-  Tabs,
-  Tooltips,
-  Paginations,
-}
+export { Breadcrumbs, Cards, Carousels, Collapses, Dropdowns, Jumbotrons, ListGroups, Navbars, Navs, Popovers, ProgressBar, Tabs, Tooltips, Paginations }

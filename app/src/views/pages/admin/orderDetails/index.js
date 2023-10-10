@@ -18,10 +18,7 @@ export default (props) => {
       />
       {/*eslint-disable-next-line @typescript-eslint/no-use-before-define*/}
       <Table {...props} {...TableProps()} data={dataset.data} />
-      <Pager
-        pageCount={dataset.pageCount}
-        onPageChange={(target) => onSearch({ ...query, page: target.selected })}
-      />
+      <Pager pageCount={dataset.pageCount} onPageChange={(target) => onSearch({ ...query, page: target.selected })} />
     </PageContainer>
   )
 }

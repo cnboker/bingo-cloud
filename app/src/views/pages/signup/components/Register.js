@@ -1,17 +1,5 @@
 import React from 'react'
-import {
-  CButton,
-  CCard,
-  CCardBody,
-  CCol,
-  CContainer,
-  CForm,
-  CFormInput,
-  CInputGroup,
-  CInputGroupText,
-  CRow,
-  CLink,
-} from '@coreui/react'
+import { CButton, CCard, CCardBody, CCol, CContainer, CForm, CFormInput, CInputGroup, CInputGroupText, CRow, CLink } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
 import { cilLockLocked, cilUser } from '@coreui/icons'
 import { useForm } from 'react-hook-form'
@@ -44,32 +32,19 @@ const Register = ({ onsubmit, error }) => {
                     <CInputGroupText>
                       <CIcon icon={cilUser} />
                     </CInputGroupText>
-                    <CFormInput
-                      placeholder="Username"
-                      autoComplete="username"
-                      {...register('userName', { required: true })}
-                    />
+                    <CFormInput placeholder="Username" autoComplete="username" {...register('userName', { required: true })} />
                     {errors.userName && <ValidatorSpan message="required" />}
                   </CInputGroup>
                   <CInputGroup className="mb-3">
                     <CInputGroupText>@</CInputGroupText>
-                    <CFormInput
-                      placeholder="Email"
-                      autoComplete="email"
-                      {...register('email', { required: true })}
-                    />
+                    <CFormInput placeholder="Email" autoComplete="email" {...register('email', { required: true })} />
                     {errors.email && <ValidatorSpan message="required" />}
                   </CInputGroup>
                   <CInputGroup className="mb-3">
                     <CInputGroupText>
                       <CIcon icon={cilLockLocked} />
                     </CInputGroupText>
-                    <CFormInput
-                      type="password"
-                      placeholder="Password"
-                      autoComplete="new-password"
-                      {...register('password', { required: true })}
-                    />
+                    <CFormInput type="password" placeholder="Password" autoComplete="new-password" {...register('password', { required: true })} />
                     {errors.password && <ValidatorSpan message="required" />}
                   </CInputGroup>
                   <CInputGroup className="mb-4">
@@ -90,9 +65,7 @@ const Register = ({ onsubmit, error }) => {
                         },
                       })}
                     />
-                    {errors.passwordConfirmation && (
-                      <ValidatorSpan message={errors.passwordConfirmation.message} />
-                    )}
+                    {errors.passwordConfirmation && <ValidatorSpan message={errors.passwordConfirmation.message} />}
                   </CInputGroup>
                   <div className="d-grid">
                     <CButton color="primary" type="submit">

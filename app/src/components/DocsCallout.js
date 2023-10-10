@@ -13,9 +13,8 @@ const DocsCallout = (props) => {
 
   return (
     <CCallout color="info" className="bg-white">
-      A React {name} component {plural ? 'have' : 'has'} been created as a native React.js version
-      of Bootstrap {name}. {name} {plural ? 'are' : 'is'} delivered with some new features,
-      variants, and unique design that matches CoreUI Design System requirements.
+      A React {name} component {plural ? 'have' : 'has'} been created as a native React.js version of Bootstrap {name}. {name} {plural ? 'are' : 'is'} delivered with some new features, variants, and
+      unique design that matches CoreUI Design System requirements.
       <br />
       <br />
       For more information please visit our official{' '}

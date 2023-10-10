@@ -1,1 +1,0 @@
-wt -d . ; new-tab  -d ./ app.bat; new-tab  -d  ./ service.bat; new-tab  -d ./  identity.bat
