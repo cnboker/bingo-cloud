@@ -1,18 +1,20 @@
 import { useEditor } from '@craftjs/core';
-import { Tooltip } from '@material-ui/core';
+import { Tooltip } from '@mui/material';
 import cx from 'classnames';
 import React from 'react';
 import styled from 'styled-components';
-import { Add, Remove, SettingsBackupRestore } from '@material-ui/icons'
+import { Add, Remove, SettingsBackupRestore } from '@mui/icons-material'
 import Checkmark from '../../../public/icons/check.svg';
 import Customize from '../../../public/icons/customize.svg';
 import RedoSvg from '../../../public/icons/toolbox/redo.svg';
 import UndoSvg from '../../../public/icons/toolbox/undo.svg';
-import Grid from '@material-ui/core/Grid'
-import { Divider } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
+import Grid from '@mui/material/Grid'
+import { Divider } from '@mui/material';
+import { makeStyles } from '@mui/styles';
+import { createTheme } from '@mui/material/styles';
 
-const useStyles = makeStyles((theme) => ({
+const theme = createTheme();
+const useStyles = makeStyles(() => ({
   root: {
     width: 'fit-content',
     border: `1px solid ${theme.palette.divider}`,
@@ -79,54 +81,54 @@ export const Header = ({ zoomIn, zoomOut, resetTransform }) => {
   const classes = useStyles();
   return (
     <HeaderDiv className="header text-white transition w-full">
-    
-        {enabled && (<Grid container alignItems="flex-start" className={classes.root}>
-          <Tooltip title="Undo" placement="bottom">
-            <Item disabled={!canUndo} onClick={() => actions.history.undo()}>
-              <UndoSvg />
-            </Item>
-          </Tooltip>
-          <Tooltip title="Redo" placement="bottom">
-            <Item disabled={!canRedo} onClick={() => actions.history.redo()}>
-              <RedoSvg />
-            </Item>
-          </Tooltip>
-          <Divider orientation="vertical" flexItem />
-          <Tooltip title="zoomIn" placement="bottom">
-            <Item onClick={() => zoomIn()}>
-              <Add />
-            </Item>
-          </Tooltip>
-          <Tooltip title="zoomOut" placement="bottom">
-            <Item onClick={() => zoomOut()}>
-              <Remove />
-            </Item>
-          </Tooltip>
-          <Tooltip title="reset" placement="bottom">
-            <Item onClick={() => resetTransform()}>
-              <SettingsBackupRestore />
-            </Item>
-          </Tooltip>
-        </Grid>)}
 
-        <div className="flex">
-          <Btn
-            className={cx([
-              'transition cursor-pointer',
-              {
-                'bg-green-400': enabled,
-                'bg-primary': !enabled,
-              },
-            ])}
-            onClick={() => {
-              actions.setOptions((options) => (options.enabled = !enabled));
-            }}
-          >
-            {enabled ? <Checkmark /> : <Customize />}
-            {enabled ? 'Finish Editing' : 'Edit'}
-          </Btn>
-        </div>
-      
+      {enabled && (<Grid container alignItems="flex-start" className={classes.root}>
+        <Tooltip title="Undo" placement="bottom">
+          <Item disabled={!canUndo} onClick={() => actions.history.undo()}>
+            <UndoSvg />
+          </Item>
+        </Tooltip>
+        <Tooltip title="Redo" placement="bottom">
+          <Item disabled={!canRedo} onClick={() => actions.history.redo()}>
+            <RedoSvg />
+          </Item>
+        </Tooltip>
+        <Divider orientation="vertical" flexItem />
+        <Tooltip title="zoomIn" placement="bottom">
+          <Item onClick={() => zoomIn()}>
+            <Add />
+          </Item>
+        </Tooltip>
+        <Tooltip title="zoomOut" placement="bottom">
+          <Item onClick={() => zoomOut()}>
+            <Remove />
+          </Item>
+        </Tooltip>
+        <Tooltip title="reset" placement="bottom">
+          <Item onClick={() => resetTransform()}>
+            <SettingsBackupRestore />
+          </Item>
+        </Tooltip>
+      </Grid>)}
+
+      <div className="flex">
+        <Btn
+          className={cx([
+            'transition cursor-pointer',
+            {
+              'bg-green-400': enabled,
+              'bg-primary': !enabled,
+            },
+          ])}
+          onClick={() => {
+            actions.setOptions((options) => (options.enabled = !enabled));
+          }}
+        >
+          {enabled ? <Checkmark /> : <Customize />}
+          {enabled ? 'Finish Editing' : 'Edit'}
+        </Btn>
+      </div>
+
     </HeaderDiv>
   );
 };

@@ -9,9 +9,9 @@ import {
   AppBar,
   Toolbar,
   IconButton,
-} from '@material-ui/core'
-import { Box } from '@material-ui/core'
-import { CloseSharp } from '@material-ui/icons'
+} from '@mui/material'
+import { Box } from '@mui/material'
+import { CloseSharp } from '@mui/icons-material'
 import R from './locale'
 
 type SelectFileInfo = {

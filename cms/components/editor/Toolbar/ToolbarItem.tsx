@@ -1,6 +1,6 @@
 import { useNode } from '@craftjs/core';
-import { Grid, Slider, RadioGroup } from '@material-ui/core';
-import { withStyles } from '@material-ui/styles';
+import { Grid, Slider, RadioGroup } from '@mui/material';
+import { withStyles } from '@mui/styles';
 import React from 'react';
 
 import { ToolbarDropdown } from './ToolbarDropdown';

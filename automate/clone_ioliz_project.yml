@@ -1,6 +1,7 @@
 ---
 - name: Clone ioliz Repository
   hosts: dbserver
+  gather_facts: no
   tasks:
     - name: Clone Git Repository
       ansible.builtin.git:

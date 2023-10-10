@@ -1,12 +1,14 @@
 import React, { forwardRef, useState } from 'react'
-import Dialog from '@material-ui/core/Dialog'
-import { AppBar, IconButton, makeStyles, Slide, Toolbar, Typography, Button, Grid } from '@material-ui/core'
-import { Close } from '@material-ui/icons'
-import { TransitionProps } from '@material-ui/core/transitions';
-import ImageList  from './ImageList';
+import Dialog from '@mui/material/Dialog'
+import { AppBar, IconButton, Slide, Toolbar, Typography, Button, Grid } from '@mui/material'
+import { Close } from '@mui/icons-material'
+import { TransitionProps } from '@mui/material/transitions';
+import ImageList from './ImageList';
 import SelectedImageList from './SelectedImageLIst'
-
-const useStyles = makeStyles((theme) => ({
+import { createTheme } from '@mui/material/styles';
+import { makeStyles } from '@mui/styles';
+const theme = createTheme();
+const useStyles = makeStyles(() => ({
   appBar: {
     position: 'relative',
   },
@@ -23,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
 const Transition = forwardRef<unknown, TransitionProps & {
   children?: React.ReactElement
 }>((props, ref) => {
-  return <Slide direction="up" ref={ref} {...props} />
+  return <Slide direction="up" appear={false} in={true} ref={ref}  >{props.children}</Slide>
 });
 
 

@@ -1,6 +1,6 @@
 import { Editor, Frame, Element } from '@craftjs/core';
-import { createTheme } from '@material-ui/core/styles';
-import { ThemeProvider } from '@material-ui/styles';
+import { createTheme } from '@mui/material/styles';
+import { ThemeProvider } from '@mui/styles';
 import { NextSeo } from 'next-seo';
 import React from 'react';
 

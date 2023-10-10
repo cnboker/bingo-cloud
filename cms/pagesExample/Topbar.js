@@ -1,6 +1,6 @@
 // components/Topbar.js
 import React from "react";
-import { Box, FormControlLabel, Switch, Grid, Button as MaterialButton } from "@material-ui/core";
+import { Box, FormControlLabel, Switch, Grid, Button as MaterialButton } from "@mui/core";
 
 export const Topbar = () => {
   return (

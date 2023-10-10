@@ -1,6 +1,6 @@
 import React from 'react'
-import { ImageList, ImageListItem, ImageListItemBar, IconButton } from '@material-ui/core'
-import { ArrowForwardOutlined, DeleteOutline } from '@material-ui/icons'
+import { ImageList, ImageListItem, ImageListItemBar, IconButton } from '@mui/material'
+import { ArrowForwardOutlined, DeleteOutline } from '@mui/icons-material'
 import { FileArray, FileData } from 'chonky'
 
 export type ImageListProps = {

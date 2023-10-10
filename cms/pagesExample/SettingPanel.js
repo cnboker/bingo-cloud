@@ -1,6 +1,6 @@
 // components/SettingsPanel.js
 import React from 'react';
-import { Box, Chip, Grid, Typography, Button as MaterialButton, FormControl, FormLabel, Slider } from "@material-ui/core";
+import { Box, Chip, Grid, Typography, Button as MaterialButton, FormControl, FormLabel, Slider } from "@mui/core";
 
 export const SettingsPanel = () => {  
   return  (    

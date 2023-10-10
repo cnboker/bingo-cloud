@@ -1,7 +1,7 @@
 import React, { forwardRef, memo, useImperativeHandle } from 'react'
-import { ListItem, ListItemText } from '@material-ui/core'
-import { ListItemIcon } from '@material-ui/core'
-import { Checkbox } from '@material-ui/core'
+import { ListItem, ListItemText } from '@mui/material'
+import { ListItemIcon } from '@mui/material'
+import { Checkbox } from '@mui/material'
 import styled from 'styled-components'
 
 import {
@@ -11,8 +11,8 @@ import {
   styleFunctionSx,
   SpacingProps,
   PaletteProps,
-} from '@material-ui/system'
-import { CSSProperties } from '@material-ui/styles'
+} from '@mui/system'
+import { CSSProperties } from '@mui/styles'
 
 const styleFunction = styleFunctionSx(compose(spacing, palette))
 

@@ -4,7 +4,7 @@ import {
   Typography,
   Grid,
   Button as MaterialButton,
-} from "@material-ui/core";
+} from "@mui/core";
 
 export const Toolbox = () => {
   return (

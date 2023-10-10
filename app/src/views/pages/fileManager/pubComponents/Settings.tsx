@@ -1,7 +1,7 @@
 import React, { useState, forwardRef, useImperativeHandle, useRef, memo } from 'react'
-import { FormControl, Box, InputLabel, Select, TextField } from '@material-ui/core'
-import { makeStyles, createStyles, Theme } from '@material-ui/core/styles'
-import { MenuItem } from '@material-ui/core'
+import { FormControl, Box, InputLabel, Select, TextField } from '@mui/material'
+import { makeStyles, createStyles, Theme } from '@mui/material/styles'
+import { MenuItem } from '@mui/material'
 import R from '../locale'
 const effects = [
   {

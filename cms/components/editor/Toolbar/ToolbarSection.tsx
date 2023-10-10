@@ -1,46 +1,49 @@
 import { useNode } from '@craftjs/core';
 import {
-  ExpansionPanel,
-  ExpansionPanelDetails,
-  ExpansionPanelSummary,
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
   Grid,
   Divider,
-} from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
+} from '@mui/material';
+import { makeStyles, createStyles } from '@mui/styles';
 import React from 'react';
-const usePanelStyles = makeStyles((_) => ({
-  root: {
-    background: 'transparent',
-    boxShadow: 'none',
-    '&:before': {
-      backgroundColor: 'rgba(0, 0, 0, 0.05)',
-    },
-    '&.Mui-expanded': {
-      margin: '0 0',
-      minHeight: '40px',
+const usePanelStyles = makeStyles(() =>
+  createStyles({
+    root: {
+      background: 'transparent',
+      boxShadow: 'none',
       '&:before': {
-        opacity: '1',
+        backgroundColor: 'rgba(0, 0, 0, 0.05)',
       },
-      '& + .MuiExpansionPanel-root:before ': {
-        display: 'block',
+      '&.Mui-expanded': {
+        margin: '0 0',
+        minHeight: '40px',
+        '&:before': {
+          opacity: '1',
+        },
+        '& + .MuiExpansionPanel-root:before ': {
+          display: 'block',
+        },
       },
     },
-  },
-}));
+  }));
 
-const useSummaryStyles = makeStyles((_) => ({
-  root: {
-    'min-height': '36px',
-    padding: 0,
-  },
-  content: {
-    margin: '0px',
-  },
-}));
+const useSummaryStyles = makeStyles(() =>
+  createStyles({
+    root: {
+      'min-height': '36px',
+      padding: 0,
+    },
+    content: {
+      margin: '0px',
+    },
+  }),
+);
 
 export const ToolbarSection = ({ title, props, summary, children }: any) => {
-  const panelClasses = usePanelStyles({});
-  const summaryClasses = useSummaryStyles({});
+  const panelClasses = usePanelStyles();
+  const summaryClasses = useSummaryStyles();
   const { nodeProps } = useNode((node) => ({
     nodeProps:
       props &&
@@ -50,8 +53,8 @@ export const ToolbarSection = ({ title, props, summary, children }: any) => {
       }, {}),
   }));
   return (
-    <ExpansionPanel classes={panelClasses}>
-      <ExpansionPanelSummary classes={summaryClasses}>
+    <Accordion classes={panelClasses}>
+      <AccordionSummary classes={summaryClasses}>
         <div className="px-6 w-full">
           <Grid container direction="row" alignItems="center" spacing={3}>
             <Grid item xs={4}>
@@ -73,13 +76,13 @@ export const ToolbarSection = ({ title, props, summary, children }: any) => {
             ) : null}
           </Grid>
         </div>
-      </ExpansionPanelSummary>
-      <ExpansionPanelDetails style={{ padding: '0px 24px 20px' }}>
+      </AccordionSummary>
+      <AccordionDetails style={{ padding: '0px 24px 20px' }}>
         <Divider />
         <Grid container spacing={1}>
           {children}
         </Grid>
-      </ExpansionPanelDetails>
-    </ExpansionPanel>
+      </AccordionDetails>
+    </Accordion>
   );
 };

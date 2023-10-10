@@ -1,5 +1,5 @@
-import { Paper, Tabs, Tab, Theme, AppBar } from '@material-ui/core'
-import { makeStyles } from '@material-ui/core/styles'
+import { Paper, Tabs, Tab, Theme, AppBar } from '@mui/material'
+import { makeStyles } from '@mui/material/styles'
 import { FileArray, FileData } from 'chonky'
 import React, { useRef, useImperativeHandle, Dispatch, SetStateAction } from 'react'
 import { CheckBoxList, ListItemData } from './CheckBoxList'

@@ -1,5 +1,5 @@
 import { CButton, CSpinner, CAlert } from '@coreui/react'
-import { Box } from '@material-ui/core'
+import { Box } from '@mui/material'
 import { useSelector } from 'react-redux'
 import { StatusBarType } from './statusBarReducer'
 

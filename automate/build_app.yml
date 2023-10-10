@@ -1,39 +1,32 @@
 ---
-- name: Run app npm build
+- become: 'yes'
+  gather_facts: 'no'
   hosts: dbserver
-  gather_facts: no
-  become: yes  # This allows you to become a superuser if necessary
+  name: Run app npm build
   tasks:
-    - name: Check if npm is installed
-      command: npm --version
+    - command: npm --version
+      ignore_errors: 'yes'
+      name: Check if npm is installed
       register: npm_check
-      ignore_errors: yes
-
+      #add chonky
     - name: Install npm if not found
       package:
         name: npm
         state: present
       when: npm_check.rc != 0
-
-   - name: Install fileManager project dependencies
-      command: chdir=/home/{{ ansible_user }}/src/ioliz/fileManager npm install 
-   - name: build fileManager project dependencies
-      command: chdir=/home/{{ ansible_user }}/src/ioliz/fileManager npm run build
-   - name: link fileManager project dependencies
-      command: chdir=/home/{{ ansible_user }}/src/ioliz/fileManager npm link
-
-    - name: Install project dependencies
-      command: chdir=/home/{{ ansible_user }}/src/ioliz/app npm install --force
-      #add chonky
-    - name: Install chonky 
-      command: chdir=/home/{{ ansible_user }}/src/ioliz/app npm install link chonky
-
-    - name: build
-      command:  chdir=/home/{{ ansible_user }}/src/ioliz/app npm run build
-      
-    - name: Copy the directory
-      copy:
-        src: /home/{{ ansible_user }}/src/ioliz/app/build/*  # Replace with the path to your local directory
-        dest: /home/{{ ansible_user }}/www/app  # Replace with the path on the remote host
-        remote_src: yes
-        recurse: yes
+    - command: chdir=/home/{{ ansible_user }}/src/ioliz/fileManger npm i
+      name: Install fileManger project dependencies
+    - command: chdir=/home/{{ ansible_user }}/src/ioliz/fileManger npm run link-pub
+      name: link fileManger project dependencies
+    - command: chdir=/home/{{ ansible_user }}/src/ioliz/app npm i
+      name: Install project dependencies
+    - command: chdir=/home/{{ ansible_user }}/src/ioliz/app npm link chonky
+      name: Install chonky
+    - command: chdir=/home/{{ ansible_user }}/src/ioliz/app npm run build
+      name: build
+    - copy:
+        dest: /home/{{ ansible_user }}/www/app
+        recurse: 'yes'
+        remote_src: 'yes'
+        src: /home/{{ ansible_user }}/src/ioliz/app/build/*
+      name: Copy the directory

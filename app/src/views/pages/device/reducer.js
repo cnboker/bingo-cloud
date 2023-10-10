@@ -10,7 +10,7 @@ import {
   RECEIVE_DEVICE_RECYCLE,
 } from './constants'
 import merge from 'lodash/merge'
-import { MergeType } from '@material-ui/icons'
+
 
 const initialState = []
 

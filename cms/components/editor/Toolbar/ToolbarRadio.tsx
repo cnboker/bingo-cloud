@@ -1,5 +1,5 @@
-import { FormControlLabel, Radio } from '@material-ui/core';
-import { makeStyles } from '@material-ui/styles';
+import { FormControlLabel, Radio } from '@mui/material';
+import { makeStyles } from '@mui/styles';
 import classnames from 'classnames';
 import React from 'react';
 
