@@ -114,7 +114,7 @@
     "build": "cross-env NODE_ENV=production react-app-rewired --openssl-legacy-provider build",
     "build2": "cross-env NODE_ENV=production react-app-rewired  build",
     "pub": "cross-env NODE_ENV=production react-app-rewired build && scp -r  ./build/*  ubuntu@192.168.0.104:~/www/app",
-    "lint": "eslint \"src/**/*.js\"",
+    "lint": "eslint src/**/*.js --fix",
     "test": "react-scripts test",
     "test:cov": "npm test -- --coverage --watchAll=false",
     "test:debug": "react-scripts --inspect-brk test --runInBand",

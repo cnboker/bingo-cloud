@@ -1,6 +1,7 @@
 import React, { useState, forwardRef, useImperativeHandle, useRef, memo } from 'react'
-import { FormControl, Box, InputLabel, Select, TextField } from '@mui/material'
-import { makeStyles, createStyles, Theme } from '@mui/material/styles'
+import { FormControl, Box, InputLabel, Select, TextField, SelectChangeEvent } from '@mui/material'
+import { makeStyles, createStyles } from '@mui/styles'
+import { createTheme } from '@mui/material/styles'
 import { MenuItem } from '@mui/material'
 import R from '../locale'
 const effects = [
@@ -41,8 +42,8 @@ const effects = [
     value: 'vanish',
   },
 ]
-
-const useStyles = makeStyles((theme: Theme) =>
+const theme = createTheme()
+const useStyles = makeStyles(() =>
   createStyles({
     root: {
       '& .MulTextField-root': {
@@ -64,7 +65,7 @@ export const Settings = memo(
     const [effect, setEffect] = useState<string>('random')
     const [duration, setDuration] = useState<number>(5)
     const durationRef = useRef(null)
-    const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
+    const handleChange = (event:SelectChangeEvent) => {
       setEffect(event.target.value as string)
     }
 
@@ -82,14 +83,7 @@ export const Settings = memo(
     return (
       <Box m={2}>
         <FormControl className={classes.formControl}>
-          <TextField
-            inputRef={durationRef}
-            label={R.duration}
-            type="number"
-            value={duration}
-            onChange={durationChange}
-            InputLabelProps={{ shrink: true }}
-          ></TextField>
+          <TextField inputRef={durationRef} label={R.duration} type="number" value={duration} onChange={durationChange} InputLabelProps={{ shrink: true }}></TextField>
         </FormControl>
         <FormControl className={classes.formControl}>
           <InputLabel>{R.playEffect}</InputLabel>
