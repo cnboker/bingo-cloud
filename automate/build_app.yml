@@ -23,7 +23,7 @@
       name: Install project dependencies
     - command: chdir=/home/{{ ansible_user }}/src/ioliz/app npm link chonky
       name: build app
-    - command: chdir=/home/{{ ansible_user }}/src/ioliz/app npm run build
+    - command: chdir=/home/{{ ansible_user }}/src/ioliz/app npm run lint && npm run build
       name: deploy
     - copy:
         dest: /home/{{ ansible_user }}/www/app
