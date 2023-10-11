@@ -1,5 +1,6 @@
 ---
 - become: 'yes'
+  become_user: root
   gather_facts: 'no'
   hosts: dbserver
   name: Run app npm build
@@ -21,9 +22,9 @@
     - command: chdir=/home/{{ ansible_user }}/src/ioliz/app npm i
       name: Install project dependencies
     - command: chdir=/home/{{ ansible_user }}/src/ioliz/app npm link chonky
-      name: Install chonky
+      name: build app
     - command: chdir=/home/{{ ansible_user }}/src/ioliz/app npm run build
-      name: build
+      name: deploy
     - copy:
         dest: /home/{{ ansible_user }}/www/app
         recurse: 'yes'
