@@ -28,6 +28,4 @@
     - copy:
         dest: /home/{{ ansible_user }}/www/app
         recurse: 'yes'
-        remote_src: 'yes'
         src: /home/{{ ansible_user }}/src/ioliz/app/build/*
-      name: Copy the directory

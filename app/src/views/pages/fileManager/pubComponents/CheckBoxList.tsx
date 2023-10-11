@@ -1,20 +1,12 @@
 import React, { forwardRef, memo, useImperativeHandle } from 'react'
 import { ListItem, ListItemText } from '@mui/material'
-import { ListItemIcon } from '@mui/material'
 import { Checkbox } from '@mui/material'
 import styled from 'styled-components'
 
-import {
-  compose,
-  spacing,
-  palette,
-  styleFunctionSx,
-  SpacingProps,
-  PaletteProps,
-} from '@mui/system'
+import { compose, spacing, palette, SpacingProps, PaletteProps } from '@mui/system'
 import { CSSProperties } from '@mui/styles'
 
-const styleFunction = styleFunctionSx(compose(spacing, palette))
+const styleFunction = compose(spacing, palette)
 
 type StyleFunctionProps = SpacingProps & PaletteProps & CSSProperties
 

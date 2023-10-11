@@ -112,7 +112,8 @@
   "scripts": {
     "start": "react-app-rewired start .env.development",
     "build": "cross-env NODE_ENV=production react-app-rewired --openssl-legacy-provider build",
-    "pub": "cross-env NODE_ENV=production react-app-rewired build && scp -r  ./build/*  ubuntu@192.168.0.106:~/ioliz/app",
+    "build2": "cross-env NODE_ENV=production react-app-rewired  build",
+    "pub": "cross-env NODE_ENV=production react-app-rewired build && scp -r  ./build/*  ubuntu@192.168.0.104:~/www/app",
     "lint": "eslint \"src/**/*.js\"",
     "test": "react-scripts test",
     "test:cov": "npm test -- --coverage --watchAll=false",

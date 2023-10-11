@@ -11,7 +11,6 @@ import {
 } from './constants'
 import merge from 'lodash/merge'
 
-
 const initialState = []
 
 export const deviceListReducer = (state = initialState, action) => {
