@@ -1,6 +1,5 @@
 ---
 - become: 'yes'
-  become_user: root
   gather_facts: 'no'
   hosts: dbserver
   name: Run app npm build
@@ -23,9 +22,10 @@
       name: Install project dependencies
     - command: chdir=/home/{{ ansible_user }}/src/ioliz/app npm link chonky
       name: build app
-    - command: chdir=/home/{{ ansible_user }}/src/ioliz/app npm run lint && npm run build
+    - command: chdir=/home/{{ ansible_user }}/src/ioliz/app npm run build
+      become_user: root
       name: deploy
     - copy:
         dest: /home/{{ ansible_user }}/www/app
-        recurse: 'yes'
-        src: /home/{{ ansible_user }}/src/ioliz/app/build/*
+        remote_src: 'yes'
+        src: /home/{{ ansible_user }}/src/ioliz/app/build/ # build/:只copy build子目录， 不带/只会copy build目录过去
