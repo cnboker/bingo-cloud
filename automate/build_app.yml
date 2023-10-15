@@ -21,12 +21,11 @@
     - command: chdir=/home/{{ ansible_user }}/src/ioliz/app npm i
       name: Install project dependencies
     - command: chdir=/home/{{ ansible_user }}/src/ioliz/app npm link chonky
-      name: Install chonky
+      name: build app
     - command: chdir=/home/{{ ansible_user }}/src/ioliz/app npm run build
-      name: build
+      become_user: root
+      name: deploy
     - copy:
         dest: /home/{{ ansible_user }}/www/app
-        recurse: 'yes'
         remote_src: 'yes'
-        src: /home/{{ ansible_user }}/src/ioliz/app/build/*
-      name: Copy the directory
+        src: /home/{{ ansible_user }}/src/ioliz/app/build/ # build/:只copy build子目录， 不带/只会copy build目录过去

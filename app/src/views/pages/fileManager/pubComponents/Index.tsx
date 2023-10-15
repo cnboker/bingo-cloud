@@ -1,12 +1,14 @@
 import { Paper, Tabs, Tab, Theme, AppBar } from '@mui/material'
-import { makeStyles } from '@mui/material/styles'
+import { makeStyles } from '@mui/styles'
 import { FileArray, FileData } from 'chonky'
 import React, { useRef, useImperativeHandle, Dispatch, SetStateAction } from 'react'
 import { CheckBoxList, ListItemData } from './CheckBoxList'
 import ImageList from './ImageList'
 import { Settings } from './Settings'
 import R from '../locale'
-const useStyles = makeStyles((theme: Theme) => ({
+import { createTheme } from '@mui/material/styles'
+const theme = createTheme()
+const useStyles = makeStyles(() => ({
   root: {
     backgroundColor: theme.palette.background.paper,
     minHeight: '320px',
@@ -24,17 +26,10 @@ const Header = (props: HeaderProps) => {
     valueChange(newValue)
   }
   return (
-    <Tabs
-      value={value}
-      indicatorColor="primary"
-      textColor="primary"
-      onChange={handleChange}
-      aria-label="pub information"
-      variant="fullWidth"
-    >
-      <Tab label={R.selectedItems} />
-      <Tab label={R.parameterSetting} />
-      <Tab label={R.deviceList} />
+    <Tabs value={value} indicatorColor="primary" textColor="primary" onChange={handleChange} aria-label="pub information" variant="fullWidth">
+      <Tab label={R.selectedItems}></Tab>
+      <Tab label={R.parameterSetting}></Tab>
+      <Tab label={R.deviceList}></Tab>
     </Tabs>
   )
 }
@@ -77,56 +72,50 @@ const getVisibilityStyle = (hiddenCondition: boolean): any => {
 }
 
 //ImperativeHandleProps定义useImperativeHandle接口， PubFormProps表示属性
-export const PubForms = React.forwardRef<ImperativeHandleProps, PubFormProps>(
-  ({ selectedFiles, deviceList, removeAction, onMovedown }, ref) => {
-    const classes = useStyles()
-    const [value, setValue] = React.useState(0)
-    const settingsRef = useRef(null)
-    const devicelistRef = useRef(null)
-    const valueChange = (value: number) => {
-      setValue(value)
-    }
+export const PubForms = React.forwardRef<ImperativeHandleProps, PubFormProps>(({ selectedFiles, deviceList, removeAction, onMovedown }, ref) => {
+  const classes = useStyles()
+  const [value, setValue] = React.useState(0)
+  const settingsRef = useRef(null)
+  const devicelistRef = useRef(null)
+  const valueChange = (value: number) => {
+    setValue(value)
+  }
 
-    useImperativeHandle(ref, () => ({
-      formData() {
-        return {
-          selectedFiles,
-          deviceList: devicelistRef.current?.formData(),
-          settings: settingsRef.current?.formData() || { duration: 5, effect: 'vanish' },
-        }
-      },
-      validate(): boolean {
-        if (!devicelistRef.current || devicelistRef.current?.formData().length === 0) {
-          setValue(2)
-          return false
-        }
-        if (selectedFiles.length === 0) {
-          setValue(0)
-          return false
-        }
-        return true
-      },
-    }))
-    //https://stackoverflow.com/questions/61097440/reactjs-material-ui-prevent-re-render-tabs-on-enter
-    return (
-      <div className={classes.root}>
-        <Paper>
-          <Header value={value} valueChange={valueChange} />
-          <div style={getVisibilityStyle(value !== 0)}>
-            <ImageList
-              selectedFiles={selectedFiles}
-              removeAction={removeAction}
-              onMovedown={onMovedown}
-            />
-          </div>
-          <div style={getVisibilityStyle(value !== 1)}>
-            <Settings ref={settingsRef} />
-          </div>
-          <div style={getVisibilityStyle(value !== 2)}>
-            <CheckBoxList data={deviceList} ref={devicelistRef} />
-          </div>
-        </Paper>
-      </div>
-    )
-  },
-)
+  useImperativeHandle(ref, () => ({
+    formData() {
+      return {
+        selectedFiles,
+        deviceList: devicelistRef.current?.formData(),
+        settings: settingsRef.current?.formData() || { duration: 5, effect: 'vanish' },
+      }
+    },
+    validate(): boolean {
+      if (!devicelistRef.current || devicelistRef.current?.formData().length === 0) {
+        setValue(2)
+        return false
+      }
+      if (selectedFiles.length === 0) {
+        setValue(0)
+        return false
+      }
+      return true
+    },
+  }))
+  //https://stackoverflow.com/questions/61097440/reactjs-material-ui-prevent-re-render-tabs-on-enter
+  return (
+    <div className={classes.root}>
+      <Paper>
+        <Header value={value} valueChange={valueChange} />
+        <div style={getVisibilityStyle(value !== 0)}>
+          <ImageList selectedFiles={selectedFiles} removeAction={removeAction} onMovedown={onMovedown} />
+        </div>
+        <div style={getVisibilityStyle(value !== 1)}>
+          <Settings ref={settingsRef} />
+        </div>
+        <div style={getVisibilityStyle(value !== 2)}>
+          <CheckBoxList data={deviceList} ref={devicelistRef} />
+        </div>
+      </Paper>
+    </div>
+  )
+})

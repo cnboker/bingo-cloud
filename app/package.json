@@ -1,0 +1,136 @@
+{
+  "name": "ioliz",
+  "description": "IronSingage",
+  "version": "1.0.0.0",
+  "config": {
+    "ironCloud": "1.0"
+  },
+  "author": {
+    "name": "IronCloud",
+    "url": "https://ioliz.com",
+    "github": "https://github.com/cnboker"
+  },
+  "contributors": [
+    {
+      "name": "IronCloud Team",
+      "url": "https://github.com/orgs/coreui/people"
+    }
+  ],
+  "homepage": ".",
+  "copyright": "Copyright 2021-2022 IronCloud",
+  "license": "MIT",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:cnboker/ironcloud.git"
+  },
+  "alias": {
+    "react": "path.resolve('./node_modules/react')"
+  },
+  "resolutions": {
+    "react-error-overlay": "6.0.9"
+  },
+  "dependencies": {
+    "@coreui/coreui": "^4.1.5",
+    "@coreui/icons": "^2.0.1",
+    "@coreui/icons-react": "^2.0.1",
+    "@coreui/react": "^4.2.1",
+    "@coreui/react-chartjs": "^2.0.0-rc.0",
+    "@coreui/utils": "^1.3.1",
+    "@emotion/styled": "^11.11.0",
+    "@mui/icons-material": "^5.14.12",
+    "@mui/material": "^5.14.12",
+    "@mui/styles": "^5.14.12",
+    "@yaireo/tagify": "^4.8.1",
+    "axios": "^0.21.4",
+    "bs-stepper": "^1.7.0",
+    "chart.js": "^3.5.1",
+    "chonky": "file:../fileManger",
+    "classnames": "^2.3.1",
+    "core-js": "^3.16.2",
+    "cross-env": "^7.0.3",
+    "eslint-config-react-app": "^6.0.0",
+    "filepond": "^4.30.0",
+    "filepond-plugin-file-rename": "^1.1.8",
+    "filepond-plugin-image-crop": "^2.0.6",
+    "filepond-plugin-image-exif-orientation": "^1.0.11",
+    "filepond-plugin-image-preview": "^4.6.10",
+    "js-cookie": "^3.0.1",
+    "jwt-decode": "^3.1.2",
+    "moment": "^2.29.1",
+    "mqtt": "^4.3.2",
+    "node-sass": "^7.0.1",
+    "prop-types": "^15.7.2",
+    "qrcode.react": "^1.0.1",
+    "react": "^17.0.2",
+    "react-app-polyfill": "^2.0.0",
+    "react-datepicker": "^4.2.1",
+    "react-dom": "^17.0.2",
+    "react-filepond": "^7.1.1",
+    "react-hook-form": "^7.15.1",
+    "react-jsonschema-form": "^1.8.1",
+    "react-localization": "^1.0.17",
+    "react-paginate": "^7.1.3",
+    "react-redux": "^7.2.5",
+    "react-router-dom": "^5.2.0",
+    "react-select": "^5.1.0",
+    "react-swipeable-views": "^0.14.0",
+    "redux": "4.1.1",
+    "redux-reset": "^0.3.0",
+    "redux-saga": "^1.1.3",
+    "redux-thunk": "^2.3.0",
+    "shortid": "^2.2.16",
+    "simplebar-react": "^2.3.5",
+    "styled-components": "^5.3.3"
+  },
+  "devDependencies": {
+    "@types/jest": "^27.0.2",
+    "@types/node": "^16.10.1",
+    "@types/react": "^18.0.8",
+    "@types/react-dom": "^17.0.9",
+    "@types/react-swipeable-views": "^0.13.1",
+    "@types/shortid": "^0.0.29",
+    "@types/styled-components": "^5.1.19",
+    "@typescript-eslint/eslint-plugin": "^4.0.1",
+    "@typescript-eslint/parser": "4.0.1",
+    "@wojtekmaj/enzyme-adapter-react-17": "^0.6.3",
+    "auto-changelog": "~2.3.0",
+    "babel-plugin-root-import": "^6.6.0",
+    "customize-cra": "^1.0.0",
+    "enzyme": "^3.11.0",
+    "eslint": "^7.32.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-config-react": "^1.1.7",
+    "eslint-plugin-prettier": "^3.4.1",
+    "prettier": "2.3.2",
+    "react-app-rewired": "^2.1.8",
+    "react-error-overlay": "^6.0.9",
+    "react-scripts": "^4.0.3",
+    "sass": "^1.38.0",
+    "typescript": "^4.2.3"
+  },
+  "scripts": {
+    "start": "react-app-rewired start .env.development",
+    "build": "cross-env NODE_ENV=production react-app-rewired --openssl-legacy-provider build",
+    "build2": "cross-env NODE_ENV=production react-app-rewired  build",
+    "pub": "cross-env NODE_ENV=production react-app-rewired build && scp -r  ./build/*  ubuntu@192.168.0.104:~/www/app",
+    "lint": "eslint src/**/*.js --fix",
+    "test": "react-scripts test",
+    "test:cov": "npm test -- --coverage --watchAll=false",
+    "test:debug": "react-scripts --inspect-brk test --runInBand",
+    "eject": "react-scripts eject",
+    "changelog": "auto-changelog --starting-version 3.0.0 --commit-limit false --hide-credit"
+  },
+  "jest": {
+    "collectCoverageFrom": [
+      "src/**/*.{js,jsx}",
+      "!**/*index.js",
+      "!src/serviceWorker.js",
+      "!src/polyfill.js"
+    ]
+  },
+  "engines": {
+    "node": ">=10",
+    "npm": ">=6"
+  }
+}
