@@ -19,18 +19,7 @@ namespace Ioliz
     public static void Main(string[] args)
     {
       var host = BuildWebHost(args);
-      //migration database
-      using (var scope = host.Services.CreateScope())
-      {
-        var services = scope.ServiceProvider;
-
-        var context = services.GetRequiredService<IolizContext>();
-        if (context.Database.GetPendingMigrations().Any())
-        {
-          context.Database.Migrate();
-        }
-      }
-
+     
       using (var scope = host.Services.CreateScope())
       {
         var services = scope.ServiceProvider;
