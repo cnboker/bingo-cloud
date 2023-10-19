@@ -1,7 +1,7 @@
 using System;
 using System.Linq;
 using Microsoft.Extensions.DependencyInjection;
-
+using Microsoft.EntityFrameworkCore;
 namespace Ioliz.Service.Models
 {
   public static class DbInitializer
@@ -10,7 +10,11 @@ namespace Ioliz.Service.Models
     public static void Initialize(IServiceProvider provider)
     {
       var context = provider.GetRequiredService<ServiceContext>();
-      context.Database.EnsureCreated();
+      if (context.Database.GetPendingMigrations().Any())
+      {
+        context.Database.Migrate();
+      }
+      //context.Database.EnsureCreated();
       if (!context.AccountDetails.Any())
       {
         for (int i = 0; i < 50; i++)

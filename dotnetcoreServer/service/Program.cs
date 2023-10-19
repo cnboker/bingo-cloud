@@ -22,18 +22,6 @@ namespace Ioliz.Service
         {
             var host = CreateHostBuilder(args).Build();
           
-            //migration database
-            using (var scope = host.Services.CreateScope())
-            {
-                var services = scope.ServiceProvider;
-
-                var context = services.GetRequiredService<ServiceContext>();
-                if (context.Database.GetPendingMigrations().Any())
-                {
-                    context.Database.Migrate();
-                }
-            }
-            
             using (var scope = host.Services.CreateScope())
             {
                 var services = scope.ServiceProvider;

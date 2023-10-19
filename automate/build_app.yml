@@ -4,28 +4,43 @@
   hosts: dbserver
   name: Run app npm build
   tasks:
-    - command: npm --version
+    - name: Update APT package cache
+      apt:
+        update_cache: yes
+    - name: Check if nodejs is installed
+      command: nodejs --version
       ignore_errors: 'yes'
-      name: Check if npm is installed
-      register: npm_check
-      #add chonky
-    - name: Install npm if not found
-      package:
-        name: npm
-        state: present
-      when: npm_check.rc != 0
-    - command: chdir=/home/{{ ansible_user }}/src/ioliz/fileManger npm i
-      name: Install fileManger project dependencies
-    - command: chdir=/home/{{ ansible_user }}/src/ioliz/fileManger npm run link-pub
-      name: link fileManger project dependencies
-    - command: chdir=/home/{{ ansible_user }}/src/ioliz/app npm i
-      name: Install project dependencies
-    - command: chdir=/home/{{ ansible_user }}/src/ioliz/app npm link chonky
-      name: build app
-    - command: chdir=/home/{{ ansible_user }}/src/ioliz/app npm run build
+      register: nodejscheck
+      
+    - name: Install or update nodejs to the latest version
+      command: sh '/home/{{ ansible_user }}/src/ioliz/automate/install_nodejs.sh'
       become_user: root
-      name: deploy
-    - copy:
+      when: nodejscheck.rc != 0
+
+    - name: Verify npm is installed
+      command: npm --version
+      register: npm_version
+      ignore_errors: yes  # Ignore errors in case npm is not installed
+
+    - name: Print npm version
+      debug:
+        var: npm_version.stdout
+
+    - name: fileManager npm i
+      command: chdir=/home/{{ ansible_user }}/src/ioliz/fileManger npm install --force
+    - name: Install fileManger project dependencies
+      command: chdir=/home/{{ ansible_user }}/src/ioliz/fileManger npm run link-pub
+
+    - name: link fileManger project dependencies
+      command: chdir=/home/{{ ansible_user }}/src/ioliz/app npm install --force
+    - name: Install project dependencies
+      command: chdir=/home/{{ ansible_user }}/src/ioliz/app npm link chonky
+
+    - name: build app
+      command: chdir=/home/{{ ansible_user }}/src/ioliz/app npm run build
+
+    - name: deploy
+      copy:
         dest: /home/{{ ansible_user }}/www/app
         remote_src: 'yes'
         src: /home/{{ ansible_user }}/src/ioliz/app/build/ # build/:只copy build子目录， 不带/只会copy build目录过去

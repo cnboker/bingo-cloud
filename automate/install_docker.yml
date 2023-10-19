@@ -26,3 +26,8 @@
         state: started
         enabled: yes
       when: docker_version.rc != 0
+
+    - name: Install python3-docker package
+      apt:
+        name: python3-docker
+        state: present

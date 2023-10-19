@@ -4,9 +4,8 @@ using System.Threading.Tasks;
 using Ioliz.Shared.Utils;
 using Member.CustomTokenProvider;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-
+using Microsoft.EntityFrameworkCore;
 
 namespace Member.Models
 {
@@ -19,7 +18,11 @@ namespace Member.Models
       var userManager = provider.GetRequiredService<UserManager<CustomTokenProvider.ApplicationUser>>();
       var roleManager = provider.GetRequiredService<RoleManager<IdentityRole>>();
 
-      context.Database.EnsureCreated();
+      //context.Database.EnsureCreated();
+      if (context.Database.GetPendingMigrations().Any())
+        {
+          context.Database.Migrate();
+        }
       if (context.TenantAccounts.Any())
       {
 
