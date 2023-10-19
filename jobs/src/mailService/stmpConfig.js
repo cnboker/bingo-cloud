@@ -1,11 +1,11 @@
 
 export const SmtpConfig = 
   {
-    from: "song@ioliz.com",
-    host: "mail.ioliz.com",
+    from: "song@dsliz.info",
+    host: "mail.dsliz.info",
     port: 465,
     secure: true,
-    user: "song@ioliz.com",
+    user: "song@dsliz.info",
     pass: "Juyouke2018"
   }
 ;
