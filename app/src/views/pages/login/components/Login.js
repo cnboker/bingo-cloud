@@ -19,7 +19,7 @@ const Login = ({ submit, error }) => {
   }
 
   return (
-    <div className="bg-light min-vh-100 d-flex flex-row align-items-center">
+    <div className="bg-light d-flex flex-row align-items-center">
       <CContainer>
         <CRow className="justify-content-center">
           <CCol md={8}>

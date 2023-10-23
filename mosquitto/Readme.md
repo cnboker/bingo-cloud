@@ -54,5 +54,9 @@ docker pull eclipse-mosquitto
   
 ``` shell
 docker-compose up
+#or
+sudo docker run -d --restart always --name mosq --network myNetwork \
+  -p 1883:1883 -p 8000:8000 \
+  -v $(pwd)/mosquitto:/mosquitto \
+  eclipse-mosquitto
 ```
-* -v $PWD:/mosiquitto map docker

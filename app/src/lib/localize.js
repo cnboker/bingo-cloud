@@ -3,7 +3,9 @@ import Cookies from 'js-cookie'
 import { language } from '../config'
 export const langLoader = (localeData) => {
   const R = new LocalizedStrings(localeData)
+  
   var lang = Cookies.get('language') || R.getLanguage() || language
+  console.log('lang',Cookies.get('language'),R.getLanguage(),language)
   R.setLanguage(lang)
   return R
 }
