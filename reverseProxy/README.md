@@ -25,7 +25,7 @@ docker network create myNetwork
 # --name=mysql ： docker 服务名称
 # -d : deamon模式启动
 # --network=myNetwork ： 使用服务网段myNetwork
-docker run --name=mysql -h mysql -p 3306:3306 --network=myNetwork --restart=always -v /home/data/mysql:/var/lib/mysql -e MYSQL_T_PASSWORD=$ioliz.com%2022 -d mysql/mysql-server 
+docker run --name=mysql -h mysql -p 3306:3306 --network=myNetwork --restart=always -v /home/data/mysql:/var/lib/mysql -e MYSQL_T_PASSWORD=$dsliz.info%2022 -d mysql/mysql-server 
 
 docker exec -it mysql bash
 

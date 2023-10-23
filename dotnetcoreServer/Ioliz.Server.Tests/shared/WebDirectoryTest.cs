@@ -13,7 +13,7 @@ public class WebDirectoryTest
     [Fact]
     public void Test1()
     {
-        var domain = "http://file.ioliz.com";
+        var domain = "http://file.dsliz.info";
         var testRootDir = Directory.GetParent(Directory.GetParent(Directory.GetParent(Directory.GetCurrentDirectory()).FullName??"").FullName??"").FullName??"";
         var rootDir = Path.Combine(testRootDir, "shared", "testData");
         Console.WriteLine("testDir=" + rootDir);

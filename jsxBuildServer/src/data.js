@@ -5,11 +5,11 @@ exports.MetaMap1 = {
     bedqmduoeu: {
       tag: "ImageList",
       urls: [
-        "http://file.ioliz.com/wwwroot/admin/7.jpeg",
-        "http://file.ioliz.com/wwwroot/admin/5.jpeg",
-        "http://file.ioliz.com/wwwroot/admin/1.jpeg",
-        "http://file.ioliz.com/wwwroot/admin/3.jpeg",
-        "http://file.ioliz.com/wwwroot/admin/2.jpeg",
+        "http://file.dsliz.info/wwwroot/admin/7.jpeg",
+        "http://file.dsliz.info/wwwroot/admin/5.jpeg",
+        "http://file.dsliz.info/wwwroot/admin/1.jpeg",
+        "http://file.dsliz.info/wwwroot/admin/3.jpeg",
+        "http://file.dsliz.info/wwwroot/admin/2.jpeg",
       ],
       duration: 3000,
       animation: "slider",
@@ -25,11 +25,11 @@ exports.MetaMap = {
     bedqmduoeu: {
       tag: "ImageList",
       urls: [
-        "http://file.ioliz.com/wwwroot/admin/7.jpeg",
-        "http://file.ioliz.com/wwwroot/admin/5.jpeg",
-        "http://file.ioliz.com/wwwroot/admin/1.jpeg",
-        "http://file.ioliz.com/wwwroot/admin/3.jpeg",
-        "http://file.ioliz.com/wwwroot/admin/2.jpeg",
+        "http://file.dsliz.info/wwwroot/admin/7.jpeg",
+        "http://file.dsliz.info/wwwroot/admin/5.jpeg",
+        "http://file.dsliz.info/wwwroot/admin/1.jpeg",
+        "http://file.dsliz.info/wwwroot/admin/3.jpeg",
+        "http://file.dsliz.info/wwwroot/admin/2.jpeg",
       ],
       duration: 3000,
       animation: "slider",
@@ -41,7 +41,7 @@ exports.MetaMap = {
         {
           sources: [
             {
-              src: "http://file.ioliz.com/wwwroot/admin/2.mp4",
+              src: "http://file.dsliz.info/wwwroot/admin/2.mp4",
               type: "video/mp4",
             },
           ],
@@ -50,7 +50,7 @@ exports.MetaMap = {
         {
           sources: [
             {
-              src: "http://file.ioliz.com/wwwroot/admin/1.mp4",
+              src: "http://file.dsliz.info/wwwroot/admin/1.mp4",
               type: "video/mp4",
             },
           ],
@@ -84,14 +84,14 @@ exports.MetaMap = {
 
 // exports.postData = {
 //   urls: [
-//     //"http://file.ioliz.com/admin/bbc.mp4",
-//     //"http://file.ioliz.com/wwwroot/admin/3.webm",
-//     // "http://file.ioliz.com/wwwroot/admin/7.jpeg",
-//     // "http://file.ioliz.com/wwwroot/admin/5.jpeg",
-//     // "http://file.ioliz.com/wwwroot/admin/1.jpeg",
-//     // "http://file.ioliz.com/wwwroot/admin/3.jpeg",
-//      "http://file.ioliz.com/admin/2.jpeg",
-//     "http://file.ioliz.com/admin/2.mp4",
+//     //"http://file.dsliz.info/admin/bbc.mp4",
+//     //"http://file.dsliz.info/wwwroot/admin/3.webm",
+//     // "http://file.dsliz.info/wwwroot/admin/7.jpeg",
+//     // "http://file.dsliz.info/wwwroot/admin/5.jpeg",
+//     // "http://file.dsliz.info/wwwroot/admin/1.jpeg",
+//     // "http://file.dsliz.info/wwwroot/admin/3.jpeg",
+//      "http://file.dsliz.info/admin/2.jpeg",
+//     "http://file.dsliz.info/admin/2.mp4",
 //   ],
 //   duration: 3000,
 //   animation: "slider",
@@ -99,16 +99,16 @@ exports.MetaMap = {
 
 exports.postData = { 
   sources: [ 
-    // { type: "image", url: "http://file.ioliz.com/admin/5.jpeg" },
-    // { type: "image", url: "http://file.ioliz.com/admin/2.jpeg" },
-    // { type: "image", url: "http://file.ioliz.com/admin/3.jpeg" },
-   // { type: "video", url: "http://file.ioliz.com/video/4a.mp4", poster: "/" },
+    // { type: "image", url: "http://file.dsliz.info/admin/5.jpeg" },
+    // { type: "image", url: "http://file.dsliz.info/admin/2.jpeg" },
+    // { type: "image", url: "http://file.dsliz.info/admin/3.jpeg" },
+   // { type: "video", url: "http://file.dsliz.info/video/4a.mp4", poster: "/" },
     { type: "image", url: "../1.jpg", poster: "/" },
     { type: "image", url: "../2.jpg", poster: "/" },
     { type: "image", url: "../3.jpeg", poster: "/" },
    
-   // { type: "video", url: "http://file.ioliz.com/video/3.mp4", poster: "/" },
-    // { type: "video", url: "http://file.ioliz.com/admin/videos/video.mp4", poster: "/" },
+   // { type: "video", url: "http://file.dsliz.info/video/3.mp4", poster: "/" },
+    // { type: "video", url: "http://file.dsliz.info/admin/videos/video.mp4", poster: "/" },
   ],
   duration: 3000,
   animation: "vanish",
