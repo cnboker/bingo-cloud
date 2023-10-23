@@ -5,7 +5,7 @@ const AppFooter = () => {
   return (
     <CFooter>
       <div>
-        <a href="http://dsliz.info" target="_blank" rel="noopener noreferrer">
+        <a href="https://dsliz.info" target="_blank" rel="noopener noreferrer">
           IronCloud
         </a>
         <span className="ms-1">&copy; 2021 creativeLabs.</span>
