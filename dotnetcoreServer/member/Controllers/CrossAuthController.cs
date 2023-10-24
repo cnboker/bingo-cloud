@@ -29,7 +29,7 @@ namespace Member.Controllers
 
     //[FromForm]以application/x-www-form-urlencoded
     [HttpPost("api/authSession")]
-    public QRResult AuthSession([FromForm]string sessionid)
+    public QRResult AuthSession([FromForm] string sessionid)
     {
       logger.LogInformation("AuthSession parameter sessionid=" + sessionid);
       if (string.IsNullOrEmpty(sessionid)) return new QRResult();

@@ -4,6 +4,7 @@ import resources from '../locale'
 import { getEmailToken } from '../action'
 import { useDispatch } from 'react-redux'
 import Center from './CenterContainer'
+import Logo from 'src/Logo'
 const schema = {
   title: resources.inputEmail,
   type: 'object',
@@ -38,6 +39,7 @@ export default (props) => {
 
   return (
     <Center>
+      <Logo />
       <Form
         schema={schema}
         uiSchema={uiSchema}

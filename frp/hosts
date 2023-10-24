@@ -1,0 +1,10 @@
+#frps hosts
+127.0.0.1 www.dsliz.info
+127.0.0.1 dsliz.info
+127.0.0.1 ffmpeg.dsliz.info
+127.0.0.1 build.dsliz.info
+127.0.0.1 file.dsliz.info
+127.0.0.1 service.dsliz.info
+127.0.0.1 auth.dsliz.info
+127.0.0.1 en.dsliz.info
+127.0.0.1 app.dsliz.info
