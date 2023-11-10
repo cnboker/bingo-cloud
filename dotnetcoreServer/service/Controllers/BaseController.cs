@@ -84,7 +84,7 @@ namespace Ioliz.Service.Controllers
         }
 
         //是否是工厂即二级帐号
-        protected bool IsAgent()
+        public bool IsAgent()
         {
             var clam = User.Claims.FirstOrDefault(c => c.Type == "isAgent");
             if (clam == null) return false;

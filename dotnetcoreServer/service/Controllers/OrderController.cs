@@ -167,7 +167,7 @@ namespace Ioliz.Service.Controllers
 
       if (codeAvailiable)
       {
-        myOrders.Amount = subTotal * ((100 - config.Discount) / 100);
+        myOrders.Amount = subTotal ;
         myOrders.Commission = config.CommissionRate * subTotal / 100;
         codeEntity.Commission = myOrders.Commission;
       }

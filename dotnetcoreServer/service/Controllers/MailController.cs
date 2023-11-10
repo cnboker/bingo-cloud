@@ -6,8 +6,8 @@ using Dapper;
 using System.Data;
 using Microsoft.AspNetCore.Authorization;
 
+namespace Ioliz.Service.Controllers;
 [Route("/api/[controller]/[action]")]
-
 public class MailController : BaseController
 {
 

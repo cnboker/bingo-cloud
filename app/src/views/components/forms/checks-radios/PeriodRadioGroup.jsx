@@ -23,7 +23,7 @@ export const DefaultConfig = [
   { label: `5${R.month}`, value: 150 },
   { label: `6${R.month}`, value: 180 },
   { label: `1${R.year}`, value: 360 },
-  { label: `1${R.year}`, value: 720 },
+  { label: `2${R.year}`, value: 720 },
 ]
 
 export const PeriodRadioGroup = ({ onChecked }) => {
