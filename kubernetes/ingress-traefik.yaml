@@ -1,0 +1,186 @@
+# apiVersion: networking.k8s.io/v1beta1 # for k3s < v1.19
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: nginx
+  annotations:
+   #traefik.ingress.kubernetes.io/router.entrypoints: web,websecure
+   #traefik.ingress.kubernetes.io/router.tls: "true"
+   #traefik.ingress.kubernetes.io/router.tls.certresolver: "le"
+   #cert-manager.io/issuer: "letsencrypt-cluster-issuer"
+   traefik.ingress.kubernetes.io/router.entrypoints: web
+spec:
+  ingressClassName: traefik
+  #tls:
+  # hosts:
+  #     - www.dsliz.info
+    #secretName: tls-dsliz-ingress-http
+  rules:
+  - host: www.dsliz.info
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: www-dsliz-info
+            port:
+              number: 80      
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: traefik-dashboard
+  namespace: traefik
+  annotations:
+   #traefik.ingress.kubernetes.io/router.entrypoints: web,websecure
+   #traefik.ingress.kubernetes.io/router.tls: "true"
+   #traefik.ingress.kubernetes.io/router.tls.certresolver: "le"
+   #cert-manager.io/issuer: "letsencrypt-cluster-issuer"
+   traefik.ingress.kubernetes.io/router.entrypoints: web
+spec:
+  ingressClassName: traefik
+  rules:
+  - host: traefik.dsliz.info
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: traefik
+            port:
+              number: 9000         
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: longhorn
+  namespace: longhorn-system
+  annotations:
+   #traefik.ingress.kubernetes.io/router.entrypoints: web,websecure
+   #traefik.ingress.kubernetes.io/router.tls: "true"
+   #traefik.ingress.kubernetes.io/router.tls.certresolver: "le"
+   #cert-manager.io/issuer: "letsencrypt-cluster-issuer"
+   traefik.ingress.kubernetes.io/router.entrypoints: web
+spec:
+  ingressClassName: traefik
+  #tls:
+  # hosts:
+  #     - www.dsliz.info
+    #secretName: tls-dsliz-ingress-http
+  rules:
+  - host: longhorn.dsliz.info
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: longhorn-frontend
+            port:
+              number: 80  
+---
+
+# apiVersion: v1
+# kind: Secret
+# metadata:
+#   name: nginx-tls
+#   namespace: default
+# type: kubernetes.io/tls
+# # The TLS secret must contain keys named 'tls.crt' and 'tls.key' that contain the certificate and private key to use for TLS.
+# data:
+#   tls.crt: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUVvRENDQTRpZ0F3SUJBZ0lVWlRUMUZDV0F4TSs4VnVBNVFwSy9mYmt0ODdrd0RRWUpLb1pJaHZjTkFRRUwKQlFBd2dZc3hDekFKQmdOVkJBWVRBbFZUTVJrd0Z3WURWUVFLRXhCRGJHOTFaRVpzWVhKbExDQkpibU11TVRRdwpNZ1lEVlFRTEV5dERiRzkxWkVac1lYSmxJRTl5YVdkcGJpQlRVMHdnUTJWeWRHbG1hV05oZEdVZ1FYVjBhRzl5CmFYUjVNUll3RkFZRFZRUUhFdzFUWVc0Z1JuSmhibU5wYzJOdk1STXdFUVlEVlFRSUV3cERZV3hwWm05eWJtbGgKTUI0WERUSXpNVEl3TnpFek5UWXdNRm9YRFRNNE1USXdNekV6TlRZd01Gb3dZakVaTUJjR0ExVUVDaE1RUTJ4dgpkV1JHYkdGeVpTd2dTVzVqTGpFZE1Cc0dBMVVFQ3hNVVEyeHZkV1JHYkdGeVpTQlBjbWxuYVc0Z1EwRXhKakFrCkJnTlZCQU1USFVOc2IzVmtSbXhoY21VZ1QzSnBaMmx1SUVObGNuUnBabWxqWVhSbE1JSUJJakFOQmdrcWhraUcKOXcwQkFRRUZBQU9DQVE4QU1JSUJDZ0tDQVFFQTBoeGVNT3ZmVE44WkxhTjVUUmtORFBOeW5mK0krRUI3WmpsYwpJZmxyNkhBSHVaOGVzaUt2eXlRQXB3K0JpZFN4RTNCSlZsTG9HOE0zdnpDNHlSRlF4QldBdnplcnNxL01iTlQyCmszY2NaWUJrem1nRDZBY1N0eEhjVVMwYWNIOEF6d0NwYUMyQW9vblR6M0tCZjg0dVV2b2RtQXF5b1BUZzRJZWIKUjlRVUZxZ2FrSHFSTEFYUzFyaDBoUkgxcEpMQW82enlhanMrMmg4N0NQYjVpd0MwOGFkT1FnWDYyblVxMTVkSwo2QjhZbndRaW5Relhjb0hzVThCb2k5Yjl2ZzU5MCtSUUdwUXBqUzBjM051WVhEb0ZUQjdyTW9GN083TW5LdEptCm8yVGxuTlJpMk1yUUl3M3hYQzA3V0M1V2dUM01VZlYwaFN6bzBpMm1pbE80Y1ZNZFFRSURBUUFCbzRJQklqQ0MKQVI0d0RnWURWUjBQQVFIL0JBUURBZ1dnTUIwR0ExVWRKUVFXTUJRR0NDc0dBUVVGQndNQ0JnZ3JCZ0VGQlFjRApBVEFNQmdOVkhSTUJBZjhFQWpBQU1CMEdBMVVkRGdRV0JCUUgzNjNhamRjb291T2hQWXVWUTZ5dTFVV0hHREFmCkJnTlZIU01FR0RBV2dCUWs2Rk5YWFh3MFFJZXA2NVRidXVFV2VQd3BwREJBQmdnckJnRUZCUWNCQVFRME1ESXcKTUFZSUt3WUJCUVVITUFHR0pHaDBkSEE2THk5dlkzTndMbU5zYjNWa1pteGhjbVV1WTI5dEwyOXlhV2RwYmw5agpZVEFqQmdOVkhSRUVIREFhZ2d3cUxtUnpiR2w2TG1sdVptK0NDbVJ6YkdsNkxtbHVabTh3T0FZRFZSMGZCREV3Ckx6QXRvQ3VnS1lZbmFIUjBjRG92TDJOeWJDNWpiRzkxWkdac1lYSmxMbU52YlM5dmNtbG5hVzVmWTJFdVkzSnMKTUEwR0NTcUdTSWIzRFFFQkN3VUFBNElCQVFDdVpXRUNiVnd5aC93ZzljR051RFhjOThqUXd6NUk4THBsYnpMLwp4U0JMNUpuL2V6a3FnMi81eFNKYjRYRkFIT0xidk1wQnhqbWhRaXgzb1FWYWxLZVJuVlIwVDJHRm1mdzE3czNKClVORzB6ZHE2M3Z1Tm1DeTZEbzZXZFRaUkZqTDNpOUJyVU5RQXBOVy9EVWlWa2pzQUNpL3UvTWxNY1NBRmVhV0gKcDF4anVRR3cxOHk0NnVDYVllTk5GdTJSZUR0MFZOZVJzT3hmSHdQQW1Xb2xjMUFqWUZQOVM2UlRIY2IxcklMNAovQldmK2xjcDJxQUxkTUd3azNUOHVycUJMbDlXRWllNWVENHJUb0pqRWF4cDFIRTNiZ3ZVbmFSc1k3ditSN3NrClp6QnFNT1AvYWFaWWlRV3VGMzBWRjFmTTJEa1RKZGo5ZVNTdUNlQXRrd0RPOFlGaQotLS0tLUVORCBDRVJUSUZJQ0FURS0tLS0tCg==
+#   tls.key: LS0tLS1CRUdJTiBQUklWQVRFIEtFWS0tLS0tCk1JSUV2d0lCQURBTkJna3Foa2lHOXcwQkFRRUZBQVNDQktrd2dnU2xBZ0VBQW9JQkFRRFNIRjR3Njk5TTN4a3QKbzNsTkdRME04M0tkLzRqNFFIdG1PVndoK1d2b2NBZTVueDZ5SXEvTEpBQ25ENEdKMUxFVGNFbFdVdWdid3plLwpNTGpKRVZERUZZQy9ONnV5cjh4czFQYVRkeHhsZ0dUT2FBUG9CeEszRWR4UkxScHdmd0RQQUtsb0xZQ2lpZFBQCmNvRi96aTVTK2gyWUNyS2c5T0RnaDV0SDFCUVdxQnFRZXBFc0JkTFd1SFNGRWZXa2tzQ2pyUEpxT3o3YUh6c0kKOXZtTEFMVHhwMDVDQmZyYWRTclhsMHJvSHhpZkJDS2RETmR5Z2V4VHdHaUwxdjIrRG4zVDVGQWFsQ21OTFJ6YwoyNWhjT2dWTUh1c3lnWHM3c3ljcTBtYWpaT1djMUdMWXl0QWpEZkZjTFR0WUxsYUJQY3hSOVhTRkxPalNMYWFLClU3aHhVeDFCQWdNQkFBRUNnZ0VBRmRCRUp5Z1Y0dEUydC9wRTJiQkVIcGdYeWplQmJPU2s2eFFCY0xXSWNuVlAKR0FKaEdYVm9jdHFtQnJJaGJNSGNNSHh6NExaeXlvOFY5bytFWDd1Z2V2c1Foc21zMWJ4U3FPbmpQNlFhR3ArZAoxNkFNNThYME4zVnZQaTVFbEhGYkVDS3RjOWRsaDNwdnR4WFlSQUNQNXFWNDlSUUhQNWFzMGlMQ0NFOElWdUdrCnFtbWdZTU5ETkJlQWJpU1hIYndFWG5ieWxramxmYTF1VDdPU1NFK2l5Y2tHaXA1UGpsY0JzVUdzTEllTS9CSjQKajQvMnpIUndoOERKZkZtRXk2MkJ2QjdDRkZZTG5wZUVvanV1LzNLTkowMjUySmlxeFU4ejQ3U2RnWUhucGtnZAp5ZlpRS3BhR2NkZ2ZDSytpcGZXWnRudHhRc1pvcFNWK2FYS1lEa0s4VVFLQmdRRDh5L0UwTUkrcndBcWhrNUkvCk9PTDlpY2VXeVJkNkk1YXAvLzhVV2FNT2NDSWJqcDByVWVkZXFFMWFrZFV3TWh6bHVnZTA0VmozaFh0d1JjZnoKaTQyS2xyaGp6OGtsQVhVekUxcXVZSHNKMWthMmpnbm5pa1JPOHY3d2lTQnJ0V05aZTJGQmtrdHpYYjV3eTV3dQo1b25KQ3ltRUVOWHI2RlpUNUI2R0pWeDNmd0tCZ1FEVXhmU1FnNGJjQTNhNHNjeVNFQkNhMHdsSnJISldjMHo0CkZiQ2lZQmxiZ096aFN6dEhKL3kyOUZFYjVpMUJpUkUwRk5EU29zd1BsbUpyMEk1UnlrVnpHanl5TzcwRjRGVHAKM3luZy9IQ3pKcExJTWY0bHdRSzludVk2Yk1OMFZCeHovYkRRVE1oNUtmc3NwUUIrL0JFdk9DZWFiNGxHMDFZUAphbXZyK3pETFB3S0JnUUMvQzRGbDU2MHNKeDNocmh6QUdzV3d4Z2RJTlFEQkZWUXZkWC9ZYVVXSkM4VTYvalJaCklMU3lISThZKzAwWjkwVlBkNStMV3lKWkxVOTBNY2hDamh5UnVBWHhxSDVpc1E5WllpOE55V3d5cXZVVjBaSTYKb1l1dC9vWWNVZ1ZtWU5hTU1XbjJuQkRaUnVjOVp5TEpid0NDSnlWZzRUaEo2SFFWUWppdk9GMEJFUUtCZ1FDUQpyQnl6V2tzTE0rdTRmMlJhZUVQaUVkWkIydGhQZ2N4MjdzQ1FWNGxHVjI0NWJkN2JiZ3YrRmpkRUlnanBnNXBICjhGTmd0VUxNNG5ML1hlbzNJTEtDSmZmWk5KYzg5S0NuK0k1UUpUVTRDdVZJNi8wampJNGhnbmFHaVVlSXhGd28KWGZtb1dGMERUWkUwZE9qV2J1djhVRkZWUjd0dWhlb0JSMW9rTlVLakh3S0JnUUNzQzd6UEdFeU9MTkRDN0VNLwp0WUdNNi9CQUFQY3VNME5kMlUvT2paYlNTeXI4TW9od3FsNGczM1psaCtRdkJ2NURqWExkdlM4ejNyZ1hFVGxFCmlRTmt0NzUvZWtOTFZZekFLVXRUOGJrTGl6RFF4d3Fsd05IdTgzMVl0TGVybWxlNjE5T2JvREo5OFFUdGJJcjUKSVlCM1FTSEdvSXF6OGFXU0JpenNrQWQyTkE9PQotLS0tLUVORCBQUklWQVRFIEtFWS0tLS0tCg==
+
+# ---
+
+# kind: ClusterRole
+# apiVersion: rbac.authorization.k8s.io/v1
+# metadata:
+#   name: traefik-role
+
+# rules:
+#   - apiGroups:
+#       - ""
+#     resources:
+#       - services
+#       - endpoints
+#       - secrets
+#     verbs:
+#       - get
+#       - list
+#       - watch
+#   - apiGroups:
+#       - extensions
+#       - networking.k8s.io
+#     resources:
+#       - ingresses
+#       - ingressclasses
+#     verbs:
+#       - get
+#       - list
+#       - watch
+#   - apiGroups:
+#       - extensions
+#       - networking.k8s.io
+#     resources:
+#       - ingresses/status
+#     verbs:
+#       - update
+
+# ---
+# apiVersion: v1
+# kind: ServiceAccount
+# metadata:
+#   name: traefik-account
+
+# ---
+# kind: ClusterRoleBinding
+# apiVersion: rbac.authorization.k8s.io/v1
+# metadata:
+#   name: traefik-role-binding
+
+# roleRef:
+#   apiGroup: rbac.authorization.k8s.io
+#   kind: ClusterRole
+#   name: traefik-role
+# subjects:
+#   - kind: ServiceAccount
+#     name: traefik-account
+#     namespace: default # Using "default" because we did not specify a namespace when creating the ClusterAccount.
+
+
+# ---
+# apiVersion: v1
+# kind: Service
+# metadata:
+#   name: traefik-dashboard-service
+
+# spec:
+#   type: LoadBalancer
+#   ports:
+#     - port: 8080
+#       targetPort: dashboard
+#   selector:
+#     app: traefik
+
+# https://kubernetes.io/docs/concepts/services-networking/ingress/#the-ingress-resource
+
+# apiVersion: networking.k8s.io/v1
+# kind: Ingress
+# metadata:
+#   name: IngressName
+#   namespace: default
+# spec:
+#   rules:
+#   - host: foo.bar.com
+#     http:
+#       paths:
+#       - path: /
+#         pathType: Prefix
+#         backend:
+#           service:
+#             name: ServiceName
+#             port:
+#               number: 80

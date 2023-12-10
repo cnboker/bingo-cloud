@@ -1,0 +1,22 @@
+serverAddr = '#'
+serverPort = 7000
+webServer.addr = "127.0.0.1"
+webServer.port = 7400
+webServer.user = "admin"
+webServer.password = "admin"
+enablePrometheus = true
+# tls_enable = true
+
+[[proxies]]
+name = 'ssh'
+type = 'tcp'
+localIP = '127.0.0.1'
+localPort = 22
+remotePort = 6000
+
+[[proxies]]
+name = 'web'
+type = 'http'
+localPort = 80
+localIP = '127.0.0.1'
+customDomains = ['dsliz.info','fmpeg.dsliz.info','service.dsliz.info','build.dsliz.info','www.dsliz.info','app.dsliz.info','auth.dsliz.info','file.dsliz.info']

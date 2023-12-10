@@ -5,7 +5,7 @@ Wants=network.target
 
 [Service]
 Type=simple
-ExecStart=/usr/bin/frpc -c  /etc/frp/frpc.ini
+ExecStart=/usr/bin/frpc -c  /etc/frp/frpc.toml
 Restart=always
 RestartSec=20s
 User=nobody
