@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { CButton, CCard, CCardBody, CCol, CContainer, CForm, CFormInput, CInputGroup, CInputGroupText, CRow, CLink } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
 import { cilLockLocked, cilUser } from '@coreui/icons'
@@ -7,19 +7,61 @@ import ValidatorSpan from '~/views/ValidatorSpan'
 import R from '../locale'
 
 const Register = ({ onsubmit, error }) => {
+  const [password, setPassword] = useState("");
+  const [message, setMessage] = useState("");
+  const [progress, setProgress] = useState("");
+
   const {
     register,
     handleSubmit,
     formState: { errors },
     getValues,
   } = useForm()
+
+  const getActiveColor = (type) => {
+    if (type === "Strong") return "#8BC926";
+    if (type === "Medium") return "#FEBD01";
+    return "#FF0054";
+  };
+  const handlePassword = (passwordValue) => {
+    const strengthChecks = {
+      length: 0,
+      hasUpperCase: false,
+      hasLowerCase: false,
+      hasDigit: false,
+      hasSpecialChar: false,
+    };
+
+    strengthChecks.length = passwordValue.length >= 8 ? true : false;
+    strengthChecks.hasUpperCase = /[A-Z]+/.test(passwordValue);
+    strengthChecks.hasLowerCase = /[a-z]+/.test(passwordValue);
+    strengthChecks.hasDigit = /[0-9]+/.test(passwordValue);
+    strengthChecks.hasSpecialChar = /[^A-Za-z0-9]+/.test(passwordValue);
+    let verifiedList = Object.values(strengthChecks).filter((value) => value);
+
+    let strength =
+      verifiedList.length == 5
+        ? "Strong"
+        : verifiedList.length >= 2
+          ? "Medium"
+          : "Weak";
+
+    setPassword(passwordValue);
+    setProgress(`${(verifiedList.length / 5) * 100}%`);
+    setMessage(strength);
+
+    console.log("verifiedList: ", `${(verifiedList.length / 5) * 100}%`);
+
+  }
   const _onsubmit = (data) => {
+
     if (onsubmit) {
       onsubmit(data)
     }
   }
+
   return (
-    <div className="bg-light min-vh-100 d-flex flex-row align-items-center">
+    <div className="bg-light d-flex flex-row align-items-center">
       <CContainer>
         <CRow className="justify-content-center">
           <CCol md={9} lg={7} xl={6}>
@@ -44,8 +86,27 @@ const Register = ({ onsubmit, error }) => {
                     <CInputGroupText>
                       <CIcon icon={cilLockLocked} />
                     </CInputGroupText>
-                    <CFormInput type="password" placeholder="Password" autoComplete="new-password" {...register('password', { required: true })} />
+                    <CFormInput type="password" placeholder="Password" autoComplete="new-password" {...register('password', {
+                      required: true, minLength: {
+                        value: 6,
+                        message: "Password must have at least 8 characters"
+                      }
+                    })} />
                     {errors.password && <ValidatorSpan message="required" />}
+                    <div className="progress-bg">
+                      <div
+                        className="progress"
+                        style={{
+                          width: progress,
+                          backgroundColor: getActiveColor(message),
+                        }}
+                      ></div>
+                    </div>
+                    {password.length !== 0 ? (
+                      <p className="message" style={{ color: getActiveColor(message) }}>
+                        Your password is {message}
+                      </p>
+                    ) : null}
                   </CInputGroup>
                   <CInputGroup className="mb-4">
                     <CInputGroupText>
@@ -71,16 +132,17 @@ const Register = ({ onsubmit, error }) => {
                     <CButton color="primary" type="submit">
                       {R.create_account}
                     </CButton>
-                    <CLink href="/login">{R.login}</CLink>
+                    <CLink href="#/login">{R.login}</CLink>
                   </div>
                   <ValidatorSpan message={error} />
+
                 </CForm>
               </CCardBody>
             </CCard>
           </CCol>
         </CRow>
       </CContainer>
-    </div>
+    </div >
   )
 }
 

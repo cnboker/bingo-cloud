@@ -302,39 +302,23 @@ namespace Ioliz.Service.Models
 
     public enum KeyValueType
     {
-        //单设备每天服务价格
-        PricePerDay = 1,
-        //试用天数
-        TrialDays,
-        //最大试用设备数
+        //Daily service price for a single device
+        PricePerDay ,
+        //Trial days
+        TrialDays ,
+        //Maximum number of trial devices
         TrialMaxDeviceCount,
-        //推荐用户商户折扣比例
-        Discount,
-        //推荐人佣金比例
+       
+        //Referrer commission ratio
         CommissionRate,
-        //试用会员最大上传视频尺寸
+        //Maximum upload video size for trial members
         TrialMaxUploadVideoFileSize,
-        //试用会员节目最大使用图片数量
+        //Maximum number of pictures used in trial membership programs
         TrialMaxUsePictureCount,
-        //每天创建优惠码数量
-        MaxBenefitCountByDay,
-        //单台服务器最大实例数
-        MaxInstance,
-        //设备许可过期无法获取可用许可后，设备正常运行天数
+ 
+        //The number of days the device has been operating normally after the device license has expired and a usable license cannot be obtained.
         LicneseExpiredDeviceAvailiableDays,
-        //代理商许可天数
-        AgentLicenseDays,
-        //4G Quota
-        Quota4G,
-        //风扇预警阀值
-        FanAlarmThreshold,
-        //温度预警阀值
-        TempAlarmThreshold,
-        //电压预警阀值
-        PowerAlarmThreshold,
-        //
-        FanMotorAlarmThreshold,
-        //风机型号数据，用,分割
-        FanMotorModelInfo
+        //Number of coupons created per day
+       MaxBenefitCountByDay
     }
 }

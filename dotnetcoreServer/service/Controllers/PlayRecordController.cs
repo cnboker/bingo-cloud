@@ -109,8 +109,7 @@ public class PlayRecordController : BaseController
                 enddate = DateTime.Now.AddDays(1)
             });
            
-            result.Left = AppInstance.Instance.Config.Quota4G - result.Payload / 1024;
-            
+          
             return result;
         }
     }

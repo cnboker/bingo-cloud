@@ -14,9 +14,10 @@ namespace Ioliz.Service.Controllers
   [Authorize]
   public class LicenseController : BaseController
   {
-
+    InstanceRepository instanceRep = null;
     public LicenseController(ServiceContext ctx, ILogger<BaseController> logger) : base(ctx, logger)
     {
+      instanceRep = new InstanceRepository(ctx);
     }
 
 
@@ -58,6 +59,8 @@ namespace Ioliz.Service.Controllers
 
     //urlAuthorizeCode=sessionid为Url授权代码，系统找到当前用户的设备信息列表， 同时比较设备信息授权代码和urlAuthorizeCode一样的
     //实体，如果一样则说明是待授权设备，用户可以点击授权按钮做授权或拒绝授权操作
+    //AuthorizeStatus=0: 没有授权设备
+    //获取用户设备列表
     [HttpGet("/api/license/unAuthorizedList")]
     public IEnumerable<Device> UnAuthorizedList()
     {
@@ -74,24 +77,21 @@ namespace Ioliz.Service.Controllers
       var device = ctx.Devices.FirstOrDefault(x => x.DeviceId == model.DeviceId);
       if (device == null)
       {
-        return BadRequest("设备不存在");
+        return BadRequest("Device does not exist");
       }
       //代理商账号不允许激活设备
       if (IsAgent())
       {
-        return BadRequest("代理商账号不允许激活设备,请使用代理商租户账号激活设备.");
+        return BadRequest("The agent account is not allowed to activate the device. Please use the agent tenant account to activate the device.");
       }
 
-      var instance = ctx.Instances.FirstOrDefault(x => x.UserName == User.Identity.Name);
-      if (instance == null)
-      {
-        return BadRequest("实例不存在，请先创建实例");
-      }
+      instanceRep.InstanceCreate(User.Identity.Name);
+      
       License license = null;
 
       if (device.UserName.ToLower() != User.Identity.Name.ToLower())
       {
-        return BadRequest("授权用户和设备绑定账号不匹配");
+        return BadRequest("The authorized user does not match the account bound to the device.");
       }
 
       license = ctx.Licenses.FirstOrDefault(x => x.Status == LicenseStatus.Active && x.DeviceId == model.DeviceId);
@@ -115,14 +115,11 @@ namespace Ioliz.Service.Controllers
       var user = User.Identity.Name;
       //获取未激活证书
       //license = ctx.Licenses.AsQueryable().FromSql($"select * from licenses where UserName={user} and Status=0 ").FirstOrDefault();
-      license = ctx.Licenses.AsQueryable().Where(c => c.UserName == user && c.Status == 0).FirstOrDefault();
-      // license = ctx.Licenses.FirstOrDefault(x =>
-      //   x.UserName == User.Identity.Name &&
-      //   x.Status == LicenseStatus.InActive 
-      // );
+      license = ctx.Licenses.AsQueryable().Where(c => c.UserName == user && c.Status == LicenseStatus.InActive).FirstOrDefault();
+      
       if (license == null)
       {
-        return BadRequest("激活失败，没有可用许可");
+        return BadRequest("Activation failed, no license available.");
       }
       license.DeviceId = model.DeviceId;
       license.ActivationdDate = DateTime.Now;
@@ -135,6 +132,7 @@ namespace Ioliz.Service.Controllers
       ctx.SaveChanges();
       return Ok(CreateDeviceModel(license));
     }
+
     private DeviceModel CreateDeviceModel(License license)
     {
       var c = ctx.Devices.FirstOrDefault(c => c.DeviceId == license.DeviceId);
@@ -154,7 +152,6 @@ namespace Ioliz.Service.Controllers
         OS = c.OS,
         LatLng = c.LatLng,
         LicenseRemark = string.Format("valid days:{0}", leftDays),
-       
       };
       return model;
     }

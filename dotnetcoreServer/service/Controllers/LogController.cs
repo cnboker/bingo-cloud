@@ -8,6 +8,7 @@ using System.Data;
 using System.Linq;
 using System;
 
+namespace Ioliz.Service.Controllers;
 [Route("/api/[controller]/[action]")]
 [Authorize]
 public class LogController : BaseController

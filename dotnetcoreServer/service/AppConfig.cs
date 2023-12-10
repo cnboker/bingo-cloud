@@ -18,24 +18,18 @@ namespace Ioliz.Service
 
     public class AppConfig
     {
-        //代理商许可天数
-        public int AgentLicenseDays { get; set; }
+
         // 单价／设备／月
         public decimal PricePerDay { get; set; }
-        // 试用天数
+
         public int TrialDays { get; set; }
-        // 最大试用设备数量
+
         public int TrialMaxDeviceCount { get; set; }
-        // 折扣
-        public decimal Discount { get; set; }
+ 
         public decimal CommissionRate { get; set; }
         public decimal TrialMaxUploadVideoFileSize { get; set; }
         public int TrialMaxUsePictureCount { get; set; }
-        public int MaxBenefitCountByDay { get; set; }
-        
-        //AppSecret,初始化内容服务器key值
-        //public string Authkey { get; set; }
-        //验证服务器地址
+
         public string AuthServer { get; set; }
 
         private TenPayV3Info _tenpayV3Info = null;
@@ -48,7 +42,7 @@ namespace Ioliz.Service
         }
         private IServiceProvider provider;
 
-        public const string PlatformId = "Ioliz";
+        public const string PlatformId = "dsliz";
 
         public string ServieServer { get; set; }
         public string WeixinToken { get; set; }
@@ -59,9 +53,10 @@ namespace Ioliz.Service
         public string ServiceConnectionString;
         public string MQTTServer;
         public string FileServer;
-        //4g網絡配額
-        public long Quota4G { get; set; }
+
         public ResourceServerConfig[] ResourceServers {get;set;}
+        public int MaxBenefitCountByDay { get;  set; }
+
 
         public AppConfig(IServiceProvider provider)
         {
@@ -133,13 +128,12 @@ namespace Ioliz.Service
             logger.LogInformation("PricePerDay=" + PricePerDay + ",keyValues.len=" + keyValues.Count);
             TrialDays = GetValue<int>(keyValues, KeyValueType.TrialDays.ToString());
             TrialMaxDeviceCount = GetValue<int>(keyValues, KeyValueType.TrialMaxDeviceCount.ToString());
-            Discount = GetValue<int>(keyValues, KeyValueType.Discount.ToString());
+
             CommissionRate = GetValue<decimal>(keyValues, KeyValueType.CommissionRate.ToString());
             TrialMaxUploadVideoFileSize = GetValue<decimal>(keyValues, KeyValueType.TrialMaxUploadVideoFileSize.ToString());
             TrialMaxUsePictureCount = GetValue<int>(keyValues, KeyValueType.TrialMaxUsePictureCount.ToString());
             MaxBenefitCountByDay = GetValue<int>(keyValues, KeyValueType.MaxBenefitCountByDay.ToString());
-            AgentLicenseDays = GetValue<int>(keyValues, KeyValueType.AgentLicenseDays.ToString());
-            Quota4G = GetValue<long>(keyValues, KeyValueType.Quota4G.ToString());
+    
         }
     }
 }

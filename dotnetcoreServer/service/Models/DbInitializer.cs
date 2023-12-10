@@ -37,11 +37,7 @@ namespace Ioliz.Service.Models
       if (!context.KeyValues.Any())
       {
         context.KeyValues.AddRange(new KeyValue[]{
-            new KeyValue(){
-              //KeyValueType = (int)KeyValueType.Discount,
-              Key = KeyValueType.Discount.ToString(),
-              Value = "0"
-            },
+          
             new KeyValue(){
               //KeyValueType = (int)KeyValueType.PricePerDay,
               Key = KeyValueType.PricePerDay.ToString(),
@@ -50,43 +46,30 @@ namespace Ioliz.Service.Models
             new KeyValue(){
               //KeyValueType = (int)KeyValueType.TrialDays,
               Key = KeyValueType.TrialDays.ToString(),
-              Value = "30"
+              Value = "360"
             },
             new KeyValue(){
               //KeyValueType = (int)KeyValueType.TrialMaxDeviceCount,
               Key = KeyValueType.TrialMaxDeviceCount.ToString(),
-              Value = "5"
+              Value = "3"
             },
-            new KeyValue(){
-              //KeyValueType = (int)KeyValueType.Discount,
-              Key = KeyValueType.Discount.ToString(),
-              Value = "5"
-            },
+         
             new KeyValue(){
                 //KeyValueType = (int)KeyValueType.CommissionRate,
                 Key = KeyValueType.CommissionRate.ToString(),
-                Value = "5"
+                Value = "20"
             },
             new KeyValue(){
               //KeyValueType = (int)KeyValueType.TrialMaxUsePictureCount,
               Key = KeyValueType.TrialMaxUsePictureCount.ToString(),
-              Value="3"
+              Value="30"
             },
             new KeyValue(){
               //KeyValueType = (int)KeyValueType.TrialMaxUploadVideoFileSize,
               Key = KeyValueType.TrialMaxUploadVideoFileSize.ToString(),
-              Value = "30"
-            },
-            new KeyValue(){
-              Key = KeyValueType.MaxBenefitCountByDay.ToString(),
-              Value="5"
-            },
-            new KeyValue(){
-              Key = KeyValueType.MaxInstance.ToString(),
-              Value="300"
-            }
+              Value = "10"
+            }          
           });
-
 
       }
 

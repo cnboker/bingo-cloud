@@ -10,6 +10,7 @@ using System.Linq;
 using Ioliz.Service;
 using System;
 
+namespace Ioliz.Service.Controllers;
 [Route("/api/[controller]/[action]")]
 [Authorize]
 public class NetTrafficController : BaseController
@@ -109,8 +110,7 @@ public class NetTrafficController : BaseController
                 enddate = DateTime.Now.AddDays(1)
             });
            
-            result.Left = AppInstance.Instance.Config.Quota4G - result.Payload / 1024;
-            
+           
             return result;
         }
     }

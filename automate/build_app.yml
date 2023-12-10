@@ -28,17 +28,19 @@
 
     - name: fileManager npm i
       command: chdir=/home/{{ ansible_user }}/src/ioliz/fileManger npm install --force
+    
     - name: Install fileManger project dependencies
       command: chdir=/home/{{ ansible_user }}/src/ioliz/fileManger npm run link-pub
-
+      become_user: root
     - name: link fileManger project dependencies
       command: chdir=/home/{{ ansible_user }}/src/ioliz/app npm install --force
+      
     - name: Install project dependencies
       command: chdir=/home/{{ ansible_user }}/src/ioliz/app npm link chonky
-
+      become_user: root
     - name: build app
       command: chdir=/home/{{ ansible_user }}/src/ioliz/app npm run build
-
+      become_user: root
     - name: deploy
       copy:
         dest: /home/{{ ansible_user }}/www/app
