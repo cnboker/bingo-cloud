@@ -9,6 +9,8 @@
     "**/node_modules": true,
     "**/build": true
   },
-  "editor.codeActionsOnSave": { "source.fixAll": true },
+  "editor.codeActionsOnSave": {
+    "source.fixAll": "explicit"
+  },
   "editor.formatOnSave": false
 }

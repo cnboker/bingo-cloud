@@ -33,7 +33,7 @@ LimitNOFILE=infinity
 WantedBy=multi-user.target
 ```
 
-## Copy the service file:
+## Copy the service file
 
 Copy the service file to the appropriate directory for your Linux distribute, the typical location is '/etc/systemd/system
 

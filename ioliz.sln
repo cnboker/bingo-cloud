@@ -1,0 +1,58 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.002.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "dotnetcoreServer", "dotnetcoreServer", "{EBC56C65-3DD6-4440-B456-AC6F1C112C41}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ioliz.member", "dotnetcoreServer\member\Ioliz.member.csproj", "{9469A2DB-F3FB-48CA-BB49-A0A4D6AA3C58}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ioliz.Shared", "dotnetcoreServer\shared\Ioliz.Shared.csproj", "{27CF16F0-E96B-4255-84D9-594638F154F9}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "fileServer", "dotnetcoreServer\fileServer\fileServer.csproj", "{202AC824-CAFC-4911-BF0A-27E418E3E36F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ioliz.Server.Tests", "dotnetcoreServer\Ioliz.Server.Tests\Ioliz.Server.Tests.csproj", "{BB8E5EBA-D3CD-4AF9-89BE-6C61EC265FCE}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ioliz.service", "dotnetcoreServer\service\Ioliz.service.csproj", "{257E25F4-336D-4EFB-9BB9-E2C3F1097D4F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9469A2DB-F3FB-48CA-BB49-A0A4D6AA3C58}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9469A2DB-F3FB-48CA-BB49-A0A4D6AA3C58}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9469A2DB-F3FB-48CA-BB49-A0A4D6AA3C58}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9469A2DB-F3FB-48CA-BB49-A0A4D6AA3C58}.Release|Any CPU.Build.0 = Release|Any CPU
+		{27CF16F0-E96B-4255-84D9-594638F154F9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{27CF16F0-E96B-4255-84D9-594638F154F9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{27CF16F0-E96B-4255-84D9-594638F154F9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{27CF16F0-E96B-4255-84D9-594638F154F9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{202AC824-CAFC-4911-BF0A-27E418E3E36F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{202AC824-CAFC-4911-BF0A-27E418E3E36F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{202AC824-CAFC-4911-BF0A-27E418E3E36F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{202AC824-CAFC-4911-BF0A-27E418E3E36F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BB8E5EBA-D3CD-4AF9-89BE-6C61EC265FCE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BB8E5EBA-D3CD-4AF9-89BE-6C61EC265FCE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BB8E5EBA-D3CD-4AF9-89BE-6C61EC265FCE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BB8E5EBA-D3CD-4AF9-89BE-6C61EC265FCE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{257E25F4-336D-4EFB-9BB9-E2C3F1097D4F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{257E25F4-336D-4EFB-9BB9-E2C3F1097D4F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{257E25F4-336D-4EFB-9BB9-E2C3F1097D4F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{257E25F4-336D-4EFB-9BB9-E2C3F1097D4F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{9469A2DB-F3FB-48CA-BB49-A0A4D6AA3C58} = {EBC56C65-3DD6-4440-B456-AC6F1C112C41}
+		{27CF16F0-E96B-4255-84D9-594638F154F9} = {EBC56C65-3DD6-4440-B456-AC6F1C112C41}
+		{202AC824-CAFC-4911-BF0A-27E418E3E36F} = {EBC56C65-3DD6-4440-B456-AC6F1C112C41}
+		{BB8E5EBA-D3CD-4AF9-89BE-6C61EC265FCE} = {EBC56C65-3DD6-4440-B456-AC6F1C112C41}
+		{257E25F4-336D-4EFB-9BB9-E2C3F1097D4F} = {EBC56C65-3DD6-4440-B456-AC6F1C112C41}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D6896A04-5B33-4185-9DAE-18E01D831380}
+	EndGlobalSection
+EndGlobal

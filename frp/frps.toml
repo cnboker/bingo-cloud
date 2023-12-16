@@ -1,0 +1,7 @@
+bindAddr = "0.0.0.0"
+bindPort = 7000
+
+vhostHTTPPort = 8888
+
+auth.method = "token"
+auth.token = "$coobots@mail.com"

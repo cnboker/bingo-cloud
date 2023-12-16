@@ -5,18 +5,22 @@ webServer.port = 7400
 webServer.user = "admin"
 webServer.password = "admin"
 enablePrometheus = true
-# tls_enable = true
+auth.method = "token"
+auth.token = "$coobots@mail.com"
 
-[[proxies]]
-name = 'ssh'
-type = 'tcp'
-localIP = '127.0.0.1'
-localPort = 22
-remotePort = 6000
+#vhostHTTPSPort = 443
+
+#[[proxies]]
+#name = 'ssh'
+#type = 'tcp'
+#localIP = '127.0.0.1'
+#localPort = 22
+#remotePort = 6000
 
 [[proxies]]
 name = 'web'
 type = 'http'
 localPort = 80
-localIP = '127.0.0.1'
+#kubernets portal ip
+localIP = '192.168.0.200'
 customDomains = ['dsliz.info','fmpeg.dsliz.info','service.dsliz.info','build.dsliz.info','www.dsliz.info','app.dsliz.info','auth.dsliz.info','file.dsliz.info']
