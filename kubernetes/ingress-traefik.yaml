@@ -1,37 +1,11 @@
 # apiVersion: networking.k8s.io/v1beta1 # for k3s < v1.19
-apiVersion: networking.k8s.io/v1
-kind: Ingress
-metadata:
-  name: nginx
-  annotations:
-   #traefik.ingress.kubernetes.io/router.entrypoints: web,websecure
-   #traefik.ingress.kubernetes.io/router.tls: "true"
-   #traefik.ingress.kubernetes.io/router.tls.certresolver: "le"
-   #cert-manager.io/issuer: "letsencrypt-cluster-issuer"
-   traefik.ingress.kubernetes.io/router.entrypoints: web
-spec:
-  ingressClassName: traefik
-  #tls:
-  # hosts:
-  #     - www.dsliz.info
-    #secretName: tls-dsliz-ingress-http
-  rules:
-  - host: www.dsliz.info
-    http:
-      paths:
-      - path: /
-        pathType: Prefix
-        backend:
-          service:
-            name: www-dsliz-info
-            port:
-              number: 80      
+   
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: traefik-dashboard
-  namespace: traefik
+  namespace: kube-system
   annotations:
    #traefik.ingress.kubernetes.io/router.entrypoints: web,websecure
    #traefik.ingress.kubernetes.io/router.tls: "true"

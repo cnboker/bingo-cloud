@@ -68,3 +68,31 @@ spec:
       # If you set the `spec.type` field to `NodePort` and you want a specific port number,
       # you can specify a value in the `spec.ports[*].nodePort` field.
       #nodePort:
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: nginx
+  annotations:
+   #traefik.ingress.kubernetes.io/router.entrypoints: web,websecure
+   #traefik.ingress.kubernetes.io/router.tls: "true"
+   #traefik.ingress.kubernetes.io/router.tls.certresolver: "le"
+   #cert-manager.io/issuer: "letsencrypt-cluster-issuer"
+   traefik.ingress.kubernetes.io/router.entrypoints: web
+spec:
+  ingressClassName: traefik
+  #tls:
+  # hosts:
+  #     - www.dsliz.info
+    #secretName: tls-dsliz-ingress-http
+  rules:
+  - host: www.dsliz.info
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: www-dsliz-info
+            port:
+              number: 80   

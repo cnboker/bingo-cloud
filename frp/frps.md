@@ -7,7 +7,7 @@ wget https://github.com/fatedier/frp/releases/download/v0.52.3/frp_0.52.3_linux_
 
 tar -xzvf frp_0.52.3_linux_amd64.tar.gz
 
-cp ./frp_0.52.3_linux_amd64/frps /usr/bin/frps
+sudo cp ./frp_0.52.3_linux_amd64/frps /usr/bin/frps
 
 ```
 
@@ -53,7 +53,7 @@ sudo systemctl daemon-reload
 ## AutoStart when Reboot
 
 ```bash
-sudo systemctl enable frpc
+sudo systemctl enable frps
 
 ```
 
